@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"stu98832.github.io","root":"/","scheme":"Pisces","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="本篇僅紀錄自己學習SOLID的內容摘要，會依照自己的理解和書中的內容結合後將內容打上 如果有理解錯誤的地方，可以在下面的 gitalk 留言通知我  S - 單一職責原則 (SRP : Single-Responsibility Principle) 一個類別應該只有一個發生變化的原因">
+  <meta name="description" content="本篇僅紀錄自己學習SOLID的內容摘要，會依照自己的理解和書中的內容結合後將內容打上如果有理解錯誤的地方，可以在下面的 gitalk 留言通知我  S - 單一職責原則 (SRP : Single-Responsibility Principle)一個類別應該只有一個發生變化的原因">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SOLID 筆記">
 <meta property="og:url" content="http://stu98832.github.io/2020/03/15/note-solid/index.html">
 <meta property="og:site_name" content="Bluebean 的筆記">
-<meta property="og:description" content="本篇僅紀錄自己學習SOLID的內容摘要，會依照自己的理解和書中的內容結合後將內容打上 如果有理解錯誤的地方，可以在下面的 gitalk 留言通知我  S - 單一職責原則 (SRP : Single-Responsibility Principle) 一個類別應該只有一個發生變化的原因">
+<meta property="og:description" content="本篇僅紀錄自己學習SOLID的內容摘要，會依照自己的理解和書中的內容結合後將內容打上如果有理解錯誤的地方，可以在下面的 gitalk 留言通知我  S - 單一職責原則 (SRP : Single-Responsibility Principle)一個類別應該只有一個發生變化的原因">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2020-03-14T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-03-20T12:42:18.986Z">
+<meta property="article:modified_time" content="2020-03-21T06:10:28.206Z">
 <meta property="article:author" content="Bluebean">
 <meta property="article:tag" content="SOLID">
 <meta name="twitter:card" content="summary">
@@ -195,7 +195,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2020-03-20 20:42:18" itemprop="dateModified" datetime="2020-03-20T20:42:18+08:00">2020-03-20</time>
+                <time title="修改時間：2020-03-21 14:10:28" itemprop="dateModified" datetime="2020-03-21T14:10:28+08:00">2020-03-21</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -219,12 +219,9 @@
 
       
         <blockquote>
-<p>本篇僅紀錄自己學習SOLID的內容摘要，會依照自己的理解和書中的內容結合後將內容打上</p>
-<p>如果有理解錯誤的地方，可以在下面的 gitalk 留言通知我</p>
+<p>本篇僅紀錄自己學習SOLID的內容摘要，會依照自己的理解和書中的內容結合後將內容打上<br>如果有理解錯誤的地方，可以在下面的 gitalk 留言通知我</p>
 </blockquote>
-<h2 id="S-單一職責原則-SRP-Single-Responsibility-Principle"><a href="#S-單一職責原則-SRP-Single-Responsibility-Principle" class="headerlink" title="S - 單一職責原則 (SRP : Single-Responsibility Principle)"></a>S - 單一職責原則 (SRP : Single-Responsibility Principle)</h2><blockquote>
-<p>一個類別應該只有一個發生變化的原因</p>
-</blockquote>
+<h2 id="S-單一職責原則-SRP-Single-Responsibility-Principle"><a href="#S-單一職責原則-SRP-Single-Responsibility-Principle" class="headerlink" title="S - 單一職責原則 (SRP : Single-Responsibility Principle)"></a>S - 單一職責原則 (SRP : Single-Responsibility Principle)</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">一個類別應該只有一個發生變化的原因</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 <ul>
 <li>一個類別應該只會有一個職責在身，不應該含有多個職責</li>
@@ -235,26 +232,17 @@
 <p>舉一個違反 SRP 的函式例子：</p>
 <figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> List&lt;User&gt; <span class="title">SearchUser</span>(<span class="params">List&lt;User&gt; users, <span class="keyword">int</span> userid, <span class="keyword">string</span> username</span>)</span> &#123;</span><br><span class="line">    List&lt;User&gt; matches = <span class="keyword">new</span> List&lt;User&gt;();</span><br><span class="line">    <span class="keyword">foreach</span> (User user : users) &#123;</span><br><span class="line">        <span class="keyword">if</span> (userid != <span class="number">-1</span> &amp;&amp; user.Id == userid) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!<span class="keyword">string</span>.IsNullOrEmpty(username) &amp;&amp; user.Name == username) &#123;</span><br><span class="line">                matches.Add(user);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="keyword">string</span>.IsNullOrEmpty(username) &amp;&amp; user.Name == username) &#123;</span><br><span class="line">        	<span class="keyword">if</span> (userid != <span class="number">-1</span> &amp;&amp; user.Id == userid) &#123;</span><br><span class="line">                matches.Add(user);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>這邊將搜尋 ID 和名子的功能混在一起，不論是要新增條件或是刪除條件，都會受到其他搜尋條件的影響</p>
-<h2 id="O-開放封閉原則-OCP-Open-Closed-Principle"><a href="#O-開放封閉原則-OCP-Open-Closed-Principle" class="headerlink" title="O - 開放封閉原則 (OCP : Open-Closed Principle)"></a>O - 開放封閉原則 (OCP : Open-Closed Principle)</h2><blockquote>
-<p>軟體實體（類別、模組、函式等等）應該是可擴展的，但不可更改</p>
-</blockquote>
+<h2 id="O-開放封閉原則-OCP-Open-Closed-Principle"><a href="#O-開放封閉原則-OCP-Open-Closed-Principle" class="headerlink" title="O - 開放封閉原則 (OCP : Open-Closed Principle)"></a>O - 開放封閉原則 (OCP : Open-Closed Principle)</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">軟體實體（類別、模組、函式等等）應該是可擴展的，但不可更改</span><br></pre></td></tr></table></figure>
 <p>軟體的實體都會透過介面去公開，而內部則不會變動，若有新的需求或變化，只需要實做一個符合介面的類別出來即可，這使得軟體易於擴展，卻不用重新部屬所有的二進制檔或 DLL 檔</p>
-<h2 id="L-里氏替換原則-LSP-Liskov-Subtitution-Principle"><a href="#L-里氏替換原則-LSP-Liskov-Subtitution-Principle" class="headerlink" title="L - 里氏替換原則 (LSP : Liskov Subtitution Principle)"></a>L - 里氏替換原則 (LSP : Liskov Subtitution Principle)</h2><blockquote>
-<p>子型態（subtype）必須能夠替換掉它們的基底型態（base type）</p>
-</blockquote>
+<h2 id="L-里氏替換原則-LSP-Liskov-Subtitution-Principle"><a href="#L-里氏替換原則-LSP-Liskov-Subtitution-Principle" class="headerlink" title="L - 里氏替換原則 (LSP : Liskov Subtitution Principle)"></a>L - 里氏替換原則 (LSP : Liskov Subtitution Principle)</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">子型態（subtype）必須能夠替換掉它們的基底型態（base type）</span><br></pre></td></tr></table></figure>
 <p>當兩個類別之間有繼承的關係時，子類別應該要能夠代替父類別</p>
 <p>由於子類別是由父類別衍生出來的，因此它應該只會擴展父類別而不是改變父類別</p>
 <p>若是子類別不能夠替換父類別，這表示他們的性質並不相同，則可以透過提取相似的性質作為介面將他們的「垂直關係」轉為「平行關係」</p>
-<h2 id="I-介面隔離原則-ISP-Interface-Segregation-Principle"><a href="#I-介面隔離原則-ISP-Interface-Segregation-Principle" class="headerlink" title="I - 介面隔離原則 (ISP : Interface Segregation Principle)"></a>I - 介面隔離原則 (ISP : Interface Segregation Principle)</h2><blockquote>
-<p>不應該強迫客戶程式依賴於它們未使用的方法</p>
-</blockquote>
+<h2 id="I-介面隔離原則-ISP-Interface-Segregation-Principle"><a href="#I-介面隔離原則-ISP-Interface-Segregation-Principle" class="headerlink" title="I - 介面隔離原則 (ISP : Interface Segregation Principle)"></a>I - 介面隔離原則 (ISP : Interface Segregation Principle)</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">不應該強迫客戶程式依賴於它們未使用的方法</span><br></pre></td></tr></table></figure>
 <p>若是部份的客戶有特殊的需求，則不應該直接修改他們所使用到的介面，而應該另外產生一個專屬的介面</p>
 <p>如果為了部份有特殊需求的客戶而修改原有的介面，這會導致本來不會受到影響的客戶也跟著受到了影響，他們也將要重新部屬他們的程式，僅僅只為了他們沒有需要用到的函式</p>
 <p>因此若不確定所有的人都會有同樣的需求，則客製化一個介面會比直接修改原有的介面來得好</p>
-<h2 id="D-依賴反轉原則-DIP-Dependency-Inversion-Principle"><a href="#D-依賴反轉原則-DIP-Dependency-Inversion-Principle" class="headerlink" title="D - 依賴反轉原則 (DIP : Dependency-Inversion Principle)"></a>D - 依賴反轉原則 (DIP : Dependency-Inversion Principle)</h2><blockquote>
-<p>a. 高層模組不應該依賴於（相依於）低層模組。二者都應該依賴抽象</p>
-<p>b. 抽象不應該依賴細節。細節應該依賴抽象</p>
-</blockquote>
+<h2 id="D-依賴反轉原則-DIP-Dependency-Inversion-Principle"><a href="#D-依賴反轉原則-DIP-Dependency-Inversion-Principle" class="headerlink" title="D - 依賴反轉原則 (DIP : Dependency-Inversion Principle)"></a>D - 依賴反轉原則 (DIP : Dependency-Inversion Principle)</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">a. 高層模組不應該依賴於（相依於）低層模組。二者都應該依賴抽象</span><br><span class="line">b. 抽象不應該依賴細節。細節應該依賴抽象</span><br></pre></td></tr></table></figure>
 <p>低層的模組應該透過介面公開，而高層模組則使用介面，使得低層模組與高層模組都只依賴於抽象的介面</p>
 <p>抽象的元件不應該依賴於有實做細節的元件，反而是實做細節的元件要依賴於抽象</p>
 <p>透過介面做隔離使得模組之間的耦合降低，由於都只依賴於介面，因此當模組內部產生變化時，並不需要連同關聯的模組一起進行部屬，只要關注在產生變化的模組即可</p>

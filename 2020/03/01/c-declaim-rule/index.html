@@ -28,7 +28,7 @@
 <meta property="og:description" content="C語言的變數宣告規則在初學C的時候，你一定會學到如何宣告一個變數，但變數宣告並沒有想像中那麼簡單，變數宣告可以變得更複雜，更不直觀 本文將會帶你了解C語言中的變數宣告規則，讓你可以僅用肉眼就能辨識出某個變數的型別，並善用typedef簡化你的宣告式">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2020-03-01T04:06:00.000Z">
-<meta property="article:modified_time" content="2020-03-01T08:19:26.891Z">
+<meta property="article:modified_time" content="2020-03-21T06:04:16.594Z">
 <meta property="article:author" content="Bluebean">
 <meta property="article:tag" content="C語言">
 <meta name="twitter:card" content="summary">
@@ -187,10 +187,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">發表於</span>
-              
 
-              <time title="創建時間：2020-03-01 12:06:00 / 修改時間：16:19:26" itemprop="dateCreated datePublished" datetime="2020-03-01T12:06:00+08:00">2020-03-01</time>
+              <time title="創建時間：2020-03-01 12:06:00" itemprop="dateCreated datePublished" datetime="2020-03-01T12:06:00+08:00">2020-03-01</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2020-03-21 14:04:16" itemprop="dateModified" datetime="2020-03-21T14:04:16+08:00">2020-03-21</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -286,11 +292,11 @@
 <p>這種宣告方式一樣也可以拆成<strong>最終型別</strong>跟<strong>中間過程</strong></p>
 <p>後面的部份通通都是<strong>中間過程</strong>，用<strong>逗號</strong>做區隔</p>
 <p>因此你可以這樣宣告</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>   var, 					<span class="comment">// int的變數</span></span><br><span class="line">      <span class="built_in">array</span>[<span class="number">5</span>],				<span class="comment">// 有5個int元素的陣列</span></span><br><span class="line">     *pointer,				<span class="comment">// 指向int資料的指標</span></span><br><span class="line">    (*func_pointer)(<span class="keyword">void</span>);	<span class="comment">// 指向無參數，回傳int的函式指標</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>   var, 			<span class="comment">// int的變數</span></span><br><span class="line">      <span class="built_in">array</span>[<span class="number">5</span>],			<span class="comment">// 有5個int元素的陣列</span></span><br><span class="line">     *pointer,			<span class="comment">// 指向int資料的指標</span></span><br><span class="line">    (*func_pointer)(<span class="keyword">void</span>);	<span class="comment">// 指向無參數，回傳int的函式指標</span></span><br></pre></td></tr></table></figure>
 <p>觀察上面的程式，不難發現一般變數跟<code>pointer</code>可以<strong>同時</strong>在裡面</p>
 <p>由此可知，<code>pointer</code>是跟著變數走的</p>
 <p>因此</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *var1, var2</span><br></pre></td></tr></table></figure>
+<p>int *var1, var2</p>
 <p>中<code>var2</code>的型別並不是<code>int*</code>，而是<code>int</code></p>
 <h2 id="Struct-宣告"><a href="#Struct-宣告" class="headerlink" title="Struct 宣告"></a>Struct 宣告</h2><p>其實<code>struct</code>跟<code>union</code>的宣告也是變數宣告的一環，舉例來說：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">my_struct_t</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> field;</span><br><span class="line">&#125; var1;</span><br></pre></td></tr></table></figure>
