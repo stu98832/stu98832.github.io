@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"stu98832.github.io","root":"/","scheme":"Pisces","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="本篇僅紀錄自己學習SOLID的內容摘要，會依照自己的理解和書中的內容結合後將內容打上如果有理解錯誤的地方，可以在下面的 gitalk 留言通知我  S - 單一職責原則 (SRP : Single-Responsibility Principle)一個類別應該只有一個發生變化的原因">
+  <meta name="description" content="本篇僅紀錄自己學習SOLID的內容摘要，會依照自己的理解和書中的內容結合後將內容打上如果有理解錯誤的地方，可以在下面的 gitalk 留言通知我  SOLID原則SOLID 原則是為了鞏固軟體的架構而存在的原則，目的是要減少程式之間的耦合，方便程式的維護與擴充 SOLID 本身是由五種原則所構成，分別為：  單一職責原則 (SRP : Single-Responsibility Principl">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SOLID 筆記">
 <meta property="og:url" content="http://stu98832.github.io/2020/03/15/note-solid/index.html">
 <meta property="og:site_name" content="Bluebean 的筆記">
-<meta property="og:description" content="本篇僅紀錄自己學習SOLID的內容摘要，會依照自己的理解和書中的內容結合後將內容打上如果有理解錯誤的地方，可以在下面的 gitalk 留言通知我  S - 單一職責原則 (SRP : Single-Responsibility Principle)一個類別應該只有一個發生變化的原因">
+<meta property="og:description" content="本篇僅紀錄自己學習SOLID的內容摘要，會依照自己的理解和書中的內容結合後將內容打上如果有理解錯誤的地方，可以在下面的 gitalk 留言通知我  SOLID原則SOLID 原則是為了鞏固軟體的架構而存在的原則，目的是要減少程式之間的耦合，方便程式的維護與擴充 SOLID 本身是由五種原則所構成，分別為：  單一職責原則 (SRP : Single-Responsibility Principl">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2020-03-14T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-03-21T06:10:28.206Z">
+<meta property="article:modified_time" content="2020-03-22T06:41:49.907Z">
 <meta property="article:author" content="Bluebean">
 <meta property="article:tag" content="SOLID">
 <meta name="twitter:card" content="summary">
@@ -195,7 +195,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2020-03-21 14:10:28" itemprop="dateModified" datetime="2020-03-21T14:10:28+08:00">2020-03-21</time>
+                <time title="修改時間：2020-03-22 14:41:49" itemprop="dateModified" datetime="2020-03-22T14:41:49+08:00">2020-03-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -221,8 +221,17 @@
         <blockquote>
 <p>本篇僅紀錄自己學習SOLID的內容摘要，會依照自己的理解和書中的內容結合後將內容打上<br>如果有理解錯誤的地方，可以在下面的 gitalk 留言通知我</p>
 </blockquote>
-<h2 id="S-單一職責原則-SRP-Single-Responsibility-Principle"><a href="#S-單一職責原則-SRP-Single-Responsibility-Principle" class="headerlink" title="S - 單一職責原則 (SRP : Single-Responsibility Principle)"></a>S - 單一職責原則 (SRP : Single-Responsibility Principle)</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">一個類別應該只有一個發生變化的原因</span><br></pre></td></tr></table></figure>
+<h1 id="SOLID原則"><a href="#SOLID原則" class="headerlink" title="SOLID原則"></a>SOLID原則</h1><p>SOLID 原則是為了鞏固軟體的架構而存在的原則，目的是要減少程式之間的耦合，方便程式的維護與擴充</p>
+<p>SOLID 本身是由五種原則所構成，分別為：</p>
+<ul>
+<li>單一職責原則 (SRP : Single-Responsibility Principle)</li>
+<li>開放封閉原則 (OCP : Open-Closed Principle)</li>
+<li>里氏替換原則 (LSP : Liskov Subtitution Principle)</li>
+<li>介面隔離原則 (ISP : Interface Segregation Principle)</li>
+<li>依賴反轉原則 (DIP : Dependency-Inversion Principle)</li>
+</ul>
 <a id="more"></a>
+<h2 id="S-單一職責原則-SRP-Single-Responsibility-Principle"><a href="#S-單一職責原則-SRP-Single-Responsibility-Principle" class="headerlink" title="S - 單一職責原則 (SRP : Single-Responsibility Principle)"></a>S - 單一職責原則 (SRP : Single-Responsibility Principle)</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">一個類別應該只有一個發生變化的原因</span><br></pre></td></tr></table></figure>
 <ul>
 <li>一個類別應該只會有一個職責在身，不應該含有多個職責</li>
 <li>當發生變化時，這個類別的其他職責不應該受到變化的職責的影響</li>
@@ -274,7 +283,10 @@
     <a href="/2020/03/01/c-declaim-rule/" rel="prev" title="C語言的變數宣告規則">
       <i class="fa fa-chevron-left"></i> C語言的變數宣告規則
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/21/note-design-pattern/" rel="next" title="設計模式筆記">
+      設計模式筆記 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -335,7 +347,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#S-單一職責原則-SRP-Single-Responsibility-Principle"><span class="nav-number">1.</span> <span class="nav-text">S - 單一職責原則 (SRP : Single-Responsibility Principle)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#O-開放封閉原則-OCP-Open-Closed-Principle"><span class="nav-number">2.</span> <span class="nav-text">O - 開放封閉原則 (OCP : Open-Closed Principle)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#L-里氏替換原則-LSP-Liskov-Subtitution-Principle"><span class="nav-number">3.</span> <span class="nav-text">L - 里氏替換原則 (LSP : Liskov Subtitution Principle)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I-介面隔離原則-ISP-Interface-Segregation-Principle"><span class="nav-number">4.</span> <span class="nav-text">I - 介面隔離原則 (ISP : Interface Segregation Principle)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#D-依賴反轉原則-DIP-Dependency-Inversion-Principle"><span class="nav-number">5.</span> <span class="nav-text">D - 依賴反轉原則 (DIP : Dependency-Inversion Principle)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#心得"><span class="nav-number"></span> <span class="nav-text">心得</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#參考"><span class="nav-number"></span> <span class="nav-text">參考</span></a></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SOLID原則"><span class="nav-number">1.</span> <span class="nav-text">SOLID原則</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#S-單一職責原則-SRP-Single-Responsibility-Principle"><span class="nav-number">1.1.</span> <span class="nav-text">S - 單一職責原則 (SRP : Single-Responsibility Principle)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#O-開放封閉原則-OCP-Open-Closed-Principle"><span class="nav-number">1.2.</span> <span class="nav-text">O - 開放封閉原則 (OCP : Open-Closed Principle)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#L-里氏替換原則-LSP-Liskov-Subtitution-Principle"><span class="nav-number">1.3.</span> <span class="nav-text">L - 里氏替換原則 (LSP : Liskov Subtitution Principle)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I-介面隔離原則-ISP-Interface-Segregation-Principle"><span class="nav-number">1.4.</span> <span class="nav-text">I - 介面隔離原則 (ISP : Interface Segregation Principle)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#D-依賴反轉原則-DIP-Dependency-Inversion-Principle"><span class="nav-number">1.5.</span> <span class="nav-text">D - 依賴反轉原則 (DIP : Dependency-Inversion Principle)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#心得"><span class="nav-number">2.</span> <span class="nav-text">心得</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#參考"><span class="nav-number">3.</span> <span class="nav-text">參考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -351,7 +363,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
@@ -364,7 +376,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

@@ -20,15 +20,20 @@
     var CONFIG = {"hostname":"stu98832.github.io","root":"/","scheme":"Pisces","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Bluebean 的筆記">
-<meta property="og:url" content="http://stu98832.github.io/archives/2020/03/index.html">
+  <meta name="description" content="本篇僅紀錄自己學習設計模式的內容摘要，會依照自己的理解和書中的內容結合後將內容打上如果有理解錯誤的地方，可以在下面的 gitalk 留言通知我  Design Pattern—設計模式設計模式，是在物件導向程式中相當重要的部份，它利用了物件導向的特性，使我們方便管理並擴充程式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="設計模式筆記">
+<meta property="og:url" content="http://stu98832.github.io/2020/03/21/note-design-pattern/index.html">
 <meta property="og:site_name" content="Bluebean 的筆記">
+<meta property="og:description" content="本篇僅紀錄自己學習設計模式的內容摘要，會依照自己的理解和書中的內容結合後將內容打上如果有理解錯誤的地方，可以在下面的 gitalk 留言通知我  Design Pattern—設計模式設計模式，是在物件導向程式中相當重要的部份，它利用了物件導向的特性，使我們方便管理並擴充程式">
 <meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2020-03-20T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-03-22T06:42:15.755Z">
 <meta property="article:author" content="Bluebean">
+<meta property="article:tag" content="Design Pattern">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://stu98832.github.io/archives/2020/03/">
+<link rel="canonical" href="http://stu98832.github.io/2020/03/21/note-design-pattern/">
 
 
 <script id="page-configurations">
@@ -36,11 +41,11 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false
+    isPost: true
   };
 </script>
 
-  <title>歸檔 | Bluebean 的筆記</title>
+  <title>設計模式筆記 | Bluebean 的筆記</title>
   
 
 
@@ -155,133 +160,139 @@
           <div class="content">
             
 
+  <div class="posts-expand">
+      
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共有 6 篇文章。 繼續努力。</span>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://stu98832.github.io/2020/03/21/note-design-pattern/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Bluebean">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bluebean 的筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          設計模式筆記
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2020-03-21 00:00:00" itemprop="dateCreated datePublished" datetime="2020-03-21T00:00:00+08:00">2020-03-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2020-03-22 14:42:15" itemprop="dateModified" datetime="2020-03-22T14:42:15+08:00">2020-03-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%80%8B%E4%BA%BA%E7%AD%86%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">個人筆記</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <h1 class="collection-header">2020</h1>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-03-22T00:00:00+08:00"
-              content="2020-03-22">
-          03-22
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2020/03/22/note-avtice-object-pattern/" itemprop="url">
-            <span itemprop="name">設計模式筆記—Active Object Pattern</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-03-22T00:00:00+08:00"
-              content="2020-03-22">
-          03-22
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2020/03/22/note-command-pattern/" itemprop="url">
-            <span itemprop="name">設計模式筆記—Command Pattern</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-03-21T00:00:00+08:00"
-              content="2020-03-21">
-          03-21
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2020/03/21/note-design-pattern/" itemprop="url">
-            <span itemprop="name">設計模式筆記</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-03-15T00:00:00+08:00"
-              content="2020-03-15">
-          03-15
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2020/03/15/note-solid/" itemprop="url">
-            <span itemprop="name">SOLID 筆記</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-03-01T12:06:00+08:00"
-              content="2020-03-01">
-          03-01
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2020/03/01/c-declaim-rule/" itemprop="url">
-            <span itemprop="name">C語言的變數宣告規則</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
+        <blockquote>
+<p>本篇僅紀錄自己學習設計模式的內容摘要，會依照自己的理解和書中的內容結合後將內容打上<br>如果有理解錯誤的地方，可以在下面的 gitalk 留言通知我</p>
+</blockquote>
+<h1 id="Design-Pattern—設計模式"><a href="#Design-Pattern—設計模式" class="headerlink" title="Design Pattern—設計模式"></a>Design Pattern—設計模式</h1><p>設計模式，是在物件導向程式中相當重要的部份，它利用了物件導向的特性，使我們方便管理並擴充程式</p>
+<a id="more"></a>
+<p>但是這些模式並不是一開始就存在的，而是經歷了許多次的編程後，根據過往的經驗，將某些架構<strong>演化</strong>成我們熟悉的設計模式</p>
+<p>而設計模式雖然很重要，但它卻不是必須的。只有在聞到程式結構的「壞味道」時才比較需要透過這些模式去重構你的程式。</p>
+<p><strong>過度的使用設計模式會給你的軟體帶來「不必要的複雜」</strong>。通常設計模式可以減少維護與重建程式的成本，但同時也會增加檔案的數量，過度的套用不僅無法適當的減少成本，反而還會因為文件變得巨量而更難以維護，所以在套用設計模式之前，都要先評估它所帶來的效益為何</p>
+<p>下面是一些常見的設計模式：</p>
+<ul>
+<li><a href='/2020/03/22/note-command-pattern/'>Command Pattern</a></li>
+<li><a href=''>Active Object Pattern</a></li>
+<li>Template Pattern</li>
+<li>Strategy Pattern</li>
+<li>Facade Pattern</li>
+<li>Mediator Pattern</li>
+<li>Singleton Pattern</li>
+<li>Monostate Pattern</li>
+<li>Null Object Pattern</li>
+<li>Factory Pattern</li>
+<li>Composite Pattern</li>
+<li>Observer Pattern</li>
+<li>Abatract Server Pattern</li>
+<li>Adapter Pattern</li>
+<li>Bridge Pattern</li>
+<li>Proxy Pattern</li>
+<li><p>Gateway Pattern</p>
+</li>
+<li><p>Visitor Pattern</p>
+</li>
+<li>State Pattern</li>
+</ul>
+<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
+<li>無暇的程式碼—敏捷完整篇，物件導向原則、設計模式與 C# 實踐。</li>
+</ul>
 
     </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Design-Pattern/" rel="tag"><i class="fa fa-tag"></i> Design Pattern</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/15/note-solid/" rel="prev" title="SOLID 筆記">
+      <i class="fa fa-chevron-left"></i> SOLID 筆記
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/22/note-command-pattern/" rel="next" title="設計模式筆記—Command Pattern">
+      設計模式筆記—Command Pattern <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
   </div>
-  
-  
-  
-
-  
-
 
 
           </div>
           
+    <div class="comments" id="gitalk-container"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -328,6 +339,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Design-Pattern—設計模式"><span class="nav-number">1.</span> <span class="nav-text">Design Pattern—設計模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#參考"><span class="nav-number">2.</span> <span class="nav-text">參考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -446,6 +458,25 @@
 
   
 
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '0b84385c74db3fd44c22',
+      clientSecret: '089aee5f0152169f2b4ec924fbce2a06ac1e4c89',
+      repo        : 'stu98832.github.io',
+      owner       : 'stu98832',
+      admin       : ['stu98832'],
+      id          : 'a83735a545e1855590eda21c00901005',
+        language: 'zh-TW',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
 
 </body>
 </html>
