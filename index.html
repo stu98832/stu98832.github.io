@@ -183,10 +183,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">發表於</span>
-              
 
-              <time title="創建時間：2020-06-26 11:58:11 / 修改時間：11:58:41" itemprop="dateCreated datePublished" datetime="2020-06-26T11:58:11+08:00">2020-06-26</time>
+              <time title="創建時間：2020-06-26 11:58:11" itemprop="dateCreated datePublished" datetime="2020-06-26T11:58:11+08:00">2020-06-26</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2020-06-29 15:55:21" itemprop="dateModified" datetime="2020-06-29T15:55:21+08:00">2020-06-29</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -215,7 +221,7 @@
 <p>舉個 C 的例子：</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">(<span class="keyword">int</span> arg1, <span class="keyword">int</span> arg2)</span> </span>&#123; &#125;</span><br></pre></td></tr></table></figure>
 <p>在這個例子中，你可以看到一個函式<code>foo</code>，裡面有2個 int 參數<code>args1</code>跟<code>args2</code></p>
-<p>這裡的<code>args1</code>跟<code>arg2</code>都是Call by value的形式，意思是它就單純是個數值，跟原本的變數毫無關聯</p>
+<p>這裡的<code>arg1</code>跟<code>arg2</code>都是Call by value的形式，意思是它就單純是個數值，跟原本的變數毫無關聯</p>
 <p>這邊舉一個新手常犯的錯誤：</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">    a = a+b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">5</span>;</span><br><span class="line">    <span class="keyword">int</span> b = <span class="number">6</span>;</span><br><span class="line">    add(a, b);      <span class="comment">// 應該要是 5+6＝11</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"a = %d"</span>, a); <span class="comment">// 這邊印出的還是 a = 5</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>這邊的輸出會與原本的期望<code>a = 11</code>不符，反而還是<code>a = 5</code></p>
