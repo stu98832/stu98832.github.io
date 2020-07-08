@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://stu98832.github.io/2020/07/08/ci3-unable-to-locate-the-specified-class/ci-bug-1.PNG">
 <meta property="og:image" content="http://stu98832.github.io/2020/07/08/ci3-unable-to-locate-the-specified-class/ci-bug-2.PNG">
 <meta property="article:published_time" content="2020-07-08T04:24:23.000Z">
-<meta property="article:modified_time" content="2020-07-08T05:13:48.284Z">
+<meta property="article:modified_time" content="2020-07-08T05:16:17.168Z">
 <meta property="article:author" content="Bluebean">
 <meta property="article:tag" content="CodeIgniter3">
 <meta name="twitter:card" content="summary">
@@ -193,7 +193,7 @@
               <span class="post-meta-item-text">發表於</span>
               
 
-              <time title="創建時間：2020-07-08 12:24:23 / 修改時間：13:13:48" itemprop="dateCreated datePublished" datetime="2020-07-08T12:24:23+08:00">2020-07-08</time>
+              <time title="創建時間：2020-07-08 12:24:23 / 修改時間：13:16:17" itemprop="dateCreated datePublished" datetime="2020-07-08T12:24:23+08:00">2020-07-08</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -229,7 +229,10 @@
 <li>在其他地方因為某些原因，產生了新的Controller</li>
 </ol>
 <p>而重複建立 CI_Controller 會導致它可能因為 <code>load_class</code> 的缺陷而產生錯誤</p>
-<h6 id="註：-load-class-位於-system-core-Common-php裡面"><a href="#註：-load-class-位於-system-core-Common-php裡面" class="headerlink" title="註： load_class 位於 system/core/Common.php裡面"></a>註： load_class 位於 system/core/Common.php裡面</h6><h2 id="類別表中已經有該類別存在"><a href="#類別表中已經有該類別存在" class="headerlink" title="類別表中已經有該類別存在"></a>類別表中已經有該類別存在</h2><p>如果已經使用了 autoload 或是手動由 loader 去載入 library的話，該類別會被存入內建的類別表中</p>
+<blockquote>
+<p>註： load_class 位於 system/core/Common.php裡面</p>
+</blockquote>
+<h2 id="類別表中已經有該類別存在"><a href="#類別表中已經有該類別存在" class="headerlink" title="類別表中已經有該類別存在"></a>類別表中已經有該類別存在</h2><p>如果已經使用了 autoload 或是手動由 loader 去載入 library的話，該類別會被存入內建的類別表中</p>
 <p>他們很有可能因為某些原因，被 <code>load_class</code> 方法所在入，這時候就有可能因為 <code>load_class</code> 的缺陷發生錯誤</p>
 <h1 id="load-class-的缺陷"><a href="#load-class-的缺陷" class="headerlink" title="load_class 的缺陷"></a>load_class 的缺陷</h1><p>大部分的情況，透過 load_class 去載入類別並不會有什麼問題，但是有某些特例，<strong>Session 就是其中一種</strong></p>
 <p>Session 這種 library 是放在子目錄裡面的</p>
@@ -339,7 +342,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Session載入問題"><span class="nav-number">1.</span> <span class="nav-text">Session載入問題</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#問題的起源"><span class="nav-number">2.</span> <span class="nav-text">問題的起源</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#重複建立CI-Controller實例"><span class="nav-number">2.1.</span> <span class="nav-text">重複建立CI_Controller實例</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#註：-load-class-位於-system-core-Common-php裡面"><span class="nav-number">2.1.0.0.0.1.</span> <span class="nav-text">註： load_class 位於 system&#x2F;core&#x2F;Common.php裡面</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#類別表中已經有該類別存在"><span class="nav-number">2.2.</span> <span class="nav-text">類別表中已經有該類別存在</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#load-class-的缺陷"><span class="nav-number">3.</span> <span class="nav-text">load_class 的缺陷</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#load-class-跟-Controller-的關係"><span class="nav-number">4.</span> <span class="nav-text">load_class 跟 Controller 的關係</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Session-載入測試"><span class="nav-number">5.</span> <span class="nav-text">Session 載入測試</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#結語"><span class="nav-number">6.</span> <span class="nav-text">結語</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Session載入問題"><span class="nav-number">1.</span> <span class="nav-text">Session載入問題</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#問題的起源"><span class="nav-number">2.</span> <span class="nav-text">問題的起源</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#重複建立CI-Controller實例"><span class="nav-number">2.1.</span> <span class="nav-text">重複建立CI_Controller實例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#類別表中已經有該類別存在"><span class="nav-number">2.2.</span> <span class="nav-text">類別表中已經有該類別存在</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#load-class-的缺陷"><span class="nav-number">3.</span> <span class="nav-text">load_class 的缺陷</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#load-class-跟-Controller-的關係"><span class="nav-number">4.</span> <span class="nav-text">load_class 跟 Controller 的關係</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Session-載入測試"><span class="nav-number">5.</span> <span class="nav-text">Session 載入測試</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#結語"><span class="nav-number">6.</span> <span class="nav-text">結語</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
