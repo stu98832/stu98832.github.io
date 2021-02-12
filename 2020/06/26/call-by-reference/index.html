@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.2.0">
+<meta name="generator" content="Hexo 4.2.1">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -28,9 +28,10 @@
 <meta property="og:description" content="參數引用大家應該都聽過 Call By Value，Call By Reference 或是 Call By Sharing 這些都是很常見的函式參數引用原則 如果沒聽過相灣概念的話，下面會簡單的做一下介紹">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2020-06-26T03:58:11.000Z">
-<meta property="article:modified_time" content="2020-07-08T04:48:54.448Z">
+<meta property="article:modified_time" content="2021-02-12T08:19:27.339Z">
 <meta property="article:author" content="Bluebean">
-<meta property="article:tag" content="參數引用">
+<meta property="article:tag" content="C語言">
+<meta property="article:tag" content="程式概念">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://stu98832.github.io/2020/06/26/call-by-reference/">
@@ -190,13 +191,6 @@
 
               <time title="創建時間：2020-06-26 11:58:11" itemprop="dateCreated datePublished" datetime="2020-06-26T11:58:11+08:00">2020-06-26</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2020-07-08 12:48:54" itemprop="dateModified" datetime="2020-07-08T12:48:54+08:00">2020-07-08</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -231,16 +225,16 @@
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">    a = a+b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">5</span>;</span><br><span class="line">    <span class="keyword">int</span> b = <span class="number">6</span>;</span><br><span class="line">    add(a, b);      <span class="comment">// 應該要是 5+6＝11</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"a = %d"</span>, a); <span class="comment">// 這邊印出的還是 a = 5</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>這邊的輸出會與原本的期望<code>a = 11</code>不符，反而還是<code>a = 5</code></p>
 <p>這邊即說明了 Call by value 並不會改變它所引用的變數，<strong>因為它引用的僅僅只是該變數當時的數值，並不是該變數本身</strong></p>
-<blockquote>
-<p>Call by value 在每個程式語言中都一定會被用到<br>通常你所使用的函式參數沒有加什麼特別的符號或關鍵字，都會是Call by value</p>
-</blockquote>
+<div class="note info">
+            <p>Call by value 在每個程式語言中都一定會被用到<br>通常你所使用的函式參數沒有加什麼特別的符號或關鍵字，都會是Call by value</p>
+          </div>
 <h1 id="Call-By-Reference"><a href="#Call-By-Reference" class="headerlink" title="Call By Reference"></a>Call By Reference</h1><p>Call by reference 跟 Call by value 最大的差別是，他是引用<strong>變數</strong>而非<strong>數值</strong></p>
 <p>就拿剛剛的<code>add</code>函式來舉個例子：</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> *a, <span class="keyword">int</span> *b)</span> </span>&#123;</span><br><span class="line">    *a = *a + *b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">5</span>;</span><br><span class="line">    <span class="keyword">int</span> b = <span class="number">6</span>;</span><br><span class="line">    add(&amp;a, &amp;b);        <span class="comment">// 應該要是 5+6＝11</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"a = %d"</span>, a); <span class="comment">// 這邊印出的是 a = 11</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>這邊跟剛剛的不同之處在於，<code>add</code>函式的參數型態從原本的<code>int</code>變成<code>int*</code>，也就是指向型別為 int 的指標</p>
-<blockquote>
-<p>不清楚什麼是指標的人，這邊就簡單說明一下<br>指標其實就是該資料的記憶體位置<br>這個記憶體位置基本上就是一個整數 (int)，或是長整數 (long)</p>
-</blockquote>
+<div class="note info">
+            <p>不清楚什麼是指標的人，這邊就簡單說明一下<br>指標其實就是該資料的記憶體位置<br>這個記憶體位置基本上就是一個整數 (int)，或是長整數 (long)</p>
+          </div>
 <p><code>main</code>函式中透過傳遞<code>a</code>和<code>b</code>的位址呼叫<code>add</code>，來達到<code>a=a+b</code>的效果</p>
 <p>如果你仔細觀察一下上面那句話，你就會發現我剛剛說的是傳遞<strong>位址</strong></p>
 <p>看出端倪了嗎？其實它實際上還是 Call by value，但是它傳遞的是<strong>記憶體位址</strong>，最後可以透過<code>*</code>取值運算子取得數值(僅適用於 C/C++ 等語言)</p>
@@ -256,9 +250,9 @@
 <p>在這個例子中，<code>foo</code>引用了一個<code>ClassA</code>參數，感覺上是 Call by value。但是他最後print出來的數值卻是<code>value of objA is 10</code>！</p>
 <p>也就是說 Java 其實是使用 Call by reference 作為預設囉？可是奇怪的事情發生了，<code>objA</code>在後面明明被改成<code>objB</code>，可是數值卻是改成10之後的<code>objA</code>，非常的詭異</p>
 <p>於是有人就稱這為 Call by sharing ，<strong>也就是該參數與變數本身都指向同一個物件，但是參數跟變數卻是不一樣的東西</strong></p>
-<blockquote>
-<p>沒有提供 Call by reference 的物件導向程式，大多會是使用 Call by sharing 這種形式的參數引用<br>也就是只要操作到 Object 或是 Object 的衍生類別，都是 Call by sharing</p>
-</blockquote>
+<div class="note info">
+            <p>沒有提供 Call by reference 的物件導向程式，大多會是使用 Call by sharing 這種形式的參數引用<br>也就是只要操作到 Object 或是 Object 的衍生類別，都是 Call by sharing</p>
+          </div>
 <h1 id="到頭來其實只有-Call-by-value-一種"><a href="#到頭來其實只有-Call-by-value-一種" class="headerlink" title="到頭來其實只有 Call by value 一種"></a>到頭來其實只有 Call by value 一種</h1><p>雖然上面講了3種參數引用的形式，但是實際上除了 Call by value 之外的其他2種都只是在說明他們的行為</p>
 <p>這2種形式都是建立在 Call by value 之上，<strong>也就是說，他們實際上都還是傳遞純數值，但是他的行為可能會從單純的數值引用變成變數引用</strong></p>
 <p>講起來可能有點抽象，所以我決定拿出剛剛在 Call by reference 的例子來說明：</p>
@@ -284,7 +278,8 @@
       <footer class="post-footer">
           
           <div class="post-tags">
-              <a href="/tags/%E5%8F%83%E6%95%B8%E5%BC%95%E7%94%A8/" rel="tag"><i class="fa fa-tag"></i> 參數引用</a>
+              <a href="/tags/C%E8%AA%9E%E8%A8%80/" rel="tag"><i class="fa fa-tag"></i> C語言</a>
+              <a href="/tags/%E7%A8%8B%E5%BC%8F%E6%A6%82%E5%BF%B5/" rel="tag"><i class="fa fa-tag"></i> 程式概念</a>
           </div>
 
         
@@ -376,7 +371,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
@@ -389,7 +384,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
@@ -418,13 +413,15 @@
 
 <div class="copyright">
   
-  &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Bluebean</span>
 </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 強力驅動 v4.2.1
+  </div>
 
         
 

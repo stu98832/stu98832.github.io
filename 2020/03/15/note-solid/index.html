@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.2.0">
+<meta name="generator" content="Hexo 4.2.1">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"stu98832.github.io","root":"/","scheme":"Pisces","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="本篇僅紀錄自己學習SOLID的內容摘要，會依照自己的理解和書中的內容結合後將內容打上如果有理解錯誤的地方，可以在下面的 gitalk 留言通知我  SOLID原則SOLID 原則是為了鞏固軟體的架構而存在的原則，目的是要減少程式之間的耦合，方便程式的維護與擴充 SOLID 本身是由五種原則所構成，分別為：  單一職責原則 (SRP : Single-Responsibility Principl">
+  <meta name="description" content="本篇僅紀錄自己學習SOLID的內容摘要，會依照自己的理解和書中的內容結合後將內容打上如果有理解錯誤的地方，可以在下面的 gitalk 留言通知我            SOLID原則SOLID 原則是為了鞏固軟體的架構而存在的原則，目的是要減少程式之間的耦合，方便程式的維護與擴充 SOLID 本身是由五種原則所構成，分別為：  單一職責原則 (SRP : Single-R">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SOLID 筆記">
 <meta property="og:url" content="http://stu98832.github.io/2020/03/15/note-solid/index.html">
 <meta property="og:site_name" content="Bluebean 的筆記">
-<meta property="og:description" content="本篇僅紀錄自己學習SOLID的內容摘要，會依照自己的理解和書中的內容結合後將內容打上如果有理解錯誤的地方，可以在下面的 gitalk 留言通知我  SOLID原則SOLID 原則是為了鞏固軟體的架構而存在的原則，目的是要減少程式之間的耦合，方便程式的維護與擴充 SOLID 本身是由五種原則所構成，分別為：  單一職責原則 (SRP : Single-Responsibility Principl">
+<meta property="og:description" content="本篇僅紀錄自己學習SOLID的內容摘要，會依照自己的理解和書中的內容結合後將內容打上如果有理解錯誤的地方，可以在下面的 gitalk 留言通知我            SOLID原則SOLID 原則是為了鞏固軟體的架構而存在的原則，目的是要減少程式之間的耦合，方便程式的維護與擴充 SOLID 本身是由五種原則所構成，分別為：  單一職責原則 (SRP : Single-R">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2020-03-14T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-03-22T06:41:49.907Z">
+<meta property="article:modified_time" content="2021-02-12T08:17:25.467Z">
 <meta property="article:author" content="Bluebean">
 <meta property="article:tag" content="SOLID">
 <meta name="twitter:card" content="summary">
@@ -190,13 +190,6 @@
 
               <time title="創建時間：2020-03-15 00:00:00" itemprop="dateCreated datePublished" datetime="2020-03-15T00:00:00+08:00">2020-03-15</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2020-03-22 14:41:49" itemprop="dateModified" datetime="2020-03-22T14:41:49+08:00">2020-03-22</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -218,9 +211,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <blockquote>
-<p>本篇僅紀錄自己學習SOLID的內容摘要，會依照自己的理解和書中的內容結合後將內容打上<br>如果有理解錯誤的地方，可以在下面的 gitalk 留言通知我</p>
-</blockquote>
+        <div class="note warning">
+            <p>本篇僅紀錄自己學習SOLID的內容摘要，會依照自己的理解和書中的內容結合後將內容打上<br>如果有理解錯誤的地方，可以在下面的 gitalk 留言通知我</p>
+          </div>
 <h1 id="SOLID原則"><a href="#SOLID原則" class="headerlink" title="SOLID原則"></a>SOLID原則</h1><p>SOLID 原則是為了鞏固軟體的架構而存在的原則，目的是要減少程式之間的耦合，方便程式的維護與擴充</p>
 <p>SOLID 本身是由五種原則所構成，分別為：</p>
 <ul>
@@ -239,7 +232,7 @@
 <p>所以任何一個符合 SRP 的類別都將只會處理一項業務，不應該同時包含兩種業務在內</p>
 <p>每一個類別和其底下的函式都只會受到所關注的業務變化影響而改變關注的業務細節，並不會影響到其他業務</p>
 <p>舉一個違反 SRP 的函式例子：</p>
-<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> List&lt;User&gt; <span class="title">SearchUser</span>(<span class="params">List&lt;User&gt; users, <span class="keyword">int</span> userid, <span class="keyword">string</span> username</span>)</span> &#123;</span><br><span class="line">    List&lt;User&gt; matches = <span class="keyword">new</span> List&lt;User&gt;();</span><br><span class="line">    <span class="keyword">foreach</span> (User user : users) &#123;</span><br><span class="line">        <span class="keyword">if</span> (userid != <span class="number">-1</span> &amp;&amp; user.Id == userid) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!<span class="keyword">string</span>.IsNullOrEmpty(username) &amp;&amp; user.Name == username) &#123;</span><br><span class="line">                matches.Add(user);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="keyword">string</span>.IsNullOrEmpty(username) &amp;&amp; user.Name == username) &#123;</span><br><span class="line">        	<span class="keyword">if</span> (userid != <span class="number">-1</span> &amp;&amp; user.Id == userid) &#123;</span><br><span class="line">                matches.Add(user);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public List&lt;User&gt; SearchUser(List&lt;User&gt; users, int userid, string username) &#123;</span><br><span class="line">    List&lt;User&gt; matches &#x3D; new List&lt;User&gt;();</span><br><span class="line">    foreach (User user : users) &#123;</span><br><span class="line">        if (userid !&#x3D; -1 &amp;&amp; user.Id &#x3D;&#x3D; userid) &#123;</span><br><span class="line">            if (!string.IsNullOrEmpty(username) &amp;&amp; user.Name &#x3D;&#x3D; username) &#123;</span><br><span class="line">                matches.Add(user);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        if (!string.IsNullOrEmpty(username) &amp;&amp; user.Name &#x3D;&#x3D; username) &#123;</span><br><span class="line">        	if (userid !&#x3D; -1 &amp;&amp; user.Id &#x3D;&#x3D; userid) &#123;</span><br><span class="line">                matches.Add(user);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>這邊將搜尋 ID 和名子的功能混在一起，不論是要新增條件或是刪除條件，都會受到其他搜尋條件的影響</p>
 <h2 id="O-開放封閉原則-OCP-Open-Closed-Principle"><a href="#O-開放封閉原則-OCP-Open-Closed-Principle" class="headerlink" title="O - 開放封閉原則 (OCP : Open-Closed Principle)"></a>O - 開放封閉原則 (OCP : Open-Closed Principle)</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">軟體實體（類別、模組、函式等等）應該是可擴展的，但不可更改</span><br></pre></td></tr></table></figure>
 <p>軟體的實體都會透過介面去公開，而內部則不會變動，若有新的需求或變化，只需要實做一個符合介面的類別出來即可，這使得軟體易於擴展，卻不用重新部屬所有的二進制檔或 DLL 檔</p>
@@ -363,7 +356,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
@@ -376,7 +369,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
@@ -405,13 +398,15 @@
 
 <div class="copyright">
   
-  &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Bluebean</span>
 </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 強力驅動 v4.2.1
+  </div>
 
         
 

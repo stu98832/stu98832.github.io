@@ -20,25 +20,27 @@
     var CONFIG = {"hostname":"stu98832.github.io","root":"/","scheme":"Pisces","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Session載入問題某些人剛開始寫CI時可能會碰到一種奇特的問題：Unable to locate the specified class 如果透過Google搜尋相關錯誤，你會發現大多跟Session.php有關 不過找不太到這種現象的解釋 即使是目前CI3的最新版本3.1.11依然有可能會出現 這種問題的難點在於無法知道確切的錯誤在哪裡 於是大家通常都是把跟session有關的地方拆掉，例如">
+  <meta name="description" content="在了解了 MPA 與 SPA 之後，就要開始建立第一個 Angular 專案了 由於這份紀錄是在我已經學習 Angular 幾天後才開始撰寫的，當時的安裝紀錄並沒有保存，接下來的安裝過程將會使用虛擬機進行。 環境安裝在建立 angular 專案前，需要先安裝一些東西  NodeJS (要注意一下版本，有的版本安裝上可能會有問題) Git (沒有 Git 的話，也是可以正常建立專案，只是不會自動產生">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CI3-Unable to locate the specified class錯誤">
-<meta property="og:url" content="http://stu98832.github.io/2020/07/08/ci3-unable-to-locate-the-specified-class/index.html">
+<meta property="og:title" content="Angular學習筆記2-建立第一個 Angular 專案">
+<meta property="og:url" content="http://stu98832.github.io/2021/02/12/note-angular-learning-2/index.html">
 <meta property="og:site_name" content="Bluebean 的筆記">
-<meta property="og:description" content="Session載入問題某些人剛開始寫CI時可能會碰到一種奇特的問題：Unable to locate the specified class 如果透過Google搜尋相關錯誤，你會發現大多跟Session.php有關 不過找不太到這種現象的解釋 即使是目前CI3的最新版本3.1.11依然有可能會出現 這種問題的難點在於無法知道確切的錯誤在哪裡 於是大家通常都是把跟session有關的地方拆掉，例如">
+<meta property="og:description" content="在了解了 MPA 與 SPA 之後，就要開始建立第一個 Angular 專案了 由於這份紀錄是在我已經學習 Angular 幾天後才開始撰寫的，當時的安裝紀錄並沒有保存，接下來的安裝過程將會使用虛擬機進行。 環境安裝在建立 angular 專案前，需要先安裝一些東西  NodeJS (要注意一下版本，有的版本安裝上可能會有問題) Git (沒有 Git 的話，也是可以正常建立專案，只是不會自動產生">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="http://stu98832.github.io/2020/07/08/ci3-unable-to-locate-the-specified-class/ci-bug-0.PNG">
-<meta property="og:image" content="http://stu98832.github.io/2020/07/08/ci3-unable-to-locate-the-specified-class/ci-bug-1.PNG">
-<meta property="og:image" content="http://stu98832.github.io/2020/07/08/ci3-unable-to-locate-the-specified-class/ci-bug-2.PNG">
-<meta property="article:published_time" content="2020-07-08T04:24:23.000Z">
-<meta property="article:modified_time" content="2021-02-11T14:14:32.208Z">
+<meta property="og:image" content="http://stu98832.github.io/2021/02/12/note-angular-learning-2/image-20210212153255022.png">
+<meta property="og:image" content="http://stu98832.github.io/2021/02/12/note-angular-learning-2/image-20210212153935909.png">
+<meta property="og:image" content="http://stu98832.github.io/2021/02/12/note-angular-learning-2/image-20210212154045733.png">
+<meta property="og:image" content="http://stu98832.github.io/2021/02/12/note-angular-learning-2/image-20210212154959700.png">
+<meta property="og:image" content="http://stu98832.github.io/2021/02/12/note-angular-learning-2/image-20210212160206905.png">
+<meta property="article:published_time" content="2021-02-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-02-12T13:47:04.428Z">
 <meta property="article:author" content="Bluebean">
-<meta property="article:tag" content="CodeIgniter3">
-<meta property="article:tag" content="網頁後端">
+<meta property="article:tag" content="Angular">
+<meta property="article:tag" content="網頁前端">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://stu98832.github.io/2020/07/08/ci3-unable-to-locate-the-specified-class/ci-bug-0.PNG">
+<meta name="twitter:image" content="http://stu98832.github.io/2021/02/12/note-angular-learning-2/image-20210212153255022.png">
 
-<link rel="canonical" href="http://stu98832.github.io/2020/07/08/ci3-unable-to-locate-the-specified-class/">
+<link rel="canonical" href="http://stu98832.github.io/2021/02/12/note-angular-learning-2/">
 
 
 <script id="page-configurations">
@@ -50,7 +52,7 @@
   };
 </script>
 
-  <title>CI3-Unable to locate the specified class錯誤 | Bluebean 的筆記</title>
+  <title>Angular學習筆記2-建立第一個 Angular 專案 | Bluebean 的筆記</title>
   
 
 
@@ -170,7 +172,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://stu98832.github.io/2020/07/08/ci3-unable-to-locate-the-specified-class/">
+    <link itemprop="mainEntityOfPage" href="http://stu98832.github.io/2021/02/12/note-angular-learning-2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -183,7 +185,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          CI3-Unable to locate the specified class錯誤
+          Angular學習筆記2-建立第一個 Angular 專案
         </h1>
 
         <div class="post-meta">
@@ -193,7 +195,7 @@
               </span>
               <span class="post-meta-item-text">發表於</span>
 
-              <time title="創建時間：2020-07-08 12:24:23" itemprop="dateCreated datePublished" datetime="2020-07-08T12:24:23+08:00">2020-07-08</time>
+              <time title="創建時間：2021-02-12 00:00:00" itemprop="dateCreated datePublished" datetime="2021-02-12T00:00:00+08:00">2021-02-12</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -201,7 +203,7 @@
               </span>
               <span class="post-meta-item-text">分類於</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CodeIgniter3/" itemprop="url" rel="index"><span itemprop="name">CodeIgniter3</span></a>
+                  <a href="/categories/%E5%80%8B%E4%BA%BA%E7%AD%86%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">個人筆記</span></a>
                 </span>
             </span>
 
@@ -216,50 +218,56 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="Session載入問題"><a href="#Session載入問題" class="headerlink" title="Session載入問題"></a>Session載入問題</h1><p>某些人剛開始寫CI時可能會碰到一種奇特的問題：<code>Unable to locate the specified class</code></p>
-<p>如果透過Google搜尋相關錯誤，你會發現大多跟Session.php有關</p>
-<p>不過找不太到這種現象的解釋</p>
-<p>即使是目前CI3的最新版本3.1.11依然有可能會出現</p>
-<p>這種問題的難點在於無法知道確切的錯誤在哪裡</p>
-<p>於是大家通常都是把跟session有關的地方拆掉，例如說 autoload 之類的</p>
+        <p>在了解了 MPA 與 SPA 之後，就要開始建立第一個 Angular 專案了</p>
+<p>由於這份紀錄是在我已經學習 Angular 幾天後才開始撰寫的，當時的安裝紀錄並沒有保存，接下來的安裝過程將會使用虛擬機進行。</p>
+<h1 id="環境安裝"><a href="#環境安裝" class="headerlink" title="環境安裝"></a>環境安裝</h1><p>在建立 angular 專案前，需要先安裝一些東西</p>
+<ul>
+<li><a href="https://nodejs.org/en/" target="_blank" rel="noopener">NodeJS</a> (要注意一下版本，有的版本安裝上可能會有問題)</li>
+<li><a href="https://git-scm.com/downloads" target="_blank" rel="noopener">Git</a> (沒有 Git 的話，也是可以正常建立專案，只是不會自動產生版本控制而已)</li>
+<li>Angular CLI</li>
+</ul>
 <a id="more"></a>
-<h1 id="問題的起源"><a href="#問題的起源" class="headerlink" title="問題的起源"></a>問題的起源</h1><h2 id="重複建立CI-Controller實例"><a href="#重複建立CI-Controller實例" class="headerlink" title="重複建立CI_Controller實例"></a>重複建立CI_Controller實例</h2><p>重複建立 CI_Controller 的原因大多是：</p>
-<ol>
-<li>不小心讓 model 繼承 CI_Controller </li>
-<li>在其他地方因為某些原因，產生了新的Controller</li>
-</ol>
-<p>而重複建立 CI_Controller 會導致它可能因為 <code>load_class</code> 的缺陷而產生錯誤</p>
-<blockquote>
-<p>註： load_class 位於 system/core/Common.php裡面</p>
-</blockquote>
-<h2 id="類別表中已經有該類別存在"><a href="#類別表中已經有該類別存在" class="headerlink" title="類別表中已經有該類別存在"></a>類別表中已經有該類別存在</h2><p>如果已經使用了 autoload 或是手動由 loader 去載入 library的話，該類別會被存入內建的類別表中</p>
-<p>他們很有可能因為某些原因，被 <code>load_class</code> 方法所在入，這時候就有可能因為 <code>load_class</code> 的缺陷發生錯誤</p>
-<h1 id="load-class-的缺陷"><a href="#load-class-的缺陷" class="headerlink" title="load_class 的缺陷"></a>load_class 的缺陷</h1><p>大部分的情況，透過 load_class 去載入類別並不會有什麼問題，但是有某些特例，<strong>Session 就是其中一種</strong></p>
-<p>Session 這種 library 是放在子目錄裡面的</p>
-<p>在 loader 載入 library 的最後一個檢查環節中有被處理到，這是我們能成功載入 Session 的關鍵</p>
-<p>但是 <code>load_class</code> 卻沒有檢查子資料夾，因此就產生了無法直接載入 class 的錯誤</p>
-<p>是這段錯誤訊息的來源</p>
-<h1 id="load-class-跟-Controller-的關係"><a href="#load-class-跟-Controller-的關係" class="headerlink" title="load_class 跟 Controller 的關係"></a>load_class 跟 Controller 的關係</h1><p>Controller 本身會在一開始自行載入由驅動檔案 <code>CoodeIgniter.php</code> 載入的類別</p>
-<p>這個部份是透過 <code>load_class</code> 來進行載入的</p>
-<p>但是當後來載入新的 library 之後，該 library 將會被加入至 class 表中，例如說 session</p>
-<p>所以當 Controller 再度被建構時，只要使用了 CI_Controller 的建構式子，就會再觸發 <code>load_class</code></p>
-<p>但是這時候就會因為子資料夾的問題，產生了無法載入 class 的錯誤</p>
-<h1 id="Session-載入測試"><a href="#Session-載入測試" class="headerlink" title="Session 載入測試"></a>Session 載入測試</h1><p>正常情況下的頁面</p>
-<p><img src="ci-bug-0.PNG" alt=""></p>
-<p>修改成 CI_Controller 之後的畫面</p>
-<p><img src="ci-bug-1.PNG" alt=""></p>
-<p>由於先載入 Session ，因此第二次建立 CI_Controller 時 <code>load_class</code> 會嘗試載入 Session</p>
-<p>載入順序對調（Library 跟 Model 對調）</p>
-<p><img src="ci-bug-2.PNG" alt=""></p>
-<p>因為是後來才載入 Session ，所以重複產生 Controller 並不會造成影響</p>
-<p>不過由於 CI3 的設計，<code>$CI-&gt;get_instance()</code>  會是新產生的 Controller </p>
-<p>因此原本的 <code>Test</code> 就不會有 <code>$session</code> 變數，反而是 <code>Test_model</code>會有</p>
-<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>這些問題引發的原因通常是因為載入未預期的 class </p>
-<p>有可能是來自於自己錯誤的寫法，也有可能是其他 library 所造成</p>
-<p>但不論怎麼說，最後都會在 <code>load_class</code> 這個環節出錯</p>
-<p>如果發現了這個問題存在，建議在 <code>load_class</code> 拋出錯誤來尋找來源</p>
-<p>看是因為未預期的 library 被載入，或是哪個地方重複呼叫了 CI_Controller 的建構式</p>
-
+<h2 id="Angular-CLI"><a href="#Angular-CLI" class="headerlink" title="Angular CLI"></a>Angular CLI</h2><p>Angular CLI 是 Angular 的 command line 工具，可以快速的建立 Angular 專案與產生相關的模組或元件</p>
+<p>在 cmd 打上指令來安裝 Angular CLI</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install --global @angular&#x2F;cli</span><br></pre></td></tr></table></figure>
+<div class="note info">
+            <h4 id="注意-NodeJS-的版本"><a href="#注意-NodeJS-的版本" class="headerlink" title="注意 NodeJS 的版本"></a>注意 NodeJS 的版本</h4><p>某些 NodeJS 的版本在安裝上可能會怪怪的，不確定是不是跟作業系統有關<br>本機上我是 Win7，使用 NodeJS 12<br>虛擬機的安裝環境則是 Win10， NodeJS 14 </p>
+          </div>
+<div class="note info">
+            <h4 id="安裝時遇到權限不足的問題"><a href="#安裝時遇到權限不足的問題" class="headerlink" title="安裝時遇到權限不足的問題"></a>安裝時遇到權限不足的問題</h4><p>有可能是因為快取資料建在 ProgramFile 裡的緣故。<br>可以修改一下 npm 的設定，讓快取資料轉存到其他地方 (比如說 <strong>ProgramData</strong>)<br>我個人並不是很建議直接使用管理員模式來處理這個問題</p>
+          </div>
+<div class="note info">
+            <p>若是在安裝時碰到其他問題，也可以考慮其他版本的 NodeJS<br>如果要快速轉換版本，可以使用 NVM 進行切換</p>
+          </div>
+<h1 id="建立-Angular-專案"><a href="#建立-Angular-專案" class="headerlink" title="建立 Angular 專案"></a>建立 Angular 專案</h1><p>終於到了今天的重頭戲 Angular 了，透過 Angular CLI 可以建立 Angular 專案</p>
+<p>打上指令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ng new &lt;資料夾名稱&gt;</span><br></pre></td></tr></table></figure>
+<p>一開始會詢問你是否要強制嚴格型別檢查。<br>打 N 的話會比較輕鬆一點，不會因為少了型別宣告就跳錯，不過我比較習慣有型別的環境，因此這邊我打 Y</p>
+<p><img src="image-20210212153255022.png" alt="image-20210212153255022"></p>
+<p>接著會詢問你是否要使用路由。如果沒有要自動產生路由檔案的話就回答 N，只後也可以手動增加上去</p>
+<p><img src="image-20210212153935909.png" alt="image-20210212153935909"></p>
+<p>最後詢問你要使用哪種樣式表格式</p>
+<p><img src="image-20210212154045733.png" alt=""></p>
+<p>最後就是等它把需要的套件全部都安裝到專案資料夾裡，這邊需要一點時間</p>
+<p>等待套件建立完之後，就有一個建立好的 Angular 專案了</p>
+<p><img src="image-20210212154959700.png" alt="image-20210212154959700"></p>
+<p>當建立好的專案可以使用 Angular CLI 來進行一些操作<br>使用前，記得先 cd 專案資料夾內</p>
+<h1 id="預覽"><a href="#預覽" class="headerlink" title="預覽"></a>預覽</h1><p>透過 Angular CLI 可以建立一個本地網頁伺服器來預覽 Angular 專案的樣貌。這個伺服器會感應程式碼的變化，當相關的程式有所變化時，會將瀏覽器的畫面重新整理，以方便開發</p>
+<p>指令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ng serve</span><br></pre></td></tr></table></figure>
+<div class="note info">
+            <p>預設的 port 號是 <strong>4200</strong> ，可以自己透過添加 <code>--port 數字</code> 來指定 port 號</p>
+          </div>
+<p>打上指令後，就能透過瀏覽器來查看一下剛建立好的專案了。這邊我是把伺服器建在 80埠</p>
+<p><img src="image-20210212160206905.png" alt="image-20210212160206905"></p>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>前面會提到 NodeJS 的問題，是因為我在自己的電腦 ( Win7 ) 安裝時碰到了問題，當時是安裝 13 版 (因為 14 版要  Win10 以上)，就遇到了 <code>npm ERR! cb() never called!</code> 的問題<br>後來去問了比較熟悉 Angular 的同學，才知道 NodeJS 的版本有可能會影響安裝過程，最後去找了 NodeJS 12 來用</p>
+<p>成功安裝之後，當然就開始了我的 Angular 之旅啦！</p>
+<p>下一篇將會簡單的介紹一下我目前所了解到的一些基本概念<br>應該會講 Module、Component 還有基本的變數操作</p>
+<div style='text-align: center'>
+    <a class='btn' href='/2021/02/11/note-angular-learning-1/'>
+        上一篇
+    </a>
+</div>
     </div>
 
     
@@ -269,8 +277,8 @@
       <footer class="post-footer">
           
           <div class="post-tags">
-              <a href="/tags/CodeIgniter3/" rel="tag"><i class="fa fa-tag"></i> CodeIgniter3</a>
-              <a href="/tags/%E7%B6%B2%E9%A0%81%E5%BE%8C%E7%AB%AF/" rel="tag"><i class="fa fa-tag"></i> 網頁後端</a>
+              <a href="/tags/Angular/" rel="tag"><i class="fa fa-tag"></i> Angular</a>
+              <a href="/tags/%E7%B6%B2%E9%A0%81%E5%89%8D%E7%AB%AF/" rel="tag"><i class="fa fa-tag"></i> 網頁前端</a>
           </div>
 
         
@@ -279,13 +287,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/06/26/call-by-reference/" rel="prev" title="Call By Value, Call By Reference? 談談所謂的參數引用">
-      <i class="fa fa-chevron-left"></i> Call By Value, Call By Reference? 談談所謂的參數引用
+    <a href="/2021/02/11/note-angular-learning-1/" rel="prev" title="Angular學習筆記1-認識SPA">
+      <i class="fa fa-chevron-left"></i> Angular學習筆記1-認識SPA
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/02/11/note-angular-learning-1/" rel="next" title="Angular學習筆記1-認識SPA">
-      Angular學習筆記1-認識SPA <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -346,7 +351,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Session載入問題"><span class="nav-number">1.</span> <span class="nav-text">Session載入問題</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#問題的起源"><span class="nav-number">2.</span> <span class="nav-text">問題的起源</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#重複建立CI-Controller實例"><span class="nav-number">2.1.</span> <span class="nav-text">重複建立CI_Controller實例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#類別表中已經有該類別存在"><span class="nav-number">2.2.</span> <span class="nav-text">類別表中已經有該類別存在</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#load-class-的缺陷"><span class="nav-number">3.</span> <span class="nav-text">load_class 的缺陷</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#load-class-跟-Controller-的關係"><span class="nav-number">4.</span> <span class="nav-text">load_class 跟 Controller 的關係</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Session-載入測試"><span class="nav-number">5.</span> <span class="nav-text">Session 載入測試</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#結語"><span class="nav-number">6.</span> <span class="nav-text">結語</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#環境安裝"><span class="nav-number">1.</span> <span class="nav-text">環境安裝</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Angular-CLI"><span class="nav-number">1.1.</span> <span class="nav-text">Angular CLI</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#注意-NodeJS-的版本"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">注意 NodeJS 的版本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安裝時遇到權限不足的問題"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">安裝時遇到權限不足的問題</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#建立-Angular-專案"><span class="nav-number">2.</span> <span class="nav-text">建立 Angular 專案</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#預覽"><span class="nav-number">3.</span> <span class="nav-text">預覽</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#結語"><span class="nav-number">4.</span> <span class="nav-text">結語</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -478,7 +483,7 @@ NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
       repo        : 'stu98832.github.io',
       owner       : 'stu98832',
       admin       : ['stu98832'],
-      id          : 'd2edeb5f013e07f2d85c700f776c2cf8',
+      id          : '2ad8313bdbc970fc62565c6905fd4b3d',
         language: 'zh-TW',
       distractionFreeMode: true
     });
