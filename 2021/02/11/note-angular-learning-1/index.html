@@ -28,7 +28,7 @@
 <meta property="og:description" content="這個寒假到感覺到後面過得有點空虛，所以找了個東西讓自己的寒假變得充實一點 由於前端的東西我不常去碰，所以我的印象就停留在 MPA 的階段，還在傻傻的從 Server 端套樣板輸出頁面。現在的網頁很講求使用者體驗，像 MPA 這種方式產生出來的網頁應用，對使用者來說可能就不是那麼順暢和便利，而且後端也要花心力去整理前端的部份 原先大概就知道 Angular、Vue、React、JQuery 等前端會">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2021-02-10T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-02-12T13:18:25.041Z">
+<meta property="article:modified_time" content="2021-02-14T13:01:19.207Z">
 <meta property="article:author" content="Bluebean">
 <meta property="article:tag" content="Angular">
 <meta property="article:tag" content="網頁前端">
@@ -217,6 +217,7 @@
 <p>原先大概就知道 Angular、Vue、React、JQuery 等前端會使用的框架，但只有一點點使用 JQuery 的經驗而已，其他都是 0 經驗</p>
 <p>由於看到了同學在作業上使用 Angular 套版搭了一個小小的網頁，於是我想說也來玩一下</p>
 <p>我也是碰到了 Angular 才知道了 MPA、SPA 這些東西</p>
+<p>本次學習 Angular 的系列文章，我將參考 IThome 的這份鐵人賽系列：<a href="https://ithelp.ithome.com.tw/users/20090728/ironman/1600?page=1" target="_blank" rel="noopener">Angular 深入淺出三十天</a><br>並透過自己的理解撰寫文章來紀錄學習 Angular 的過程</p>
 <a id="more"></a>
 <h1 id="MPA"><a href="#MPA" class="headerlink" title="MPA"></a>MPA</h1><p>在講 SPA 之前，要先說明一下 MPA</p>
 <p>MPA 是指一個網頁應用程式是以多個頁面來呈現，這表示每換一次頁都需要發送一次 request 到伺服器上，然後根據 伺服器 response 的 HTML 資料來渲染，過程中會感覺到比較明顯的載入感</p>
@@ -237,11 +238,24 @@
 <h1 id="Angular"><a href="#Angular" class="headerlink" title="Angular"></a>Angular</h1><p>Angular 是一個強大的網頁框架，可透過 nodejs 來安裝，使用物件導向的方式來搭建一個 SPA 網頁，並提供大量有用的功能 (e.g. 注入器，路由)</p>
 <p>Angular 本身是使用 TypeScript (你可以當作是 Javascript，印象中兩者其實沒差多少)，可以將專案設定成嚴格模式 (這樣在類型不符合的時候 IDE 會報錯)，因此搭建出來的程式穩固性高。</p>
 <p>然而，Angular 本身有一個比較致命的缺點，那就是 Angular 本身很<strong>肥</strong>，一個專案檔光 nodejs 的套件裝一裝大約 200 MB 左右，建出來的網頁也偏肥，因此如果要製作輕巧的頁面，可能要斟酌一下</p>
-<p>本次學習 Angular 我將參考 IThome 的這篇文章：</p>
-<p><a href="https://ithelp.ithome.com.tw/users/20090728/ironman/1600?page=1" target="_blank" rel="noopener">Angular 深入淺出三十天</a></p>
 <h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>這篇算是我突然想到要做個紀錄才生出來的，至少會把認識、安裝到基礎功能的部份寫完。至於一些特殊寫法，進階內容就看我之後有沒有要繼續深入了。</p>
 <p>如果有什麼理解錯誤，或寫得不好的地方，歡迎透過下方的 Gitalk 留言告訴我 (不過我並不是天天看，所以很有可能要好幾天後才會看到)</p>
 <p>下一篇會從安裝 Angular 的部份開始講起，因為前幾天剛開始學的時候並沒有去紀錄相關內容，因此環境安裝部份我會另外使用虛擬機來建立</p>
+<h1 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h1><ul>
+<li><p>2021-02-14</p>
+<ol>
+<li>將 <code>本次學習 Angular 我將參考 ...</code> 這段從<strong>結語</strong>移到<strong>開頭</strong><br>內文改寫：<br>本次學習 Angular <font color="green">的系列文章，</font>我將參考 IThome 的<font color="red"><del>這篇文章</del></font><font color="green">這份鐵人賽系列</font>：<a href="https://ithelp.ithome.com.tw/users/20090728/ironman/1600?page=1" target="_blank" rel="noopener">Angular 深入淺出三十天</a><font color="green">並透過自己的理解撰寫文章來紀錄學習 Angular 的過程</font>
+
+
+
+
+
+
+
+</li>
+</ol>
+</li>
+</ul>
 <div style='text-align: center'>
     <a class='btn' href='/2021/02/12/note-angular-learning-2/'>
         下一篇
@@ -336,7 +350,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MPA"><span class="nav-number">1.</span> <span class="nav-text">MPA</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SPA"><span class="nav-number">2.</span> <span class="nav-text">SPA</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hash-Tag"><span class="nav-number">3.</span> <span class="nav-text">Hash Tag</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Angular"><span class="nav-number">4.</span> <span class="nav-text">Angular</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#結語"><span class="nav-number">5.</span> <span class="nav-text">結語</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MPA"><span class="nav-number">1.</span> <span class="nav-text">MPA</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SPA"><span class="nav-number">2.</span> <span class="nav-text">SPA</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hash-Tag"><span class="nav-number">3.</span> <span class="nav-text">Hash Tag</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Angular"><span class="nav-number">4.</span> <span class="nav-text">Angular</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#結語"><span class="nav-number">5.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更新"><span class="nav-number">6.</span> <span class="nav-text">更新</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -352,7 +366,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
