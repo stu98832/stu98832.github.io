@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"stu98832.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="既上次升級 .NET Core 之後 這次打算把專案的 WinForm 改用 WPF 來呈現 這算是我第一次正式寫 WPF，之前都只有開個專案拉幾個 Control 而已 原本想說應該不難，寫之後才發現事情沒我想的那麼簡單 🙃">
+<meta property="og:type" content="article">
+<meta property="og:title" content="來翻新老專案 (2) - MapleLooker - WinForm 遷移到 WPF">
+<meta property="og:url" content="http://stu98832.github.io/2025/01/31/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-2-maplelooker-winform-%E9%81%B7%E7%A7%BB%E5%88%B0-wpf/index.html">
+<meta property="og:site_name" content="Bluebean 的筆記">
+<meta property="og:description" content="既上次升級 .NET Core 之後 這次打算把專案的 WinForm 改用 WPF 來呈現 這算是我第一次正式寫 WPF，之前都只有開個專案拉幾個 Control 而已 原本想說應該不難，寫之後才發現事情沒我想的那麼簡單 🙃">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://stu98832.github.io/assets/topics/project-renovation/maple-looker/maple-looker-binding-sort-button.gif">
+<meta property="og:image" content="http://stu98832.github.io/assets/topics/project-renovation/maple-looker/maple-looker-old-look-screenshot-20250131.png">
+<meta property="og:image" content="http://stu98832.github.io/assets/topics/project-renovation/maple-looker/maple-looker-new-look-screenshot-20250131.png">
+<meta property="article:published_time" content="2025-01-31T07:55:00.000Z">
+<meta property="article:modified_time" content="2025-03-23T05:12:15.206Z">
+<meta property="article:author" content="Bluebean">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://stu98832.github.io/assets/topics/project-renovation/maple-looker/maple-looker-binding-sort-button.gif">
+
+
+<link rel="canonical" href="http://stu98832.github.io/2025/01/31/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-2-maplelooker-winform-%E9%81%B7%E7%A7%BB%E5%88%B0-wpf/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://stu98832.github.io/2025/01/31/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-2-maplelooker-winform-%E9%81%B7%E7%A7%BB%E5%88%B0-wpf/","path":"2025/01/31/來翻新老專案-2-maplelooker-winform-遷移到-wpf/","title":"來翻新老專案 (2) - MapleLooker - WinForm 遷移到 WPF"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>來翻新老專案 (2) - MapleLooker - WinForm 遷移到 WPF | Bluebean 的筆記</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Bluebean 的筆記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">為什麼選 WPF?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">WinForm 遷移 Wpf</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%88%E6%A1%88%E5%95%9F%E7%94%A8-Wpf"><span class="nav-number">2.1.</span> <span class="nav-text">專案啟用 Wpf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Application-%E9%81%B7%E7%A7%BB"><span class="nav-number">2.2.</span> <span class="nav-text">Application 遷移</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Form%E3%80%81UserControl-%E9%81%B7%E7%A7%BB"><span class="nav-number">2.3.</span> <span class="nav-text">Form、UserControl 遷移</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E9%A0%85%E8%AE%8A%E6%95%B8"><span class="nav-number">2.3.1.</span> <span class="nav-text">控制項變數</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B3%87%E6%96%99%E7%B6%81%E5%AE%9A"><span class="nav-number">2.3.2.</span> <span class="nav-text">資料綁定</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Binding"><span class="nav-number">2.3.2.1.</span> <span class="nav-text">Binding</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Resource"><span class="nav-number">2.3.2.2.</span> <span class="nav-text">Resource</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DataContext"><span class="nav-number">2.3.2.3.</span> <span class="nav-text">DataContext</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B3%87%E6%96%99%E8%BD%89%E6%8F%9B"><span class="nav-number">2.3.3.</span> <span class="nav-text">資料轉換</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E8%BD%89%E7%A7%BB%E3%80%81%E5%8E%BB%E9%99%A4%E8%A8%AD%E5%AE%9A%E6%8E%A7%E5%88%B6%E9%A0%85%E7%9B%B8%E9%97%9C%E7%A8%8B%E5%BC%8F"><span class="nav-number">2.4.</span> <span class="nav-text">事件轉移、去除設定控制項相關程式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TreeView-%E9%81%B7%E7%A7%BB"><span class="nav-number">2.5.</span> <span class="nav-text">TreeView 遷移</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%A8%E5%9F%B7%E8%A1%8C%E7%B7%92%E6%93%8D%E4%BD%9C"><span class="nav-number">2.6.</span> <span class="nav-text">跨執行緒操作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">目前的遷移進度</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">結語</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bluebean"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Bluebean</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/stu98832" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stu98832" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://stu98832.github.io/2025/01/31/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-2-maplelooker-winform-%E9%81%B7%E7%A7%BB%E5%88%B0-wpf/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Bluebean">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="來翻新老專案 (2) - MapleLooker - WinForm 遷移到 WPF | Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          來翻新老專案 (2) - MapleLooker - WinForm 遷移到 WPF
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2025-01-31 15:55:00" itemprop="dateCreated datePublished" datetime="2025-01-31T15:55:00+08:00">2025-01-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%80%81%E5%B0%88%E6%A1%88%E7%BF%BB%E6%96%B0/" itemprop="url" rel="index"><span itemprop="name">老專案翻新</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>既上次升級 .NET Core 之後<br>
+這次打算把專案的 WinForm 改用 WPF 來呈現<br>
+這算是我第一次正式寫 WPF，之前都只有開個專案拉幾個 Control 而已<br>
+原本想說應該不難，寫之後才發現事情沒我想的那麼簡單 🙃</p>
+<span id="more"></span>
+<h1>為什麼選 WPF?</h1>
+<p>本來想看轉 WPF 後能不能脫離 Visual Studio 改用 Visual Studio Code，然而我需要的 Designer 功能依然只有 Visual Studio 可以使用…</p>
+<p>最初本來考慮使用 UWP + WinUI3，但是 WinUI3 只能 Hot Reload ，沒辦法用 Designer ，而 WinUI2 給我的感覺並沒有 WinUI3 來得好<br>
+後來在網路上找到了 WPF UI 這東西，想說還不錯，就使用 WPF + WPF UI 了</p>
+<p>其實我並不清楚 WPF 跟 UWP 的差別，我以為基底都是 WPF，但從官方文件來看，兩者只能說是相似而不是一樣的東西</p>
+<h1>WinForm 遷移 Wpf</h1>
+<p>如果開新專案可能還比較簡單，但我是選擇原地升級 Wpf，因此需要做一些處理把專案的 WPF 啟用，並慢慢的將 WinForm 跟 UserControl 轉成 WPF 形式</p>
+<p>由於 WinForm 的操作邏輯與 Wpf 差異較大<br>
+所以這等於是將原本大量操作 UI 的程式碼進行大改，過程有些痛苦…</p>
+<h2 id="專案啟用-Wpf">專案啟用 Wpf</h2>
+<p>在專案的 <code>.csproj</code> 檔案裡需要使用 <code>UseWPF</code> 開啟 WPF 功能</p>
+<figure class="highlight xml"><figcaption><span>MapleLooker.csproj</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Project</span> <span class="attr">Sdk</span>=<span class="string">&quot;Microsoft.NET.Sdk&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">PropertyGroup</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- ... --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">UseWPF</span>&gt;</span>True<span class="tag">&lt;/<span class="name">UseWPF</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">PropertyGroup</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- ... --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Application-遷移">Application 遷移</h2>
+<p>Wpf 跟 WinForm 不同的點在於：傳統 WinForm 使用最原始的 Main 作為進入點，並以 Application 為基礎掛上 MainForm 啟動應用程式。</p>
+<p>而 Wpf 的部份，根據我自己從範本建立的專案，它會使用 xaml 來描述 Application 本身，並且不需要指定 Main 進入點</p>
+<p>下面是原本 Form 的進入點：</p>
+<figure class="highlight c#"><figcaption><span>Program.cs</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.Windows.Forms;</span><br><span class="line"><span class="keyword">using</span> Un4seen.Bass;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">MapleLooker</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 應用程式的主要進入點。</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        [<span class="meta">STAThread</span>]</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            Application.EnableVisualStyles();</span><br><span class="line">            Application.SetCompatibleTextRenderingDefault(<span class="literal">false</span>);</span><br><span class="line">            Application.Run(<span class="keyword">new</span> StartForm());</span><br><span class="line">            Bass.FreeMe();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>而 Wpf 則變成以 App.xaml 來設計應用程式的基底，並另外撰寫 C# 程式來開啟視窗：</p>
+<figure class="highlight xml"><figcaption><span>App.xaml</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Application</span></span></span><br><span class="line"><span class="tag">    <span class="attr">x:Class</span>=<span class="string">&quot;MapleLooker.App&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns</span>=<span class="string">&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:x</span>=<span class="string">&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:ui</span>=<span class="string">&quot;http://schemas.lepo.co/wpfui/2022/xaml&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">Startup</span>=<span class="string">&quot;OnStartup&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Application.Resources</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ResourceDictionary</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">ResourceDictionary.MergedDictionaries</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">ui:ThemesDictionary</span> <span class="attr">Theme</span>=<span class="string">&quot;Dark&quot;</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">ui:ControlsDictionary</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">ResourceDictionary.MergedDictionaries</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">ResourceDictionary</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">Application.Resources</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Application</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Application 啟動事件的定義</p>
+<figure class="highlight c#"><figcaption><span>App.xaml.cs</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> Un4seen.Bass;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">MapleLooker</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">partial</span> <span class="keyword">class</span> <span class="title">App</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnStartup</span>(<span class="params"><span class="built_in">object</span> sender, System.Windows.StartupEventArgs e</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">bool</span> <span class="keyword">init</span> = Bass.BASS_Init(<span class="number">-1</span>, <span class="number">44100</span>, BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero);</span><br><span class="line">        <span class="keyword">if</span> (!<span class="keyword">init</span>) &#123;</span><br><span class="line">            <span class="keyword">var</span> reason = Bass.BASS_ErrorGetCode();</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">$&quot;Bass Initialize error: <span class="subst">&#123;reason&#125;</span>&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> main = <span class="keyword">new</span> MainForm();</span><br><span class="line">        main.Show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>撰寫好 <code>App.xaml</code> 之後，把 <code>Program.cs</code> 刪掉並且移除 Startup 類別便可以改啟動 Wpf 應用程式</p>
+<div class="note info"><p>目前的初始化方式是透過觀察 Wpf 專案範本刻出來的<br>
+不知道有沒有其他初始化 Application 的方式</p>
+</div>
+<h2 id="Form、UserControl-遷移">Form、UserControl 遷移</h2>
+<p>這個階段主要是重刻一個 Wpf 的 UI ，並將以前的事件逐一遷移到新的 UI 上面</p>
+<p>Wpf 的佈局上會比起以前 WinForm 提供的佈局更有彈性一些<br>
+一開始拉會有點卡卡的，習慣之後，其實設計起來會比 WinForm 還要輕鬆，呈現的效果以及響應也比 WinForm 來得好</p>
+<p>除了拉控制項的部份有變化以外，對控制項的處理也有很大的變化</p>
+<h3 id="控制項變數">控制項變數</h3>
+<p>WinForm 的控制項打從拉進去的時候就已經自動依照序號命名變數名稱，比如 <code>textBox1</code><br>
+而 Wpf 則是要透過 <code>x:Name</code> 這個屬性來為控制項命名變數名稱，比如：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">TextBox</span> <span class="attr">x:Name</span>=<span class="string">&quot;textBox1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">TextBox</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>如果不使用這個屬性，一般是沒辦法直接存取控制項本身</p>
+<h3 id="資料綁定">資料綁定</h3>
+<p>原本使用 WinForm 的寫法是手動去修改控制項的資料做內容更新<br>
+而 Wpf 主要則比較常使用資料綁定的方式來動態呈現資料在介面上</p>
+<p>WinForm 其實也有資料綁定的設計，只是我以前根本沒碰這塊<br>
+當時主要還是以手動修改控制項的資料為主</p>
+<p>我覺得初學 Wpf 困難的地方在於資料綁定<br>
+這部份我覺得文件不太好翻閱，很常找到非常老舊的資料，或是找到 MVVM (Model-View-ViewModel) 架構的資料<br>
+目前主要是透過探索 Github 上一些有使用 Wpf 的專案才大概知道有什麼使用方式…</p>
+<p>依照目前的了解，大概知道下面幾種綁定的基礎用法：</p>
+<ul>
+<li>Binding</li>
+<li>Resource</li>
+<li>DataContext</li>
+</ul>
+<h4 id="Binding">Binding</h4>
+<p>Binding 是最基礎的綁定單位，可以將某個物件綁定到特定屬性上<br>
+常見綁定的方式有 OnyWay, TwoWay 等等</p>
+<p>這部份我目前只知道一些基礎的用法，像是綁定相對資源，綁定元素</p>
+<p>舉個例子，綁定上層 <code>Border</code> 的 <code>BorderBrush</code> ：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Border</span> <span class="attr">BorderBrush</span>=<span class="string">&quot;Aqua&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">CheckBox</span> <span class="attr">BorderBrush</span>=<span class="string">&quot;&#123;Binding BorderBrush, RelativeSource=&#123;RelativeSource AncestorType=Border&#125;&#125;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">CheckBox</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Border</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>透過 <code>ElementName</code> ，可以綁定有設定 <code>x:Name</code> 的元素<br>
+舉個例子，綁定元素 <code>border1</code> 的 <code>BorderBrush</code> ：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Border</span> <span class="attr">x:Name</span>=<span class="string">&quot;border1&quot;</span> <span class="attr">BorderBrush</span>=<span class="string">&quot;Aqua&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">CheckBox</span> <span class="attr">BorderBrush</span>=<span class="string">&quot;&#123;Binding BorderBrush, ElementName=border1&#125;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">CheckBox</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Border</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="Resource">Resource</h4>
+<p>在 xaml 上可以為某個元素定義一些預設的資源<br>
+這些資源可以透過 <code>StaticResource</code> 做連接，如果是在程式上設定的 Resource，則可以透過 <code>DynamicResource</code> 連接</p>
+<p>這邊以 StaticResource 做範例：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Border</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Border.Resources</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">SolidColorBrush</span> <span class="attr">x:Key</span>=<span class="string">&quot;bgColor&quot;</span> <span class="attr">Color</span>=<span class="string">&quot;#323232&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">Border.Resources</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">CheckBox</span> <span class="attr">Background</span>=<span class="string">&quot;&#123;StaticResource bgColor&#125;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">CheckBox</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Border</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="DataContext">DataContext</h4>
+<p>DataContext 主要是提供資料的上下文，也就是提供基礎的資料來源供自己以及子元素做綁定</p>
+<p>比如說我在 RadioButton 上綁定上下文為 checkbox1，那我可以在其他屬性直接綁定他的 IsChecked：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">CheckBox</span> <span class="attr">x:Name</span>=<span class="string">&quot;checkbox1&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">CheckBox</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">RadioButton</span></span></span><br><span class="line"><span class="tag">    <span class="attr">DataContext</span>=<span class="string">&quot;&#123;Binding ElementName=checkbox1&#125;&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">IsChecked</span>=<span class="string">&quot;&#123;Binding IsChecked&#125;&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">RadioButton</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="資料轉換">資料轉換</h3>
+<p>前面設定的資料綁定並不能直接寫 Code 在裡面<br>
+如果要對設定的數值做一些處理，需要經過 convertor 轉換才行</p>
+<p>我原先有寫一個節點排序功能，可以勾選是要自動排序還是手動排序<br>
+當自動排序開啟時，手動排序的按鈕就必須反灰</p>
+<p>為此，我寫了一個 <code>InverseBoolConvertor</code> 來反轉 Boolean 達到這個效果：</p>
+<figure class="highlight c#"><figcaption><span>InverseBoolConvertor.cs</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Globalization;</span><br><span class="line"><span class="keyword">using</span> System.Windows.Data;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">MapleLooker.Converters</span>;</span><br><span class="line"></span><br><span class="line">[<span class="meta">ValueConversion(typeof(bool), typeof(bool))</span>]</span><br><span class="line"><span class="keyword">class</span> <span class="title">InverseBoolConvertor</span> : <span class="title">IValueConverter</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">object</span> <span class="title">Convert</span>(<span class="params"><span class="built_in">object</span> <span class="keyword">value</span>, Type targetType, <span class="built_in">object</span> parameter, CultureInfo culture</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> !(<span class="built_in">bool</span>)<span class="keyword">value</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">object</span> <span class="title">ConvertBack</span>(<span class="params"><span class="built_in">object</span> <span class="keyword">value</span>, Type targetType, <span class="built_in">object</span> parameter, CultureInfo culture</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> !(<span class="built_in">bool</span>)<span class="keyword">value</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 綁定 namespace `convert` --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ui:FluentWindow</span></span></span><br><span class="line"><span class="tag">    <span class="attr">...</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:convert</span>=<span class="string">&quot;clr-namespace:MapleLooker.Converters&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 建立 inverseBool 資源 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ui:FluentWindow.Resources</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- ... --&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">convert:InverseBoolConvertor</span> <span class="attr">x:Key</span>=<span class="string">&quot;inverseBool&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ui:FluentWindow.Resources</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- ... --&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- Button_Sort 的 IsEnabled 綁定 Check_AutoSort 的 IsChecked，並且經過 inverseBool 做反向 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ui:Button</span> </span></span><br><span class="line"><span class="tag">        <span class="attr">x:Name</span>=<span class="string">&quot;Button_Sort&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">Content</span>=<span class="string">&quot;排序&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">FontSize</span>=<span class="string">&quot;12&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">Margin</span>=<span class="string">&quot;10,10,0,10&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">IsEnabled</span>=<span class="string">&quot;&#123;Binding IsChecked, Converter=&#123;StaticResource inverseBool&#125;, ElementName=Check_AutoSort, FallbackValue=false&#125;&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">Width</span>=<span class="string">&quot;80&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">Grid.RowSpan</span>=<span class="string">&quot;1&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ui:ToggleSwitch</span> </span></span><br><span class="line"><span class="tag">        <span class="attr">x:Name</span>=<span class="string">&quot;Check_AutoSort&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">Content</span>=<span class="string">&quot;自動排序&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">Checked</span>=<span class="string">&quot;WzTree_Event_SortAuto&quot;</span> <span class="attr">HorizontalAlignment</span>=<span class="string">&quot;Right&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">Margin</span>=<span class="string">&quot;0,0,10,0&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">Grid.RowSpan</span>=<span class="string">&quot;1&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ui:FluentWindow</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>設定後的效果：<br>
+<img src="/assets/topics/project-renovation/maple-looker/maple-looker-binding-sort-button.gif" alt="MapleLooker - Main"></p>
+<h2 id="事件轉移、去除設定控制項相關程式">事件轉移、去除設定控制項相關程式</h2>
+<p>由於用了資料綁定，因此一些手動設定資料的程式碼就可以進行移除</p>
+<p>事件的部份，則需要更新事件方法的定義<br>
+大部分的事件參數都從 <code>EventArgs</code> 轉為 <code>RoutedEventArgs</code><br>
+理論上以 <code>EventArgs</code> 作為參數的事件可以直接沿用，但我偏好使用正確的事件定義，所以全部都改成 <code>RoutedEventArgs</code></p>
+<h2 id="TreeView-遷移">TreeView 遷移</h2>
+<p><code>TreeView</code> 的節點在 Wpf 上叫 <code>TreeViewItem</code> 而不是 <code>TreeNode</code><br>
+<code>TreeView</code> 的 Children 也從 <code>TreeNode</code> 改為可以接受各種元件</p>
+<p>較大的不同是，以前節點排序、事件、選取都是在 <code>TreeView</code> 設定<br>
+但現在則是在 <code>TreeViewItem</code> 各自設定<br>
+排序的部份則需要透過對綁定資料排序來達成，因為目前是採用手動添加控制項的方式來建立節點，所以這部份還沒完成</p>
+<h2 id="跨執行緒操作">跨執行緒操作</h2>
+<p>以前有透過 Thread 對資料進行載入，主要是處理 TreeNode 量太大導致 UI 凍結的問題<br>
+在 Wpf 沒辦法使用 <code>.InvokeRequired</code> 跟 <code>.Invoke()</code> 來跨執行緒操作 UI<br>
+取而代之，要使用 <code>.CheckAccess()</code> 跟 <code>.Dispatcher.Invoke()</code></p>
+<h1>目前的遷移進度</h1>
+<p>除了上面提到的項目以外，轉移的過程還踩了不少坑<br>
+像是 TrackBar 在 Wpf 等同功能 Slider 就有一些事件沒辦法遷移，需要改原本的程式。或是因為 UI 庫與 Windows 的元件類別名稱重複，導致我需要用全名來寫類別名稱</p>
+<p>目前除了少部份功能還沒遷移完成，其他大部分事件以及 UI 都成功從 WinForm 遷移過來了 🎉</p>
+<p>原本的 UI：<br>
+<img src="/assets/topics/project-renovation/maple-looker/maple-looker-old-look-screenshot-20250131.png" alt="maple-looker-old-look-screenshot-20250131.png"></p>
+<p>新的 UI：<br>
+<img src="/assets/topics/project-renovation/maple-looker/maple-looker-new-look-screenshot-20250131.png" alt="maple-looker-new-look-screenshot-20250131.png"></p>
+<h1>結語</h1>
+<p>Wpf 比我想像的還要難寫許多，以前 WinForm 寫習慣了，轉到 Wpf 完全不知道該如何下手</p>
+<p>專案本身轉 Wpf 是一個問題，翻了一下官方文件也沒找到相關的條目，因為專案範本預設好太多東西了，導致我完全不知道建立一個 Wpf 專案需要具備哪些東西</p>
+<p>資料綁定比想像中還要難使用，沒辦法直接套用 Web 前端的概念<br>
+還好理解之後，寫起來還算簡單，UI 的呈現效果也比想像中好，整個程式的外在質感也提昇不少呢 🙂</p>
+<p>目前看官方跟網路上的 Wpf 教學，都傾向使用 MVVM (Model-View-ViewModel) 架構，但依照目前的 WinForm 程式，短時間還無法以這個架構去寫 Wpf，所以目前還沒使用 MVVM 架構</p>
+<p>UI 遷移的部份先在這裡告一個段落，接著會開始去改善以前那一堆醜醜的 Code ，除了讓程式更簡潔以外，也方便未來直接對 TreeView 做資料綁定，去除手動建立控制項的部份</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/01/15/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-1-%E5%8D%87%E7%B4%9A-net-8-0/" rel="prev" title="來翻新老專案 (1) - 升級 .net 8.0">
+                  <i class="fa fa-angle-left"></i> 來翻新老專案 (1) - 升級 .net 8.0
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/02/15/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-3-maplelooker-treeview-%E8%B3%87%E6%96%99%E7%B6%81%E5%AE%9A/" rel="next" title="來翻新老專案 (3) - MapleLooker - TreeView 資料綁定">
+                  來翻新老專案 (3) - MapleLooker - TreeView 資料綁定 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2020 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Bluebean</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr+QR0SQDNfgglgtcM=" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"stu98832","repo":"stu98832.github.io","client_id":"0b84385c74db3fd44c22","client_secret":"089aee5f0152169f2b4ec924fbce2a06ac1e4c89","admin_user":"stu98832","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","labels":"Gitalk","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"0ebacfb998a0a71d0202a91898ceccd0"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>
