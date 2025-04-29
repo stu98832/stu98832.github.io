@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"stu98832.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="最近在重構 C# 的程式，剛好看到自己以前寫的擴充方法，就想說來聊聊這個我特別喜歡的語言特性 C# 的擴充方法(Extension Methods)，這一特性讓開發者可以「擴充」任何類別、結構的方法，並且不破壞封裝性 它的概念非常單純，實際上就只是呼叫靜態類別而已 但因為它可以將方法掛在任何類別&#x2F;結構上，使用起來的感覺非常好">
+<meta property="og:type" content="article">
+<meta property="og:title" content="聊一下 C# 的 擴充方法(Extension Methods)">
+<meta property="og:url" content="http://stu98832.github.io/2024/11/25/%E8%81%8A%E4%B8%80%E4%B8%8B-c-%E7%9A%84-%E6%93%B4%E5%85%85%E6%96%B9%E6%B3%95-extension-methods/index.html">
+<meta property="og:site_name" content="Bluebean 的筆記">
+<meta property="og:description" content="最近在重構 C# 的程式，剛好看到自己以前寫的擴充方法，就想說來聊聊這個我特別喜歡的語言特性 C# 的擴充方法(Extension Methods)，這一特性讓開發者可以「擴充」任何類別、結構的方法，並且不破壞封裝性 它的概念非常單純，實際上就只是呼叫靜態類別而已 但因為它可以將方法掛在任何類別&#x2F;結構上，使用起來的感覺非常好">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2024-11-25T14:50:00.000Z">
+<meta property="article:modified_time" content="2025-04-29T15:38:38.645Z">
+<meta property="article:author" content="Bluebean">
+<meta property="article:tag" content="C#">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://stu98832.github.io/2024/11/25/%E8%81%8A%E4%B8%80%E4%B8%8B-c-%E7%9A%84-%E6%93%B4%E5%85%85%E6%96%B9%E6%B3%95-extension-methods/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://stu98832.github.io/2024/11/25/%E8%81%8A%E4%B8%80%E4%B8%8B-c-%E7%9A%84-%E6%93%B4%E5%85%85%E6%96%B9%E6%B3%95-extension-methods/","path":"2024/11/25/聊一下-c-的-擴充方法-extension-methods/","title":"聊一下 C# 的 擴充方法(Extension Methods)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>聊一下 C# 的 擴充方法(Extension Methods) | Bluebean 的筆記</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Bluebean 的筆記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">擴充方法的好處</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E6%B3%95%E7%9B%B4%E8%A6%BA"><span class="nav-number">1.1.</span> <span class="nav-text">用法直覺</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E9%8F%88%E5%BC%8F%E5%91%BC%E5%8F%AB-Method-chaining"><span class="nav-number">1.2.</span> <span class="nav-text">方法鏈式呼叫 (Method chaining)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B0%A1%E5%8C%96%E6%93%8D%E4%BD%9C%E7%89%A9%E4%BB%B6%E7%9A%84%E6%B5%81%E7%A8%8B"><span class="nav-number">1.3.</span> <span class="nav-text">簡化操作物件的流程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">用擴充方法之前先想一想適不適合</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">後記</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bluebean"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Bluebean</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/stu98832" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stu98832" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://stu98832.github.io/2024/11/25/%E8%81%8A%E4%B8%80%E4%B8%8B-c-%E7%9A%84-%E6%93%B4%E5%85%85%E6%96%B9%E6%B3%95-extension-methods/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Bluebean">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="聊一下 C# 的 擴充方法(Extension Methods) | Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          聊一下 C# 的 擴充方法(Extension Methods)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2024-11-25 22:50:00" itemprop="dateCreated datePublished" datetime="2024-11-25T22:50:00+08:00">2024-11-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C#</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>最近在重構 C# 的程式，剛好看到自己以前寫的擴充方法，就想說來聊聊這個我特別喜歡的語言特性</p>
+<p>C# 的擴充方法(Extension Methods)，這一特性讓開發者可以「擴充」任何類別、結構的方法，並且不破壞封裝性</p>
+<p>它的概念非常單純，實際上就只是呼叫靜態類別而已<br>
+但因為它可以將方法掛在任何類別/結構上，使用起來的感覺非常好</p>
+<span id="more"></span>
+<p>擴充方法自 C# 3.0 開始支援，最早在 .NET Framework 3.5 跟著 LINQ 這個東西一起引入</p>
+<p>我最早接觸 C# 是在 .NET Framework 4.0 的時候，因為只有寫 WinForm，所以幾乎沒用過這個功能<br>
+印象中當時 LINQ 主要用在 SQL 查詢，可以直接在程式上寫類似 SQL 的語法<br>
+但在其他方面則鮮少使用 (也許 <a target="_blank" rel="noopener" href="http://ASP.NET">ASP.NET</a> 當時有使用，但我那時並沒有接觸 .NET 的 Web 開發)</p>
+<p>這個功能的寫法非常簡單，就是撰寫一個靜態 Extension 類，並在擴充方法的第一個參數加上 <code>this</code> 指定要擴充的類別<br>
+只要引用 Extension 類所在的 namespace，C# 會自動把擴充方法掛到對應的類別上，可以像使用原生方法一樣使用擴充方法</p>
+<p>範例如下：</p>
+<figure class="highlight c#"><figcaption><span>StringExtension.cs</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">Example.Extensions</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">StringExtensions</span> &#123;</span><br><span class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">string</span> <span class="title">Indent</span>(<span class="params"><span class="keyword">this</span> <span class="built_in">string</span> str, <span class="built_in">int</span> size</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">string</span>[] parts = str.Split();</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; parts.Length; i++) &#123;</span><br><span class="line">          parts[i] = <span class="string">&quot;&quot;</span>.PadLeft(size, <span class="string">&#x27; &#x27;</span>) + parts[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">string</span>.Join(<span class="string">&quot;\n&quot;</span>, parts);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c#"><figcaption><span>Program.cs</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> Example.Extensions;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Example</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">Program</span> &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] <span class="keyword">args</span></span>)</span> &#123;</span><br><span class="line">            <span class="built_in">string</span> text = <span class="string">&quot;Hello\nWorld&quot;</span>;</span><br><span class="line">            Console.WriteLine(text.Indent(<span class="number">4</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由於擴充方法本身就是一個靜態方法，因此上面的程式實際上也可以寫成這樣：</p>
+<figure class="highlight c#"><figcaption><span>Program.cs</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> Example.Extensions;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Example</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">Program</span> &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] <span class="keyword">args</span></span>)</span> &#123;</span><br><span class="line">            <span class="built_in">string</span> text = <span class="string">&quot;Hello\nWorld&quot;</span>;</span><br><span class="line">            Console.WriteLine(StringExtensions.Indent(text, <span class="number">4</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>擴充方法的好處</h1>
+<h2 id="用法直覺">用法直覺</h2>
+<p>擴充方法的好處就是使用起來非常直覺<br>
+而且可以去除冗長的靜態方法呼叫</p>
+<p>如果是以前，要使用一些常用類的靜態方法只能用下面的方式呼叫：</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="built_in">string</span> str = <span class="string">&quot;abcdefg&quot;</span>;</span><br><span class="line"><span class="built_in">string</span> rotatedStr = StringUtils.Rotate(str, <span class="number">3</span>); <span class="comment">// efgabcd</span></span><br></pre></td></tr></table></figure>
+<p>但是有了擴充方法之後，就可以把常用類寫成擴充類，直接使用擴充方法：</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="built_in">string</span> str = <span class="string">&quot;abcdefg&quot;</span>;</span><br><span class="line"><span class="built_in">string</span> rotatedStr = str.Rotate(<span class="number">3</span>); <span class="comment">// efgabcd</span></span><br></pre></td></tr></table></figure>
+<p>整個程式看起來就簡潔不少</p>
+<h2 id="方法鏈式呼叫-Method-chaining">方法鏈式呼叫 (Method chaining)</h2>
+<p>擴充方法最強大的部份在於它可以用於方法鏈式呼叫</p>
+<p>比如說 LINQ 就是藉由統一返回 <code>IEnumerable&lt;T&gt;</code> 對象使 output 可以當作 input 傳入<br>
+搭配擴充方法對 <code>IEnumerable&lt;T&gt;</code> 進行擴充，實現鏈式呼叫</p>
+<p>經典的鏈式呼叫例子：</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="built_in">int</span>[] numbers = <span class="keyword">new</span>[] &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line"><span class="built_in">int</span>[] numbersBetween2And4 = numbers</span><br><span class="line">    .Where(n =&gt; n &gt;= <span class="number">2</span>)</span><br><span class="line">    .Where(n =&gt; n &lt;= <span class="number">4</span>)</span><br><span class="line">    .ToArray(); <span class="comment">// [2, 3, 4]</span></span><br></pre></td></tr></table></figure>
+<h2 id="簡化操作物件的流程">簡化操作物件的流程</h2>
+<p>擴充方法可以用於簡化操作物件的流程</p>
+<p>比如說鏈式呼叫，藉由擴充方法，可以把一些常用的鏈式呼叫包成一塊，讓程式可讀性提高</p>
+<p>以前面的例子來說，可以將兩個 <code>Where</code> 包在一起變成 <code>Between</code><br>
+所以前面的 <code>numberBetween2And4</code> 就可以直接寫成：</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="built_in">int</span>[] numbers = <span class="keyword">new</span>[] &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line"><span class="built_in">int</span>[] numbersBetween2And4 = numbers.Between(<span class="number">2</span>, <span class="number">4</span>).ToArray(); <span class="comment">// [2, 3, 4]</span></span><br></pre></td></tr></table></figure>
+<p>像這樣簡化的設計在後期很常見<br>
+比如說在 EntityFramework 中就可以對 <code>DbContextOptions</code> 使用 <code>UseNpgsql</code> 擴充方法<br>
+僅僅一行就可以幫忙設定連線到 PostgresDB 所需的配置：</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line">options</span><br><span class="line">    .UseNpgsql(connectionString) <span class="comment">// 套用 postgresql</span></span><br><span class="line">    .UseLoggerFactory(logFactory) <span class="comment">// 掛上 log 輸出</span></span><br></pre></td></tr></table></figure>
+<h1>用擴充方法之前先想一想適不適合</h1>
+<p>當初我用 C# 寫自己的遊戲伺服器時，我在想，如果將封包的操作以擴充方法掛在遊戲物件上，這樣就可以隱藏封包發送的邏輯並且用起來也很直覺<br>
+但直到最近我在重構舊 Code 的時候，才意識到這是個<strong>壞點子</strong></p>
+<p>我發現，為了藉由玩家物件發送封包，我會在任何衍生的類別傳入玩家物件，讓依賴變得複雜<br>
+因為封包邏輯跟操作邏輯混在一起，看程式時我會開始疑惑使用的方法是要發送封包還是單純的遊戲邏輯<br>
+雖然可以在名稱上下功夫，比如 <code>SendXXXPacket</code> 之類的，不過我想表達的是，用過頭它會<strong>污染</strong>自動完成列表</p>
+<p>我自己認為擴充方法適合幾種狀況：</p>
+<ul>
+<li>
+<p>常用方法</p>
+<p>比如說範例的 <code>Indent</code>，或是 LINQ 本身就是非常好的例子</p>
+<p>如果 Java 有這個特性，我想寫起來就不會那麼冗長了 XD</p>
+</li>
+<li>
+<p>簡化對物件操作的流程</p>
+<p>對於一些常用的流程操作，就可以寫一個擴充方法來進行簡化</p>
+<p>例如說，我需要對某張地圖的玩家群體發送封包<br>
+我就可以對玩家集合建立一個 <code>Broadcast</code> 擴充方法<br>
+之後只要是任何玩家群體，我都可以直接呼叫 <code>Broadcast</code> 方法一次性的發送封包給多名玩家</p>
+</li>
+</ul>
+<p>簡而言之，擴充方法本身的意圖要非常明確，而且是針對被擴充的物件進行處理</p>
+<p>所以在使用之前還是先想想這個方法的意圖，再想想適不適合使用擴充方法<br>
+不要為了使用擴充方法而使用，然後建立一堆垃圾擴充</p>
+<h1>後記</h1>
+<p>這篇文章其實是在坐車時想到的，因為最近都在重構舊 Code，想說剛好可以當個題材<br>
+原先預想大概一個小時就可以寫完了，結果寫到後面發現一些描述跟內容感覺不對，就又打掉重寫<br>
+最後花了我大概四個小時寫這篇 🙃</p>
+<p>本來只是想簡單寫一下，但寫到一半又覺得內容太少，寫到結尾又覺得哪裡不對，結果就變成這樣了 XD</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C#</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/11/16/%E5%9C%A8%E4%B8%8D%E6%94%B9%E8%AE%8A%E9%80%A3%E7%B5%90%E7%9A%84%E6%83%85%E6%B3%81%E4%B8%8B%E6%90%AC%E7%A7%BB-hexo-%E6%96%87%E7%AB%A0/" rel="prev" title="在不改變連結的情況下搬移 Hexo 文章">
+                  <i class="fa fa-angle-left"></i> 在不改變連結的情況下搬移 Hexo 文章
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/12/17/2024%E5%BF%AB%E7%B5%90%E6%9D%9F%E4%BA%86/" rel="next" title="2024快結束了">
+                  2024快結束了 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2020 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Bluebean</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr+QR0SQDNfgglgtcM=" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"stu98832","repo":"stu98832.github.io","client_id":"0b84385c74db3fd44c22","client_secret":"089aee5f0152169f2b4ec924fbce2a06ac1e4c89","admin_user":"stu98832","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","labels":"Gitalk","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"56cff6932178c73bc376c7ec737e5551"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>
