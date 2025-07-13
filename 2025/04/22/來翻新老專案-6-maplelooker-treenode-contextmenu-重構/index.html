@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"stu98832.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="最早在 WinForm 時期，TreeNode 的 ContextMenu 是動態生成並即時顯示在指定位置上 轉到 WPF 之後，因為呼叫方式的改變，我改成動態建立 ContextMenu 並掛在節點的 TextBlock 上 一開始，我打算掛在 TreeViewItem 上，當時透過設定 Style 來實現 但卻遇上了選單樣式失效的問題，由於遲遲無法解決，最後還是用一開始掛在 TextBlock">
+<meta property="og:type" content="article">
+<meta property="og:title" content="來翻新老專案 (6) - MapleLooker - TreeNode ContextMenu 重構">
+<meta property="og:url" content="http://stu98832.github.io/2025/04/22/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-6-maplelooker-treenode-contextmenu-%E9%87%8D%E6%A7%8B/index.html">
+<meta property="og:site_name" content="Bluebean 的筆記">
+<meta property="og:description" content="最早在 WinForm 時期，TreeNode 的 ContextMenu 是動態生成並即時顯示在指定位置上 轉到 WPF 之後，因為呼叫方式的改變，我改成動態建立 ContextMenu 並掛在節點的 TextBlock 上 一開始，我打算掛在 TreeViewItem 上，當時透過設定 Style 來實現 但卻遇上了選單樣式失效的問題，由於遲遲無法解決，最後還是用一開始掛在 TextBlock">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2025-04-22T15:58:00.000Z">
+<meta property="article:modified_time" content="2025-07-13T13:51:43.544Z">
+<meta property="article:author" content="Bluebean">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://stu98832.github.io/2025/04/22/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-6-maplelooker-treenode-contextmenu-%E9%87%8D%E6%A7%8B/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://stu98832.github.io/2025/04/22/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-6-maplelooker-treenode-contextmenu-%E9%87%8D%E6%A7%8B/","path":"2025/04/22/來翻新老專案-6-maplelooker-treenode-contextmenu-重構/","title":"來翻新老專案 (6) - MapleLooker - TreeNode ContextMenu 重構"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>來翻新老專案 (6) - MapleLooker - TreeNode ContextMenu 重構 | Bluebean 的筆記</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Bluebean 的筆記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">DataTrigger</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">Command</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AA%E8%A7%A3%E6%B1%BA%E7%9A%84-CanExecute-%E7%9A%84%E5%95%8F%E9%A1%8C"><span class="nav-number">2.1.</span> <span class="nav-text">未解決的 CanExecute 的問題</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">完成</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">其他優化、修正</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#TreeView-%E7%9A%84-VirtualizingPanel-%E8%A7%A3%E6%B1%BA%E7%AF%80%E9%BB%9E%E5%A4%AA%E5%A4%9A%E5%8D%A1%E9%A0%93%E5%95%8F%E9%A1%8C"><span class="nav-number">4.1.</span> <span class="nav-text">TreeView 的 VirtualizingPanel 解決節點太多卡頓問題</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TreeViewItem-%E7%9A%84-IsExpanded-%E8%A6%81-TwoWay-%E7%B6%81%E5%AE%9A%E6%89%8D%E8%83%BD%E6%8E%A7%E5%88%B6"><span class="nav-number">4.2.</span> <span class="nav-text">TreeViewItem 的 IsExpanded 要 TwoWay 綁定才能控制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">結語</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bluebean"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Bluebean</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/stu98832" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stu98832" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://stu98832.github.io/2025/04/22/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-6-maplelooker-treenode-contextmenu-%E9%87%8D%E6%A7%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Bluebean">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="來翻新老專案 (6) - MapleLooker - TreeNode ContextMenu 重構 | Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          來翻新老專案 (6) - MapleLooker - TreeNode ContextMenu 重構
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2025-04-22 23:58:00" itemprop="dateCreated datePublished" datetime="2025-04-22T23:58:00+08:00">2025-04-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%80%81%E5%B0%88%E6%A1%88%E7%BF%BB%E6%96%B0/" itemprop="url" rel="index"><span itemprop="name">老專案翻新</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>最早在 WinForm 時期，TreeNode 的 ContextMenu 是動態生成並即時顯示在指定位置上<br>
+轉到 WPF 之後，因為呼叫方式的改變，我改成動態建立 ContextMenu 並掛在節點的 TextBlock 上</p>
+<p>一開始，我打算掛在 TreeViewItem 上，當時透過設定 Style 來實現<br>
+但卻遇上了選單樣式失效的問題，由於遲遲無法解決，最後還是用一開始掛在 TextBlock 的方案</p>
+<p>在翻新的過程中，一直在尋找能夠綁定在 TreeViewItem 並正常呈現方法<br>
+或者至少能夠直接用 xaml 來描述 ContextMenu 也行</p>
+<p>這次透過免費版 Claude，問到可以根據節點類型切換 ContextMenu 的方法<br>
+於是就有了這次的 ContextMenu 重構，想試試看效果如何</p>
+<span id="more"></span>
+<h1>DataTrigger</h1>
+<p>DataTrigger 可以根據資料的數值來設定各種 UI 屬性<br>
+通常可以透過元件的 <code>Style.Triggers</code> 進行設定</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">TextBlock</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">TextBlock.Style</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Style</span> <span class="attr">TargetType</span>=<span class="string">&quot;TextBlock&quot;</span>&gt;</span><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">Style.Triggers</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                <span class="comment">&lt;!-- data trigger --&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">Style.Triggers</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        </span><span class="tag">&lt;/<span class="name">Style</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">TextBlock.Style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">TextBlock</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>xaml 看起來有點多層，這是因為 <code>DataTrigger</code> 需要在 <code>Triggers</code> 屬性底下設定才行<br>
+因為需要設定元件的屬性，所以要將 <code>DataTrigger</code> 放在 <code>Style.Triggers</code> 裡面使用</p>
+<p>重構後的 ContextMenu 會根據節點的類型個別設定，最終 xaml 寫成這個樣子：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">TextBlock.Style</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Style</span> <span class="attr">TargetType</span>=<span class="string">&quot;TextBlock&quot;</span>&gt;</span><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">Style.Resources</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">ContextMenu</span> <span class="attr">x:Key</span>=<span class="string">&quot;wzFileMenu&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                <span class="tag">&lt;<span class="name">MenuItem</span> <span class="attr">Header</span>=<span class="string">&quot;關閉WZ檔案&quot;</span> <span class="attr">Command</span>=<span class="string">&quot;&#123;Binding CloseNodeCommand&#125;&quot;</span>/&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">ContextMenu</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">ContextMenu</span> <span class="attr">x:Key</span>=<span class="string">&quot;wzListMenu&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                <span class="tag">&lt;<span class="name">MenuItem</span> <span class="attr">Header</span>=<span class="string">&quot;關閉清單&quot;</span> <span class="attr">Command</span>=<span class="string">&quot;&#123;Binding CloseNodeCommand&#125;&quot;</span>/&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">ContextMenu</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">ContextMenu</span> <span class="attr">x:Key</span>=<span class="string">&quot;wzImageMenu&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                <span class="tag">&lt;<span class="name">MenuItem</span> <span class="attr">Header</span>=<span class="string">&quot;解析&quot;</span> <span class="attr">Command</span>=<span class="string">&quot;&#123;Binding ExpandCommand&#125;&quot;</span> <span class="attr">IsEnabled</span>=<span class="string">&quot;&#123;Binding IsLoaded, Converter=&#123;StaticResource inverseBool&#125;&#125;&quot;</span>/&gt;</span></span></span><br><span class="line"><span class="language-xml">                <span class="tag">&lt;<span class="name">MenuItem</span> <span class="attr">Header</span>=<span class="string">&quot;重置&quot;</span> <span class="attr">Command</span>=<span class="string">&quot;&#123;Binding ResetCommand&#125;&quot;</span> <span class="attr">IsEnabled</span>=<span class="string">&quot;&#123;Binding IsLoaded&#125;&quot;</span>/&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">ContextMenu</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">ContextMenu</span> <span class="attr">x:Key</span>=<span class="string">&quot;wzDataMenu&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                <span class="tag">&lt;<span class="name">MenuItem</span> <span class="attr">Header</span>=<span class="string">&quot;解析&quot;</span> <span class="attr">Command</span>=<span class="string">&quot;&#123;Binding ExpandCommand&#125;&quot;</span> <span class="attr">IsEnabled</span>=<span class="string">&quot;&#123;Binding IsLoaded, Converter=&#123;StaticResource inverseBool&#125;&#125;&quot;</span>/&gt;</span></span></span><br><span class="line"><span class="language-xml">                <span class="tag">&lt;<span class="name">MenuItem</span> <span class="attr">Header</span>=<span class="string">&quot;重置&quot;</span> <span class="attr">Command</span>=<span class="string">&quot;&#123;Binding ResetCommand&#125;&quot;</span> <span class="attr">IsEnabled</span>=<span class="string">&quot;&#123;Binding IsLoaded&#125;&quot;</span>/&gt;</span></span></span><br><span class="line"><span class="language-xml">                <span class="tag">&lt;<span class="name">MenuItem</span> <span class="attr">Header</span>=<span class="string">&quot;關閉Data檔案&quot;</span> <span class="attr">Command</span>=<span class="string">&quot;&#123;Binding CloseNodeCommand&#125;&quot;</span>/&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">ContextMenu</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">ContextMenu</span> <span class="attr">x:Key</span>=<span class="string">&quot;wzSoundMenu&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                <span class="tag">&lt;<span class="name">MenuItem</span> <span class="attr">Header</span>=<span class="string">&quot;儲存聲音&quot;</span> <span class="attr">Command</span>=<span class="string">&quot;&#123;Binding SaveSoundCommand&#125;&quot;</span>/&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">ContextMenu</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">ContextMenu</span> <span class="attr">x:Key</span>=<span class="string">&quot;wzCanvasMenu&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                <span class="tag">&lt;<span class="name">MenuItem</span> <span class="attr">Header</span>=<span class="string">&quot;儲存圖片&quot;</span> <span class="attr">Command</span>=<span class="string">&quot;&#123;Binding SaveCanvasCommand&#125;&quot;</span>/&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">ContextMenu</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">Style.Resources</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">Style.Triggers</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">DataTrigger</span> <span class="attr">Binding</span>=<span class="string">&quot;&#123;Binding Converter=&#123;StaticResource objectType&#125;&#125;&quot;</span> <span class="attr">Value</span>=<span class="string">&quot;&#123;x:Type wzTree:WzFileTreeNode&#125;&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                <span class="tag">&lt;<span class="name">Setter</span> <span class="attr">Property</span>=<span class="string">&quot;ContextMenu&quot;</span> <span class="attr">Value</span>=<span class="string">&quot;&#123;StaticResource wzFileMenu&#125;&quot;</span>/&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">DataTrigger</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">DataTrigger</span> <span class="attr">Binding</span>=<span class="string">&quot;&#123;Binding Converter=&#123;StaticResource objectType&#125;&#125;&quot;</span> <span class="attr">Value</span>=<span class="string">&quot;&#123;x:Type wzTree:WzListTreeNode&#125;&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                <span class="tag">&lt;<span class="name">Setter</span> <span class="attr">Property</span>=<span class="string">&quot;ContextMenu&quot;</span> <span class="attr">Value</span>=<span class="string">&quot;&#123;StaticResource wzListMenu&#125;&quot;</span>/&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">DataTrigger</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">DataTrigger</span> <span class="attr">Binding</span>=<span class="string">&quot;&#123;Binding Converter=&#123;StaticResource objectType&#125;&#125;&quot;</span> <span class="attr">Value</span>=<span class="string">&quot;&#123;x:Type wzTree:WzImageTreeNode&#125;&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                <span class="tag">&lt;<span class="name">Setter</span> <span class="attr">Property</span>=<span class="string">&quot;ContextMenu&quot;</span> <span class="attr">Value</span>=<span class="string">&quot;&#123;StaticResource wzImageMenu&#125;&quot;</span>/&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">DataTrigger</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">DataTrigger</span> <span class="attr">Binding</span>=<span class="string">&quot;&#123;Binding Converter=&#123;StaticResource objectType&#125;&#125;&quot;</span> <span class="attr">Value</span>=<span class="string">&quot;&#123;x:Type wzTree:WzDataTreeNode&#125;&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                <span class="tag">&lt;<span class="name">Setter</span> <span class="attr">Property</span>=<span class="string">&quot;ContextMenu&quot;</span> <span class="attr">Value</span>=<span class="string">&quot;&#123;StaticResource wzDataMenu&#125;&quot;</span>/&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">DataTrigger</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">DataTrigger</span> <span class="attr">Binding</span>=<span class="string">&quot;&#123;Binding Converter=&#123;StaticResource objectType&#125;&#125;&quot;</span> <span class="attr">Value</span>=<span class="string">&quot;&#123;x:Type wzTree:WzSoundTreeNode&#125;&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                <span class="tag">&lt;<span class="name">Setter</span> <span class="attr">Property</span>=<span class="string">&quot;ContextMenu&quot;</span> <span class="attr">Value</span>=<span class="string">&quot;&#123;StaticResource wzSoundMenu&#125;&quot;</span>/&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">DataTrigger</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">DataTrigger</span> <span class="attr">Binding</span>=<span class="string">&quot;&#123;Binding Converter=&#123;StaticResource objectType&#125;&#125;&quot;</span> <span class="attr">Value</span>=<span class="string">&quot;&#123;x:Type wzTree:WzCanvasTreeNode&#125;&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                <span class="tag">&lt;<span class="name">Setter</span> <span class="attr">Property</span>=<span class="string">&quot;ContextMenu&quot;</span> <span class="attr">Value</span>=<span class="string">&quot;&#123;StaticResource wzCanvasMenu&#125;&quot;</span>/&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">DataTrigger</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">Style.Triggers</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    </span><span class="tag">&lt;/<span class="name">Style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">TextBlock.Style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>主要就是在 <code>Style.Resources</code> 定義各種類型的 ContextMenu<br>
+最後在 <code>Style.Triggers</code> 內使用 <code>DataTrigger</code> 針對不同的節點類型設定對應的選單</p>
+<p>原本我是把 ContextMenu 直接寫在 <code>Setter.Value</code> 裡面，但是這樣寫 Setter 的部份會變成這樣：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Setter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Setter.Value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ContextMenu</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">Setter.Value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Setter</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>因為太多層會讓 xaml 變得很難看，所以才用 Resource 綁定的方式讓 xaml 好看一點</p>
+<h1>Command</h1>
+<p>Command 我不是很熟悉，目前只知道他是一個通用的接口<br>
+部份 UI 元件會有 Command 屬性可以設定輸入時要觸發的行為<br>
+比如說按下 Button，或是按下 MenuItem，這些元件會呼叫 Command 設定好的程式</p>
+<p>原本相關選單的事件都放在 MainForm.xaml.cs 內，並在動態產生選單時直接指定事件<br>
+現在因為 ContextMenu 直接定義在 xaml 內的關係，所以改用 Command 並綁定到對應的 MenuItem 上</p>
+<p>為了要綁定 Command，所以我在每個節點類別上定義各自的 Command，並原本定義在 MainForm 的事件都搬進去<br>
+部份會動到根節點的事件，則是透過建立 event 讓外部自行實做其他跟節點無關的操作</p>
+<p>下面是其中一個節點的定義：</p>
+<figure class="highlight c#"><figcaption><span>WzSoundTreeNode.cs</span></figcaption><table><tr><td class="code"><pre><span class="line">[<span class="meta">SupportedOSPlatform(<span class="string">&quot;Windows&quot;</span>)</span>]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">WzSoundTreeNode</span> : <span class="title">WzTreeNode</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> ICommand SaveSoundCommand &#123; <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">WzSoundTreeNode</span>(<span class="params"><span class="built_in">string</span> name, WzSound <span class="keyword">value</span></span>) : <span class="title">base</span>(<span class="params">name, <span class="keyword">value</span></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.SaveSoundCommand = <span class="keyword">new</span> RelayCommand&lt;<span class="built_in">object</span>&gt;(<span class="keyword">this</span>.OnSaveSound);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> SaveFileDialog <span class="title">CreateDialog</span>(<span class="params">WzSound sound</span>)</span> &#123;</span><br><span class="line">        SaveFileDialog dialog = <span class="keyword">new</span>();</span><br><span class="line">        <span class="keyword">if</span> (sound.IsWav) &#123;</span><br><span class="line">            dialog.DefaultExt = <span class="string">&quot;.wav&quot;</span>;</span><br><span class="line">            dialog.Filter = <span class="string">&quot;Wave 音樂檔(.wav)|*.wav&quot;</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            dialog.DefaultExt = <span class="string">&quot;.mp3&quot;</span>;</span><br><span class="line">            dialog.Filter = <span class="string">&quot;MP3 音樂檔(.mp3)|*.mp3&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dialog;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnSaveSound</span>(<span class="params"><span class="built_in">object</span> obj</span>)</span> &#123;</span><br><span class="line">        WzSound sound = (WzSound)obj;</span><br><span class="line">        SaveFileDialog SaveSound = <span class="keyword">this</span>.CreateDialog(sound);</span><br><span class="line">        <span class="keyword">if</span> (SaveSound.ShowDialog() == <span class="literal">true</span>) &#123;</span><br><span class="line">            sound.SaveSound(<span class="keyword">new</span> BinaryWriter(SaveSound.OpenFile()));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這個節點的選單主要可以儲存聲音<br>
+我在裡面使用了 WpfUI 提供的 <code>RelayCommand</code> 綁定 <code>OnSaveSound</code> 事件，並且在設定選單時直接綁在選單上</p>
+<h2 id="未解決的-CanExecute-的問題">未解決的 CanExecute 的問題</h2>
+<p>Command 有一個 <code>CanExecute</code> 屬性可以設定，主要用來判斷 Command 能不能執行<br>
+原本應該會自己更新 UI 的狀態，但是我透過 Trigger 將 Command 綁到 MenuItem 時，MenuItem 卻不會更新 <code>IsEnabled</code> 的狀態<br>
+目前在網路上找到的資料不多，只能推測可能是 Trigger 造成的問題<br>
+因為沒有解法，最後乾脆直接綁定 <code>IsEnabled</code> 來控制 MenuItem 的開關</p>
+<!--
+參考文件
+![refer](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/properties/dependency-property-value-precedence?view=netdesktop-9.0&redirectedfrom=MSDN#the-style-property)
+-->
+<h1>完成</h1>
+<p>ContextMenu 重構大致上就到這邊結束<br>
+只不過是換了一個寫法動態設定 ContextMenu 而已，呈現的效果跟原本差不多<br>
+主要還是藉這次機會整理一下 Code，並學習其他寫法</p>
+<h1>其他優化、修正</h1>
+<h2 id="TreeView-的-VirtualizingPanel-解決節點太多卡頓問題">TreeView 的 VirtualizingPanel 解決節點太多卡頓問題</h2>
+<p>這次測試時發現了節點太多導致 UI 卡住的問題<br>
+本來以為是短時間內建立太多節點導致，後來才發現只是單純節點太多…</p>
+<p>要處理這個問題，可以開啟 TreeView 的 VirtualizingPanel 功能<br>
+它只會在可以看見節點的地方建立 UI 元素，減少了大量 UI 元素導致的卡頓</p>
+<figure class="highlight xml"><figcaption><span>TreeView 開啟 VirtualizingPanel 功能</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">TreeView</span></span></span><br><span class="line"><span class="tag">    <span class="attr">VirtualizingPanel.IsVirtualizing</span>=<span class="string">&quot;True&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">VirtualizingPanel.VirtualizationMode</span>=<span class="string">&quot;Recycling&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">TreeView</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="TreeViewItem-的-IsExpanded-要-TwoWay-綁定才能控制">TreeViewItem 的 IsExpanded 要 TwoWay 綁定才能控制</h2>
+<p>一開始看 TreeNode 有正常設定 <code>IsExpanded</code> 的值以後，就沒去理會<br>
+直到要用程式關閉節點才知道，TreeViewItem 的 <code>IsExpanded</code> 屬性需要使用 TwoWay 綁定</p>
+<p>原本預設的 OneWay 綁定，會將綁定數值的改動反映到 UI 上<br>
+但是 TreeViewItem 本身也可以控制 <code>IsExpanded</code><br>
+因此需要設定 TwoWay 綁定使 TreeViewItem 控制同一個綁定屬性</p>
+<h1>結語</h1>
+<p>目前這樣寫下來，感覺 WPF 的入門的難度挺高的<br>
+比起現在的網頁框架有現成的 CSS 可以用，寫法也比較簡單易懂<br>
+用 WPF 的 xaml 來寫 UI 需要了解各種類別的限制與使用時機<br>
+這導致早期為了實現一些動畫或動態生成的 UI 時，需要學習很多基礎知識<br>
+Animation、TimeLine、UI 元件、Setter、Trigger、Style<br>
+眾多的概念使得初學時特別容易碰壁，有時在網路上也找不到類似的問題，而 MSDN 的文件又龐大又難找，學起特別累<br>
+但逐漸了解這些類別以及其限制之後，後面寫 UI 就簡單多了</p>
+<p>這次為了減少查文件的時間，就在 Claude 上開了免費帳號去問問題<br>
+目前使用起來體驗還不錯，只不過有時候問出來的 Code 或 xaml 不能用 😐</p>
+<p>例如 DataTrigger 的部份，Claude 給出的答案長這樣：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">DataTrigger</span> <span class="attr">Binding</span>=<span class="string">&quot;&#123;Binding&#125;&quot;</span> <span class="attr">Value</span>=<span class="string">&quot;&#123;x:Type wzTree:WzFileTreeNode&#125;&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">DataTrigger</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>實際上，這邊的 Binding 只是綁定節點本身，沒辦法用來判斷型別<br>
+所以後來才寫了一個 ObjectTypeConvertor 把物件轉成型別去做判斷<br>
+雖然 Claude 的回答不完全可靠，但起碼提供了方向，還是比上網 Google 方便一點</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/04/05/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-5-maplelooker-animationview-%E5%8B%95%E7%95%AB%E7%B5%84%E4%BB%B6%E5%84%AA%E5%8C%96/" rel="prev" title="來翻新老專案 (5) - MapleLooker - AnimationView 動畫組件優化">
+                  <i class="fa fa-angle-left"></i> 來翻新老專案 (5) - MapleLooker - AnimationView 動畫組件優化
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/04/29/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-7-maplelooker-treeview-%E6%9F%A5%E8%A9%A2/" rel="next" title="來翻新老專案 (7) - MapleLooker - TreeView 查詢">
+                  來翻新老專案 (7) - MapleLooker - TreeView 查詢 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2020 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Bluebean</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr+QR0SQDNfgglgtcM=" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"stu98832","repo":"stu98832.github.io","client_id":"0b84385c74db3fd44c22","client_secret":"089aee5f0152169f2b4ec924fbce2a06ac1e4c89","admin_user":"stu98832","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","labels":"Gitalk","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"4814e5dc202bc5f928959532862afe15"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>
