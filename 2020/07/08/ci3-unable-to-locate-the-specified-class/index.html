@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"stu98832.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Session載入問題 某些人剛開始寫CI時可能會碰到一種奇特的問題：Unable to locate the specified class 如果透過Google搜尋相關錯誤，你會發現大多跟Session.php有關 不過找不太到這種現象的解釋 即使是目前CI3的最新版本3.1.11依然有可能會出現 這種問題的難點在於無法知道確切的錯誤在哪裡 於是大家通常都是把跟session有關的地方拆掉，例">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CI3-Unable to locate the specified class錯誤">
+<meta property="og:url" content="http://stu98832.github.io/2020/07/08/ci3-unable-to-locate-the-specified-class/index.html">
+<meta property="og:site_name" content="Bluebean 的筆記">
+<meta property="og:description" content="Session載入問題 某些人剛開始寫CI時可能會碰到一種奇特的問題：Unable to locate the specified class 如果透過Google搜尋相關錯誤，你會發現大多跟Session.php有關 不過找不太到這種現象的解釋 即使是目前CI3的最新版本3.1.11依然有可能會出現 這種問題的難點在於無法知道確切的錯誤在哪裡 於是大家通常都是把跟session有關的地方拆掉，例">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://stu98832.github.io/2020/07/08/ci3-unable-to-locate-the-specified-class/ci-bug-0.PNG">
+<meta property="og:image" content="http://stu98832.github.io/2020/07/08/ci3-unable-to-locate-the-specified-class/ci-bug-1.PNG">
+<meta property="og:image" content="http://stu98832.github.io/2020/07/08/ci3-unable-to-locate-the-specified-class/ci-bug-2.PNG">
+<meta property="article:published_time" content="2020-07-08T04:24:23.000Z">
+<meta property="article:modified_time" content="2025-09-21T15:51:56.657Z">
+<meta property="article:author" content="Bluebean">
+<meta property="article:tag" content="CodeIgniter3">
+<meta property="article:tag" content="網頁後端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://stu98832.github.io/2020/07/08/ci3-unable-to-locate-the-specified-class/ci-bug-0.PNG">
+
+
+<link rel="canonical" href="http://stu98832.github.io/2020/07/08/ci3-unable-to-locate-the-specified-class/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://stu98832.github.io/2020/07/08/ci3-unable-to-locate-the-specified-class/","path":"/2020/07/08/ci3-unable-to-locate-the-specified-class/","title":"CI3-Unable to locate the specified class錯誤"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>CI3-Unable to locate the specified class錯誤 | Bluebean 的筆記</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Bluebean 的筆記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Session載入問題</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">問題的起源</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E8%A4%87%E5%BB%BA%E7%AB%8BCI-Controller%E5%AF%A6%E4%BE%8B"><span class="nav-number">2.1.</span> <span class="nav-text">重複建立CI_Controller實例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%9E%E5%88%A5%E8%A1%A8%E4%B8%AD%E5%B7%B2%E7%B6%93%E6%9C%89%E8%A9%B2%E9%A1%9E%E5%88%A5%E5%AD%98%E5%9C%A8"><span class="nav-number">2.2.</span> <span class="nav-text">類別表中已經有該類別存在</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">load_class 的缺陷</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">load_class 跟 Controller 的關係</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">Session 載入測試</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">結語</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bluebean"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Bluebean</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/stu98832" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stu98832" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://stu98832.github.io/2020/07/08/ci3-unable-to-locate-the-specified-class/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Bluebean">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="CI3-Unable to locate the specified class錯誤 | Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CI3-Unable to locate the specified class錯誤
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2020-07-08 12:24:23" itemprop="dateCreated datePublished" datetime="2020-07-08T12:24:23+08:00">2020-07-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/CodeIgniter3/" itemprop="url" rel="index"><span itemprop="name">CodeIgniter3</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1>Session載入問題</h1>
+<p>某些人剛開始寫CI時可能會碰到一種奇特的問題：<code>Unable to locate the specified class</code></p>
+<p>如果透過Google搜尋相關錯誤，你會發現大多跟Session.php有關</p>
+<p>不過找不太到這種現象的解釋</p>
+<p>即使是目前CI3的最新版本3.1.11依然有可能會出現</p>
+<p>這種問題的難點在於無法知道確切的錯誤在哪裡</p>
+<p>於是大家通常都是把跟session有關的地方拆掉，例如說 autoload 之類的</p>
+<span id="more"></span>
+<h1>問題的起源</h1>
+<h2 id="重複建立CI-Controller實例">重複建立CI_Controller實例</h2>
+<p>重複建立 CI_Controller 的原因大多是：</p>
+<ol>
+<li>不小心讓 model 繼承 CI_Controller</li>
+<li>在其他地方因為某些原因，產生了新的Controller</li>
+</ol>
+<p>而重複建立 CI_Controller 會導致它可能因為 <code>load_class</code> 的缺陷而產生錯誤</p>
+<blockquote>
+<p>註： load_class 位於 system/core/Common.php裡面</p>
+</blockquote>
+<h2 id="類別表中已經有該類別存在">類別表中已經有該類別存在</h2>
+<p>如果已經使用了 autoload 或是手動由 loader 去載入 library的話，該類別會被存入內建的類別表中</p>
+<p>他們很有可能因為某些原因，被 <code>load_class</code> 方法所在入，這時候就有可能因為 <code>load_class</code> 的缺陷發生錯誤</p>
+<h1>load_class 的缺陷</h1>
+<p>大部分的情況，透過 load_class 去載入類別並不會有什麼問題，但是有某些特例，<strong>Session 就是其中一種</strong></p>
+<p>Session 這種 library 是放在子目錄裡面的</p>
+<p>在 loader 載入 library 的最後一個檢查環節中有被處理到，這是我們能成功載入 Session 的關鍵</p>
+<p>但是 <code>load_class</code> 卻沒有檢查子資料夾，因此就產生了無法直接載入 class 的錯誤</p>
+<p>是這段錯誤訊息的來源</p>
+<h1>load_class 跟 Controller 的關係</h1>
+<p>Controller 本身會在一開始自行載入由驅動檔案 <code>CoodeIgniter.php</code> 載入的類別</p>
+<p>這個部份是透過 <code>load_class</code> 來進行載入的</p>
+<p>但是當後來載入新的 library 之後，該 library 將會被加入至 class 表中，例如說 session</p>
+<p>所以當 Controller 再度被建構時，只要使用了 CI_Controller 的建構式子，就會再觸發 <code>load_class</code></p>
+<p>但是這時候就會因為子資料夾的問題，產生了無法載入 class 的錯誤</p>
+<h1>Session 載入測試</h1>
+<p>正常情況下的頁面</p>
+<p><img src="ci-bug-0.PNG" alt=""></p>
+<p>修改成 CI_Controller 之後的畫面</p>
+<p><img src="ci-bug-1.PNG" alt=""></p>
+<p>由於先載入 Session ，因此第二次建立 CI_Controller 時 <code>load_class</code> 會嘗試載入 Session</p>
+<p>載入順序對調（Library 跟 Model 對調）</p>
+<p><img src="ci-bug-2.PNG" alt=""></p>
+<p>因為是後來才載入 Session ，所以重複產生 Controller 並不會造成影響</p>
+<p>不過由於 CI3 的設計，<code>$CI-&gt;get_instance()</code>  會是新產生的 Controller</p>
+<p>因此原本的 <code>Test</code> 就不會有 <code>$session</code> 變數，反而是 <code>Test_model</code>會有</p>
+<h1>結語</h1>
+<p>這些問題引發的原因通常是因為載入未預期的 class</p>
+<p>有可能是來自於自己錯誤的寫法，也有可能是其他 library 所造成</p>
+<p>但不論怎麼說，最後都會在 <code>load_class</code> 這個環節出錯</p>
+<p>如果發現了這個問題存在，建議在 <code>load_class</code> 拋出錯誤來尋找來源</p>
+<p>看是因為未預期的 library 被載入，或是哪個地方重複呼叫了 CI_Controller 的建構式</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CodeIgniter3/" rel="tag"><i class="fa fa-tag"></i> CodeIgniter3</a>
+              <a href="/tags/%E7%B6%B2%E9%A0%81%E5%BE%8C%E7%AB%AF/" rel="tag"><i class="fa fa-tag"></i> 網頁後端</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/06/26/call-by-reference/" rel="prev" title="Call By Value, Call By Reference? 談談所謂的參數引用">
+                  <i class="fa fa-angle-left"></i> Call By Value, Call By Reference? 談談所謂的參數引用
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/02/11/note-angular-learning-1/" rel="next" title="Angular學習筆記1 - 認識SPA">
+                  Angular學習筆記1 - 認識SPA <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2020 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Bluebean</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr+QR0SQDNfgglgtcM=" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"stu98832","repo":"stu98832.github.io","client_id":"0b84385c74db3fd44c22","client_secret":"089aee5f0152169f2b4ec924fbce2a06ac1e4c89","admin_user":"stu98832","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","labels":"Gitalk","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"d2edeb5f013e07f2d85c700f776c2cf8"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

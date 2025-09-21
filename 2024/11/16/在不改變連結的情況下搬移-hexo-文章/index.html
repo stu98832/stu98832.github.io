@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"stu98832.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Hexo 預設的文章連結設計我覺得不太好對文章做管理 造成我必須在文章的檔案名稱加上一些前綴以方便區分檔案 為了以後方便管理文章，所以我就做了文章的遷移 想說是時候該寫文章了，就拿這次遷移水一篇 XD">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在不改變連結的情況下搬移 Hexo 文章">
+<meta property="og:url" content="http://stu98832.github.io/2024/11/16/%E5%9C%A8%E4%B8%8D%E6%94%B9%E8%AE%8A%E9%80%A3%E7%B5%90%E7%9A%84%E6%83%85%E6%B3%81%E4%B8%8B%E6%90%AC%E7%A7%BB-hexo-%E6%96%87%E7%AB%A0/index.html">
+<meta property="og:site_name" content="Bluebean 的筆記">
+<meta property="og:description" content="Hexo 預設的文章連結設計我覺得不太好對文章做管理 造成我必須在文章的檔案名稱加上一些前綴以方便區分檔案 為了以後方便管理文章，所以我就做了文章的遷移 想說是時候該寫文章了，就拿這次遷移水一篇 XD">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://stu98832.github.io/2024/11/16/%E5%9C%A8%E4%B8%8D%E6%94%B9%E8%AE%8A%E9%80%A3%E7%B5%90%E7%9A%84%E6%83%85%E6%B3%81%E4%B8%8B%E6%90%AC%E7%A7%BB-hexo-%E6%96%87%E7%AB%A0/2024-11-17-01.png">
+<meta property="article:published_time" content="2024-11-16T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-09-21T15:51:56.664Z">
+<meta property="article:author" content="Bluebean">
+<meta property="article:tag" content="hexo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://stu98832.github.io/2024/11/16/%E5%9C%A8%E4%B8%8D%E6%94%B9%E8%AE%8A%E9%80%A3%E7%B5%90%E7%9A%84%E6%83%85%E6%B3%81%E4%B8%8B%E6%90%AC%E7%A7%BB-hexo-%E6%96%87%E7%AB%A0/2024-11-17-01.png">
+
+
+<link rel="canonical" href="http://stu98832.github.io/2024/11/16/%E5%9C%A8%E4%B8%8D%E6%94%B9%E8%AE%8A%E9%80%A3%E7%B5%90%E7%9A%84%E6%83%85%E6%B3%81%E4%B8%8B%E6%90%AC%E7%A7%BB-hexo-%E6%96%87%E7%AB%A0/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://stu98832.github.io/2024/11/16/%E5%9C%A8%E4%B8%8D%E6%94%B9%E8%AE%8A%E9%80%A3%E7%B5%90%E7%9A%84%E6%83%85%E6%B3%81%E4%B8%8B%E6%90%AC%E7%A7%BB-hexo-%E6%96%87%E7%AB%A0/","path":"2024/11/16/在不改變連結的情況下搬移-hexo-文章/","title":"在不改變連結的情況下搬移 Hexo 文章"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>在不改變連結的情況下搬移 Hexo 文章 | Bluebean 的筆記</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Bluebean 的筆記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">permalink</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">舊檔案處理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">舊文章連結處理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">結語</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bluebean"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Bluebean</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/stu98832" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stu98832" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://stu98832.github.io/2024/11/16/%E5%9C%A8%E4%B8%8D%E6%94%B9%E8%AE%8A%E9%80%A3%E7%B5%90%E7%9A%84%E6%83%85%E6%B3%81%E4%B8%8B%E6%90%AC%E7%A7%BB-hexo-%E6%96%87%E7%AB%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Bluebean">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="在不改變連結的情況下搬移 Hexo 文章 | Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          在不改變連結的情況下搬移 Hexo 文章
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2024-11-17 00:00:00" itemprop="dateCreated datePublished" datetime="2024-11-17T00:00:00+08:00">2024-11-17</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Hexo 預設的文章連結設計我覺得不太好對文章做管理<br>
+造成我必須在文章的檔案名稱加上一些前綴以方便區分檔案</p>
+<p>為了以後方便管理文章，所以我就做了文章的遷移</p>
+<p>想說是時候該寫文章了，就拿這次遷移水一篇 XD</p>
+<span id="more"></span>
+<p>老實說早期剛開始寫 blog 的時候還沒想到這個問題<br>
+但在我重寫一次 DesignPattern <s>(然後又放著長草)</s> 之後，才發現 Hexo 預設的文章連結設計讓我沒辦法很好的去分類檔案</p>
+<h1>permalink</h1>
+<p>Hexo 預設的永久路徑長這樣</p>
+<figure class="highlight yaml"><figcaption><span>_config.yaml</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment"># ...</span></span><br><span class="line"><span class="attr">permalink:</span> <span class="string">:year/:month/:day/:title</span></span><br><span class="line"><span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
+<p>這其實有點誤導，根據官方文件的寫法， <code>:title</code> 指的是相對 <code>source/_posts/</code> 的檔案路徑，只要我搬移檔案，路徑就會變動</p>
+<p>因為這個原因，所以我之前的文章都會加一些前綴來跟以前的文章錯開</p>
+<p>現在我使用的配置是</p>
+<figure class="highlight yaml"><figcaption><span>_config.yaml</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment"># ...</span></span><br><span class="line"><span class="attr">permalink:</span> <span class="string">:year/:month/:day/:post_title</span></span><br><span class="line"><span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
+<p>這個才是以文章的標題去決定 url</p>
+<p>由於路徑上會包含年月日，因此完全不用擔心連結衝突的問題</p>
+<p>有關 permalink 的敘述可參考官方文件：<a target="_blank" rel="noopener" href="https://hexo.io/docs/permalinks">Permalinks | Hexo</a></p>
+<p>調整完新文章的連結配置之後，再來就是要處理舊檔案</p>
+<h1>舊檔案處理</h1>
+<p>其實官方的第一段就有講到 <code>permalink</code> 這個配置可以 by 文章設定，但我實際上是看留言才知道的🙃</p>
+<blockquote>
+<p>You can specify the permalinks for your site in <code>_config.yml</code> or in the <strong>front-matter for each post</strong>.</p>
+</blockquote>
+<p>於是我只要對每個文章當用這樣的形式輸入，就可以讓舊文章在不受影響的情況下進行文件搬移</p>
+<figure class="highlight markdown"><figcaption><span>_config.yaml</span></figcaption><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"><span class="section"># ...</span></span><br><span class="line">permalink: yyyy/mm/dd/old-title/</span><br><span class="line"><span class="section"># ...</span></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<div class="note warning"><p>後面一定要加上斜線，這樣 Hexo 產生文件時會將其放入獨立的資料夾內的 <code>index.html</code> 而非 <code>&lt;old-title&gt;</code> 檔案</p>
+</div>
+<p>設定好之後，就只剩文章連結要處理了</p>
+<h1>舊文章連結處理</h1>
+<p>由於我把我的文章整理之後塞到各自的資料夾內，因此使用 <code>post_path</code> 跟 <code>post_link</code> 兩個 tag 外掛的區段也要進行修改</p>
+<p>一開始我的 DesignPattern 文章是使用 <code>&#123;% post_link note-design-pattern %&#125;</code> 來產生連接</p>
+<p>但是當我將 md 檔分類到 <code>topics/design-pattern/</code> 之後，必須要改成 <code>&#123;% post_link topics/design-pattern/note-design-pattern %&#125;</code></p>
+<p>實際上 <code>post_link</code> 跟 <code>post_path</code> 都是吃相對於 <code>source/_posts/</code> 的檔案路徑 (不含副檔名)，因此這部份只要路徑有改動就必須做修正</p>
+<h1>結語</h1>
+<p>上面的幾項改完之後就是現在看到的 blog 的樣貌了，應該會發現沒什麼變化，我可是很仔細的看了 git 的 ChangeLog 來確定配置都沒有變動呢 :)</p>
+<p>現在的文章分類大概就像下圖這樣：</p>
+<p><img src="2024-11-17-01.png" alt="現在的 Post 檔案結構"></p>
+<p>除了位置的變動以外，也對檔案名稱做了修改，方便管理</p>
+<p>因為之前的文章並不是很多，修改起來還算容易</p>
+<p>改成用文章標題之後，以後就不需要再做這麼麻煩的設定了~</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/hexo/" rel="tag"><i class="fa fa-tag"></i> hexo</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/11/10/2024-11-10_talk/" rel="prev" title="好久沒寫文章了">
+                  <i class="fa fa-angle-left"></i> 好久沒寫文章了
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/11/25/%E8%81%8A%E4%B8%80%E4%B8%8B-c-%E7%9A%84-%E6%93%B4%E5%85%85%E6%96%B9%E6%B3%95-extension-methods/" rel="next" title="聊一下 C# 的 擴充方法(Extension Methods)">
+                  聊一下 C# 的 擴充方法(Extension Methods) <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2020 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Bluebean</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr+QR0SQDNfgglgtcM=" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"stu98832","repo":"stu98832.github.io","client_id":"0b84385c74db3fd44c22","client_secret":"089aee5f0152169f2b4ec924fbce2a06ac1e4c89","admin_user":"stu98832","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","labels":"Gitalk","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"191b2c0589fc65df371bdddd5d4d7f4b"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"stu98832.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="時間過得真快，現在已經是 2025 年了 原本想要介紹一些讓程式看起來更簡潔的程式寫法 因為我在自介裡面說過自己追求易於閱讀的程式碼，但卻沒有出過類似的文章中內容 只是我一直想不到該怎麼介紹，連舉例都想不到 🙃 為了尋找素材，去翻了一下以前寫的 C# 專案 剛好翻到一個適合翻新的陳年老專案 於是想說乾脆改寫紀錄自己翻新重構的過程 雖然這個專案後面應該會被蛋雕(丟掉) 但還是想試著翻新來玩玩 這個">
+<meta property="og:type" content="article">
+<meta property="og:title" content="來翻新老專案 (1) - 升級 .net 8.0">
+<meta property="og:url" content="http://stu98832.github.io/2025/01/15/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-1-%E5%8D%87%E7%B4%9A-net-8-0/index.html">
+<meta property="og:site_name" content="Bluebean 的筆記">
+<meta property="og:description" content="時間過得真快，現在已經是 2025 年了 原本想要介紹一些讓程式看起來更簡潔的程式寫法 因為我在自介裡面說過自己追求易於閱讀的程式碼，但卻沒有出過類似的文章中內容 只是我一直想不到該怎麼介紹，連舉例都想不到 🙃 為了尋找素材，去翻了一下以前寫的 C# 專案 剛好翻到一個適合翻新的陳年老專案 於是想說乾脆改寫紀錄自己翻新重構的過程 雖然這個專案後面應該會被蛋雕(丟掉) 但還是想試著翻新來玩玩 這個">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://stu98832.github.io/assets/topics/project-renovation/maple-looker/maple-looker-intro.png">
+<meta property="og:image" content="http://stu98832.github.io/assets/topics/project-renovation/maple-looker/maple-looker-main.png">
+<meta property="article:published_time" content="2025-01-15T16:35:00.000Z">
+<meta property="article:modified_time" content="2025-09-21T15:51:56.671Z">
+<meta property="article:author" content="Bluebean">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://stu98832.github.io/assets/topics/project-renovation/maple-looker/maple-looker-intro.png">
+
+
+<link rel="canonical" href="http://stu98832.github.io/2025/01/15/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-1-%E5%8D%87%E7%B4%9A-net-8-0/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://stu98832.github.io/2025/01/15/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-1-%E5%8D%87%E7%B4%9A-net-8-0/","path":"2025/01/15/來翻新老專案-1-升級-net-8-0/","title":"來翻新老專案 (1) - 升級 .net 8.0"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>來翻新老專案 (1) - 升級 .net 8.0 | Bluebean 的筆記</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Bluebean 的筆記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">專案歷史</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">加入 Git 版控</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">升級 .net 8.0</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">套件改使用 Nuget 集中管理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">標記 SupportedOSPlatform</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">完成升級</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bluebean"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Bluebean</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/stu98832" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stu98832" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://stu98832.github.io/2025/01/15/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-1-%E5%8D%87%E7%B4%9A-net-8-0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Bluebean">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="來翻新老專案 (1) - 升級 .net 8.0 | Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          來翻新老專案 (1) - 升級 .net 8.0
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2025-01-16 00:35:00" itemprop="dateCreated datePublished" datetime="2025-01-16T00:35:00+08:00">2025-01-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%80%81%E5%B0%88%E6%A1%88%E7%BF%BB%E6%96%B0/" itemprop="url" rel="index"><span itemprop="name">老專案翻新</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>時間過得真快，現在已經是 2025 年了</p>
+<p>原本想要介紹一些讓程式看起來更簡潔的程式寫法<br>
+因為我在自介裡面說過自己追求易於閱讀的程式碼，但卻沒有出過類似的文章中內容<br>
+只是我一直想不到該怎麼介紹，連舉例都想不到 🙃</p>
+<p>為了尋找素材，去翻了一下以前寫的 C# 專案<br>
+剛好翻到一個適合翻新的陳年老專案<br>
+於是想說乾脆改寫紀錄自己翻新重構的過程</p>
+<p>雖然這個專案後面應該會被蛋雕(丟掉)<br>
+但還是想試著翻新來玩玩</p>
+<p>這個專案叫 MapleLooker，是楓之谷這款遊戲的資源讀取器<br>
+以前從各論壇搜刮來各種資源，用 .Net Framework WinForm 寫出來的專案</p>
+<span id="more"></span>
+<h1>專案歷史</h1>
+<p>以前學生時期很喜歡去翻楓之谷的檔案，當時還載了各國的楓之谷來拆檔<br>
+後來我從網路上找來一堆資源，拼接出解析遊戲檔案的 Library<br>
+由於早期的拆檔程式我覺得不太好用，有時會遇到改版後噴錯的問題，所以想說自己寫一個</p>
+<p>這個專案的程式碼最後編輯於 2016 年，距今已經有 8 年多了<br>
+當初覺得這個專案寫得還算不錯，經過多次改版都不太會噴掉<br>
+大概是因為功能太少，沒什麼歷史包袱的關係</p>
+<p>現在回來看裡面的程式，寫得挺爛的😆<br>
+但也因此能夠作為重構跟翻新的好題材</p>
+<h1>加入 Git 版控</h1>
+<p>我接觸 git 的時間比較晚，大概是 3、4 年前<br>
+所以這個專案理所當然的沒有 git<br>
+在開始之前，我需要先初始化 git，讓專案有版控可以紀錄我的改動</p>
+<h1>升級 .net 8.0</h1>
+<p>今天的重點，把這個陳年專案從 .Net Framework 升級到 .Net Core<br>
+除了可以使用新的 C# 語法之外，這樣也才能支持我習慣的 VSCode</p>
+<p>轉換期間需要打開 Visual Studio<br>
+這邊我依照 Visual Studio UI 的指引，選擇了 <a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.upgradeassistant">.NET Upgrade Assistant</a> 插件做升級<br>
+過程用 GUI 點一點，專案就升級成 .Net Core 8.0 了 🎉</p>
+<h1>套件改使用 Nuget 集中管理</h1>
+<p>這個專案有用到 <a target="_blank" rel="noopener" href="http://Bass.NET">Bass.NET</a>，它將 bass 這個聲音函式庫包裝成 .NET 介面，個人非商業使用免費<br>
+原先都是直接下載 dll 並引入到專案</p>
+<p>很高興官方有出 .Net Core 版本，而且也可以用 Nuget 安裝<br>
+所以我就把舊的 dll 給砍了改用 Nuget，這樣除了原生的 dll 之外，就不用額外下載 .Net 的 Dll 了~</p>
+<h1>標記 SupportedOSPlatform</h1>
+<p>不確定從哪個版本開始，.Net Core 的程式需要在使用 WinForm 的程式上標記 <code>SupportedOSPlatform(&quot;windows&quot;)</code><br>
+由於 .Net Core 已經可以跨平台，使用 Windows 的 API 確實比較怪，能理解標記的用意<br>
+只不過不設定就會跳一堆 <a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-tw/dotnet/fundamentals/code-analysis/quality-rules/ca1416">CA1416</a> 警告，其實挺煩的</p>
+<p>還好這個專案不大，我就把大部分的 class/method 都找到並標記 <code>SupportedOSPlatform(&quot;windows&quot;)</code></p>
+<h1>完成升級</h1>
+<p>總算是把專案升級成 .Net Core 專案了，其實過程還蠻順暢的<br>
+原本以為升級要自己寫專案檔，幸好微軟有出升級插件可以使用</p>
+<p>附上這個陳舊專案的程式圖：</p>
+<p><img src="/assets/topics/project-renovation/maple-looker/maple-looker-intro.png" alt="MapleLooker - Intro"></p>
+<p><img src="/assets/topics/project-renovation/maple-looker/maple-looker-main.png" alt="MapleLooker - Main"></p>
+<p>介面看起來非常陽春 🙂<br>
+以前都想要自己用 GDI+ 繪製 WinForm，不過效果並不好，也缺少緩動效果<br>
+C# 好看的 UI Library 不好找，好像也只能改用 UWP 了<br>
+UWP 至少有 WinUI 可以用，比 WinForm 好看太多了</p>
+<p>現在的應用程式好像比較多使用 Electron + Web 前端，但 Electron 實在太肥了，所以我不考慮使用</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/12/29/tea-%E5%BE%AE%E5%9E%8B%E5%8A%A0%E5%AF%86%E6%BC%94%E7%AE%97%E6%B3%95/" rel="prev" title="TEA 微型加密演算法">
+                  <i class="fa fa-angle-left"></i> TEA 微型加密演算法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/01/31/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-2-maplelooker-winform-%E9%81%B7%E7%A7%BB%E5%88%B0-wpf/" rel="next" title="來翻新老專案 (2) - MapleLooker - WinForm 遷移到 WPF">
+                  來翻新老專案 (2) - MapleLooker - WinForm 遷移到 WPF <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2020 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Bluebean</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr+QR0SQDNfgglgtcM=" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"stu98832","repo":"stu98832.github.io","client_id":"0b84385c74db3fd44c22","client_secret":"089aee5f0152169f2b4ec924fbce2a06ac1e4c89","admin_user":"stu98832","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","labels":"Gitalk","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"49181d4c4ea6384830ca2db77d0585c1"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

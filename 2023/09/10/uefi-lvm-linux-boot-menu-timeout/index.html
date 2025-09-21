@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"stu98832.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="一切的起源 大約一個月前，因為覺得公司的筆電開機慢又容易發燙，所以自己另外買了一臺筆電想要在工作上使用 不過買了才發現電腦裝的是 Windows 11 Home 好傢伙，我連 WSL 沒辦法開  雖然有嘗試過找指令來開 Hyper V 結果就是 Windows 一直開機失敗…  因為不想再花錢升級成 Windows 11 Pro 所以開箱第一天，直接拿去重灌成 Linux Mint 目前用起來還算">
+<meta property="og:type" content="article">
+<meta property="og:title" content="解決 UEFI+LVM 的 Linux Boot 畫面 Timeout 無法設定的問題">
+<meta property="og:url" content="http://stu98832.github.io/2023/09/10/uefi-lvm-linux-boot-menu-timeout/index.html">
+<meta property="og:site_name" content="Bluebean 的筆記">
+<meta property="og:description" content="一切的起源 大約一個月前，因為覺得公司的筆電開機慢又容易發燙，所以自己另外買了一臺筆電想要在工作上使用 不過買了才發現電腦裝的是 Windows 11 Home 好傢伙，我連 WSL 沒辦法開  雖然有嘗試過找指令來開 Hyper V 結果就是 Windows 一直開機失敗…  因為不想再花錢升級成 Windows 11 Pro 所以開箱第一天，直接拿去重灌成 Linux Mint 目前用起來還算">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2023-09-10T05:25:00.000Z">
+<meta property="article:modified_time" content="2025-09-21T15:51:56.664Z">
+<meta property="article:author" content="Bluebean">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://stu98832.github.io/2023/09/10/uefi-lvm-linux-boot-menu-timeout/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://stu98832.github.io/2023/09/10/uefi-lvm-linux-boot-menu-timeout/","path":"/2023/09/10/uefi-lvm-linux-boot-menu-timeout/","title":"解決 UEFI+LVM 的 Linux Boot 畫面 Timeout 無法設定的問題"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>解決 UEFI+LVM 的 Linux Boot 畫面 Timeout 無法設定的問題 | Bluebean 的筆記</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Bluebean 的筆記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">一切的起源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">TL;DR</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">辛路歷程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A8%AD%E5%AE%9A-GRUB-TIMEOUT-%E8%AE%8A%E6%95%B8-%E5%A4%B1%E6%95%97"><span class="nav-number">3.1.</span> <span class="nav-text">設定 GRUB_TIMEOUT 變數 (失敗)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%8F%E9%81%8E-Grub-Customizer-%E8%A8%AD%E5%AE%9A-%E5%A4%B1%E6%95%97"><span class="nav-number">3.2.</span> <span class="nav-text">透過 Grub Customizer 設定 (失敗)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%9E-Grub-%E9%85%8D%E7%BD%AE%E6%9F%A5%E5%8E%9F%E5%9B%A0"><span class="nav-number">3.3.</span> <span class="nav-text">從 Grub 配置查原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%95%8F%E9%A1%8C%E5%9C%A8%E5%93%AA%E8%A3%A1%EF%BC%9F"><span class="nav-number">3.4.</span> <span class="nav-text">問題在哪裡？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#UEFI-LVM-%E9%80%B2%E4%B8%8D%E5%8E%BB-Boot-%E9%81%B8%E5%96%AE"><span class="nav-number">3.4.1.</span> <span class="nav-text">UEFI + LVM &#x3D; 進不去 Boot 選單</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">後記</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bluebean"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Bluebean</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/stu98832" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stu98832" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://stu98832.github.io/2023/09/10/uefi-lvm-linux-boot-menu-timeout/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Bluebean">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="解決 UEFI+LVM 的 Linux Boot 畫面 Timeout 無法設定的問題 | Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          解決 UEFI+LVM 的 Linux Boot 畫面 Timeout 無法設定的問題
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2023-09-10 13:25:00" itemprop="dateCreated datePublished" datetime="2023-09-10T13:25:00+08:00">2023-09-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1>一切的起源</h1>
+<p>大約一個月前，因為覺得公司的筆電開機慢又容易發燙，所以自己另外買了一臺筆電想要在工作上使用<br>
+不過買了才發現電腦裝的是 Windows 11 Home<br>
+好傢伙，我連 WSL 沒辦法開</p>
+<blockquote>
+<p>雖然有嘗試過找指令來開 Hyper V<br>
+結果就是 Windows 一直開機失敗…</p>
+</blockquote>
+<p>因為不想再花錢升級成 Windows 11 Pro<br>
+所以開箱第一天，直接拿去重灌成 Linux Mint</p>
+<p>目前用起來還算順手，缺點就是 Linux 好多軟體不支援 😢<br>
+偏偏公司用微軟套餐，非 Windows/Mac 就沒軟體用，只能乖乖用 PWA<br>
+最後就放棄在公司使用改在家裡當第二台電腦</p>
+<p>每次 Mint 開機時都會遇到一個問題<br>
+那就是 boot 選單都需要等 30 秒<br>
+常常接上螢幕後蓋著發現怎麼還沒開機，打開來才知道倒數計時還沒結束<br>
+等個 10 秒就算了，偏偏要等 30 秒…</p>
+<p>於是，我就開始查資料來解決這個問題</p>
+<span id="more"></span>
+<h1>TL;DR</h1>
+<p>使用 <code>UEFI</code> + <code>LVM</code> 的朋友<br>
+到 <code>/etc/default/grub</code> 設定 <code>GRUB_RECORDFAIL_TIMEOUT</code> 變數<br>
+就可以逃離 30 秒等待時間的魔爪了</p>
+<h1>辛路歷程</h1>
+<h2 id="設定-GRUB-TIMEOUT-變數-失敗">設定 GRUB_TIMEOUT 變數 (失敗)</h2>
+<p>正常情況下<br>
+只要前往 <code>/etc/grub/default</code> 修改 <code>GRUB_TIMEOUT</code> 變數<br>
+然後下 <code>update-grub</code> 就可以套用了</p>
+<p>實際上就是設定好變數後，產出新的 Grub 腳本在開機時運行</p>
+<p>更改完之後重開機<br>
+結果一樣要等 30 秒…</p>
+<p>之後又到處去找跟 Grub 相關的配置檔修改<br>
+但都無果<br>
+不論怎麼改 <code>GRUB_TIMEOUT</code> 都沒什麼用</p>
+<h2 id="透過-Grub-Customizer-設定-失敗">透過 Grub Customizer 設定 (失敗)</h2>
+<p>實際上 GUI 跟下指令的效果是一樣的<br>
+但是我想說有沒有可能是我找錯變數，或是有什麼配置我沒使用到<br>
+所以想借助 GUI 進行配置與更新<br>
+結果仍然是 30 秒</p>
+<p>最後不小心搞爆 boot 配置，用安裝碟來還原<br>
+然後突然就變 10 秒了 ???</p>
+<p>不過安裝碟還原的配置就少了 Mint 的 Splash，感覺就怪怪的<br>
+所以從 VM 裝了 Mint 然後把設定檔拉回來<br>
+然後秒數又回到 30 秒了</p>
+<h2 id="從-Grub-配置查原因">從 Grub 配置查原因</h2>
+<p>在找了一些資料之後，最後被引導到 Grub 的配置產生腳本<br>
+從這邊去尋找可能的參數來設定秒數，或是自己寫設定</p>
+<p>打開 <code>/etc/grub.d/00_header</code> 後，發現了這段：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">...</span></span><br><span class="line">if [ &quot;$recordfail_brkoen&quot; = 1 ]; then</span><br><span class="line">    cat &lt;&lt; EOF</span><br><span class="line">if [ \$grub_platform = efi ]; then</span><br><span class="line">    set timeout=$&#123;GRUB_RECORDFAIL_TIMEOUT:-30&#125;</span><br><span class="line">    if [ x\$feature_timeout_style = xy ] ; then</span><br><span class="line">        set timeout_style = menu</span><br><span class="line">    fi</span><br><span class="line">fi</span><br><span class="line">EOF</span><br><span class="line">fi</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">...</span></span><br></pre></td></tr></table></figure>
+<p>如果 recordfail 功能無法使用<br>
+那會在 grub 配置檔新增： uefi 開機時<strong>強制</strong>進入 boot 選單的腳本<br>
+等待時間預設 30 秒，可以透過 <code>GRUB_RECORDFAIL_TIMEOUT</code> 設定等待時間</p>
+<p>於是我在 <code>/etc/default/grub</code> 加入 <code>GRUB_RECORDFAIL_TIMEOUT=5</code><br>
+然後下 <code>grub-update</code> 套用</p>
+<p>最終， boot 選單終於變成只會等待 5 秒</p>
+<h2 id="問題在哪裡？">問題在哪裡？</h2>
+<p>由於已經知道程式會走哪一段<br>
+所以就比較好查原因<br>
+原來是因為我剛好使用 UEFI 開機加上使用 LVM 檔案系統</p>
+<h3 id="UEFI-LVM-進不去-Boot-選單">UEFI + LVM = 進不去 Boot 選單</h3>
+<p>2018 年的時候，Ubuntu 上有人回報了一個 <a target="_blank" rel="noopener" href="https://bugs.launchpad.net/ubuntu/+source/grub2/+bug/1800722">Bug</a><br>
+因為 UEFI 沒辦法在開機時進行瞬時按鍵判斷，加上 Grub 無法將開機失敗紀錄寫入 LVM<br>
+這導致了透過 UEFI + LVM 開機會無法進入 boot 選單</p>
+<blockquote>
+<p>可以直接到 <code>/boot/grub/grub.cfg</code> 尋找 <code>function recordfail</code><br>
+不支援的檔案系統會寫成這個樣子：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">function recordfail &#123;</span><br><span class="line">  set recordfail=1</span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">GRUB lacks write support <span class="keyword">for</span> lvm, so recordfail support is disabled</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>該 Bug 最後的修正方式就是：<strong>強制進入 boot 選單</strong></p>
+<p>只不過預設等待 30 秒有些折騰人就是了<br>
+雖然可以直接 Enter 開機，不過有時候按下開機就馬上離開，結果回來都還沒離開 boot 選單呢 🙃</p>
+<h1>後記</h1>
+<p>之前就有在虛擬機用 Linux Desktop 的關係<br>
+所以用起來不會說不順手<br>
+就是有些常用的的 Windows 軟體要去找替代軟體</p>
+<p>現在的 Linux Desktop 跟以前比起來已經穩定很多<br>
+用來寫 Code 看影片已經非常充足<br>
+遊戲上也可以用 Wine 跟 Porton 遊玩一部分的 Windows 遊戲</p>
+<p>少數不便的地方，就是沒辦法用微軟的軟體<br>
+因為限定 Windows ，少部份 MAC<br>
+然後 Office PWA 又難用</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/07/29/2023-07-29-talk/" rel="prev" title="久違的新文章">
+                  <i class="fa fa-angle-left"></i> 久違的新文章
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/11/10/2024-11-10_talk/" rel="next" title="好久沒寫文章了">
+                  好久沒寫文章了 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2020 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Bluebean</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr+QR0SQDNfgglgtcM=" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"stu98832","repo":"stu98832.github.io","client_id":"0b84385c74db3fd44c22","client_secret":"089aee5f0152169f2b4ec924fbce2a06ac1e4c89","admin_user":"stu98832","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","labels":"Gitalk","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"ab5d08082668c0915c046c245c8864de"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

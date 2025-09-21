@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"stu98832.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="這次要繼續介紹與 Complnent 相關的各種工具：  Pipe Directive  透過使用這些東西，可以使得 Component 樣板的內容變得更簡潔、好維護 在開始講之前，要先補之前沒有介紹到的一些基本的樣板結構操作">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Angular學習筆記5 - 基本結構操作、Pipe、Directive">
+<meta property="og:url" content="http://stu98832.github.io/2021/02/23/note-angular-learning-5/index.html">
+<meta property="og:site_name" content="Bluebean 的筆記">
+<meta property="og:description" content="這次要繼續介紹與 Complnent 相關的各種工具：  Pipe Directive  透過使用這些東西，可以使得 Component 樣板的內容變得更簡潔、好維護 在開始講之前，要先補之前沒有介紹到的一些基本的樣板結構操作">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://stu98832.github.io/2021/02/23/note-angular-learning-5/0-1613996588336.gif">
+<meta property="og:image" content="http://stu98832.github.io/2021/02/23/note-angular-learning-5/image-20210222203142323.png">
+<meta property="og:image" content="http://stu98832.github.io/2021/02/23/note-angular-learning-5/0-1613998385371.gif">
+<meta property="og:image" content="http://stu98832.github.io/2021/02/23/note-angular-learning-5/image-20210222214250931.png">
+<meta property="og:image" content="http://stu98832.github.io/2021/02/23/note-angular-learning-5/image-20210222214454420.png">
+<meta property="og:image" content="http://stu98832.github.io/2021/02/23/note-angular-learning-5/image-20210223100039003.png">
+<meta property="og:image" content="http://stu98832.github.io/2021/02/23/note-angular-learning-5/image-20210223102046493.png">
+<meta property="og:image" content="http://stu98832.github.io/2021/02/23/note-angular-learning-5/image-20210223102003663.png">
+<meta property="og:image" content="http://stu98832.github.io/2021/02/23/note-angular-learning-5/image-20210223103332732.png">
+<meta property="article:published_time" content="2021-02-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-09-21T15:51:56.667Z">
+<meta property="article:author" content="Bluebean">
+<meta property="article:tag" content="Angular">
+<meta property="article:tag" content="網頁前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://stu98832.github.io/2021/02/23/note-angular-learning-5/0-1613996588336.gif">
+
+
+<link rel="canonical" href="http://stu98832.github.io/2021/02/23/note-angular-learning-5/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://stu98832.github.io/2021/02/23/note-angular-learning-5/","path":"/2021/02/23/note-angular-learning-5/","title":"Angular學習筆記5 - 基本結構操作、Pipe、Directive"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Angular學習筆記5 - 基本結構操作、Pipe、Directive | Bluebean 的筆記</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Bluebean 的筆記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">基礎的 Angular 樣板結構操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ngIf"><span class="nav-number">1.1.</span> <span class="nav-text">ngIf</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#note-info"><span class="nav-number">1.1.1.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ngIf-%E7%82%BA-false-%E6%99%82%EF%BC%8C%E6%98%AF%E7%9B%B4%E6%8E%A5%E7%A7%BB%E9%99%A4%E8%A9%B2%E5%85%83%E7%B4%A0"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">ngIf 為 false 時，是直接移除該元素</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ngFor"><span class="nav-number">1.2.</span> <span class="nav-text">ngFor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ngSwitch"><span class="nav-number">1.3.</span> <span class="nav-text">ngSwitch</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">Pipe</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%98%E6%96%B9%E6%8F%90%E4%BE%9B%E7%9A%84%E5%9F%BA%E6%9C%AC-Pipe"><span class="nav-number">2.1.</span> <span class="nav-text">官方提供的基本 Pipe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E8%A8%82-Pipe"><span class="nav-number">2.2.</span> <span class="nav-text">自訂 Pipe</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">Directive</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ngIf%E3%80%81ngFor-%E5%85%B6%E5%AF%A6%E9%83%BD%E6%98%AF-Directive"><span class="nav-number">3.1.</span> <span class="nav-text">ngIf、ngFor 其實都是 Directive</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Directive-%E7%9A%84%E7%89%B9%E4%BE%8B%EF%BC%9AComponent"><span class="nav-number">3.2.</span> <span class="nav-text">Directive 的特例：Component</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E8%A8%82-Directive"><span class="nav-number">3.3.</span> <span class="nav-text">自訂 Directive</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Input"><span class="nav-number">3.3.1.</span> <span class="nav-text">Input</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OnInit-%E4%BB%8B%E9%9D%A2"><span class="nav-number">3.3.2.</span> <span class="nav-text">OnInit 介面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Input-%E5%B1%AC%E6%80%A7%E7%B6%81%E5%AE%9A"><span class="nav-number">3.3.3.</span> <span class="nav-text">Input 屬性綁定</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">參考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bluebean"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Bluebean</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/stu98832" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stu98832" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://stu98832.github.io/2021/02/23/note-angular-learning-5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Bluebean">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Angular學習筆記5 - 基本結構操作、Pipe、Directive | Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Angular學習筆記5 - 基本結構操作、Pipe、Directive
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2021-02-23 00:00:00" itemprop="dateCreated datePublished" datetime="2021-02-23T00:00:00+08:00">2021-02-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%80%8B%E4%BA%BA%E7%AD%86%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">個人筆記</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>這次要繼續介紹與 Complnent 相關的各種工具：</p>
+<ul>
+<li>Pipe</li>
+<li>Directive</li>
+</ul>
+<p>透過使用這些東西，可以使得 Component 樣板的內容變得更簡潔、好維護</p>
+<p>在開始講之前，要先補之前沒有介紹到的一些基本的樣板結構操作</p>
+<span id="more"></span>
+<h1>基礎的 Angular 樣板結構操作</h1>
+<p>Angular 提供了幾種結構性操作，使得撰寫樣板變得更加便利</p>
+<p>結構性操作包括：</p>
+<ul>
+<li>ngIf</li>
+<li>ngFor</li>
+<li>ngSwitch</li>
+</ul>
+<h2 id="ngIf">ngIf</h2>
+<p>使用方式：<code>&lt;tag *ngIf=&quot;expression&quot;&gt; ... &lt;/tag&gt;</code></p>
+<p>用來決定是否顯示該元素以及其子元素的內容<br>
+裡面可以帶入變數，運算式，或常數</p>
+<p>首先先準備好決定顯示的變數 <code>visible</code></p>
+<figure class="highlight typescript"><figcaption><span>app.component.ts 部份</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppComponent</span> &#123;</span><br><span class="line">    visible = <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接著來寫樣板</p>
+<figure class="highlight html"><figcaption><span>app.component.html</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> *<span class="attr">ngIf</span>=<span class="string">&quot;!visible&quot;</span>&gt;</span> contentA <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> *<span class="attr">ngIf</span>=<span class="string">&quot;visible&quot;</span>&gt;</span> contentB <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> (<span class="attr">click</span>)=<span class="string">&quot;visible=!visible&quot;</span>&gt;</span> toggle content <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>樣板的內容是這樣的，一開始只會顯示 <code>contentA</code><br>
+當點擊了 <code>toggle content</code> 後，會將 <code>visible</code> 的值做反向，此時顯示 <code>contentB</code><br>
+再點擊一次 <code>toggle content</code> 後，再將 <code>visible</code> 反向一次，此時顯示 <code>contentA</code></p>
+<p>來看一下執行畫面：</p>
+<p><img src="0-1613996588336.gif" alt="0-0-1613996588336.gif"></p>
+<h3 id="note-info"><!-- note info --></h3>
+<div class="note info"><h4 id="ngIf-為-false-時，是直接移除該元素">ngIf 為 false 時，是直接移除該元素</h4>
+<p>一般的 Javascript 做隱藏，可能會是設定 <code>display:none</code> 來達成隱藏的效果<br>
+而 ngIf 則會直接移除整個元素，顯示時再將其加回來</p>
+</div>
+<h2 id="ngFor">ngFor</h2>
+<p>使用方式：<code>&lt;tag *ngFor=&quot;let item of list;let i=index;let odd=odd; traceBy: func&quot;&gt; ... &lt;/tag&gt;</code></p>
+<p>可以遍歷 <code>list</code> 的內容，並將該元素以其子元素逐一輸出<br>
+裡面有幾個內容需要先說明清楚：</p>
+<ul>
+<li><code>let item of list</code><br>
+<code>item</code> 表示被迭代的元素，<code>list</code> 則是陣列</li>
+<li><code>let i=index</code> (可選)<br>
+取得目前迴圈的索引值</li>
+<li><code>let odd=odd</code> (可選)<br>
+目前的迭代的索引是否為奇數</li>
+<li><code>trackBy: func </code> (可選)<br>
+指定用來追蹤物件的依據。通常不太會使用這個選項<br>
+簡單來說，就是用來確定清單更新時的變化依據，來決定是否要重新載入 DOM 元素<br>
+預設情況，當陣列內的物件不一樣時，會把整個元素都重新載入一次<br>
+但可以指定像是名子之類的作為依據，這樣就只會更新有差異的部份，而不是整個 DOM 刪除重新加入<br>
+算是可以增加前端顯示效能的功能</li>
+</ul>
+<p>使用 ngFor 之前先設定一個字串陣列 <code>list</code>，等等要拿來遍歷用的</p>
+<figure class="highlight typescript"><figcaption><span>app.component.ts 部份</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppComponent</span> &#123;</span><br><span class="line">  list = [</span><br><span class="line">    <span class="string">&#x27;apple&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;banana&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;cat&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;dog&#x27;</span>,</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然後是樣版</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">  <span class="selector-tag">table</span>, <span class="selector-tag">th</span>, <span class="selector-tag">td</span> &#123;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">border</span>: <span class="number">1px</span> solid black;</span></span><br><span class="line"><span class="language-css">  &#125;</span></span><br><span class="line"><span class="language-css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">table</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">tr</span> </span></span><br><span class="line"><span class="tag">    *<span class="attr">ngFor</span>=<span class="string">&quot;let item of list;let i=index;let odd=odd;&quot;</span></span></span><br><span class="line"><span class="tag">    [<span class="attr">style.background-color</span>]=<span class="string">&quot;odd ? &#x27;pink&#x27; : &#x27;transparent&#x27;&quot;</span></span></span><br><span class="line"><span class="tag">  &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123; i &#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123; item &#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>樣板的部份，主要是將陣列的所有字串都印出來，並印出他們的索引值<br>
+為了使用 <code>odd</code>，這邊針對索引值為<strong>奇數</strong>的列，將背景顏色改為粉紅色</p>
+<p>執行畫面：</p>
+<p><img src="image-20210222203142323.png" alt="image-20210222203142323"></p>
+<h2 id="ngSwitch">ngSwitch</h2>
+<p>使用方式：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">tag</span> [<span class="attr">ngSwitch</span>]=<span class="string">&quot;variable&quot;</span>&gt;</span> </span><br><span class="line">  <span class="tag">&lt;<span class="name">tag</span> *<span class="attr">ngSwitchCase</span>=<span class="string">&quot;expression&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">tag</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">tag</span> *<span class="attr">ngSwitchCase</span>=<span class="string">&quot;expression&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">tag</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">tag</span> *<span class="attr">ngSwitchDefault</span>&gt;</span> <span class="comment">&lt;!-- 可選 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">tag</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">tag</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>跟一般程式的 switch 差不多</p>
+<p>這邊直接舉例子比較快：</p>
+<figure class="highlight typescript"><figcaption><span>app.component.ts 部份</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppComponent</span> &#123;</span><br><span class="line">  currentTab = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><figcaption><span>app.component.html</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> (<span class="attr">click</span>)=<span class="string">&quot;currentTab=&#x27;Tab1&#x27;&quot;</span>&gt;</span>Tab1<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> (<span class="attr">click</span>)=<span class="string">&quot;currentTab=&#x27;Tab2&#x27;&quot;</span>&gt;</span>Tab2<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> (<span class="attr">click</span>)=<span class="string">&quot;currentTab=&#x27;Tab3&#x27;&quot;</span>&gt;</span>Tab3<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> [<span class="attr">ngSwitch</span>]=<span class="string">&quot;currentTab&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> *<span class="attr">ngSwitchCase</span>=<span class="string">&quot;&#x27;Tab1&#x27;&quot;</span>&gt;</span> Tab1 <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> *<span class="attr">ngSwitchCase</span>=<span class="string">&quot;&#x27;Tab2&#x27;&quot;</span>&gt;</span> Tab2 <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> *<span class="attr">ngSwitchCase</span>=<span class="string">&quot;&#x27;Tab3&#x27;&quot;</span>&gt;</span> Tab3 <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> *<span class="attr">ngSwitchDefault</span>&gt;</span> 404 <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>這邊會模擬一個簡單的 Tab 功能</p>
+<p>要特別注意的地方是在 <code>*ngSwitchCase</code> 上<br>
+<code>*ngSwitchCase</code> 的值是要輸入<strong>表達式</strong>，而非一般文字<br>
+所以當要使用<strong>字串</strong>作為判斷的依據時，兩旁邊要加上<strong>引號</strong></p>
+<p>執行畫面：</p>
+<p><img src="0-1613998385371.gif" alt="0-1613998385371.gif"></p>
+<h1>Pipe</h1>
+<p>使用方式：<code>value | pipe:arg1:arg2...</code></p>
+<p>Pipe 是一種用來處理資料的工具<br>
+比較常見的例子像是格式化時間顯示</p>
+<p>Pipe 的參數以<strong>冒號</strong> <code>:</code> 做區隔</p>
+<p><strong>Pipe 可以透過 <code>|</code> 進行串接</strong></p>
+<h2 id="官方提供的基本-Pipe">官方提供的基本 Pipe</h2>
+<p>官方其實已經有提供幾個基本的 Pipe 來使用，像是：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://angular.io/api/common/DatePipe">DatePipe</a>：date<br>
+日期格式</li>
+<li><a target="_blank" rel="noopener" href="https://angular.io/api/common/LowerCasePipe">LowerCasePipe</a>：lowercase<br>
+小寫顯示</li>
+<li><a target="_blank" rel="noopener" href="https://angular.io/api/common/CurrencyPipe">CurrencyPipe</a>：currency<br>
+貨幣表示</li>
+<li><a target="_blank" rel="noopener" href="https://angular.io/api/common/DecimalPipe">DecimalPipe</a>：number<br>
+數字表示</li>
+<li><a target="_blank" rel="noopener" href="https://angular.io/api/common/PercentPipe">PercentPipe</a>：percent<br>
+百分比表示</li>
+</ul>
+<p>詳細用法可以點擊上面的 Pipe 類別名稱前往 Angular 官網查看</p>
+<p>Pipe 範例：</p>
+<figure class="highlight html"><figcaption><span>app.component.html</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; &#x27;2020-01-01&#x27; | date &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; &#x27;lower&#x27; | uppercase  &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; &#x27;UPPER&#x27; | lowercase &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; 100 | currency &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; 10000 | number &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; 0.05 | percent &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>執行畫面：</p>
+<p><img src="image-20210222214250931.png" alt="image-20210222214250931"></p>
+<h2 id="自訂-Pipe">自訂 Pipe</h2>
+<p>Angular 使用者可以自己建立自訂的 Pipe 類別</p>
+<p>最簡單的方式就是透過 Angular CLI 的 <code>ng g pipe &#123;pipe-path&#125;</code> 來建立</p>
+<p>這邊會透過 Angular CLI 建立一個 Pipe <code>html-tag</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ng g pipe html-tag</span><br></pre></td></tr></table></figure>
+<p>建立好的 HtmlTagPipe 如下：</p>
+<figure class="highlight typescript"><figcaption><span>html-tag.pipe.ts</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Pipe</span>, <span class="title class_">PipeTransform</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Pipe</span>(&#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;htmlTag&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">HtmlTagPipe</span> <span class="keyword">implements</span> <span class="title class_">PipeTransform</span> &#123;</span><br><span class="line">  <span class="title function_">transform</span>(<span class="attr">value</span>: <span class="built_in">unknown</span>, ...<span class="attr">args</span>: <span class="built_in">unknown</span>[]): <span class="built_in">unknown</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>透過 <code>@Pipe</code> 裝飾器來建立可使用的 Pipe<br>
+<code>name</code> 表示在樣板使用時的 Pipe 名稱</p>
+<p>由於之前建立專案時，是使用<strong>型別嚴格檢查</strong>，所以產生的函式參數型別會是 <code>unknown</code> 的型態</p>
+<p>接下來會假定傳入數值一定是字串，然後將輸出字串 <code>&lt;value&gt;</code></p>
+<p>修改後的 transform 函式如下：</p>
+<figure class="highlight typescript"><figcaption><span>html-tag.pipe.ts 部份</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="title function_">transform</span>(<span class="attr">value</span>: <span class="built_in">string</span>): <span class="built_in">string</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">`&lt;<span class="subst">$&#123;value&#125;</span>&gt;`</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接著使用建立好的 Pipe</p>
+<figure class="highlight html"><figcaption><span>app.component.html</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; &#x27;li&#x27; | htmlTag &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>執行畫面：</p>
+<p><img src="image-20210222214454420.png" alt="image-20210222214454420"></p>
+<h1>Directive</h1>
+<p>Directive 可以修飾元素本身</p>
+<p>Directive 修飾的元素都是透過<strong>選擇器</strong>來選擇<br>
+通常是選擇含有自訂<strong>屬性 (attribute)</strong> 的元素<br>
+(在 CSS Selector 中表示為 <code>[attribute]</code> )</p>
+<p>Angular 有提供一些基本的 Directive：</p>
+<ul>
+<li>ngClass<br>
+CSS 樣式類別</li>
+<li>ngStyle<br>
+CSS 樣式</li>
+<li><strong>Model</strong><br>
+對 HTML Form 元素進行雙向綁定時使用</li>
+</ul>
+<h2 id="ngIf、ngFor-其實都是-Directive">ngIf、ngFor 其實都是 Directive</h2>
+<p>前面在說明結構性操作時，有提到 ngIf、ngFor 跟 ngSwitch<br>
+這些其實全部都是 Directive<br>
+他們在官方文件中被歸類為<strong>結構指示 (Structural Directive)</strong></p>
+<h2 id="Directive-的特例：Component">Directive 的特例：Component</h2>
+<p>Component 本身繼承自 Directive<br>
+可以說是 Directive 的特例<br>
+專門修飾自訂標籤，並輸出樣板內容<br>
+Directive 可以做的事情，Component 都可以做</p>
+<h2 id="自訂-Directive">自訂 Directive</h2>
+<p>簡單的介紹了 Directive 之後，接著來新增自定義的 Directive</p>
+<p>本次將會建立一個名為 <code>icon</code> 的 Directive</p>
+<p>在開始之前，先透過 npm 安裝 icon 套件 <code>FontAwesome</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install @fortawesome/fontawesome-free</span><br></pre></td></tr></table></figure>
+<p>接著在 <code>專案資料夾/angular.json</code> 中引入 <code>FontAwesome</code> 的 CSS 檔與 JS 檔</p>
+<figure class="highlight json"><figcaption><span>angular.json 部份</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="attr">&quot;styles&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">  <span class="comment">/* ... */</span></span><br><span class="line">  <span class="string">&quot;node_modules/@fortawesome/fontawesome-free/css/all.min.css&quot;</span></span><br><span class="line">  <span class="comment">/* ... */</span></span><br><span class="line"><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">  <span class="comment">/* ... */</span></span><br><span class="line">  <span class="string">&quot;node_modules/@fortawesome/fontawesome-free/js/all.min.js&quot;</span></span><br><span class="line">  <span class="comment">/* ... */</span></span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+<p>接著使用 Angular CLI 建立一個 Directive，指令如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ng g directive icon</span><br></pre></td></tr></table></figure>
+<p>建立好的 Directive 會長這個樣子：</p>
+<figure class="highlight typescript"><figcaption><span>icon.directive.ts</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Directive</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Directive</span>(&#123;</span><br><span class="line">  <span class="attr">selector</span>: <span class="string">&#x27;[appIcon]&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">IconDirective</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"></span>) &#123; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接著來改寫一下，在建構式引入元素參考<br>
+並增加 class <code>fa</code> 和 <code>fa-home</code></p>
+<figure class="highlight typescript"><figcaption><span>icon.directive.ts 部份</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">IconDirective</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"><span class="attr">elem</span>: <span class="title class_">ElementRef</span>&lt;<span class="title class_">HTMLElement</span>&gt;</span>) &#123; </span><br><span class="line">    elem.<span class="property">nativeElement</span>.<span class="property">classList</span>.<span class="title function_">add</span>(<span class="string">&#x27;fa&#x27;</span>, <span class="string">&#x27;fa-home&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然後在 AppComponent 的樣板裡套用這個 Directive</p>
+<figure class="highlight html"><figcaption><span>app.component.html</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">i</span> <span class="attr">appIcon</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span> <span class="tag">&lt;<span class="name">span</span>&gt;</span> Home <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>執行結果：</p>
+<p><img src="image-20210223100039003.png" alt="image-20210223100039003"></p>
+<h3 id="Input">Input</h3>
+<p>只有一種 Icon 顯然是不夠的<br>
+為了能夠讓使用者自己決定要使用的 Icon，因此要在 Directive 裡新增輸入變數</p>
+<figure class="highlight typescript"><figcaption><span>icon.directive.ts</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Directive</span>, <span class="title class_">ElementRef</span>, <span class="title class_">Input</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Directive</span>(&#123;</span><br><span class="line">  <span class="attr">selector</span>: <span class="string">&#x27;[appIcon]&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">IconDirective</span> &#123;</span><br><span class="line">  <span class="meta">@Input</span>() iconType = <span class="string">&#x27;home&#x27;</span>;</span><br><span class="line">    </span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"><span class="attr">elem</span>: <span class="title class_">ElementRef</span>&lt;<span class="title class_">HTMLElement</span>&gt;</span>) &#123; </span><br><span class="line">    elem.<span class="property">nativeElement</span>.<span class="property">classList</span>.<span class="title function_">add</span>(<span class="string">&#x27;fa&#x27;</span>, <span class="string">`fa-<span class="subst">$&#123;<span class="variable language_">this</span>.iconType&#125;</span>`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>建構式的內容也改成會隨著 <code>iconType</code> 而改變</p>
+<p>使用了 Input 之後，就可以在樣板裡再新增一個 <code>iconType</code> 屬性來決定輸出數值</p>
+<figure class="highlight html"><figcaption><span>app.component.html</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">i</span> <span class="attr">appIcon</span> <span class="attr">iconType</span>=<span class="string">&quot;link&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span> <span class="tag">&lt;<span class="name">span</span>&gt;</span> Url <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>執行結果：</p>
+<p><img src="image-20210223102046493.png" alt="image-20210223102046493"></p>
+<p>嗯…？怎麼沒改變？<br>
+原來 Directive 在<strong>建構時</strong>就已經設定好元素的樣式了<br>
+因此即使後來設定 <code>iconType</code>，也沒辦法改變樣式<br>
+為了解決這個問題，需要讓 <code>IconDirective</code> 繼承 <code>OnInit</code> 界面</p>
+<h3 id="OnInit-介面">OnInit 介面</h3>
+<p><code>OnInit</code> 界面裡只有一個函式 <code>ngOnInit</code><br>
+當一切都設定好，頁面要初始化時，就會呼叫 <code>ngOnInit</code><br>
+因此我們要來改寫原本的 Directive，使其繼承 <code>OnInit</code> 並實做 <code>ngOnInit</code></p>
+<figure class="highlight typescript"><figcaption><span>icon.directive.ts</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Directive</span>, <span class="title class_">ElementRef</span>, <span class="title class_">Input</span>, <span class="title class_">OnInit</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Directive</span>(&#123;</span><br><span class="line">  <span class="attr">selector</span>: <span class="string">&#x27;[appIcon]&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">IconDirective</span> <span class="keyword">implements</span> <span class="title class_">OnInit</span> &#123;</span><br><span class="line">  <span class="meta">@Input</span>() iconType = <span class="string">&#x27;home&#x27;</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 這邊使用了 TypeScript 的語法糖</span></span><br><span class="line">  <span class="comment">// 引入變建立一個私有成員 elem</span></span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"><span class="keyword">private</span> <span class="attr">elem</span>: <span class="title class_">ElementRef</span>&lt;<span class="title class_">HTMLElement</span>&gt;</span>) &#123; </span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 在初始化時才設定 icon</span></span><br><span class="line">  <span class="title function_">ngOnInit</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">elem</span>.<span class="property">nativeElement</span>.<span class="property">classList</span>.<span class="title function_">add</span>(<span class="string">&#x27;fa&#x27;</span>, <span class="string">`fa-<span class="subst">$&#123;<span class="variable language_">this</span>.iconType&#125;</span>`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接著看一下執行畫面：</p>
+<p><img src="image-20210223102003663.png" alt="image-20210223102003663"></p>
+<p>前面寫完 <code>IconDirective</code> 之後，感覺比以往直接賦予 class 還要麻煩，字也更多<br>
+每次設定 Icon 時都要出現 <code>appIcon</code> 跟 <code>iconType</code><br>
+要解決這個問題，可以使用 Input 屬性綁定</p>
+<h3 id="Input-屬性綁定">Input 屬性綁定</h3>
+<p>從前面的範例中可以發現，Input 本身也是一個裝飾器<br>
+而 Input 本身其實可以接受一個參數，也就是<strong>要綁定的屬性名稱</strong></p>
+<p>在這邊為了要簡化 <code>iconType</code> 跟 <code>appIcon</code> 一定要一起出現的問題<br>
+因此對於 <code>iconType</code> 的部份就透過綁定 <code>appIcon</code> 來解決：</p>
+<figure class="highlight typescript"><figcaption><span>icon.directive.ts 部份</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta">@Input</span>(<span class="string">&#x27;appIcon&#x27;</span>) iconType = <span class="string">&#x27;home&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<p>樣板的內容就可以進行改寫：</p>
+<figure class="highlight html"><figcaption><span>app.component.html</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">i</span> <span class="attr">appIcon</span>=<span class="string">&quot;link&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span> <span class="tag">&lt;<span class="name">span</span>&gt;</span> Url <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>執行結果：</p>
+<p><img src="image-20210223103332732.png" alt="image-20210223103332732"></p>
+<div class="note info"><p>事實上將 Property 名稱設定為 <code>appIcon</code>，也可以達成一樣的效果<br>
+不一定要進行屬性綁定</p>
+</div>
+<h1>結語</h1>
+<p>這次算是補足了之前沒說到的 ngIf、ngFor 等結構指示<br>
+雖然是知道 ngIf 跟 ngFor 或是 ngSwitch 這些都是 Directive<br>
+但由於其特殊性，讓我不知道該怎麼說明才好<br>
+後來看到官方文件上寫的是 <strong>Structural Directive</strong><br>
+於是前面在不破題的情況下，我就把這些都稱為<strong>結構性操作</strong></p>
+<p>ngModel 的部份由於涉及雙向綁定<br>
+自己本身對這部份不熟，所以沒另外講解<br>
+可以參考官方的<a target="_blank" rel="noopener" href="https://angular.io/guide/two-way-binding">雙向綁定條目</a>來進一步了解</p>
+<p>這次篇幅跟之前比起來有比較長一點<br>
+實際上 Directive 還有其他東西可以說明<br>
+但是由於篇幅關係，加上有些內容我也不是很熟悉，因此就不另外介紹了<br>
+有興趣的可以去找官方文件來深入</p>
+<h1>參考</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://dotblogs.com.tw/explooosion/2017/04/29/035512">Angular - ngFor trackby | Robby - 全端的 Front-End Engineer - 點部落</a></li>
+<li><a target="_blank" rel="noopener" href="https://angular.io/guide/built-in-directives">Angular - Built-in directives</a></li>
+<li><a target="_blank" rel="noopener" href="https://angular.io/guide/attribute-directives">Angular - Attribute directives</a></li>
+<li><a target="_blank" rel="noopener" href="https://angular.io/guide/structural-directives">Angular - Structural directives</a></li>
+<li><a target="_blank" rel="noopener" href="https://angular.io/guide/pipes">Angular - Transforming Data Using Pipes</a></li>
+<li><a target="_blank" rel="noopener" href="https://angular.io/api/core/OnInit">Angular - OnInit</a></li>
+</ul>
+<div style='text-align: center'>
+    <a class='btn' href='/2021/02/18/note-angular-learning-4/'>
+        上一篇
+    </a>
+    <a class='btn' href='/2021/03/03/note-angular-learning-6/'>
+        下一篇
+    </a>
+</div>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Angular/" rel="tag"><i class="fa fa-tag"></i> Angular</a>
+              <a href="/tags/%E7%B6%B2%E9%A0%81%E5%89%8D%E7%AB%AF/" rel="tag"><i class="fa fa-tag"></i> 網頁前端</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/02/18/note-angular-learning-4/" rel="prev" title="Angular學習筆記4 - Component與樣版">
+                  <i class="fa fa-angle-left"></i> Angular學習筆記4 - Component與樣版
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/03/03/note-angular-learning-6/" rel="next" title="Angular學習筆記6 - Module 與路由">
+                  Angular學習筆記6 - Module 與路由 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2020 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Bluebean</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr+QR0SQDNfgglgtcM=" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"stu98832","repo":"stu98832.github.io","client_id":"0b84385c74db3fd44c22","client_secret":"089aee5f0152169f2b4ec924fbce2a06ac1e4c89","admin_user":"stu98832","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","labels":"Gitalk","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"706c155b1260182e865704ab3958787c"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

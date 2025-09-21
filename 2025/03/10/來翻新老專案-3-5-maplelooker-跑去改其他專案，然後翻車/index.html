@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"stu98832.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="原本打算去更新之前自己寫的遊戲檔案 Library NeoWZ 主要是因為 MapleLooker 上的 WzLib 版本非常舊，我覺得結構也不好，所以打算移除改用後來寫的版本 結果改好幾天都沒成果，時間就這樣白白浪費了 🙃 雖然專案本身沒有什麼進展，但還是寫個文章來紀錄一下，也順便證明我沒有失蹤 (?)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="來翻新老專案 (3.5) - MapleLooker - 跑去改其他專案，然後翻車">
+<meta property="og:url" content="http://stu98832.github.io/2025/03/10/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-3-5-maplelooker-%E8%B7%91%E5%8E%BB%E6%94%B9%E5%85%B6%E4%BB%96%E5%B0%88%E6%A1%88%EF%BC%8C%E7%84%B6%E5%BE%8C%E7%BF%BB%E8%BB%8A/index.html">
+<meta property="og:site_name" content="Bluebean 的筆記">
+<meta property="og:description" content="原本打算去更新之前自己寫的遊戲檔案 Library NeoWZ 主要是因為 MapleLooker 上的 WzLib 版本非常舊，我覺得結構也不好，所以打算移除改用後來寫的版本 結果改好幾天都沒成果，時間就這樣白白浪費了 🙃 雖然專案本身沒有什麼進展，但還是寫個文章來紀錄一下，也順便證明我沒有失蹤 (?)">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://stu98832.github.io/assets/topics/project-renovation/maple-looker/maple-looker-wzlib-node-example.png">
+<meta property="article:published_time" content="2025-03-10T13:47:00.000Z">
+<meta property="article:modified_time" content="2025-09-21T15:51:56.671Z">
+<meta property="article:author" content="Bluebean">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://stu98832.github.io/assets/topics/project-renovation/maple-looker/maple-looker-wzlib-node-example.png">
+
+
+<link rel="canonical" href="http://stu98832.github.io/2025/03/10/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-3-5-maplelooker-%E8%B7%91%E5%8E%BB%E6%94%B9%E5%85%B6%E4%BB%96%E5%B0%88%E6%A1%88%EF%BC%8C%E7%84%B6%E5%BE%8C%E7%BF%BB%E8%BB%8A/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://stu98832.github.io/2025/03/10/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-3-5-maplelooker-%E8%B7%91%E5%8E%BB%E6%94%B9%E5%85%B6%E4%BB%96%E5%B0%88%E6%A1%88%EF%BC%8C%E7%84%B6%E5%BE%8C%E7%BF%BB%E8%BB%8A/","path":"2025/03/10/來翻新老專案-3-5-maplelooker-跑去改其他專案，然後翻車/","title":"來翻新老專案 (3.5) - MapleLooker - 跑去改其他專案，然後翻車"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>來翻新老專案 (3.5) - MapleLooker - 跑去改其他專案，然後翻車 | Bluebean 的筆記</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Bluebean 的筆記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">NeoWZ</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">更新 NeoWZ 的動機</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%94%E6%8E%89%E8%87%AA%E8%A8%82%E7%9A%84-WzStream"><span class="nav-number">2.1.</span> <span class="nav-text">拔掉自訂的 WzStream</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E6%95%B4%E8%B3%87%E6%96%99%E7%B5%90%E6%A7%8B"><span class="nav-number">2.2.</span> <span class="nav-text">重整資料結構</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">後續</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bluebean"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Bluebean</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/stu98832" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stu98832" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://stu98832.github.io/2025/03/10/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-3-5-maplelooker-%E8%B7%91%E5%8E%BB%E6%94%B9%E5%85%B6%E4%BB%96%E5%B0%88%E6%A1%88%EF%BC%8C%E7%84%B6%E5%BE%8C%E7%BF%BB%E8%BB%8A/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Bluebean">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="來翻新老專案 (3.5) - MapleLooker - 跑去改其他專案，然後翻車 | Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          來翻新老專案 (3.5) - MapleLooker - 跑去改其他專案，然後翻車
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2025-03-10 21:47:00" itemprop="dateCreated datePublished" datetime="2025-03-10T21:47:00+08:00">2025-03-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%80%81%E5%B0%88%E6%A1%88%E7%BF%BB%E6%96%B0/" itemprop="url" rel="index"><span itemprop="name">老專案翻新</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>原本打算去更新之前自己寫的遊戲檔案 Library <strong>NeoWZ</strong><br>
+主要是因為 MapleLooker 上的 WzLib 版本非常舊，我覺得結構也不好，所以打算移除改用後來寫的版本<br>
+結果改好幾天都沒成果，時間就這樣白白浪費了 🙃</p>
+<p>雖然專案本身沒有什麼進展，但還是寫個文章來紀錄一下，也順便證明我沒有失蹤 (?)</p>
+<span id="more"></span>
+<h1>NeoWZ</h1>
+<p>先簡單介紹一下這次更新的專案 NeoWZ</p>
+<p>NeoWZ 是我在寫私服的時候順便建立的，讀取 WZ 檔案的 Library<br>
+以前寫的版本都叫 WzLib，但是通常都是跟當時寫的工具比較適配<br>
+直到 NeoWZ 開始，在資料結構跟讀取方面做了一些調整，之後就不定時在維護 (主要是寫私服時才會做小更新)</p>
+<h1>更新 NeoWZ 的動機</h1>
+<p>如同一開始講的，因為 MapleLooker 上面用的 WzLib 是非常久以前寫的函式庫，年久失修加上個人覺得用起來不方便，所以打算換掉</p>
+<p>然而即使是後來寫的 NeoWZ，也還是有一些缺陷在，所以我決定做一些改動：</p>
+<ol>
+<li>拔掉自訂 WzStream</li>
+<li>重整資料結構</li>
+</ol>
+<p>看起來範圍挺大的吧？雖然這幾乎是整個專案的內容，不過主要的目標只有 1. 而已，所以過去寫的大部份的內容其實沒有改動</p>
+<h2 id="拔掉自訂的-WzStream">拔掉自訂的 WzStream</h2>
+<p>早期我一直都是使用自訂的 WzStream 來讀寫 WZ 檔案，設計其實沒那麼差<br>
+但在看了一些常見的 Stream 跟 Reader/Writer 後，我發覺以前建立的 WzStream 主要都在讀寫遊戲檔案的特定格式<br>
+也就是說，WzStream 整體來看不像是一個 Stream，而是 Stream + Reader 組合的感覺，甚至不能說是 Stream，實做 Stream 就只是去操作裡面的 BaseStream 而已</p>
+<p>因為發現 WzStream 不太符合 Stream 的概念，所以我決定把它用 Reader/Writer 來做替換<br>
+這樣的好處在於，我不用再實作 Stream，僅需操作 Stream 物件即可</p>
+<div class="note info"><p>我認為 Stream 的概念應該只是一連串的資料流，可以做位移並讀寫資料<br>
+所以像是 DeflateStream 、 CryptoStream 等本身可以描述為資料流的類別才能夠繼承並實做 Stream<br>
+而像 WzStream 這種單純對 Stream 讀寫的工具，並不具備資料流的概念，應該以 Reader/Writer 來描述</p>
+</div>
+<h2 id="重整資料結構">重整資料結構</h2>
+<p>會想要重整結構只是因為心血來潮而已<br>
+原本設計結構其實我還算滿意，只是在拔除 WzStream 的過程中因為以前寫的結構遇到一點困難，就想說順便重整資料結構<br>
+沒想到花了很多時間，最後還翻車 🙃</p>
+<p>我先簡單介紹一下 WZ 檔案<br>
+它其實就是類似 ZIP 結構的檔案，裡面包含目錄跟遊戲檔案，本身沒什麼特別的東西</p>
+<p>而遊戲檔案似乎是使用 Windows 的 COM (Component Object Model) 做開發，它會使用到 VARIANT 跟 IUnknown<br>
+VARIANT 本身是 COM 中常用的結構，可以儲存多樣化的資料 (比如整數、浮點數、指標等等)<br>
+IUnknown 則是 COM 組件的基本介面，主要就是自訂類別的部份</p>
+<p>遊戲檔案的資料節點大概會長下面這樣：<br>
+<img src="/assets/topics/project-renovation/maple-looker/maple-looker-wzlib-node-example.png" alt="節點範例"></p>
+<p>可以看到，VARIANT 底下才是自訂物件 ParentClass，而自訂物件底下又接著多個 VARIANT<br>
+從根節點透過名稱往下訪問節點不是難事，但要往上就有些難度</p>
+<p>如果我要對整個節點樹做向上遍歷，會讓自訂物件跟 VARIANT 互相耦合<br>
+而且，因為節點的名稱在檔案結構上屬於 VARIANT 而不是自訂物件，使得自訂物件的名子要馬從 VARIANT 拿，要馬存在自訂物件上並與 VARIANT 共用。<br>
+不論哪一種，都會增加了改名以及移動節點的難度</p>
+<p>最後，我花了很長一段時間在做 VARIANT 跟自訂物件的解耦，但都沒有成功</p>
+<h1>後續</h1>
+<p>雖然大概兩週的時間被我浪費掉了，加上最近比較忙一點又拖了一週才生文章出來<br>
+但這更新也不全是失敗，至少 Stream 的部份我成功替換掉了，但只有到外層的 ZIP 結構而已，遊戲資料的部份並沒有處理完成</p>
+<p>翻新老專案系列至今已經持續 2 個多月了，雖然我不是全力在做翻新，其實每週也就花大概 8 ~ 16 小時而已<br>
+畢竟開始工作後，時間沒有學生時期那麼多，下班後也比較偏好休閒而非寫 Code</p>
+<p>寫這個系列除了讓 Blog 有點文章以外，也順便讓自己有個目標能夠帶動自己寫 Code<br>
+過去比較勤奮寫 Code ，主要還是因為楓之谷這款遊戲去帶動我去寫一些有的沒的東西<br>
+自從那些技術論壇逐漸式微，消失之後，就比較少在非工作時間寫 Code 了</p>
+<p>我覺得自己還是喜歡寫 Code 並研究一些酷炫的寫法，只是缺乏一個目標<br>
+剛好藉著這次翻新專案，讓自己有目標寫寫程式，順便維持或提昇自己的能力</p>
+<p>WzLib 這塊我想會先擱著，後續還是會以 MapleLooker 的翻新為主<br>
+畢竟原本寫的 WzLib 也沒有那麼不堪 (應該吧？)。既然還可以用，那就沒有需要接著做的必要<br>
+等 MapleLooker 都整理的差不多之後，再繼續更新並替換原有的 Lib 🙂</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/02/15/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-3-maplelooker-treeview-%E8%B3%87%E6%96%99%E7%B6%81%E5%AE%9A/" rel="prev" title="來翻新老專案 (3) - MapleLooker - TreeView 資料綁定">
+                  <i class="fa fa-angle-left"></i> 來翻新老專案 (3) - MapleLooker - TreeView 資料綁定
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/03/22/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-4-maplelooker-animationview-%E5%8B%95%E7%95%AB%E7%B5%84%E4%BB%B6/" rel="next" title="來翻新老專案 (4) - MapleLooker - AnimationView 動畫組件">
+                  來翻新老專案 (4) - MapleLooker - AnimationView 動畫組件 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2020 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Bluebean</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr+QR0SQDNfgglgtcM=" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"stu98832","repo":"stu98832.github.io","client_id":"0b84385c74db3fd44c22","client_secret":"089aee5f0152169f2b4ec924fbce2a06ac1e4c89","admin_user":"stu98832","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","labels":"Gitalk","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"1cf1ec7df4d7be3635ecde86e573e246"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

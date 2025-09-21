@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"stu98832.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="最近都在摸 MapleStory Worlds (以下簡稱 MSW) 的編輯器 這是 Nexon 藉由楓之谷這個 IP 打造出來的創作平台，類似 Roblox 我並沒有接觸過 Roblox，只知道他是一個自由度很高的東西 後來去查才知道它已經是接近遊戲引擎程度的東西，並且提供免費雲端資源讓玩家建立伺服器 而 MSW 也是如此，就連存取資料的方式也很相似">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[雜談] 最近在嘗試 MapleStory Worlds 的遊戲編輯器">
+<meta property="og:url" content="http://stu98832.github.io/2025/06/02/%E9%9B%9C%E8%AB%87-%E6%9C%80%E8%BF%91%E5%9C%A8%E5%98%97%E8%A9%A6-maplestory-worlds-%E7%9A%84%E9%81%8A%E6%88%B2%E7%B7%A8%E8%BC%AF%E5%99%A8/index.html">
+<meta property="og:site_name" content="Bluebean 的筆記">
+<meta property="og:description" content="最近都在摸 MapleStory Worlds (以下簡稱 MSW) 的編輯器 這是 Nexon 藉由楓之谷這個 IP 打造出來的創作平台，類似 Roblox 我並沒有接觸過 Roblox，只知道他是一個自由度很高的東西 後來去查才知道它已經是接近遊戲引擎程度的東西，並且提供免費雲端資源讓玩家建立伺服器 而 MSW 也是如此，就連存取資料的方式也很相似">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://stu98832.github.io/assets/misc/2025-06-02-recently-maplestory-world/image-1.png">
+<meta property="og:image" content="http://stu98832.github.io/assets/misc/2025-06-02-recently-maplestory-world/image.png">
+<meta property="og:image" content="http://stu98832.github.io/assets/misc/2025-06-02-recently-maplestory-world/image-6.png">
+<meta property="og:image" content="http://stu98832.github.io/assets/misc/2025-06-02-recently-maplestory-world/image-4.png">
+<meta property="article:published_time" content="2025-06-02T14:39:00.000Z">
+<meta property="article:modified_time" content="2025-09-21T15:51:56.664Z">
+<meta property="article:author" content="Bluebean">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://stu98832.github.io/assets/misc/2025-06-02-recently-maplestory-world/image-1.png">
+
+
+<link rel="canonical" href="http://stu98832.github.io/2025/06/02/%E9%9B%9C%E8%AB%87-%E6%9C%80%E8%BF%91%E5%9C%A8%E5%98%97%E8%A9%A6-maplestory-worlds-%E7%9A%84%E9%81%8A%E6%88%B2%E7%B7%A8%E8%BC%AF%E5%99%A8/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://stu98832.github.io/2025/06/02/%E9%9B%9C%E8%AB%87-%E6%9C%80%E8%BF%91%E5%9C%A8%E5%98%97%E8%A9%A6-maplestory-worlds-%E7%9A%84%E9%81%8A%E6%88%B2%E7%B7%A8%E8%BC%AF%E5%99%A8/","path":"2025/06/02/雜談-最近在嘗試-maplestory-worlds-的遊戲編輯器/","title":"[雜談] 最近在嘗試 MapleStory Worlds 的遊戲編輯器"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[雜談] 最近在嘗試 MapleStory Worlds 的遊戲編輯器 | Bluebean 的筆記</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Bluebean 的筆記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">為什麼想接觸 MSW</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">目前的體驗心得</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B3%87%E6%BA%90%E6%A8%99%E7%B1%A4%E6%9C%89%E8%B7%9F%E6%B2%92%E6%9C%89%E4%B8%80%E6%A8%A3"><span class="nav-number">2.1.</span> <span class="nav-text">資源標籤有跟沒有一樣</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%BA%E4%B9%8F%E8%89%AF%E5%A5%BD%E7%9A%84%E9%96%8B%E7%99%BC%E7%A4%BE%E7%BE%A4"><span class="nav-number">2.2.</span> <span class="nav-text">缺乏良好的開發社群</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E5%82%B3%E8%B3%87%E6%BA%90%E4%B8%8D%E6%96%B9%E4%BE%BF"><span class="nav-number">2.3.</span> <span class="nav-text">上傳資源不方便</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%98%E6%96%B9%E6%96%87%E4%BB%B6%E4%B8%8D%E5%A4%A0%E8%A9%B3%E7%9B%A1"><span class="nav-number">2.4.</span> <span class="nav-text">官方文件不夠詳盡</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A4%8E%E5%85%83%E4%BB%B6%E5%8A%9F%E8%83%BD%E4%B8%8D%E5%AE%8C%E5%96%84"><span class="nav-number">2.5.</span> <span class="nav-text">基礎元件功能不完善</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">MSW 還年輕，還有發展空間</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">結語</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bluebean"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Bluebean</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/stu98832" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stu98832" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://stu98832.github.io/2025/06/02/%E9%9B%9C%E8%AB%87-%E6%9C%80%E8%BF%91%E5%9C%A8%E5%98%97%E8%A9%A6-maplestory-worlds-%E7%9A%84%E9%81%8A%E6%88%B2%E7%B7%A8%E8%BC%AF%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Bluebean">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[雜談] 最近在嘗試 MapleStory Worlds 的遊戲編輯器 | Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [雜談] 最近在嘗試 MapleStory Worlds 的遊戲編輯器
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2025-06-02 22:39:00" itemprop="dateCreated datePublished" datetime="2025-06-02T22:39:00+08:00">2025-06-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E9%9B%9C%E8%AB%87/" itemprop="url" rel="index"><span itemprop="name">雜談</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E9%9B%9C%E8%AB%87/MapleStoryWorld/" itemprop="url" rel="index"><span itemprop="name">MapleStoryWorld</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>最近都在摸 MapleStory Worlds (以下簡稱 MSW) 的編輯器<br>
+這是 Nexon 藉由楓之谷這個 IP 打造出來的創作平台，類似 Roblox</p>
+<p>我並沒有接觸過 Roblox，只知道他是一個自由度很高的東西<br>
+後來去查才知道它已經是接近遊戲引擎程度的東西，並且提供免費雲端資源讓玩家建立伺服器<br>
+而 MSW 也是如此，就連存取資料的方式也很相似</p>
+<span id="more"></span>
+<h1>為什麼想接觸 MSW</h1>
+<p>我一直很喜歡楓之谷，也很懷念以前的遊戲環境<br>
+原本要懷舊只能夠透過私服，因為私服本身不合法，所以最多只能自己架來給自己玩玩<br>
+幾年前就找了一個老版本自己解析封包並從零建立後端<br>
+老實說這會花費很大量的時間去建立相關資料、腳本，而且做出來的後端還不易升版 (要再解析封包並調整服務端架構)</p>
+<p>自從知道官方要推出 MSW ，就很期待能夠透過官方的平台來打造自己的懷舊服<br>
+從 04/24 中文平台開放之後，就一直在摸他的編輯器</p>
+<p>我沒有做遊戲的經驗，目前就是抱持著玩玩看的想法天天在摸編輯器</p>
+<h1>目前的體驗心得</h1>
+<p>用到目前為止，我覺得 MSW 的編輯器體驗不太好<br>
+他的限制太多了，而且相關資源非常的少，官方的開發者社群看起來也不是很積極的在經營<br>
+編輯器目前還很陽春，官方的文件也不詳盡，只能說現在用 MSW 來做遊戲還是比較痛苦一點</p>
+<p>目前 MSW 我覺得問題最大的是有跟沒有一樣的資源標籤以及缺乏良好的官方創作社群</p>
+<h2 id="資源標籤有跟沒有一樣">資源標籤有跟沒有一樣</h2>
+<p>MSW 上的官方資源有標記很多 tag<br>
+這些 tag 一看就是用 AI 產的，一點參考價值都沒有<br>
+只有幾個 tag 比如遊戲包路徑、ID 等有用…<br>
+對於沒有拆過檔的人來說，這資源標籤基本上可以直接忽略</p>
+<p><img src="/assets/misc/2025-06-02-recently-maplestory-world/image-1.png" alt="alt text"></p>
+<blockquote>
+<p>這是黃金海灘的 NPC<br>
+雖然不知道名子，但只要是楓谷玩家至少能知道 NPC 的所在位置或是場景</p>
+<p>標籤除了遊戲資料路徑如 <code>npc/1081100.img</code> 跟 <code>stand/11</code>有用以外，剩下的標籤完全不相關。裡面甚至有 UUID 標籤，用它啥都查不到…<br>
+(其實有 NPC 的韓文名稱標籤，但要剛好會韓文而且知道 NPC 名稱才有用…)</p>
+</blockquote>
+<h2 id="缺乏良好的開發社群">缺乏良好的開發社群</h2>
+<p>目前唯一看到的官方開發者社群只有 Discord<br>
+對，只有 Discord，而且開發者還跟玩家擺在一起<br>
+並沒有什麼模型、Plugin 平台可以分享，連個像樣論壇都沒有</p>
+<p>韓國平台開放也兩年了，但目前仍然只有 Discord 群組<br>
+至少也開個平台讓人分享模組資源吧…</p>
+<hr>
+<p>除了上面提到比較大的問題，其他還有像是：</p>
+<ul>
+<li>上傳資源不夠方便</li>
+<li>官方文件不夠詳盡</li>
+<li>基礎元件功能不完善</li>
+</ul>
+<p>之類的問題</p>
+<p>這些問題不是很嚴重，工具可以用，文件也有參考價值，就是陽春了點，感覺能再更好</p>
+<h2 id="上傳資源不方便">上傳資源不方便</h2>
+<p>雖然 MSW 上已經有許多楓谷資源可以使用，看起來大約是 RED 時期到六轉二技時期的資源<br>
+但官方資源並非萬能，總會需要上傳自己的圖片或是音樂資源</p>
+<p>資源唯一的上傳方式就是經過官方的 ResourceManager，雖然有批次上傳，但也謹此而已<br>
+目前似乎沒有便利的方式可以設定資源，任何操作都只能在 GUI 上完成，不論是拉伸邊界還是原點設定</p>
+<p>如果 MSW 能上傳圖片、聲音以外的資源，那上傳功能陽春一點也沒關係<br>
+但今天限定只能上傳圖片、聲音資源，又只能在 GUI 上一個一個設定資源，真的很不方便…</p>
+<p><img src="/assets/misc/2025-06-02-recently-maplestory-world/image.png" alt="組隊任務的錯誤效果"></p>
+<blockquote>
+<p>這個是楓谷組隊任務的錯誤效果<br>
+官方資源並沒有提供這個效果，所以我必須要自己上傳並製作動畫</p>
+<p>即使只有 5 個 Frame，但我唯一能做的就是上傳這 5 張圖片<br>
+然後自己一個一個透過 GUI 手動調整這些圖片的中心點並製作動畫<br>
+這個過程很花時間</p>
+</blockquote>
+<h2 id="官方文件不夠詳盡">官方文件不夠詳盡</h2>
+<p>官方雖然有 API 文件以及遊戲創作指南<br>
+但我個人覺得內容不夠詳盡。適合入門，但要深入的話，資料還不夠齊全</p>
+<p>編輯器上可以找到沒有文件說明的元件，我必須自己摸索元件如何運作<br>
+甚至會出現棄用屬性依然被使用的問題，官方文件完全沒提到這點，還以為是元件出 Bug 了…</p>
+<p><img src="/assets/misc/2025-06-02-recently-maplestory-world/image-6.png" alt="標示已棄用的 RenderSetting"></p>
+<blockquote>
+<p>這個是 Sprite 渲染元件，官方文件是這樣寫 <code>RenderSetting</code> 這個屬性的：<br>
+<strong>這個屬性不再被使用</strong></p>
+<p>然而，從預設素材拉出來的物件會把這個值設為 1<br>
+而直接建物件這個值預設為 0<br>
+這個屬性會間接影響狀態動畫元件 (<code>StateAnimationComponent</code>)，設定為 1 時，狀態變化後動畫才會自動切換</p>
+<p>官方文件完全沒有提及這個屬性跟 <code>StateAnimationComponent</code> 的關係<br>
+要不是我開 Local Workspace 功能存檔剛好看到，還真不知道預設模型會設定一個編輯器點不到的東西</p>
+</blockquote>
+<h2 id="基礎元件功能不完善">基礎元件功能不完善</h2>
+<p>官方有提供一個很基礎的 Sprite 渲染元件叫 <code>SpriteRendererComponent</code>，就是前面提到的那個元件<br>
+它可以支援動畫播放，但只能循環播放，沒辦法自己暫停或是限定播放次數<br>
+明明 GUI 用的 <code>SpriteGUIRendererComponent</code> 就可以設定一次性動畫跟來回播放的動畫<br>
+但遊戲內的動畫渲染卻什麼配置都沒有</p>
+<p><img src="/assets/misc/2025-06-02-recently-maplestory-world/image-4.png" alt="SpriteGUIRendererComponent 與 SpriteRendererComponent 比對"></p>
+<blockquote>
+<p>為什麼 GUI Sprite 可以只播放一次動畫，但遊戲內的 Sprite 卻只能重複播放動畫？</p>
+</blockquote>
+<h1>MSW 還年輕，還有發展空間</h1>
+<p>與發展快 20 年的 Roblox 相比，MSW 出來也才 2 年多，還有發展空間<br>
+即使目前體驗不算很好，但也還在可以接受的範圍內</p>
+<p>官方最近也開始在嘗試經過第三方編輯器如 VSCode 編輯腳本<br>
+雖然它會綁死 Local Workspace，但算是一個不錯的嘗試</p>
+<p>期望未來社群能逐漸壯大，並出現許多好玩的遊戲跟好用的開發工具<br>
+也希望官方能開放創作者上架模組促進社群發展</p>
+<h1>結語</h1>
+<p>最初想說 MSW 會提供基於楓谷的環境來開發遊戲，但現在看起來它更像 Roblox，自由度比起原作更高一些<br>
+雖然跟想像中不太一樣，但光是能夠使用預建好的楓谷素材，就已經讓我有足夠的動機去使用這個編輯器了</p>
+<p>最近這段時間應該都會研究 MSW ，除了打發時間以外，主要還是想試著在上面建立自己的懷舊服 :)</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/05/20/%E4%BE%86%E8%81%8A%E9%BB%9E-ai/" rel="prev" title="來聊點 AI">
+                  <i class="fa fa-angle-left"></i> 來聊點 AI
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/06/23/%E9%9B%9C%E8%AB%87-2025-06-23/" rel="next" title="[雜談] 2025-06-23">
+                  [雜談] 2025-06-23 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2020 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Bluebean</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr+QR0SQDNfgglgtcM=" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"stu98832","repo":"stu98832.github.io","client_id":"0b84385c74db3fd44c22","client_secret":"089aee5f0152169f2b4ec924fbce2a06ac1e4c89","admin_user":"stu98832","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","labels":"Gitalk","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"0467f2b8e61917097543d073358c606c"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

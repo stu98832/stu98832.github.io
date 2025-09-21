@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"stu98832.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="在初學C的時候，你一定會學到如何宣告一個變數，但變數宣告並沒有想像中那麼簡單，變數宣告可以變得更複雜，更不直觀 本文將會帶你了解C語言中的變數宣告規則，讓你可以僅用肉眼就能辨識出某個變數的型別，並善用typedef簡化你的宣告式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C語言的變數宣告規則">
+<meta property="og:url" content="http://stu98832.github.io/2020/03/01/c-declaim-rule/index.html">
+<meta property="og:site_name" content="Bluebean 的筆記">
+<meta property="og:description" content="在初學C的時候，你一定會學到如何宣告一個變數，但變數宣告並沒有想像中那麼簡單，變數宣告可以變得更複雜，更不直觀 本文將會帶你了解C語言中的變數宣告規則，讓你可以僅用肉眼就能辨識出某個變數的型別，並善用typedef簡化你的宣告式">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2020-03-01T04:06:00.000Z">
+<meta property="article:modified_time" content="2025-09-21T15:51:56.657Z">
+<meta property="article:author" content="Bluebean">
+<meta property="article:tag" content="C語言">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://stu98832.github.io/2020/03/01/c-declaim-rule/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://stu98832.github.io/2020/03/01/c-declaim-rule/","path":"/2020/03/01/c-declaim-rule/","title":"C語言的變數宣告規則"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>C語言的變數宣告規則 | Bluebean 的筆記</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Bluebean 的筆記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E8%88%AC%E8%AE%8A%E6%95%B8%E5%AE%A3%E5%91%8A"><span class="nav-number">1.</span> <span class="nav-text">一般變數宣告</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E5%BC%8F%E6%8C%87%E6%A8%99"><span class="nav-number">2.</span> <span class="nav-text">函式指標</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8typedef"><span class="nav-number">3.</span> <span class="nav-text">使用typedef</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%A3%E5%91%8A%E7%9A%84%E8%A6%8F%E5%89%87"><span class="nav-number">4.</span> <span class="nav-text">宣告的規則</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%B3%A8%EF%BC%9Atypedef-%E7%9A%84%E5%AE%A3%E5%91%8A%E6%A8%A3%E5%BC%8F%E5%92%8C%E8%AE%8A%E6%95%B8%E5%AE%A3%E5%91%8A%E4%B8%80%E6%A8%A1%E4%B8%80%E6%A8%A3%EF%BC%8C%E5%B7%AE%E5%88%A5%E5%B0%B1%E5%9C%A8-typedef-%E6%9C%83%E7%94%A2%E7%94%9F%E5%9E%8B%E5%88%A5%EF%BC%8C%E8%80%8C%E4%B8%80%E8%88%AC%E7%9A%84%E5%AE%A3%E5%91%8A%E6%9C%83%E7%94%A2%E7%94%9F%E8%AE%8A%E6%95%B8"><span class="nav-number">4.0.0.0.1.</span> <span class="nav-text">注：typedef 的宣告樣式和變數宣告一模一樣，差別就在 typedef 會產生型別，而一般的宣告會產生變數</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90-signal"><span class="nav-number">5.</span> <span class="nav-text">分析 signal</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#typedef-%E7%9A%84%E7%94%A8%E9%80%94"><span class="nav-number">6.</span> <span class="nav-text">typedef 的用途</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%96%AE%E4%B8%80%E5%9E%8B%E5%88%A5%E7%9A%84%E5%A4%9A%E9%87%8D%E5%AE%A3%E5%91%8A"><span class="nav-number">7.</span> <span class="nav-text">單一型別的多重宣告</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Struct-%E5%AE%A3%E5%91%8A"><span class="nav-number">8.</span> <span class="nav-text">Struct 宣告</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">9.</span> <span class="nav-text">結語</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bluebean"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Bluebean</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/stu98832" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stu98832" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://stu98832.github.io/2020/03/01/c-declaim-rule/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Bluebean">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="C語言的變數宣告規則 | Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C語言的變數宣告規則
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2020-03-01 12:06:00" itemprop="dateCreated datePublished" datetime="2020-03-01T12:06:00+08:00">2020-03-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/C%E8%AA%9E%E8%A8%80/" itemprop="url" rel="index"><span itemprop="name">C語言</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>在初學C的時候，你一定會學到如何宣告一個變數，但變數宣告並沒有想像中那麼簡單，變數宣告可以變得更複雜，更不直觀</p>
+<p>本文將會帶你了解C語言中的變數宣告規則，讓你可以僅用肉眼就能辨識出某個變數的型別，並善用<code>typedef</code>簡化你的宣告式</p>
+<span id="more"></span>
+<h2 id="一般變數宣告">一般變數宣告</h2>
+<p>一般變數宣告，是C語言中最基本的操作，包含宣告最基本型別 ( 如<code>int</code>，<code>array</code>，<code>pointer</code>等 ) 和自訂型別(<code>struct</code>，<code>union</code>)</p>
+<p>想必大家都可以簡單的辨識下列程式的意義</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> variable = <span class="number">5</span>;</span><br></pre></td></tr></table></figure>
+<p>上面程式的意思是產生一個型別為<code>int</code>的變數<code>variable</code>，並設定<code>variable</code>為5</p>
+<p>基本的陣列宣告或是指標宣告對於程式新手來說想必也不是問題</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span>  <span class="built_in">array</span>[<span class="number">5</span>]; <span class="comment">// 含有5個int元素的陣列array</span></span><br><span class="line"><span class="type">int</span> *pointer;  <span class="comment">// 指向int的指標pointer</span></span><br></pre></td></tr></table></figure>
+<h2 id="函式指標">函式指標</h2>
+<p>函式指標是指一個指向函式的指標變數，表現上比較不直觀，但是學久了就會慢慢熟悉這個樣貌</p>
+<p>有學過函式指標的人應該可以了解下面的程式</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> (*func)(<span class="type">void</span>);</span><br></pre></td></tr></table></figure>
+<p>這段的意思是宣告一個名為<code>func</code>的函式指標，該指標指向一個沒有參數，回傳<code>int</code>的函式</p>
+<p>不過，接下來的程式就不是每個人都會解的了</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> (*signal(<span class="type">int</span>, <span class="type">void</span>(*)(<span class="type">int</span>)))(<span class="type">int</span>);</span><br></pre></td></tr></table></figure>
+<p>這是C標準函式庫中，用來處理信號的函式的宣告</p>
+<p>看起來不是很直觀，它給人一種很像函式指標，卻又不像函式指標的樣子</p>
+<p>短時間內很難去解析這個函式的樣貌為何</p>
+<p>不過只要善用<code>typedef</code>，就可以使得這個函式變得好看許多</p>
+<h2 id="使用typedef">使用typedef</h2>
+<p><code>typedef</code>的用途是用來對某個類別進行簡化，或者說給它一個別名，本質上很像變數宣告，但最後產生出來的是一個<strong>型別</strong></p>
+<p>首先我們先宣告一個型別定義</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="title function_">void</span> <span class="params">(*SignalHandler)</span><span class="params">(<span class="type">int</span>)</span>;</span><br></pre></td></tr></table></figure>
+<p>這段看起來很像是宣告一個函式指標變數，不過它其實是宣告一個函式指標類型，名為<code>SignalHandler</code></p>
+<p>接著我們對<code>signal</code>這個函式套用<code>SignalHandler</code>，最後會變成</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SignalHandler <span class="title function_">signal</span><span class="params">(<span class="type">int</span>, SignalHandler)</span>;</span><br></pre></td></tr></table></figure>
+<p>有沒有覺得這樣好看多了呢？</p>
+<p>你可能會覺得很神奇，原本一個看起來有點複雜的函式最後卻可以簡化成這麼簡單的樣子</p>
+<p>但是簡化之前我們要如何知道它可以這樣被簡化呢？</p>
+<p>這種時候你就需要了解<strong>宣告的規則</strong>，抽出型別，再針對該型別進行<code>typedef</code>，最後進行簡化</p>
+<h2 id="宣告的規則">宣告的規則</h2>
+<p>其實所謂的規則比較像是觀察出來的結果</p>
+<p>C語言的宣告式子你可以分解成：<strong>最終型別</strong>  **中間過程 ** ;</p>
+<p>舉例來說：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> var;</span><br></pre></td></tr></table></figure>
+<p>上面的式子可以拆成<code>int</code>跟<code>var</code></p>
+<p>你最後可以得知<code>var</code>最終會得到一個型別為<code>int</code>的資料</p>
+<p>再進一步舉例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> *pointer;</span><br></pre></td></tr></table></figure>
+<p>可以被拆成<code>int</code>跟<code>*pointer</code></p>
+<p>這表示<code>*pointer</code>可以得到型別為<code>int</code>的資料</p>
+<p>接著再去推導<code>*pointer</code>，你會發現這是一個<strong>取值</strong>的過程，這表示<code>pointer</code>將會是一個<strong>指標</strong></p>
+<p>最後得出<code>pointer</code>將會是一個<strong>指標</strong>只向一個型別為<code>int</code>的資料</p>
+<blockquote>
+<p>注意：如果是 IDE ，<code>pointer</code>的型別會是<code>int*</code>但是你在解析時要把<code>*</code>跟變數放在一塊看</p>
+</blockquote>
+<p>接著是函式指標的解析，我要拆解</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> (*func)(<span class="type">void</span>);</span><br></pre></td></tr></table></figure>
+<p>依照剛剛的規則，拆成<code>int</code>跟<code>(*func)(void)</code>這2塊，由此可以得知經過<code>(*func)(void)</code>會得到<code>int</code></p>
+<p>接著觀察<code>(*func)(void)</code>，你可以發現它其實是呼叫了一個無參數的函式<code>(*func)</code></p>
+<p>在繼續往下，函式<code>(*func)</code>來自<code>*func</code>，<code>*</code>是一個取值運算子，因此<code>func</code>是一個指標</p>
+<p>接著將剛剛的所有結果串起來：</p>
+<p><code>int</code>來自一個<strong>無參數的函式</strong>，<strong>函式</strong>來自<code>*func</code></p>
+<p>因此<code>func</code>便是一個<strong>指向無參數，回傳<code>int</code>的函式的指標</strong></p>
+<p>大致上到這裡如果你都能了解，那就已經差不多可以來分析<code>signal</code>函式了</p>
+<h6 id="注：typedef-的宣告樣式和變數宣告一模一樣，差別就在-typedef-會產生型別，而一般的宣告會產生變數">注：typedef 的宣告樣式和變數宣告一模一樣，差別就在 typedef 會產生<strong>型別</strong>，而一般的宣告會產生<strong>變數</strong></h6>
+<h2 id="分析-signal">分析 signal</h2>
+<p>我們先看一下signal的長相</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> (*signal(<span class="type">int</span>, <span class="type">void</span>(*)(<span class="type">int</span>)))(<span class="type">int</span>);</span><br></pre></td></tr></table></figure>
+<p>一樣，先拆成2個部份：<code>void</code>跟<code>(*signal(int, void(*)(int)))(int)</code>，<code>(*signal(int, void(*)(int)))(int)</code>最後回傳<code>void</code>，</p>
+<p>接著解析<code>(*signal(int, void(*)(int)))(int)</code>，可以發現他是一個參數為<code>int</code>的函式<code>(*signal(int, void(*)(int)))</code></p>
+<p>再來是<code>(*signal(int, void(*)(int)))</code>，這邊使用了<strong>取值運算子<code>*</code></strong></p>
+<p>然後你就會看到我們的函式主體<code>signal(int, void(*)(int))</code></p>
+<p>因此，藉由剛剛的推導，我們可以知道<code>signal</code>回傳了一個<strong>指向參數為<code>int</code>，回傳<code>void</code>的函式指標</strong>，也就是<code>void (*)(int)</code></p>
+<p>而<code>signal</code>的參數則是<code>int</code>跟<code>void (*)(int)</code></p>
+<p>由於函式指標的樣子實在不太好看，因此使用<code>typedef</code>進行簡化：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="title function_">void</span> <span class="params">(*SignalHandler)</span><span class="params">(<span class="type">int</span>)</span>;</span><br></pre></td></tr></table></figure>
+<p>接著將<code>void (*)(int)</code>替換成<code>SignalHandler</code>，最後我們的<code>signal</code>函式就變成了：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SignalHandler <span class="title function_">signal</span><span class="params">(<span class="type">int</span>, SignalHandler)</span>;</span><br></pre></td></tr></table></figure>
+<p>這樣看起來就會簡單很多</p>
+<h2 id="typedef-的用途">typedef 的用途</h2>
+<p>經過了剛剛的解析與改寫，你會發現<code>typedef</code>可以簡化複雜難懂的類別，並且使得該類別的名子更具有意義，可以大大的增加程式碼的可讀性，而且使用<code>typedef</code>，也可以很簡單的替換型別</p>
+<p>這麼好用的<code>typedef</code>，還不用嗎？</p>
+<h2 id="單一型別的多重宣告">單一型別的多重宣告</h2>
+<p>有些人可能看過這樣的語法</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> var1, var2 = <span class="number">5</span>;</span><br></pre></td></tr></table></figure>
+<p>這將會建立兩個變數<code>var1</code>跟<code>var2</code></p>
+<p>這種宣告方式一樣也可以拆成<strong>最終型別</strong>跟<strong>中間過程</strong></p>
+<p>後面的部份通通都是<strong>中間過程</strong>，用<strong>逗號</strong>做區隔</p>
+<p>因此你可以這樣宣告</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span>   var, 		    <span class="comment">// int的變數</span></span><br><span class="line">      <span class="built_in">array</span>[<span class="number">5</span>],			<span class="comment">// 有5個int元素的陣列</span></span><br><span class="line">     *pointer,			<span class="comment">// 指向int資料的指標</span></span><br><span class="line">    (*func_pointer)(<span class="type">void</span>);	<span class="comment">// 指向無參數，回傳int的函式指標</span></span><br></pre></td></tr></table></figure>
+<p>觀察上面的程式，不難發現一般變數跟<code>pointer</code>可以<strong>同時</strong>在裡面</p>
+<p>由此可知，<code>pointer</code>是跟著變數走的</p>
+<p>因此</p>
+<p>int *var1, var2</p>
+<p>中<code>var2 </code>的型別並不是<code>int*</code>，而是<code>int</code></p>
+<h2 id="Struct-宣告">Struct 宣告</h2>
+<p>其實<code>struct</code>跟<code>union</code>的宣告也是變數宣告的一環，舉例來說：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">my_struct_t</span> &#123;</span></span><br><span class="line">    <span class="type">int</span> field;</span><br><span class="line">&#125; var1;</span><br></pre></td></tr></table></figure>
+<p>上面的式子不僅產生了自訂型別<code>struct my_struct_t</code>，同時也產生了型別為<code>struct my_struct_t</code>的變數<code>var1</code></p>
+<h2 id="結語">結語</h2>
+<p>看完是不是有一種 “想不到變數宣告可以這樣解析呢！” 的想法呢？</p>
+<p>老實說我第一次看到<code>signal</code>函式時也是蠻驚訝的，第一次見到如此神奇的函數宣告，甚至還有人觀察出了一種特殊的解法來解析<code>signal</code>函式，名子我不太記得了，但大致上的原理是從變數名稱開始左右掃射，直到所有的符號都看完為止，就可以解析出這個變數的型別</p>
+<p>不過我並沒有運用那種方式，畢竟實做起來感覺還是有點麻煩</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C%E8%AA%9E%E8%A8%80/" rel="tag"><i class="fa fa-tag"></i> C語言</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/02/29/hexo-admin/" rel="prev" title="初入 hexo-admin">
+                  <i class="fa fa-angle-left"></i> 初入 hexo-admin
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/03/15/note-solid/" rel="next" title="SOLID 筆記">
+                  SOLID 筆記 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2020 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Bluebean</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr+QR0SQDNfgglgtcM=" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"stu98832","repo":"stu98832.github.io","client_id":"0b84385c74db3fd44c22","client_secret":"089aee5f0152169f2b4ec924fbce2a06ac1e4c89","admin_user":"stu98832","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","labels":"Gitalk","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"8434d7bcf5c18c7d7a70380943243030"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

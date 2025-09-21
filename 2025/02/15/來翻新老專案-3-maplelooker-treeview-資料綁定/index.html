@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"stu98832.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="這次主軸是將 TreeView 的資料節點做資料綁定 原本是打算對播放器元件做一些重構，但調整 Slider 時碰到問題暫時沒法解決 所以就改重構 TreeView 的部份了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="來翻新老專案 (3) - MapleLooker - TreeView 資料綁定">
+<meta property="og:url" content="http://stu98832.github.io/2025/02/15/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-3-maplelooker-treeview-%E8%B3%87%E6%96%99%E7%B6%81%E5%AE%9A/index.html">
+<meta property="og:site_name" content="Bluebean 的筆記">
+<meta property="og:description" content="這次主軸是將 TreeView 的資料節點做資料綁定 原本是打算對播放器元件做一些重構，但調整 Slider 時碰到問題暫時沒法解決 所以就改重構 TreeView 的部份了">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://stu98832.github.io/assets/topics/project-renovation/maple-looker/maple-looker-20250216.gif">
+<meta property="article:published_time" content="2025-02-15T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-09-21T15:51:56.671Z">
+<meta property="article:author" content="Bluebean">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://stu98832.github.io/assets/topics/project-renovation/maple-looker/maple-looker-20250216.gif">
+
+
+<link rel="canonical" href="http://stu98832.github.io/2025/02/15/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-3-maplelooker-treeview-%E8%B3%87%E6%96%99%E7%B6%81%E5%AE%9A/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://stu98832.github.io/2025/02/15/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-3-maplelooker-treeview-%E8%B3%87%E6%96%99%E7%B6%81%E5%AE%9A/","path":"2025/02/15/來翻新老專案-3-maplelooker-treeview-資料綁定/","title":"來翻新老專案 (3) - MapleLooker - TreeView 資料綁定"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>來翻新老專案 (3) - MapleLooker - TreeView 資料綁定 | Bluebean 的筆記</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Bluebean 的筆記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">TreeView 如何處理資料綁定？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ItemsSource"><span class="nav-number">1.1.</span> <span class="nav-text">ItemsSource</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ItemContainerGenerator"><span class="nav-number">1.2.</span> <span class="nav-text">ItemContainerGenerator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ItemTemplate"><span class="nav-number">1.3.</span> <span class="nav-text">ItemTemplate</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ItemContainerStyle"><span class="nav-number">1.4.</span> <span class="nav-text">ItemContainerStyle</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">開始修改 TreeView</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BA%96%E5%82%99%E7%AF%80%E9%BB%9E%E7%89%A9%E4%BB%B6"><span class="nav-number">2.1.</span> <span class="nav-text">準備節點物件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9-xaml"><span class="nav-number">2.2.</span> <span class="nav-text">修改 xaml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A8%AD%E5%AE%9A-ContextMenu"><span class="nav-number">2.3.</span> <span class="nav-text">設定 ContextMenu</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E9%87%8D%E6%A7%8B"><span class="nav-number">2.4.</span> <span class="nav-text">事件重構</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">修改呈現物件資訊的自訂控制項 - ViewBox</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DependencyProperty"><span class="nav-number">3.1.</span> <span class="nav-text">DependencyProperty</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8-MainForm-xaml-%E4%B8%AD%E9%80%B2%E8%A1%8C%E7%B6%81%E5%AE%9A"><span class="nav-number">3.2.</span> <span class="nav-text">在 MainForm.xaml 中進行綁定</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">最終成果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">後記</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bluebean"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Bluebean</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/stu98832" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stu98832" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://stu98832.github.io/2025/02/15/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-3-maplelooker-treeview-%E8%B3%87%E6%96%99%E7%B6%81%E5%AE%9A/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Bluebean">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="來翻新老專案 (3) - MapleLooker - TreeView 資料綁定 | Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          來翻新老專案 (3) - MapleLooker - TreeView 資料綁定
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2025-02-16 00:00:00" itemprop="dateCreated datePublished" datetime="2025-02-16T00:00:00+08:00">2025-02-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%80%81%E5%B0%88%E6%A1%88%E7%BF%BB%E6%96%B0/" itemprop="url" rel="index"><span itemprop="name">老專案翻新</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>這次主軸是將 TreeView 的資料節點做資料綁定<br>
+原本是打算對播放器元件做一些重構，但調整 Slider 時碰到問題暫時沒法解決<br>
+所以就改重構 TreeView 的部份了</p>
+<span id="more"></span>
+<h1>TreeView 如何處理資料綁定？</h1>
+<p>相較於一般的控制項如：CheckBox、RadioButton、TextBlock 等等，都是直接綁定 <code>Text</code> 或 <code>IsChecked</code> 等簡單屬性<br>
+而 TextList、TreeView 等等有關集合的物件，則通常會透過 <code>ItemsSource</code> 來管理物件集合</p>
+<p>這類使用物件集合的物件有幾個對 UI 渲染非常重要的屬性：<code>ItemTemplate</code>、<code>ItemContainerStyle</code>、<code>ItemContainerGenerator</code> 等等</p>
+<h2 id="ItemsSource">ItemsSource</h2>
+<p>原先使用 TreeView 時，都是自己手動建立 TreeViewItem (在 WinForm 則是 TreeNode)，並手動將資料指定到 <code>Tag</code> 屬性方便使用<br>
+到了 Wpf 中，則可以使用 <code>ItemsSource</code> 直接管理資料集合，並在觸發事件時直接使用資料而非節點</p>
+<p>ItemsSource 除了要求實做 <code>IEnumerable</code> 外，並無其他限制，可放入任何資料</p>
+<h2 id="ItemContainerGenerator">ItemContainerGenerator</h2>
+<p>TreeView 會透過 ItemContainerGenerator 為每一個資料生成對應的節點控制項，也就是 <code>TreeViewItem</code></p>
+<h2 id="ItemTemplate">ItemTemplate</h2>
+<p>ItemTemplate 主要負責節點控制項的客製化<br>
+先前 ItemContainerGenerator 已經幫忙為資料生成一個外殼 TreeViewItem<br>
+TreeViewItem 裡面則有一個 <code>Header</code> 屬性支援客製化模板，為每個資料建立自定義 UI 並依照資料進行綁定<br>
+ItemTemplate 會影響 <code>Header</code> 的呈現方式</p>
+<p>若沒有什麼特殊需求，TreeView 的 <code>ItemTemplate</code> 使用基本的 TextBlock 來呈現節點資料即可</p>
+<h2 id="ItemContainerStyle">ItemContainerStyle</h2>
+<p>如果要對 ItemContainer 的數值進行綁定或額外設定，則需要設定 <code>ItemContainerStyle</code></p>
+<p>ItemContainerStyle 允許設定 ItemContainer 的各項配置，包含一般的屬性以及事件<br>
+藉由 ItemContainerStyle 可以在自訂節點上綁定 <code>IsExpanded</code>、<code>IsSelected</code> 等屬性，並綁定 TreeViewItem 進行控制</p>
+<div class="note warning"><p>若使用的控制項原本就有設定 ItemContainerStyle，設定 Style 之後會導致原本的配置被覆蓋<br>
+這時候就要在設定 Style 時特別設定 <code>BaseOn</code> ，基於原本的 Style 配置進行進一步的改動</p>
+</div>
+<h1>開始修改 TreeView</h1>
+<p>了解 TreeView 有哪些東西，接著就是開始將原本手動建立 Item 的部份改為使用資料綁定與 Template</p>
+<h2 id="準備節點物件">準備節點物件</h2>
+<p>首先是節點物件</p>
+<p>Wpf 的 TreeView 和 WinForm 的 TreeView 運作上有很大的不同<br>
+最初 WinForm 的 TreeView 在任何跟 TreeNode 有關的事件、是否展開都是直接在 TreeView 設定<br>
+但是 Wpf 的事件與是否展開皆在 TreeViewItem 設定<br>
+這導致最初從 WinForm 轉移到 Wpf 之後，TreeView 的節點在讀取時會全部展開，造成 UI 一次載入大量節點造成卡頓</p>
+<p>為了避免節點全部展開，我需要對節點展開的狀態進行控制<br>
+因此，需要建立自訂的節點類別，在連結資料的情況下，同時提供綁定在 TreeViewItem 上的屬性：</p>
+<figure class="highlight c#"><figcaption><span>WzTreeNode.cs</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">WzTreeNode</span> : <span class="title">INotifyPropertyChanged</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> WzObjectBase _value;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">required</span> WzObjectBase Value &#123;</span><br><span class="line">        <span class="keyword">get</span> =&gt; _value;</span><br><span class="line">        <span class="keyword">set</span> &#123;</span><br><span class="line">            _value = <span class="keyword">value</span>;</span><br><span class="line">            OnPropertyChanged();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">string</span> _name;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">required</span> <span class="built_in">string</span> Name &#123;</span><br><span class="line">        <span class="keyword">get</span> =&gt; _name;</span><br><span class="line">        <span class="keyword">set</span> &#123;</span><br><span class="line">            _name = <span class="keyword">value</span>;</span><br><span class="line">            OnPropertyChanged();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> ObservableCollection&lt;WzTreeNode&gt; Children &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125; = <span class="keyword">new</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">bool</span> _isExpanded = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">bool</span> IsExpanded &#123;</span><br><span class="line">        <span class="keyword">get</span> =&gt; _isExpanded;</span><br><span class="line">        <span class="keyword">set</span> &#123;</span><br><span class="line">            _isExpanded = <span class="keyword">value</span>;</span><br><span class="line">            OnPropertyChanged();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">event</span> PropertyChangedEventHandler PropertyChanged;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">OnPropertyChanged</span>(<span class="params">[CallerMemberName] <span class="built_in">string</span> propertyName = <span class="literal">null</span></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.PropertyChanged?.Invoke(<span class="keyword">this</span>, <span class="keyword">new</span> PropertyChangedEventArgs(propertyName));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的 INotifyPropertyChanged 是一個介面，要求類別提供一個 <code>PropertyChanged</code> 事件用於通知 UI 資料發生變化</p>
+<div class="note info"><p>任何 INotifyPropertyChanged 的物件都必須在 UI 執行緒呼叫 <code>PropertyChanged</code><br>
+若是需要透過其他執行緒對這些物件進行改動，建議是透過 UI 的 Dispatcher 使用 Invoke 回到 UI 執行緒操作物件<br>
+或是將 <code>PropertyChanged</code> 事件拉到 UI 執行緒執行，而物件本體則可以不受限制的修改</p>
+</div>
+<p>ObservableCollection 是一個實作 INotifyPropertyChanged 的集合<br>
+對集合本身的操作如 <code>Add</code>、<code>Remove</code>、<code>Clear</code> 等都會通知 UI</p>
+<div class="note info"><p>由於 ObservableCollection 實作 INotifyPropertyChanged，所以必須在 UI 執行緒進行操作</p>
+</div>
+<h2 id="修改-xaml">修改 xaml</h2>
+<p>ItemsSource 一樣直接綁定到 MainForm 本身，建立一個 <code>RootNodes</code> 用於綁定<br>
+由於使用 ObservableCollection，因此不用對 MainForm 實作 INotifyPropertyChanged</p>
+<figure class="highlight c#"><figcaption><span>MainForm.xaml.cs</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">partial</span> <span class="keyword">class</span> <span class="title">MainForm</span> : <span class="title">WpfUi.FluentWindow</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="keyword">public</span> ObservableCollection&lt;WzTreeNode&gt; RootNodes &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125; = <span class="keyword">new</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接著在 TreeView 上綁定 <code>ItemsSource</code> 為 <code>RootNodes</code> 並且設定 Style 跟 Template：</p>
+<figure class="highlight xml"><figcaption><span>MainForm.xaml</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">TreeView</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">...</span></span></span><br><span class="line"><span class="tag">    <span class="attr">ItemsSource</span>=<span class="string">&quot;&#123;Binding RootNodes, ElementName=_parent&#125;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">TreeView.ItemContainerStyle</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Style</span> <span class="attr">TargetType</span>=<span class="string">&quot;TreeViewItem&quot;</span> <span class="attr">BasedOn</span>=<span class="string">&quot;&#123;StaticResource DefaultTreeViewItemStyle&#125;&quot;</span>&gt;</span><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">Setter</span> <span class="attr">Property</span>=<span class="string">&quot;IsExpanded&quot;</span> <span class="attr">Value</span>=<span class="string">&quot;&#123;Binding IsExpanded&#125;&quot;</span>/&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">Setter</span> <span class="attr">Property</span>=<span class="string">&quot;Margin&quot;</span> <span class="attr">Value</span>=<span class="string">&quot;0 5 0 0&quot;</span>/&gt;</span></span></span><br><span class="line"><span class="language-xml">        </span><span class="tag">&lt;/<span class="name">Style</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">TreeView.ItemContainerStyle</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">TreeView.ItemTemplate</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">HierarchicalDataTemplate</span> <span class="attr">ItemsSource</span>=<span class="string">&quot;&#123;Binding Children&#125;&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">TextBlock</span> <span class="attr">Text</span>=<span class="string">&quot;&#123;Binding Name&#125;&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">HierarchicalDataTemplate</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">TreeView.ItemTemplate</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">TreeView</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>上面的 HierarchicalDataTemplate 主要是給 TreeView 使用，用於未知深度的樹節點<br>
+若是 TextList 之類單純列表形式的控制項，只需要使用 DataTemplate 即可<br>
+與 DataTemplate 的不同之處在於對多綁了一次 <code>Children</code> 到 <code>ItemsSource</code> 上</p>
+<p>Style 的部份有另外使用到 <code>BaseOn</code><br>
+如同前面所說，設定 Style 會把原先預設的 Style 全部蓋掉<br>
+因此，透過 <code>BaseOn</code> 基於原本的 Style 做修改，才能避免蓋掉原本 Wpf.UI 設定的樣式</p>
+<p>樣板的部份因為沒有特殊需求，所以只使用最簡單的 TextBlock</p>
+<h2 id="設定-ContextMenu">設定 ContextMenu</h2>
+<p>最早 WinForm 時期的 ContextMenu 是藉由 <code>MouseClick</code> 的右鍵點擊事件建立並顯示 ContextMenu<br>
+而到 Wpf 這邊，目前我還找不到好的方式處理這一塊</p>
+<p>如果使用滑鼠點擊事件，我可以透過 <code>sender</code> 變數取得 TreeViewItem<br>
+但是超出第一層的 TreeViewItem 就沒辦法顯示選單</p>
+<p>也嘗試過直接用 Style 裡面透過 Setter 設定 ContextMenu<br>
+但是一切到沒有選單的區塊點右鍵後再切回來， Wpf.UI 的樣式就會跑掉</p>
+<p>最後折衷的作法，就是在自訂 Node 上設定 ContextMenu ，並綁定到 TextBlock 上<br>
+缺點是，只有在文字區塊點擊右鍵才會跳出選單</p>
+<h2 id="事件重構">事件重構</h2>
+<p>因應前面的一些改動，因此一些事件的觸發都要做一些相對應的改動<br>
+同時也將輸入做一些調整以方便實做 <code>ICommand</code> 介面做綁定</p>
+<p>這邊主要以關閉節點的事件做說明：</p>
+<figure class="highlight c#"><figcaption><span>MainForm.xaml.cs</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Wz_Close</span>()</span> &#123;</span><br><span class="line">    TreeViewItem sele = WzTreeView.SelectedItem <span class="keyword">as</span> TreeViewItem;</span><br><span class="line">    <span class="keyword">if</span> (sele != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (sele.Tag <span class="keyword">is</span> WzFile) &#123;</span><br><span class="line">            <span class="keyword">var</span> msgbox = <span class="keyword">new</span> WpfUi.MessageBox() &#123;</span><br><span class="line">                Title = <span class="string">&quot;警告&quot;</span>,</span><br><span class="line">                Content = <span class="string">&quot;請問要關閉所選的WZ嗎?\r\n&quot;</span> + ((WzFile)sele.Tag).Name,</span><br><span class="line">                PrimaryButtonText = <span class="string">&quot;是&quot;</span>,</span><br><span class="line">                CloseButtonText = <span class="string">&quot;取消&quot;</span>,</span><br><span class="line">            &#125;;</span><br><span class="line">            <span class="keyword">if</span> (msgbox.ShowDialogAsync().Result == WpfUi.MessageBoxResult.Primary) &#123;</span><br><span class="line">                WzFile disFile = sele.Tag <span class="keyword">as</span> WzFile;</span><br><span class="line">                sele.Tag = <span class="literal">null</span>;</span><br><span class="line">                disFile.Dispose();</span><br><span class="line">                WzMaganer.LoadedWZs.Remove(disFile);</span><br><span class="line">                WzTreeView.Items.Remove(sele);</span><br><span class="line">                ViewBox.ShowWzInfo(<span class="literal">null</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (WzTreeView.Items.Contains(sele)) &#123;</span><br><span class="line">            <span class="keyword">var</span> msgbox = <span class="keyword">new</span> WpfUi.MessageBox() &#123;</span><br><span class="line">                Title = <span class="string">&quot;警告&quot;</span>,</span><br><span class="line">                Content = <span class="string">&quot;請問要關閉所選的資料嗎?\r\n&quot;</span> + ((WzObjectBase)sele.Tag).Name</span><br><span class="line">            &#125;;</span><br><span class="line">            <span class="keyword">if</span> (msgbox.ShowDialogAsync().Result == WpfUi.MessageBoxResult.Primary) &#123;</span><br><span class="line">                ((IDisposable)sele.Tag).Dispose();</span><br><span class="line">                WzTreeView.Items.Remove(sele);</span><br><span class="line">                ViewBox.ShowWzInfo(<span class="literal">null</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>重構之後變成這樣：</p>
+<figure class="highlight c#"><figcaption><span>MainForm.xaml.cs</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CloseWzNode</span>(<span class="params">WzTreeNode node</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (node.Value <span class="keyword">is</span> WzFile <span class="keyword">file</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> msgbox = <span class="keyword">new</span> WpfUi.MessageBox() &#123;</span><br><span class="line">            Title = <span class="string">&quot;警告&quot;</span>,</span><br><span class="line">            Content = <span class="string">&quot;請問要關閉所選的WZ嗎?\r\n&quot;</span> + <span class="keyword">file</span>.Name,</span><br><span class="line">            PrimaryButtonText = <span class="string">&quot;是&quot;</span>,</span><br><span class="line">            CloseButtonText = <span class="string">&quot;取消&quot;</span>,</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">if</span> (msgbox.ShowDialogAsync().Result == WpfUi.MessageBoxResult.Primary) &#123;</span><br><span class="line">            <span class="keyword">file</span>.Dispose();</span><br><span class="line">            WzMaganer.LoadedWZs.Remove(<span class="keyword">file</span>);</span><br><span class="line">            RootNodes.Remove(node);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> msgbox = <span class="keyword">new</span> WpfUi.MessageBox() &#123;</span><br><span class="line">            Title = <span class="string">&quot;警告&quot;</span>,</span><br><span class="line">            Content = <span class="string">&quot;請問要關閉所選的資料嗎?\r\n&quot;</span> + node.Name</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">if</span> (msgbox.ShowDialogAsync().Result == WpfUi.MessageBoxResult.Primary) &#123;</span><br><span class="line">            node.Value?.Dispose();</span><br><span class="line">            WzTreeView.Items.Remove(node);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>主要的差異在於，事件本身已經是以資料為主，所以不用再透過 TreeViewItem 的 <code>Tag</code> 取得資料了<br>
+整個方法已經聚焦在 WzTreeNode 上，使得前面的巢狀 if 通通可以拔掉</p>
+<p>再來是使用 <code>is</code> 判斷變數的同時，可以同時宣告變數<br>
+透過這個語法糖，就少了後續宣告變數的部份，程式也變得更加簡潔</p>
+<p>最後透過 <code>?.</code> 關鍵字，若節點本身並沒有資料，則不會執行 <code>Dispose()</code><br>
+就少了一些強制轉型跟 null 的判斷</p>
+<p>ViewBox 的部份後面會說明，這邊的程式已經是調整之後，也不需要手動傳遞數值到自訂控制項了</p>
+<h1>修改呈現物件資訊的自訂控制項 - ViewBox</h1>
+<p>ViewBox 主要是為了呈現 WZ 資料而建立的自訂控制項<br>
+原本都是手動將物件傳遞到控制項來更新控制項資訊<br>
+現在則要透過 xaml 的方式直接綁定 TreeView 的 <code>SelectedItem</code> 來呈現目前選擇的節點資訊</p>
+<h2 id="DependencyProperty">DependencyProperty</h2>
+<p>為了支援直接從 xaml 綁定屬性的功能，需要新增 DependencyProperty</p>
+<p>有關相依性屬性的部份可以參考<a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-tw/windows/uwp/xaml-platform/dependency-properties-overview">官方文件</a><br>
+這塊我還沒有深入研究，目前就是從網路上找資源跟著做而已 🙂</p>
+<p>下面是針對 <code>CurrentWzObject</code> 屬性的配置：</p>
+<figure class="highlight c#"><figcaption><span>WzViewBox.xaml.cs</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">partial</span> <span class="keyword">class</span> <span class="title">WzViewBox</span> : <span class="title">UserControl</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">readonly</span> DependencyProperty CurrentWzObjectProperty =</span><br><span class="line">        DependencyProperty.Register(</span><br><span class="line">            <span class="keyword">nameof</span>(CurrentWzObject),</span><br><span class="line">            <span class="keyword">typeof</span>(WzObjectBase),</span><br><span class="line">            <span class="keyword">typeof</span>(WzViewBox),</span><br><span class="line">            <span class="keyword">new</span> PropertyMetadata(<span class="literal">null</span>, OnCurrentWzObjectChanged)</span><br><span class="line">        );</span><br><span class="line">    <span class="keyword">public</span> WzObjectBase CurrentWzObject &#123;</span><br><span class="line">        <span class="keyword">get</span> =&gt; (WzObjectBase)GetValue(CurrentWzObjectProperty);</span><br><span class="line">        <span class="keyword">set</span> =&gt; SetValue(CurrentWzObjectProperty, <span class="keyword">value</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">OnCurrentWzObjectChanged</span>(<span class="params">DependencyObject sender, DependencyPropertyChangedEventArgs e</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (sender <span class="keyword">is</span> WzViewBox self) &#123;</span><br><span class="line">            self.UpdateInfo(e.NewValue <span class="keyword">as</span> WzObjectBase);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>針對屬性 <code>CurrentWzObject</code> ，需要設定一樣名稱的 Property <code>CurrentWzObjectProperty</code><br>
+然後在 <code>CurrentWzObject</code> 的 Getter 跟 Setter 都設定從自己身上取得對應 Property 的資料</p>
+<p>這邊另外設定了 OnChanged 事件用於更新內部元件的資料</p>
+<h2 id="在-MainForm-xaml-中進行綁定">在 MainForm.xaml 中進行綁定</h2>
+<p>完成了 DependencyProperty 的設定後<br>
+再來就可以直接在 xaml 上使用屬性了</p>
+<p>這邊直接對 <code>CurrentWzObject</code> 綁定 TreeView 的 <code>SelectedItem.Value</code>：</p>
+<figure class="highlight xml"><figcaption><span>MainForm.xaml</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">comp:WzViewBox</span></span></span><br><span class="line"><span class="tag">    <span class="attr">x:Name</span>=<span class="string">&quot;ViewBox&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">CurrentWzObject</span>=<span class="string">&quot;&#123;Binding SelectedItem.Value, ElementName=WzTreeView&#125;&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<h1>最終成果</h1>
+<p><img src="/assets/topics/project-renovation/maple-looker/maple-looker-20250216.gif" alt="maple-looker-20250216.gif"></p>
+<h1>後記</h1>
+<p>原本是要先重構舊的程式<br>
+但看了看 MainForm 的程式，發現大多跟 UI 相關，其實非 UI 邏輯的程式量並不多<br>
+中途本來想先改 SoundPlayer 這個子控制項，但是調整聲音位置的部份一直沒辦法調好，所以就跑去改寫 TreeView</p>
+<p>原本我在 ItemTemplate 設定 TreeViewItem，而且還忘記把 IsEnabled 設回 true，導致中途試的時候一直打不開 + 位置錯誤<br>
+折騰了好一陣子才終於把項目調整好，然後又碰到 Wpf.UI 的樣式被吃掉，找了好久才知道 <code>BaseOn</code> 這個屬性<br>
+幸好最後修改結果還算成功</p>
+<p>ContextMenu 目前還沒有好的修改方式<br>
+試過好幾種辦法，都沒辦法有效的讓<strong>動態生成的選單</strong>適當的顯示出來<br>
+最後只好綁定到 TextBlock 上先讓選單正常運作</p>
+<p>目前看起來效果還不錯，而且還順便把以前為了避免 TreeView 載入卡頓而設定的 Thread 給砍掉<br>
+整個 UI 的程式開始變得精簡，是好的開始 🙂</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/01/31/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-2-maplelooker-winform-%E9%81%B7%E7%A7%BB%E5%88%B0-wpf/" rel="prev" title="來翻新老專案 (2) - MapleLooker - WinForm 遷移到 WPF">
+                  <i class="fa fa-angle-left"></i> 來翻新老專案 (2) - MapleLooker - WinForm 遷移到 WPF
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/03/10/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-3-5-maplelooker-%E8%B7%91%E5%8E%BB%E6%94%B9%E5%85%B6%E4%BB%96%E5%B0%88%E6%A1%88%EF%BC%8C%E7%84%B6%E5%BE%8C%E7%BF%BB%E8%BB%8A/" rel="next" title="來翻新老專案 (3.5) - MapleLooker - 跑去改其他專案，然後翻車">
+                  來翻新老專案 (3.5) - MapleLooker - 跑去改其他專案，然後翻車 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2020 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Bluebean</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr+QR0SQDNfgglgtcM=" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"stu98832","repo":"stu98832.github.io","client_id":"0b84385c74db3fd44c22","client_secret":"089aee5f0152169f2b4ec924fbce2a06ac1e4c89","admin_user":"stu98832","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","labels":"Gitalk","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"b66d97ea201a0d05c0d88e28faa741bf"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

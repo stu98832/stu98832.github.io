@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"stu98832.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="從第一篇文章開始到現在，已經過了三個半月 MapleLooker 從最初的 .NET Framework 4.8 + WinForm 變成 .NET 8.0 + WPF 透過這個專案，學到一些 WPF 的皮毛，現在 MapleLooker 已經沒什麼東西可以翻新了 因此這篇將會是 MapleLooker 翻新的最後一篇文章 🙂 這次主要是實現針對 TreeView 節點的查詢功能 在原始 Win">
+<meta property="og:type" content="article">
+<meta property="og:title" content="來翻新老專案 (7) - MapleLooker - TreeView 查詢">
+<meta property="og:url" content="http://stu98832.github.io/2025/04/29/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-7-maplelooker-treeview-%E6%9F%A5%E8%A9%A2/index.html">
+<meta property="og:site_name" content="Bluebean 的筆記">
+<meta property="og:description" content="從第一篇文章開始到現在，已經過了三個半月 MapleLooker 從最初的 .NET Framework 4.8 + WinForm 變成 .NET 8.0 + WPF 透過這個專案，學到一些 WPF 的皮毛，現在 MapleLooker 已經沒什麼東西可以翻新了 因此這篇將會是 MapleLooker 翻新的最後一篇文章 🙂 這次主要是實現針對 TreeView 節點的查詢功能 在原始 Win">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://stu98832.github.io/assets/topics/project-renovation/maple-looker/maple-looker-tree-view-filter-20250429.gif">
+<meta property="og:image" content="http://stu98832.github.io/assets/topics/project-renovation/maple-looker/maple-looker-image-node-text-color-hint-20250429.png">
+<meta property="og:image" content="http://stu98832.github.io/assets/topics/project-renovation/maple-looker/maple-looker-light-theme-switch-20250429.png">
+<meta property="article:published_time" content="2025-04-29T15:34:00.000Z">
+<meta property="article:modified_time" content="2025-09-21T15:51:56.672Z">
+<meta property="article:author" content="Bluebean">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://stu98832.github.io/assets/topics/project-renovation/maple-looker/maple-looker-tree-view-filter-20250429.gif">
+
+
+<link rel="canonical" href="http://stu98832.github.io/2025/04/29/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-7-maplelooker-treeview-%E6%9F%A5%E8%A9%A2/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://stu98832.github.io/2025/04/29/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-7-maplelooker-treeview-%E6%9F%A5%E8%A9%A2/","path":"2025/04/29/來翻新老專案-7-maplelooker-treeview-查詢/","title":"來翻新老專案 (7) - MapleLooker - TreeView 查詢"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>來翻新老專案 (7) - MapleLooker - TreeView 查詢 | Bluebean 的筆記</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Bluebean 的筆記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">TreeView 篩選的主要邏輯</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">綁定 UI 並呼叫 ApplyFilter</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">將 IsVisible 寫回 TreeViewItem</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">篩選成果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">其他優化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Image-%E7%AF%80%E9%BB%9E%E6%96%87%E5%AD%97%E6%9C%83%E6%A0%B9%E6%93%9A%E8%A7%A3%E6%9E%90%E7%8B%80%E6%85%8B%E8%AE%8A%E5%8C%96"><span class="nav-number">5.1.</span> <span class="nav-text">Image 節點文字會根據解析狀態變化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E9%A1%8C%E5%88%87%E6%8F%9B"><span class="nav-number">5.2.</span> <span class="nav-text">主題切換</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">結語</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bluebean"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Bluebean</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/stu98832" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stu98832" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://stu98832.github.io/2025/04/29/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-7-maplelooker-treeview-%E6%9F%A5%E8%A9%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Bluebean">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="來翻新老專案 (7) - MapleLooker - TreeView 查詢 | Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          來翻新老專案 (7) - MapleLooker - TreeView 查詢
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2025-04-29 23:34:00" itemprop="dateCreated datePublished" datetime="2025-04-29T23:34:00+08:00">2025-04-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%80%81%E5%B0%88%E6%A1%88%E7%BF%BB%E6%96%B0/" itemprop="url" rel="index"><span itemprop="name">老專案翻新</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>從第一篇文章開始到現在，已經過了三個半月<br>
+MapleLooker 從最初的 .NET Framework 4.8 + WinForm 變成 .NET 8.0 + WPF<br>
+透過這個專案，學到一些 WPF 的皮毛，現在 MapleLooker 已經沒什麼東西可以翻新了<br>
+因此這篇將會是 MapleLooker 翻新的最後一篇文章 🙂</p>
+<p>這次主要是實現針對 TreeView 節點的查詢功能<br>
+在原始 WinForm 版本中，這個功能並沒有實現，這次特別將它做出來，為這個專案劃下一個句點</p>
+<span id="more"></span>
+<h1>TreeView 篩選的主要邏輯</h1>
+<p>這次的 TreeView 篩選是一個相當簡單的功能<br>
+不知道為什麼以前沒去實做這個功能</p>
+<p>這次主要會透過 <code>Visibility</code> 這個屬性去過濾 TreeViewItem<br>
+由於 TreeViewItem 元件的組成相當複雜，因此篩選主要針對 Model 而不是 TreeViewItem 本身</p>
+<p>一開始先為 TreeNode 建立 <code>IsVisible</code> 選項，並在 MainForm 的程式內新增套用篩選的程式：</p>
+<figure class="highlight c#"><figcaption><span>WzTreeNode.cs</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">WzTreeNode</span> : <span class="title">INotifyPropertyChanged</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/* ... */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">bool</span> _isVisible = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">bool</span> IsVisible &#123;</span><br><span class="line">        <span class="keyword">get</span> =&gt; _isVisible;</span><br><span class="line">        <span class="keyword">set</span> &#123;</span><br><span class="line">            _isVisible = <span class="keyword">value</span>;</span><br><span class="line">            OnPropertyChanged();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/* ... */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight c#"><figcaption><span>MainForm.xaml.cs</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">partial</span> <span class="keyword">class</span> <span class="title">MainForm</span> : <span class="title">WpfUi.FluentWindow</span>, <span class="title">INotifyPropertyChanged</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/* ... */</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">ApplyFilter</span>(<span class="params"><span class="built_in">string</span> filterText</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">foreach</span> (WzTreeNode node <span class="keyword">in</span> RootNodes) &#123;</span><br><span class="line">            <span class="keyword">this</span>.ApplyFilterForTreeNode(node, filterText);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="built_in">bool</span> <span class="title">ApplyFilterForTreeNode</span>(<span class="params">WzTreeNode node, <span class="built_in">string</span> filterText, <span class="built_in">bool</span> parentVisible = <span class="literal">false</span></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">bool</span> visible = parentVisible || <span class="built_in">string</span>.IsNullOrEmpty(filterText) || node.Name.Contains(filterText);</span><br><span class="line">        <span class="built_in">bool</span> finalVisible = visible;</span><br><span class="line">        <span class="keyword">foreach</span> (<span class="keyword">var</span> child <span class="keyword">in</span> node.Children) &#123;</span><br><span class="line">            <span class="built_in">bool</span> childVisible = <span class="keyword">this</span>.ApplyFilterForTreeNode(child, filterText, visible);</span><br><span class="line">            finalVisible = finalVisible || childVisible;</span><br><span class="line">        &#125;</span><br><span class="line">        node.IsVisible = finalVisible;</span><br><span class="line">        <span class="keyword">return</span> finalVisible;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* ... */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>邏輯其實很單純，當我要尋找的節點與文字不匹配的時候，就把它隱藏起來<br>
+比較特別的是，我要找的節點如果在深處，那他的父節點也要顯示<br>
+而要尋找的節點底下還有子節點，則他底下所有的子節點全部都要顯示</p>
+<p>當輸入為空字串時，則全部節點的 <code>IsVisible</code> 都會是 <code>true</code></p>
+<h1>綁定 UI 並呼叫 ApplyFilter</h1>
+<p>方法有了，再來就是要綁定 UI 並觸發 ApplyFilter 方法<br>
+先建立 <code>FilterText</code> 屬性，然後再跟之前已經建立的 TextBox 做 TwoWay 綁定</p>
+<figure class="highlight c#"><figcaption><span>MainForm.xaml.cs</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">partial</span> <span class="keyword">class</span> <span class="title">MainForm</span> : <span class="title">WpfUi.FluentWindow</span>, <span class="title">INotifyPropertyChanged</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/* ... */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">string</span> _filterText = <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> FilterText &#123;</span><br><span class="line">        <span class="keyword">get</span> =&gt; _filterText;</span><br><span class="line">        <span class="keyword">set</span> &#123;</span><br><span class="line">            <span class="keyword">this</span>._filterText = <span class="keyword">value</span>;</span><br><span class="line">            OnPropertyChanged();</span><br><span class="line">            <span class="keyword">this</span>.ApplyFilter(<span class="keyword">this</span>._filterText);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* ... */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><figcaption><span>MainForm.xaml</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ui:AutoSuggestBox</span></span></span><br><span class="line"><span class="tag">    <span class="attr">Grid.Row</span>=<span class="string">&quot;1&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">Margin</span>=<span class="string">&quot;10,10,10,0&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">PlaceholderText</span>=<span class="string">&quot;搜尋...&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">Text</span>=<span class="string">&quot;&#123;Binding FilterText, ElementName=_parent, Mode=TwoWay&#125;&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>當 AutoSuggestBox 輸入之後，會改變 <code>FilterText</code><br>
+改變當下便會呼叫 <code>ApplyFilter</code> 對 TreeView 進行隱藏</p>
+<h1>將 <code>IsVisible</code> 寫回 TreeViewItem</h1>
+<p>現在輸入文字後會控制 TreeNode 的顯示狀態<br>
+最後只要再建立 Convertor 將 <code>IsVisible</code> 轉成 <code>Visibility</code>，並設定到 TreeViewItem 即可</p>
+<p>這邊我直接沿用之前寫好的 <code>BoolVisibilityConvertor</code><br>
+之前的邏輯是 <code>true</code> 轉換成 <code>Visible</code> ， <code>false</code> 轉換成 <code>Hidden</code>，但是 <code>Hidden</code> 只是把 UI 隱藏，但依然會佔用空間<br>
+所以這次的目標是將 <code>false</code> 轉成 <code>Collapsed</code> ，它可以讓 UI 不佔位，使被篩選的 TreeViewItem 直接消失</p>
+<p>我為 <code>BoolVisibilityConvertor</code> 新增一個 <code>Collapsed</code> 屬性來決定這個 Convertor 在 <code>false</code> 的情況該如何轉換 <code>Visibility</code> 值</p>
+<figure class="highlight c#"><figcaption><span>BoolVisibilityConvertor.cs</span></figcaption><table><tr><td class="code"><pre><span class="line">[<span class="meta">ValueConversion(typeof(bool), typeof(Visibility))</span>]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BoolVisibilityConvertor</span> : <span class="title">IValueConverter</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">bool</span> Collapsed &#123; <span class="keyword">get</span>; <span class="keyword">init</span>; &#125; = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">object</span> <span class="title">Convert</span>(<span class="params"><span class="built_in">object</span> <span class="keyword">value</span>, Type targetType, <span class="built_in">object</span> parameter, CultureInfo culture</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">bool</span> b = (<span class="built_in">bool</span>)<span class="keyword">value</span>;</span><br><span class="line">        <span class="keyword">return</span> b ? Visibility.Visible : (Collapsed ? Visibility.Collapsed : Visibility.Hidden);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">object</span> <span class="title">ConvertBack</span>(<span class="params"><span class="built_in">object</span> <span class="keyword">value</span>, Type targetType, <span class="built_in">object</span> parameter, CultureInfo culture</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NotImplementedException();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這樣的寫法可以避免重複建立類似功能的 Convertor，並且能夠依照需求選擇該如何建立 Convertor<br>
+我只要在 Resource 建立時指定 <code>Collapsed</code> 即可建立將 <code>false</code> 轉換成 <code>Collapsed</code> 的 Convertor</p>
+<figure class="highlight xml"><figcaption><span>MainForm.xaml</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ui:FluentWindow.Resources</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">convert:BoolVisibilityConvertor</span> <span class="attr">x:Key</span>=<span class="string">&quot;boolVisibility&quot;</span> <span class="attr">Collapsed</span>=<span class="string">&quot;True&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ui:FluentWindow.Resources</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>最後再將 <code>IsVisible</code> 套用到 <code>TreeViewItem</code> 即可</p>
+<figure class="highlight xml"><figcaption><span>MainForm.xaml</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">TreeView.ItemContainerStyle</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Style</span> <span class="attr">TargetType</span>=<span class="string">&quot;TreeViewItem&quot;</span> <span class="attr">BasedOn</span>=<span class="string">&quot;&#123;StaticResource DefaultTreeViewItemStyle&#125;&quot;</span>&gt;</span><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">Setter</span> <span class="attr">Property</span>=<span class="string">&quot;Visibility&quot;</span> <span class="attr">Value</span>=<span class="string">&quot;&#123;Binding IsVisible, Converter=&#123;StaticResource boolVisibility&#125;, Mode=TwoWay&#125;&quot;</span>/&gt;</span></span></span><br><span class="line"><span class="language-xml">    </span><span class="tag">&lt;/<span class="name">Style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">TreeView.ItemContainerStyle</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1>篩選成果</h1>
+<p>最後的成品如下：</p>
+<p><img src="/assets/topics/project-renovation/maple-looker/maple-looker-tree-view-filter-20250429.gif" alt="maple-looker-tree-view-filter-20250429.gif"></p>
+<h1>其他優化</h1>
+<p>除了 TreeView 篩選以外，這次還有對 UI 稍微做一點點小優化</p>
+<h2 id="Image-節點文字會根據解析狀態變化">Image 節點文字會根據解析狀態變化</h2>
+<p>由於 Image 節點我是採用 LazyLoading 的方式來載入子節點<br>
+為了能夠更清楚的知道哪些解析過哪些還沒解析<br>
+所以我就把沒有解析的節點設定為灰色，讓我能夠一眼辨識</p>
+<p><img src="/assets/topics/project-renovation/maple-looker/maple-looker-image-node-text-color-hint-20250429.png" alt="maple-looker-image-node-text-color-hint-20250429.png"></p>
+<h2 id="主題切換">主題切換</h2>
+<p>專案本身因為個人偏好，預設是深色主題<br>
+但考慮到並非每個人都會用深色主題，所以做了一個開關來切換淺色主題跟深色主題<br>
+算是一個非常簡單的功能</p>
+<p><img src="/assets/topics/project-renovation/maple-looker/maple-looker-light-theme-switch-20250429.png" alt="maple-looker-light-theme-switch-20250429.png"></p>
+<h1>結語</h1>
+<p>本來翻新 MapleLooker 這個專案主要是想寫一些程式重構的東西<br>
+但寫到後面才發現，這個專案的程式好像都跟 UI  有關 🙃<br>
+最後整個系列就變得像 WPF 學習紀錄了</p>
+<p>會想要在這一篇結束 MapleLooker 這個系列，主要是因為大部分的功能以及介面都已經翻新完成<br>
+雖然不是每個部份都寫得很完美，但該有的大多都有了，也運作得很好<br>
+如果再繼續往下去寫，那就不是翻新了，而是繼續堆疊新功能，<s>而且我也想不到該翻新什麼了</s><br>
+所以做完篩選框之後，就打算結束這個系列</p>
+<p>WPF 我覺得是一個蠻有挑戰性的東西，它跟 WinForm 相比完全是不同層級的東西<br>
+前面需要學習的概念還蠻多的，但是學會以後，就能夠快速建立好看的 Desktop App<br>
+現在有 ChatGPT、Claude 等大語言模型的幫助，多少能降低一些學習門檻<br>
+儘管大語言模型的輸出並非每次都很可靠，但也提供不錯的靈感去尋找資源或實作想要的效果</p>
+<p>不知道怎麼搞的，文章的產出時間漸漸變成以兩週為一個週期<br>
+後面也是盡可能在第一個週末投入時間想方向跟寫程式，並在第二個週末撰寫文章<br>
+雖然翻新系列到這篇就結束了，但我還是會繼續想一些題材來寫，紀錄一些個人思維與看法，看能不能提昇文字方面的表達能力</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/04/22/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-6-maplelooker-treenode-contextmenu-%E9%87%8D%E6%A7%8B/" rel="prev" title="來翻新老專案 (6) - MapleLooker - TreeNode ContextMenu 重構">
+                  <i class="fa fa-angle-left"></i> 來翻新老專案 (6) - MapleLooker - TreeNode ContextMenu 重構
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/05/20/%E4%BE%86%E8%81%8A%E9%BB%9E-ai/" rel="next" title="來聊點 AI">
+                  來聊點 AI <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2020 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Bluebean</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr+QR0SQDNfgglgtcM=" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"stu98832","repo":"stu98832.github.io","client_id":"0b84385c74db3fd44c22","client_secret":"089aee5f0152169f2b4ec924fbce2a06ac1e4c89","admin_user":"stu98832","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","labels":"Gitalk","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"40ead0fa5fc743bdffaf142ca9557cdd"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"stu98832.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="近期因為服兵役，在裡面太無聊，所以就又重讀了很久之前買的 無暇的程式碼—敏捷完整篇 主要是針對設計模式的部份來看看 大約 3 年前，剛看完書籍就想要現學現賣，結果只寫了 Command Pattern 跟 Active Object Pattern 就沒再更新了 現在回去看，感覺就像是把書籍的內容貼上一樣 XD 當時有位前輩就有回覆過使用模式的原因，現在有比較了結意思了 最初的統整文章：設計模式筆">
+<meta property="og:type" content="article">
+<meta property="og:title" content="設計模式筆記">
+<meta property="og:url" content="http://stu98832.github.io/2023/01/20/note-2023-01-20-design-pattern/index.html">
+<meta property="og:site_name" content="Bluebean 的筆記">
+<meta property="og:description" content="近期因為服兵役，在裡面太無聊，所以就又重讀了很久之前買的 無暇的程式碼—敏捷完整篇 主要是針對設計模式的部份來看看 大約 3 年前，剛看完書籍就想要現學現賣，結果只寫了 Command Pattern 跟 Active Object Pattern 就沒再更新了 現在回去看，感覺就像是把書籍的內容貼上一樣 XD 當時有位前輩就有回覆過使用模式的原因，現在有比較了結意思了 最初的統整文章：設計模式筆">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2023-01-20T05:00:00.000Z">
+<meta property="article:modified_time" content="2025-09-21T15:51:56.670Z">
+<meta property="article:author" content="Bluebean">
+<meta property="article:tag" content="Design Pattern">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://stu98832.github.io/2023/01/20/note-2023-01-20-design-pattern/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://stu98832.github.io/2023/01/20/note-2023-01-20-design-pattern/","path":"/2023/01/20/note-2023-01-20-design-pattern/","title":"設計模式筆記"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>設計模式筆記 | Bluebean 的筆記</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Bluebean 的筆記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Design Pattern—設計模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%95%E8%AC%82%E8%A8%AD%E8%A8%88%E6%A8%A1%E5%BC%8F%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">何謂設計模式？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A9%B2%E4%B8%8D%E8%A9%B2%E4%BD%BF%E7%94%A8%E8%A8%AD%E8%A8%88%E6%A8%A1%E5%BC%8F%EF%BC%9F"><span class="nav-number">1.2.</span> <span class="nav-text">該不該使用設計模式？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%82%BA%E4%BD%95%E9%87%8D%E6%A7%8B%E6%9C%83%E4%BD%BF%E7%94%A8%E5%88%B0%E8%A8%AD%E8%A8%88%E6%A8%A1%E5%BC%8F%EF%BC%9F"><span class="nav-number">1.3.</span> <span class="nav-text">為何重構會使用到設計模式？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">開始之前</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">目錄</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">參考</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">更新</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bluebean"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Bluebean</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/stu98832" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stu98832" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://stu98832.github.io/2023/01/20/note-2023-01-20-design-pattern/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Bluebean">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="設計模式筆記 | Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          設計模式筆記
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2023-01-20 13:00:00" itemprop="dateCreated datePublished" datetime="2023-01-20T13:00:00+08:00">2023-01-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%80%8B%E4%BA%BA%E7%AD%86%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">個人筆記</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>近期因為服兵役，在裡面太無聊，所以就又重讀了很久之前買的 <strong>無暇的程式碼—敏捷完整篇</strong><br>
+主要是針對設計模式的部份來看看</p>
+<p>大約 3 年前，剛看完書籍就想要現學現賣，結果只寫了 Command Pattern 跟 Active Object Pattern 就沒再更新了<br>
+現在回去看，感覺就像是把書籍的內容貼上一樣 XD<br>
+當時有位前輩就有回覆過使用模式的原因，現在有比較了結意思了<br>
+最初的統整文章：<a href="/2020/03/21/note-design-pattern/" title="設計模式筆記 (舊)">設計模式筆記 (舊)</a></p>
+<p>現在打算依照自己的經驗重新去撰寫這些模式的相關介紹<br>
+舊的文章則會保存，把黑歷史留下來 XD</p>
+<span id="more"></span>
+<h1>Design Pattern—設計模式</h1>
+<p>設計模式，一個用物件導向概念寫程式時可能會用到的酷東西<br>
+或許曾在課程內聽過，或許在一些講解重構的書籍看過<br>
+就我而言，因為學校的正規課程並沒有細談這個東西，所以我實際上對設計模式並不是很了解<br>
+大部分的有關設計模式的資訊都來經由 <strong>無暇的程式碼—敏捷完整篇</strong> 這本書籍取得的</p>
+<h2 id="何謂設計模式？">何謂設計模式？</h2>
+<p>設計模式實際上就是在過去眾多的軟體設計中，經過重重考驗，精粹出來的各種良好的設計架構<br>
+也就是說，設計模式並非是一種準則或標準，它只不過是各種良好設計架構的統整而已</p>
+<p>讀者可能會誤解，認為只要這著這些「良好的設計架構」就可以產生高品質的程式<br>
+然而， <strong>過度的使用設計模式只會讓軟體變得更遭，更亂，更難維護</strong></p>
+<h2 id="該不該使用設計模式？">該不該使用設計模式？</h2>
+<p>看了前面粗淺的介紹，或許各位會想問，那我到底該不該用設計模式？<br>
+答案是：視情況而定</p>
+<p>設計模式雖然是好的設計的集合，但是這些設計都有其背景與特定的使用時機，這也是設計模式難學的原因<br>
+實際上需要的技能不是學會設計模式，而是知道軟體背後的需求<br>
+這樣才能根據所需去評估該如何設計軟體</p>
+<h2 id="為何重構會使用到設計模式？">為何重構會使用到設計模式？</h2>
+<p>會需要重構就表示工程師意識到這個軟體開始不好維護了<br>
+對於可預見的需求無法輕易的擴展，或是發現程式都綁在一起，難以改動<br>
+這些會影響開發的設計被稱為「壞味道」</p>
+<p>透過重構程式並導入良好的設計模式，可以解決這些問題，並提昇開發效率<br>
+但是前面也提過，過度的使用會導致情況變遭<br>
+並不是所有的壞味道都需要，且必須要挑一個設計模式來解決</p>
+<h1>開始之前</h1>
+<p>在開始學習設計模式之前，要先確保自己對物件導向有一定的程度的理解<br>
+必須要知道 <strong>interface</strong>、<strong>abstract class</strong> 、<strong>繼承</strong>等相關概念</p>
+<p>如果能了解像是<strong>委派</strong>、<strong>耦合</strong>等相關概念會更好</p>
+<h1>目錄</h1>
+<p>在 <strong>無暇的程式碼—敏捷完整篇</strong> 書中共介紹了這些模式：</p>
+<ul>
+<li>
+<a href="/2023/01/20/note-2023-01-20-command-pattern/" title="設計模式筆記—Command Pattern">Command Pattern</a> (2023-01-20)
+</li>
+<li>Active Object Pattern</li>
+<li>
+<a href="/2023/02/26/note-2023-02-26-template-method-pattern/" title="設計模式筆記—Template Method Pattern">Template Pattern</a> (2023-02-26)
+</li>
+<li>Strategy Pattern</li>
+<li>Facade Pattern</li>
+<li>Mediator Pattern</li>
+<li>Singleton Pattern</li>
+<li>Monostate Pattern</li>
+<li>Null Object Pattern</li>
+<li>Factory Pattern</li>
+<li>Composite Pattern</li>
+<li>Observer Pattern</li>
+<li>Abstract Server Pattern</li>
+<li>Adapter Pattern</li>
+<li>Bridge Pattern</li>
+<li>Proxy Pattern</li>
+<li>Gateway Pattern</li>
+<li>Visitor Pattern</li>
+<li>State Pattern</li>
+</ul>
+<p>設計模式並不是只有這些，但再列下去除了有生之年沒辦法寫完之外，對設計能力也不會有太大的幫助<br>
+了解並內化模式原理和思維遠比知道和使用模式來得有效</p>
+<h1>參考</h1>
+<ul>
+<li>無暇的程式碼—敏捷完整篇，物件導向原則、設計模式與 C# 實踐</li>
+<li>自身經驗</li>
+</ul>
+<h1>更新</h1>
+<ul>
+<li>
+<p>2023/02/19<br>
+移除反模式的相關敘述</p>
+<blockquote>
+<p>最初在寫文章的時候因為對 Anti Pattern 的誤解，寫出錯誤的解釋<br>
+因此將相關的敘述移除，避免誤導</p>
+</blockquote>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Design-Pattern/" rel="tag"><i class="fa fa-tag"></i> Design Pattern</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/08/13/linux-desktop-on-windows/" rel="prev" title="在 Windows 上執行 Linux Desktop">
+                  <i class="fa fa-angle-left"></i> 在 Windows 上執行 Linux Desktop
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/01/20/note-2023-01-20-command-pattern/" rel="next" title="設計模式筆記—Command Pattern">
+                  設計模式筆記—Command Pattern <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2020 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Bluebean</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr+QR0SQDNfgglgtcM=" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"stu98832","repo":"stu98832.github.io","client_id":"0b84385c74db3fd44c22","client_secret":"089aee5f0152169f2b4ec924fbce2a06ac1e4c89","admin_user":"stu98832","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","labels":"Gitalk","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"b2e67f6b0466efa16957c7469b739dc3"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

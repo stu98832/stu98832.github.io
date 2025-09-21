@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"stu98832.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="這次要翻新的是動畫元件 AnimationView AnimationView 的用途是播放簡單影格動畫 由於 WPF 本身的繪圖機制跟 WinForm 不一樣，一度讓我失去方向 最後用了一個感覺不太優，但是簡單有效的方法來實做 WPF 版本的 AnimationView 元件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="來翻新老專案 (4) - MapleLooker - AnimationView 動畫組件">
+<meta property="og:url" content="http://stu98832.github.io/2025/03/22/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-4-maplelooker-animationview-%E5%8B%95%E7%95%AB%E7%B5%84%E4%BB%B6/index.html">
+<meta property="og:site_name" content="Bluebean 的筆記">
+<meta property="og:description" content="這次要翻新的是動畫元件 AnimationView AnimationView 的用途是播放簡單影格動畫 由於 WPF 本身的繪圖機制跟 WinForm 不一樣，一度讓我失去方向 最後用了一個感覺不太優，但是簡單有效的方法來實做 WPF 版本的 AnimationView 元件">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://learn.microsoft.com/zh-tw/dotnet/desktop/wpf/graphics-multimedia/media/wpf-graphics-rendering-overview/win32-rendering-squence.png?view=netframeworkdesktop-4.8">
+<meta property="og:image" content="https://learn.microsoft.com/zh-tw/dotnet/desktop/wpf/graphics-multimedia/media/wpf-graphics-rendering-overview/wpf-rendering-sequence.png?view=netframeworkdesktop-4.8">
+<meta property="og:image" content="http://stu98832.github.io/assets/topics/project-renovation/maple-looker/maple-looker-animation-view-error-20250323.png">
+<meta property="og:image" content="http://stu98832.github.io/assets/topics/project-renovation/maple-looker/maple-looker-animation-view-20250323.gif">
+<meta property="og:image" content="http://stu98832.github.io/assets/topics/project-renovation/maple-looker/maple-looker-image-clip-bug-20250323.png">
+<meta property="article:published_time" content="2025-03-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-09-21T15:51:56.671Z">
+<meta property="article:author" content="Bluebean">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://learn.microsoft.com/zh-tw/dotnet/desktop/wpf/graphics-multimedia/media/wpf-graphics-rendering-overview/win32-rendering-squence.png?view=netframeworkdesktop-4.8">
+
+
+<link rel="canonical" href="http://stu98832.github.io/2025/03/22/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-4-maplelooker-animationview-%E5%8B%95%E7%95%AB%E7%B5%84%E4%BB%B6/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://stu98832.github.io/2025/03/22/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-4-maplelooker-animationview-%E5%8B%95%E7%95%AB%E7%B5%84%E4%BB%B6/","path":"2025/03/22/來翻新老專案-4-maplelooker-animationview-動畫組件/","title":"來翻新老專案 (4) - MapleLooker - AnimationView 動畫組件"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>來翻新老專案 (4) - MapleLooker - AnimationView 動畫組件 | Bluebean 的筆記</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Bluebean 的筆記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">原本的 AnimationView 實作方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">WinForm 與 WPF 繪製的不同之處</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">WPF 的繪圖事件 CompositionTarget.Rendering</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">最初的嘗試： WriteableBitmap</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">最終方案： Canvas + Image</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">其他雜項的實做與優化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">插曲： .NET 的 DeflateStream 雷點</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">8.</span> <span class="nav-text">結語</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bluebean"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Bluebean</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/stu98832" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stu98832" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://stu98832.github.io/2025/03/22/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-4-maplelooker-animationview-%E5%8B%95%E7%95%AB%E7%B5%84%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Bluebean">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="來翻新老專案 (4) - MapleLooker - AnimationView 動畫組件 | Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          來翻新老專案 (4) - MapleLooker - AnimationView 動畫組件
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2025-03-23 00:00:00" itemprop="dateCreated datePublished" datetime="2025-03-23T00:00:00+08:00">2025-03-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%80%81%E5%B0%88%E6%A1%88%E7%BF%BB%E6%96%B0/" itemprop="url" rel="index"><span itemprop="name">老專案翻新</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>這次要翻新的是動畫元件 AnimationView</p>
+<p>AnimationView 的用途是播放簡單影格動畫<br>
+由於 WPF 本身的繪圖機制跟 WinForm 不一樣，一度讓我失去方向<br>
+最後用了一個感覺不太優，但是簡單有效的方法來實做 WPF 版本的 AnimationView 元件</p>
+<span id="more"></span>
+<h1>原本的 AnimationView 實作方式</h1>
+<p>早期使用 WinForm 撰寫的 AnimationView 是採用 GDI+ 繪圖搭配 Thread 定時更新畫面</p>
+<p>因為 WinForm 控制項重繪的效率不好，當時常用的作法是使用雙重緩衝區搭配一個渲染執行緒定時更新畫面<br>
+使用 sleep 控制渲染執行緒的更新速率，讓控制項在不使用太多 CPU 的情況下，以大約 60 FPS 的速度下穩定渲染畫面</p>
+<h1>WinForm 與 WPF 繪製的不同之處</h1>
+<p>原本我在 WPF 也想走 GDI+ 這條路，結果 Google 好久都沒找到什麼直接渲染 WPF 控制項方式<br>
+後來就慢慢去嘗試 Google 到的其他渲染方式</p>
+<p>在寫這篇的時候去找了一下官方資料<br>
+發現官方在 <a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-tw/dotnet/desktop/wpf/graphics-multimedia/wpf-graphics-rendering-overview?view=netframeworkdesktop-4.8#retained-mode-graphics">WPF 圖形轉譯概觀</a> 有提及「保留模式圖形 (Retain Mode Graphics)」</p>
+<p>與 WinForm 直接使用 Graphics 渲染的的直接模式相比，WPF 使用的保留模式僅定義繪圖資料<br>
+當 WPF 需要渲染的時候，會使用這些定義好的繪圖資料進行渲染並呈現</p>
+<p>Win32 直接模式轉譯流程：<br>
+<img src="https://learn.microsoft.com/zh-tw/dotnet/desktop/wpf/graphics-multimedia/media/wpf-graphics-rendering-overview/win32-rendering-squence.png?view=netframeworkdesktop-4.8" alt="Win32 直接模式"></p>
+<p>WPF 保留模式轉譯流程：<br>
+<img src="https://learn.microsoft.com/zh-tw/dotnet/desktop/wpf/graphics-multimedia/media/wpf-graphics-rendering-overview/wpf-rendering-sequence.png?view=netframeworkdesktop-4.8" alt="WPF 保留模式"></p>
+<p>一開始我覺得很不習慣，畢竟以前都是想到就畫，現在卻要用其他方式來渲染，完全沒有方向<br>
+實做當時我還沒去翻官方文件，而是直接在 StackOverflow 找一些範例，然後去做實驗</p>
+<h1>WPF 的繪圖事件 CompositionTarget.Rendering</h1>
+<p>WPF 有一個事件叫 <code>CompositionTarget.Rendering</code> ，它會在圖形轉譯期間觸發事件<br>
+相當於以前在 WinForm 使用的渲染迴圈，只要註冊這個事件，接著實做渲染就可以了</p>
+<p>下面就是大概的架構</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">AnimationView</span>()</span> &#123;</span><br><span class="line">    InitializeComponent();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 註冊渲染事件</span></span><br><span class="line">    CompositionTarget.Rendering += <span class="keyword">this</span>.FrameUpdate;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">FrameUpdate</span>(<span class="params"><span class="built_in">object</span> sender, EventArgs e</span>)</span> &#123;</span><br><span class="line">    <span class="comment">// 渲染事件只在有動畫時才會觸發</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.IsLoading || <span class="keyword">this</span>.frames == <span class="literal">null</span> || <span class="keyword">this</span>.frames.Count == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    AnimationFrame frame = <span class="keyword">this</span>.frames?[<span class="keyword">this</span>.currentIndex];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 切換影格...</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 影格渲染...</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.stopwatch.Restart();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>迴圈內透過 stopwatch 紀錄經過時間，並在適當的時間切換影格做渲染</p>
+<p>渲染部份，一開始我使用的是 <code>WritableBitmap</code>，畢竟我還是挺偏好 GDI+ 那種直接渲染的方式<br>
+但很快就踢到鐵板，這東西比想像中還難用 😥</p>
+<p>最後使用 <code>Canvas</code> 配 <code>Image</code> 的方式將每個 Frame 的圖片顯示在上面，並根據時間切換圖片和位置達到影格動畫的效果<br>
+老實說呈現的效果比想像的還要好</p>
+<h1>最初的嘗試： WriteableBitmap</h1>
+<p><code>WriteableBitmap</code> 是可以直接寫入像素資料的 Bitmap 類別<br>
+一開始想說這個正是我要的東西，試了之後才發現跟我想的不太一樣</p>
+<p>正如 <code>WriteableBitmap</code> 這個名子，它就是可以繪製的 Bitmap<br>
+類似 WinForm <code>Bitmap</code> 的 <code>LockBits</code> ，<code>WriteableBitmap</code> 也可以使用指標直接操作像素內容，可以說功能幾乎一模一樣</p>
+<p>原本想說只要能把圖片繪製上去就好了，所以直接框住範圍把像素資料複製到 <code>WriteableBitmap</code></p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 將圖片的像素複製到 buffer，這邊都使用 argb32 格式</span></span><br><span class="line"><span class="built_in">int</span> stride = (<span class="built_in">int</span>)(<span class="number">4</span> * frame.Size.X);</span><br><span class="line"><span class="built_in">byte</span>[] buffer = <span class="keyword">new</span> <span class="built_in">byte</span>[(<span class="built_in">int</span>)(stride * frame.Size.Y)];</span><br><span class="line">frame.Image.CopyPixels(buffer, stride, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 將圖片像素寫入 writeableBitmap 中</span></span><br><span class="line">Int32Rect rect = <span class="keyword">new</span> Int32Rect((<span class="built_in">int</span>)(-frame.Origin.X), (<span class="built_in">int</span>)(-frame.Origin.Y), (<span class="built_in">int</span>)frame.Size.X, (<span class="built_in">int</span>)frame.Size.Y);</span><br><span class="line">writeableBitmap.WritePixels(rect, buffer, stride, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<p>當我一測試，WPF 直接給我一個大大的 OverflowException</p>
+<p><img src="/assets/topics/project-renovation/maple-looker/maple-looker-animation-view-error-20250323.png" alt="溢位錯誤"></p>
+<p>顯然我渲染的時候沒辦法把像素渲染到外面，這表示我需要做額外的處理才能把圖片繪製到特定範圍內<br>
+因為覺得後續的處理流程太過麻煩，所以果斷放棄這個方法</p>
+<h1>最終方案： Canvas + Image</h1>
+<p>這個方法其實算是 WPF 標準的渲染方式<br>
+主要透過 <code>Canvas</code> 可以自由設定 UI 位置的特性，搭配 <code>Image</code> 渲染圖片來達成效果</p>
+<p>每次渲染我都會執行下面的步驟：</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 清除 canvas 的圖片</span></span><br><span class="line"><span class="keyword">this</span>.canvas.Children.Clear();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 設定 image 的圖片大小、位置</span></span><br><span class="line">Vector center = <span class="keyword">new</span> Vector(<span class="keyword">this</span>.canvas.ActualWidth, <span class="keyword">this</span>.canvas.ActualHeight) / <span class="number">2</span>;</span><br><span class="line">Vector offset = center - frame.Origin;</span><br><span class="line">Image image = <span class="keyword">new</span>();</span><br><span class="line">image.Source = frame.Image;</span><br><span class="line">image.Width = frame.Size.X;</span><br><span class="line">image.Height = frame.Size.Y;</span><br><span class="line">Canvas.SetLeft(image, (<span class="built_in">int</span>)offset.X);</span><br><span class="line">Canvas.SetTop(image, (<span class="built_in">int</span>)offset.Y);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 把圖片加入 Canvas 上</span></span><br><span class="line"><span class="keyword">this</span>.canvas.Children.Add(image);</span><br></pre></td></tr></table></figure>
+<p>其實就是一直清空 <code>Canvas</code> 再建立新的 <code>Image</code> 丟到 <code>Canvas</code> 做刷新而已<br>
+一開始使用這個方法感覺挺怪的，因為 WinForm 本身這樣做不只效果差，效率也很低<br>
+實際使用效率不差，而且好寫很多</p>
+<p>了解一點保留模式的東西之後，就比較好理解這塊在做什麼了<br>
+其實每次更新不停刷新 <code>Image</code> 的部份，就是在更新 Visual Objects，後續渲染則是交給 WPF 去處理<br>
+比起原本 WinForm 不停刷新控制項重新渲染，WPF 這樣做比較不會吃太多 CPU</p>
+<p>大概是因為在渲染迴圈內不停建立 <code>Image</code> 的關係，渲染時的 CPU 使用率還是偏高，這部份還需要做一些優化</p>
+<h1>其他雜項的實做與優化</h1>
+<p>原本WinForm 的版本其實還有做滑鼠拖動的功能<br>
+這邊我只要將 <code>Image</code> 的 <code>IsEnabled</code> 設定成 false，然後在 <code>Canvas</code> 主體註冊事件來處理就好</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Canvas</span></span></span><br><span class="line"><span class="tag">    <span class="attr">x:Name</span>=<span class="string">&quot;canvas&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">ClipToBounds</span>=<span class="string">&quot;True&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">MouseLeftButtonDown</span>=<span class="string">&quot;OnCanvasLeftMouseDown&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">MouseMove</span>=<span class="string">&quot;OnCanvasMouseMove&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">MouseLeftButtonUp</span>=<span class="string">&quot;OnCanvasLeftMouseUp&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">MouseRightButtonDown</span>=<span class="string">&quot;OnCanvasRightMouseDown&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">Focusable</span>=<span class="string">&quot;True&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">KeyDown</span>=<span class="string">&quot;OnCanvasKeyDown&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">Background</span>=<span class="string">&quot;#01000000&quot;</span></span></span><br><span class="line"><span class="tag">    &gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Canvas</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>後面還額外做了按鍵控制，實現了暫停以及重設動畫位置與影格的功能<br>
+並且透過設定 <code>Image</code> 的 <code>Opacity</code> 跟 <code>Width</code> 與 <code>Height</code> 實現動畫的透明與縮放</p>
+<p>最後附上完成品，龍咆哮的動圖 :)</p>
+<p><img src="/assets/topics/project-renovation/maple-looker/maple-looker-animation-view-20250323.gif" alt="龍咆哮"></p>
+<p>WPF 的 AnimationView 跟原版比起來再更好一些，但 CPU 的使用量應該能再優化</p>
+<h1>插曲： .NET 的 DeflateStream 雷點</h1>
+<p>測試的時候，發現讀取出來的圖片只有一部分區塊成功渲染</p>
+<p><img src="/assets/topics/project-renovation/maple-looker/maple-looker-image-clip-bug-20250323.png" alt="圖片被截斷"></p>
+<p>原本以為是 .NET Windows 組件的 Bitmap 出了什麼問題<br>
+Google 很久都沒有找到相關資料，後來意外發現 <code>DeflateStream</code> 多了一個 <code>ReadExactly</code> 方法，才循線找到一個 .NET 6 的重大改動</p>
+<p>楓谷的圖片有經過壓縮，因此需要使用 <code>DeflateStream</code> 的 <code>Read</code> 方法來讀取資料<br>
+由於 .NET 6 做了一項更動，使得 <code>Read</code> 可能只讀取一部分的資料<br>
+這導致原本在 .Net Framework 好好的程式轉到 .NET 之後直接壞掉<br>
+如果要像之前一樣使用 <code>Read</code> 讀取所有資料，則要使用 <code>ReadExactly</code> 方法才能讀取正確長度的資料</p>
+<p>最初還沒想到是壓縮的問題，還好有發現多了一個沒看過的函式，才知道問題所在</p>
+<h1>結語</h1>
+<p>現在 MapleLooker 已經把 UI 翻新的差不多了<br>
+剩下一個 WinForm 組件就是 ComparerResult，用於比較兩份 WZ 的差異<br>
+由於這個功能本身並不完全，所以不會納入翻新的計畫，下次會開始對整份程式做一些優化</p>
+<p>以現在的進度來看，MapleLooker 的翻新快要告一段落了<br>
+雖然這個專案非常的小，其實沒多少東西能改，但是因為我在裡面投入的時間不多，所以前前後後還是花了 2 個月的時間<br>
+整體來說，這翻新寫起來還蠻愉快的，看到 WinForm 的元件成功轉成 WPF 元件挺有成就感的</p>
+<p>原本這篇文章的初稿亂到我自己都看不懂 🙃<br>
+大概是因為我沒有在開發期間紀錄自己的思路並截圖，很多圖片跟程式都是後來才補上<br>
+花了一些時間改寫之後，讀起來才感覺順一點</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/03/10/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-3-5-maplelooker-%E8%B7%91%E5%8E%BB%E6%94%B9%E5%85%B6%E4%BB%96%E5%B0%88%E6%A1%88%EF%BC%8C%E7%84%B6%E5%BE%8C%E7%BF%BB%E8%BB%8A/" rel="prev" title="來翻新老專案 (3.5) - MapleLooker - 跑去改其他專案，然後翻車">
+                  <i class="fa fa-angle-left"></i> 來翻新老專案 (3.5) - MapleLooker - 跑去改其他專案，然後翻車
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/04/05/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-5-maplelooker-animationview-%E5%8B%95%E7%95%AB%E7%B5%84%E4%BB%B6%E5%84%AA%E5%8C%96/" rel="next" title="來翻新老專案 (5) - MapleLooker - AnimationView 動畫組件優化">
+                  來翻新老專案 (5) - MapleLooker - AnimationView 動畫組件優化 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2020 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Bluebean</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr+QR0SQDNfgglgtcM=" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"stu98832","repo":"stu98832.github.io","client_id":"0b84385c74db3fd44c22","client_secret":"089aee5f0152169f2b4ec924fbce2a06ac1e4c89","admin_user":"stu98832","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","labels":"Gitalk","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"480199ba0284b94f32a6c2b79705d8e8"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

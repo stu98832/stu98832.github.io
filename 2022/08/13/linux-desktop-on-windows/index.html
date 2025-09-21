@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"stu98832.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="我自己在體驗 Linux Desktop 時都是會額外建立一個虛擬環境 這樣蠻耗費資源的，因為需要兩個 Linux 的硬碟空間，其中一個是平常用的 Ubuntu Server 在粗略的碰過 Docker 之後，開始在想能不能夠透過 Docker 來執行 GUI 程式 一來環境本身隨用隨棄，二來移除時也比較方便，比較沒有負擔">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在 Windows 上執行 Linux Desktop">
+<meta property="og:url" content="http://stu98832.github.io/2022/08/13/linux-desktop-on-windows/index.html">
+<meta property="og:site_name" content="Bluebean 的筆記">
+<meta property="og:description" content="我自己在體驗 Linux Desktop 時都是會額外建立一個虛擬環境 這樣蠻耗費資源的，因為需要兩個 Linux 的硬碟空間，其中一個是平常用的 Ubuntu Server 在粗略的碰過 Docker 之後，開始在想能不能夠透過 Docker 來執行 GUI 程式 一來環境本身隨用隨棄，二來移除時也比較方便，比較沒有負擔">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://stu98832.github.io/2022/08/13/linux-desktop-on-windows/image-20220813181947294.png">
+<meta property="og:image" content="http://stu98832.github.io/2022/08/13/linux-desktop-on-windows/image-20220813182116099.png">
+<meta property="og:image" content="http://stu98832.github.io/2022/08/13/linux-desktop-on-windows/image-20220813165723067.png">
+<meta property="og:image" content="http://stu98832.github.io/2022/08/13/linux-desktop-on-windows/image-20220813164807463.png">
+<meta property="og:image" content="http://stu98832.github.io/2022/08/13/linux-desktop-on-windows/image-20220813181813455.png">
+<meta property="og:image" content="http://stu98832.github.io/2022/08/13/linux-desktop-on-windows/image-20220813194412111.png">
+<meta property="og:image" content="http://stu98832.github.io/2022/08/13/linux-desktop-on-windows/image-20220813200923181.png">
+<meta property="og:image" content="http://stu98832.github.io/2022/08/13/linux-desktop-on-windows/image-20220813201724145.png">
+<meta property="article:published_time" content="2022-08-13T03:52:00.000Z">
+<meta property="article:modified_time" content="2025-09-21T15:51:56.661Z">
+<meta property="article:author" content="Bluebean">
+<meta property="article:tag" content="X-Window">
+<meta property="article:tag" content="Windows">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://stu98832.github.io/2022/08/13/linux-desktop-on-windows/image-20220813181947294.png">
+
+
+<link rel="canonical" href="http://stu98832.github.io/2022/08/13/linux-desktop-on-windows/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://stu98832.github.io/2022/08/13/linux-desktop-on-windows/","path":"/2022/08/13/linux-desktop-on-windows/","title":"在 Windows 上執行 Linux Desktop"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>在 Windows 上執行 Linux Desktop | Bluebean 的筆記</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Bluebean 的筆記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">用 Docker 執行 Linux GUI 程式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">在 Windows 上執行 GUI 程式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8E%E5%90%91-X-Window-%E7%9A%84%E5%B0%81%E5%8C%85%E5%88%B0-Windows-%E4%B8%8A"><span class="nav-number">2.1.</span> <span class="nav-text">導向 X-Window 的封包到 Windows 上</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">中文輸入問題</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">在 Windows 上執行 Linux Desktop</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">聲音</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ALSA"><span class="nav-number">5.1.</span> <span class="nav-text">ALSA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PulseAudio"><span class="nav-number">5.2.</span> <span class="nav-text">PulseAudio</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">後續問題</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU-%E6%B6%88%E8%80%97%E9%87%8F%E5%A4%A7"><span class="nav-number">6.1.</span> <span class="nav-text">CPU 消耗量大</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BC%B8%E5%85%A5%E6%B3%95%E5%95%9F%E7%94%A8%E5%95%8F%E9%A1%8C"><span class="nav-number">6.2.</span> <span class="nav-text">輸入法啟用問題</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E6%80%A7"><span class="nav-number">6.3.</span> <span class="nav-text">安全性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">8.</span> <span class="nav-text">相關連結</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">9.</span> <span class="nav-text">參考</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0"><span class="nav-number">9.1.</span> <span class="nav-text">更新</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bluebean"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Bluebean</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/stu98832" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stu98832" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://stu98832.github.io/2022/08/13/linux-desktop-on-windows/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Bluebean">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="在 Windows 上執行 Linux Desktop | Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          在 Windows 上執行 Linux Desktop
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2022-08-13 11:52:00" itemprop="dateCreated datePublished" datetime="2022-08-13T11:52:00+08:00">2022-08-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/X-Window/" itemprop="url" rel="index"><span itemprop="name">X-Window</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>我自己在體驗 Linux Desktop 時都是會額外建立一個虛擬環境<br>
+這樣蠻耗費資源的，因為需要兩個 Linux 的硬碟空間，其中一個是平常用的 Ubuntu Server</p>
+<p>在粗略的碰過 Docker 之後，開始在想能不能夠透過 Docker 來執行 GUI 程式<br>
+一來環境本身隨用隨棄，二來移除時也比較方便，比較沒有負擔</p>
+<span id="more"></span>
+<h1>用 Docker 執行 Linux GUI 程式</h1>
+<p>在這個想法出來的時候，我便上網去尋找相關內容<br>
+很快的就找到了 firefox 的執行範例</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/43508481/running-x-windows-desktop-apps-in-docker-containers-on-windows-10">linux - Running X-Windows Desktop Apps in Docker Containers on Windows 10 - Stack Overflow</a></li>
+</ul>
+<p>其實還蠻有趣的<br>
+因為 X-Window 是 Client-Server 的架構<br>
+所以這個 Docker 就只是安裝 firefox，然後把本機的 X-Window socket 分享給它</p>
+<p>但我的 Host 機器本身是架在 VMware 上的 Linux VM<br>
+沒有裝 X-Window ，所以沒辦法分享 socket<br>
+所以還要想辦法讓 GUI 可以在 Windows 上執行</p>
+<h1>在 Windows 上執行 GUI 程式</h1>
+<p>考慮到 X-Window 的 Client-Server 架構<br>
+在 Windows 上執行應該是可行的<br>
+所以就找了 Windows 用的 X-Server ： <strong>VcXsrv</strong></p>
+<p>依照使用情況決定要怎麼顯示 X-Window 的應用程式</p>
+<p><img src="image-20220813181947294.png" alt="image-20220813181947294"></p>
+<p>如果連線本身來自外部， Disable access control 需要開啟</p>
+<p><img src="image-20220813182116099.png" alt="image-20220813182116099"></p>
+<h2 id="導向-X-Window-的封包到-Windows-上">導向 X-Window 的封包到 Windows 上</h2>
+<p>這邊我採取了一個簡單的作法<br>
+就是開啟 putty ，然後透過 SSH 連線時，開啟 <strong>X-Forwarding</strong></p>
+<p><img src="image-20220813165723067.png" alt="image-20220813165723067"></p>
+<p>使用後就可把 X-Windows 的封包導向到 Windows 上<br>
+缺點就是這個 SSH 連線必須一直開著</p>
+<p>接著依照前面放的 Stackoverflow 上的回答<br>
+然後把 <code>DISPLAY</code> 帶入 <code>host.docker.internal</code> 連到 Linux 本機</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker run -d --name firefox -e DISPLAY=host.docker.internal:0 jess/firefox</span><br></pre></td></tr></table></figure>
+<p>這樣連線就會先連到 Linux 再經過 X-Forwarding 連到 Windows 上的 X-Server<br>
+就可以在 Windows 上使用 Linux 的火狐了！</p>
+<p><img src="image-20220813164807463.png" alt="image-20220813164807463"></p>
+<h1>中文輸入問題</h1>
+<p>簡單的使用 firefox 之後，很快的遇到了一個問題：中文輸入<br>
+沒辦法打中文，這樣就沒辦法隨意瀏覽，只能用英文</p>
+<p>目前我還找不到直接使用輸入法的方式<br>
+即使透過執行 bash 去手動安裝 ibus 也無法將 daemon 啟動<br>
+因此目前只能夠使用 desktop 環境來使用輸入法而已</p>
+<h1>在 Windows 上執行 Linux Desktop</h1>
+<p>自從能夠使用 firefox 之後，我就在想能不能直接把整個桌面搬過來<br>
+於是開始建置有安裝 <strong>xfce</strong> 桌面環境的 Docker Image</p>
+<p>結論是可行的<br>
+不過網路上已經有 desktop 的 docker 了，就直接拿來用了 :)</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://hub.docker.com/r/x11docker/xfce">x11docker/xfce - Docker Image | Docker Hub</a></li>
+</ul>
+<p>然後基於這個 Image 之上，另外安裝了中文字型、新酷音輸入法、以及 Firefox<br>
+這樣就有一個基本的桌面環境了<br>
+使用上特別對環境做了一些調整</p>
+<p>最後就有了以下這個 Dockerfile</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">FROM</span> x11docker/xfce</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安裝語系、中文字型、Firefox、新酷音</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> sed -i <span class="string">&quot;s@http://deb.debian.org@http://debian.csie.ntu.edu.tw@g&quot;</span> /etc/apt/sources.list &amp;&amp; \</span></span><br><span class="line"><span class="language-bash">    apt-get update &amp;&amp; \</span></span><br><span class="line"><span class="language-bash">    apt-get -y install \</span></span><br><span class="line"><span class="language-bash">        locales locales-all \</span></span><br><span class="line"><span class="language-bash">        fonts-arphic-ukai fonts-arphic-uming \</span></span><br><span class="line"><span class="language-bash">        firefox-esr \</span></span><br><span class="line"><span class="language-bash">        ibus ibus-chewing</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 設定時區</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">ln</span> -fs /usr/share/zoneinfo/Asia/Taipei /etc/localtime &amp;&amp; ＼</span></span><br><span class="line">    dpkg-reconfigure -f noninteractive tzdata</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安裝個 sudo</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> apt-get update &amp;&amp; apt-get install -y <span class="built_in">sudo</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 建立使用者 docker 然後以使用者 docker 來執行桌面環境</span></span><br><span class="line"><span class="comment"># 密碼是 password</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> useradd -ms /bin/bash -G <span class="built_in">sudo</span> docker &amp;&amp; <span class="built_in">echo</span> <span class="string">&quot;docker:password&quot;</span> | chpasswd</span></span><br><span class="line"><span class="keyword">USER</span> docker</span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /home/docker</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 註冊 ibus 讓輸入法隨著桌面環境開啟而啟動</span></span><br><span class="line"><span class="comment"># 不自動的話，就需要手動執行 ibus-daemon -drx</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">mkdir</span> -p ~/.config/autostart/ &amp;&amp; \</span></span><br><span class="line"><span class="language-bash">    <span class="built_in">echo</span> <span class="string">&quot;\</span></span></span><br><span class="line"><span class="string"><span class="language-bash">[Desktop Entry]\n\</span></span></span><br><span class="line"><span class="string"><span class="language-bash">Encoding=UTF-8\n\</span></span></span><br><span class="line"><span class="string"><span class="language-bash">Version=0.9.4\n\</span></span></span><br><span class="line"><span class="string"><span class="language-bash">Type=Application\n\</span></span></span><br><span class="line"><span class="string"><span class="language-bash">Name=ibus\n\</span></span></span><br><span class="line"><span class="string"><span class="language-bash">Comment=ibus\n\</span></span></span><br><span class="line"><span class="string"><span class="language-bash">Exec=ibus-daemon -drx\n\</span></span></span><br><span class="line"><span class="string"><span class="language-bash">OnlyShowIn=XFCE;\n\</span></span></span><br><span class="line"><span class="string"><span class="language-bash">RunHook=0\n\</span></span></span><br><span class="line"><span class="string"><span class="language-bash">StartupNotify=false\n\</span></span></span><br><span class="line"><span class="string"><span class="language-bash">Terminal=false\n\</span></span></span><br><span class="line"><span class="string"><span class="language-bash">Hidden=false\n\</span></span></span><br><span class="line"><span class="string"><span class="language-bash">&quot;</span> &gt; ~/.config/autostart/ibus.desktop</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 最後將畫面導向 Linux 主機本身</span></span><br><span class="line"><span class="keyword">ENV</span> DISPLAY=host.docker.internal:<span class="number">0</span> </span><br><span class="line"></span><br><span class="line"><span class="comment"># 執行程式的部份就交給 x11docker/xfce 了</span></span><br></pre></td></tr></table></figure>
+<p>最後的執行畫面長這樣：</p>
+<p><img src="image-20220813181813455.png" alt="image-20220813181813455"></p>
+<h1>聲音</h1>
+<p>看起來桌面環境都沒問題了<br>
+但還有一點美中不足，那就是沒辦法將聲音輸出<br>
+後來發現 x11docker 在 github 的 wiki 上有提供兩種方案：</p>
+<ul>
+<li>ALSA</li>
+<li>PulseAudio</li>
+</ul>
+<h2 id="ALSA">ALSA</h2>
+<p>ALSA 的操作雖然比較簡單，但是需要分享 <code>/dev/snd</code><br>
+對 VM 加入硬體，分享 <code>/dev/snd</code> 後，依然沒辦法輸出聲音<br>
+最後實在是研究不出什麼東西<br>
+所以就不使用了</p>
+<h2 id="PulseAudio">PulseAudio</h2>
+<p>PulseAudio 本身就是 Client-Server 架構<br>
+如果是一般的配置方式，那會比 ALSA 複雜<br>
+但是如果是使用 tcp 連線到 Windows 播放，那就簡單很多</p>
+<p>PulseAudio 官方有 Windows 版本</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.freedesktop.org/wiki/Software/PulseAudio/Ports/Windows/Support/">PulseAudio on Windows – PulseAudio</a></li>
+</ul>
+<p>在開啟之前需要對一些檔案進行一些修改：</p>
+<ul>
+<li>
+<p>etc/pulse/default.pa<br>
+找到 <code>module-waveout</code> 的地方並在結尾加上 <code>record=0</code></p>
+<blockquote>
+<p>這樣可以禁止錄音的部份</p>
+</blockquote>
+<p>找到 <code>module-native-protocol-tcp</code> 的地方<br>
+啟用它，並在結尾加上 <code>auth-ip-acl=&lt;your-docker-host-ip&gt;</code><br>
+限制只有 docker 可以連入</p>
+<blockquote>
+<p>或者可以使用 <code>listen 0.0.0.0 auth-anonymous=1</code><br>
+但是這樣誰都可以連到你的 PluseAudio Server</p>
+</blockquote>
+</li>
+<li>
+<p>etc/pulse/daemon.conf</p>
+<p>找到 <code>exit-idle-time</code> 的地方<br>
+啟用並設定成 <code>-1</code></p>
+<blockquote>
+<p>這樣是為了能夠讓 PulseAudio Server 持續執行<br>
+不會在結束一個 client 之後就自己結束</p>
+</blockquote>
+</li>
+</ul>
+<p>最後執行 <code>bin/pulseaudio.exe</code></p>
+<p><img src="image-20220813194412111.png" alt="image-20220813194412111"></p>
+<p>然後就可以在桌面上調整音量了</p>
+<p><img src="image-20220813200923181.png" alt="image-20220813200923181"></p>
+<h1>後續問題</h1>
+<h2 id="CPU-消耗量大">CPU 消耗量大</h2>
+<p>僅僅是看一個 Youtube 影片，就可以占走 74.5 % 的 CPU 了<br>
+VM 本身的運行加上網路的運作以及 VcXsrv 就占走大部分的資源</p>
+<p><img src="image-20220813201724145.png" alt="image-20220813201724145"></p>
+<p>而我配給 Linux VM 的 CPU 只有自身核心的 1/3 ，共兩顆核心<br>
+所以應該有 33% 是耗在 CPU ，而約 17% 耗在其他硬體模擬<br>
+再來就是網路上使用又會耗掉 16% 的 CPU<br>
+至少用這樣的方式來看影片或是使用 firefox 都不是個好方案<br>
+但是單純使用 desktop 的話，全部幾乎吃不到 10%</p>
+<h2 id="輸入法啟用問題">輸入法啟用問題</h2>
+<p>由於目前還沒找到可以在 Desktop 環境開啟前設定 ibus 的方法<br>
+所以沒辦法直接 build 設定好中文輸入法的環境<br>
+每次開啟時都必須自己添加語系切換或是直接下 <code>ibus engine chewing</code> 開啟輸入法<br>
+這也造成使用上的麻煩</p>
+<h2 id="安全性">安全性</h2>
+<p>在這篇使用了接受所有人連入的 X-Window Server 以及 PulseAudio Server<br>
+這本身就不是多安全的事情，畢竟任何人都可以連入<br>
+因為 Docker 本身只能使用 <code>host.docker.internal</code> 連線到 Linux VM<br>
+然後再透過 X-Forwarding 給 Windows<br>
+在這方面造成了連入的 IP 會是 Docker 的 IP 而非 localhost<br>
+迫使我只能關閉 Access Control 跟監聽 0.0.0.0 來接受這個 Docker 的連入</p>
+<p>如果 X-Window 的主機在 Linux 上<br>
+則是直接將 X-Window 的 socket 給掛上去<br>
+似乎也不是個好的作法</p>
+<h1>結語</h1>
+<p>這些東西花我好幾天去找尋各種資料<br>
+從最一開始的 firefox 、中文字型、Desktop、中文輸入、背景啟動，最後到聲音</p>
+<p>大致上運行上都沒什麼問題<br>
+除了瀏覽器的花費比想像中還大，有可能是用了 VM 的關係</p>
+<p>至於安全性的部份還需要進一步研究才行<br>
+目前沒辦法保證這樣有比較安全<br>
+頂多可以不保留本機上的相關紀錄，而且隨用隨丟<br>
+所以還是玩玩就好，要不要拿來使用就看個人了</p>
+<p>WSL 的部份也是可以這麼玩<br>
+因為我本身會用到 VMware 的 VT-x 去模擬巢狀虛擬化<br>
+所以沒有辦法使用 WSL<br>
+要用 WSL 的話，可以參考下面的影片：<br>
+<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=nKCe9UE-quA">XFCE 4 Linux Desktop on WSL (windows subsystem for linux) with Pulse Audio - YouTube</a></p>
+<h1>相關連結</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://hub.docker.com/r/x11docker/xfce">x11docker/xfce - Docker Image | Docker Hub</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.freedesktop.org/wiki/Software/PulseAudio/Ports/Windows/Support/">PulseAudio on Windows – PulseAudio</a></li>
+<li><a target="_blank" rel="noopener" href="https://sourceforge.net/projects/vcxsrv/">VcXsrv Windows X Server download | SourceForge.net</a></li>
+</ul>
+<h1>參考</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/43508481/running-x-windows-desktop-apps-in-docker-containers-on-windows-10">linux - Running X-Windows Desktop Apps in Docker Containers on Windows 10 - Stack Overflow</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/mviereck/x11docker/wiki/Container-sound:-ALSA-or-Pulseaudio">Container sound: ALSA or Pulseaudio · mviereck/x11docker Wiki</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.w3help.cc/a/202109/981349.html">如何在Debian下快速安裝中文字型 (www.w3help.cc)</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/35530062/how-to-run-a-program-on-startup-in-debian">linux - How to run a program on startup in Debian - Stack Overflow</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/107695979">基于Pulse Audio在设备间传输声音 - 知乎</a></li>
+<li><a target="_blank" rel="noopener" href="https://x410.dev/cookbook/wsl/enabling-sound-in-wsl-ubuntu-let-it-sing/">Enabling sound in WSL / Ubuntu - Let It Sing! - X410.dev</a></li>
+</ul>
+<h2 id="更新">更新</h2>
+<ul>
+<li>
+<p>2023-04-04<br>
+修正 記憶體消耗量大 -&gt; CPU 消耗量大</p>
+<blockquote>
+<p>太晚發現這個問題了<br>
+明明條目是寫記憶體，內文都在說 CPU …</p>
+</blockquote>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/X-Window/" rel="tag"><i class="fa fa-tag"></i> X-Window</a>
+              <a href="/tags/Windows/" rel="tag"><i class="fa fa-tag"></i> Windows</a>
+              <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/06/20/hexo-deploy-by-github-action/" rel="prev" title="第一篇用 Github Action 部屬的文章">
+                  <i class="fa fa-angle-left"></i> 第一篇用 Github Action 部屬的文章
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/01/20/note-2023-01-20-design-pattern/" rel="next" title="設計模式筆記">
+                  設計模式筆記 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2020 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Bluebean</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr+QR0SQDNfgglgtcM=" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"stu98832","repo":"stu98832.github.io","client_id":"0b84385c74db3fd44c22","client_secret":"089aee5f0152169f2b4ec924fbce2a06ac1e4c89","admin_user":"stu98832","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","labels":"Gitalk","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"970b81bb84760654f43f46942dab009b"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

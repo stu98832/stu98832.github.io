@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"stu98832.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="前面介紹了與 component 相關的內容之後 接下來將會介紹建構 angular 系統裡的重要角色 Module Module 可以管理許多的 Component，並引入像是 Pipe、Directive、Service 等東西 也可以引入其他 Module 來使用相關的 Component、Pipe 或 Directive 等 之後還會介紹一種比較特別的 Module，路由">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Angular學習筆記6 - Module 與路由">
+<meta property="og:url" content="http://stu98832.github.io/2021/03/03/note-angular-learning-6/index.html">
+<meta property="og:site_name" content="Bluebean 的筆記">
+<meta property="og:description" content="前面介紹了與 component 相關的內容之後 接下來將會介紹建構 angular 系統裡的重要角色 Module Module 可以管理許多的 Component，並引入像是 Pipe、Directive、Service 等東西 也可以引入其他 Module 來使用相關的 Component、Pipe 或 Directive 等 之後還會介紹一種比較特別的 Module，路由">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://stu98832.github.io/2021/03/03/note-angular-learning-6/image-20210301205045383.png">
+<meta property="og:image" content="http://stu98832.github.io/2021/03/03/note-angular-learning-6/image-20210301211924107.png">
+<meta property="og:image" content="http://stu98832.github.io/2021/03/03/note-angular-learning-6/image-20210302113729318.png">
+<meta property="og:image" content="http://stu98832.github.io/2021/03/03/note-angular-learning-6/image-20210302191619241.png">
+<meta property="og:image" content="http://stu98832.github.io/2021/03/03/note-angular-learning-6/image-20210302193413146.png">
+<meta property="og:image" content="http://stu98832.github.io/2021/03/03/note-angular-learning-6/image-20210302194006667.png">
+<meta property="og:image" content="http://stu98832.github.io/2021/03/03/note-angular-learning-6/image-20210303213924861.png">
+<meta property="og:image" content="http://stu98832.github.io/2021/03/03/note-angular-learning-6/image-20210303213944788.png">
+<meta property="og:image" content="http://stu98832.github.io/2021/03/03/note-angular-learning-6/image-20210303221200790.png">
+<meta property="og:image" content="http://stu98832.github.io/2021/03/03/note-angular-learning-6/image-20210303221216995.png">
+<meta property="og:image" content="http://stu98832.github.io/2021/03/03/note-angular-learning-6/image-20210303221846843.png">
+<meta property="og:image" content="http://stu98832.github.io/2021/03/03/note-angular-learning-6/image-20210303224836807.png">
+<meta property="article:published_time" content="2021-03-02T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-09-21T15:51:56.668Z">
+<meta property="article:author" content="Bluebean">
+<meta property="article:tag" content="Angular">
+<meta property="article:tag" content="網頁前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://stu98832.github.io/2021/03/03/note-angular-learning-6/image-20210301205045383.png">
+
+
+<link rel="canonical" href="http://stu98832.github.io/2021/03/03/note-angular-learning-6/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://stu98832.github.io/2021/03/03/note-angular-learning-6/","path":"/2021/03/03/note-angular-learning-6/","title":"Angular學習筆記6 - Module 與路由"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Angular學習筆記6 - Module 與路由 | Bluebean 的筆記</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Bluebean 的筆記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Module</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">建立 Module</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E5%A2%9E%E6%A8%A1%E7%B5%84"><span class="nav-number">2.1.</span> <span class="nav-text">新增模組</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%92%B0%E5%AF%AB-navbar-%E7%9B%B8%E9%97%9C%E5%85%83%E4%BB%B6"><span class="nav-number">2.2.</span> <span class="nav-text">撰寫 navbar 相關元件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#navbar-%E5%85%83%E4%BB%B6"><span class="nav-number">2.2.1.</span> <span class="nav-text">navbar 元件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ng-content"><span class="nav-number">2.2.2.</span> <span class="nav-text">ng-content</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Component-%E6%A8%A3%E5%BC%8F%E7%8D%A8%E7%AB%8B"><span class="nav-number">2.2.3.</span> <span class="nav-text">Component 樣式獨立</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nav-item-%E5%85%83%E4%BB%B6"><span class="nav-number">2.2.4.</span> <span class="nav-text">nav-item 元件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8E%E5%87%BA"><span class="nav-number">2.3.</span> <span class="nav-text">導出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8E%E5%85%A5"><span class="nav-number">2.4.</span> <span class="nav-text">導入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E8%87%AA%E8%A8%82%E6%A8%99%E7%B1%A4"><span class="nav-number">2.5.</span> <span class="nav-text">使用自訂標籤</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">路由 (Routing)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE"><span class="nav-number">3.1.</span> <span class="nav-text">基本配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RouterModule"><span class="nav-number">3.1.1.</span> <span class="nav-text">RouterModule</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Route"><span class="nav-number">3.1.2.</span> <span class="nav-text">Route</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#router-outlet"><span class="nav-number">3.1.3.</span> <span class="nav-text">router-outlet</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">建立路由</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-router-outlet"><span class="nav-number">4.1.</span> <span class="nav-text">配置 router-outlet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%90%E8%B7%AF%E7%94%B1"><span class="nav-number">4.2.</span> <span class="nav-text">子路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%90%AC%E7%94%A8%E5%AD%97%E5%85%83%E8%B7%AF%E7%94%B1"><span class="nav-number">4.3.</span> <span class="nav-text">萬用字元路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B-404-%E9%8C%AF%E8%AA%A4%E9%A0%81%E9%9D%A2"><span class="nav-number">4.4.</span> <span class="nav-text">建立 404 錯誤頁面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E9%A0%86%E5%BA%8F%E5%95%8F%E9%A1%8C"><span class="nav-number">4.5.</span> <span class="nav-text">路由順序問題</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E9%80%A3%E6%8E%A5"><span class="nav-number">4.6.</span> <span class="nav-text">路由連接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A2%E7%8B%80%E8%B7%AF%E7%94%B1"><span class="nav-number">4.7.</span> <span class="nav-text">巢狀路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hasg-Tag"><span class="nav-number">4.8.</span> <span class="nav-text">Hasg Tag</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">參考</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">更新</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bluebean"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Bluebean</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/stu98832" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stu98832" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://stu98832.github.io/2021/03/03/note-angular-learning-6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Bluebean">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Angular學習筆記6 - Module 與路由 | Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Angular學習筆記6 - Module 與路由
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2021-03-03 00:00:00" itemprop="dateCreated datePublished" datetime="2021-03-03T00:00:00+08:00">2021-03-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%80%8B%E4%BA%BA%E7%AD%86%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">個人筆記</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>前面介紹了與 component 相關的內容之後<br>
+接下來將會介紹建構 angular 系統裡的重要角色 <strong>Module</strong><br>
+Module 可以管理許多的 Component，並引入像是 <strong>Pipe</strong>、<strong>Directive</strong>、<strong>Service</strong> 等東西<br>
+也可以引入其他 Module 來使用相關的 Component、Pipe 或 Directive 等<br>
+之後還會介紹一種比較特別的 Module，<strong>路由</strong></p>
+<span id="more"></span>
+<h1>Module</h1>
+<p>前面其實有粗略的介紹過 Module 跟其裝飾器 <code>NgModule</code><br>
+Module 本身管理著各種 Component、Pipe 跟 Service<br>
+來看看整個系列截至目前為止 <code>AppModule</code> 裡 <code>NgModule</code> 裝飾器的內容：</p>
+<figure class="highlight typescript"><figcaption><span>AppModule.ts</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta">@NgModule</span>(&#123;</span><br><span class="line">  <span class="attr">declarations</span>: [</span><br><span class="line">    <span class="title class_">AppComponent</span>,</span><br><span class="line">    <span class="title class_">HtmlTagPipe</span>,</span><br><span class="line">    <span class="title class_">IconDirective</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">imports</span>: [</span><br><span class="line">    <span class="title class_">BrowserModule</span>,</span><br><span class="line">    <span class="title class_">AppRoutingModule</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">providers</span>: [],</span><br><span class="line">  <span class="attr">bootstrap</span>: [<span class="title class_">AppComponent</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppModule</span> &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>相較於最初介紹 <code>NgModule</code>，可以發現 declarations 多了上次使用的 <code>HtmlTagPage</code> 跟 <code>IconDirective</code><br>
+事實上，<strong>任何要在頁面使用的 Component、Pipe、Directive 都要放入 declarations 裡</strong><br>
+之前之所以沒有做這些操作，是因為 Angular CLI 會自動幫忙找<strong>最近</strong>的模組並自動引入</p>
+<p>關於其他參數的內容，則可以回顧之前的<a href="/2021/02/14/note-angular-learning-3/" title="Angular學習筆記3 - 專案結構、Module、Component">Angular學習筆記3 - 專案結構、Module、Component</a></p>
+<h1>建立 Module</h1>
+<p>一直到剛剛都還是在介紹著整個 Angular 應用的中心 <strong>AppModule</strong><br>
+但是實際上當功能逐漸複雜化時，會開始將一些獨立的功能分成子模組，等到需要時引用<br>
+接著將會再網站上新增 Navbar 模組</p>
+<h2 id="新增模組">新增模組</h2>
+<p>一開始先使用指令新增模組：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ng g module navbar</span><br></pre></td></tr></table></figure>
+<p>完成後，可以發現多了一個資料夾 <code>navbar</code>，裡面有模組 <code>navbar.module.ts</code></p>
+<p>然後就可以看到空無一物的模組 <code>NavbarModule</code></p>
+<figure class="highlight typescript"><figcaption><span>navbar.module.ts</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">NgModule</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">CommonModule</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/common&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@NgModule</span>(&#123;</span><br><span class="line">  <span class="attr">declarations</span>: [ ],</span><br><span class="line">  <span class="attr">imports</span>: [</span><br><span class="line">    <span class="title class_">CommonModule</span></span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">NavbarModule</span> &#123; &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="撰寫-navbar-相關元件">撰寫 navbar 相關元件</h2>
+<p>為了完成 navbar<br>
+接著會參考<a target="_blank" rel="noopener" href="https://www.w3schools.com/css/css_navbar_horizontal.asp"> W3School 的 navbar 範例</a>來設定 navbar 元件的樣式表跟樣板<br>
+考慮到 navbar 裡會有一個主體跟數個按鈕<br>
+因此會建立兩種元件 <code>navbar</code> 跟 <code>nav-item</code></p>
+<h3 id="navbar-元件">navbar 元件</h3>
+<p>新增 component <code>navbar</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ng g component navbar</span><br></pre></td></tr></table></figure>
+<p>可以發現 <code>NavbarModule</code> 自動引入了 <code>NavbarComponent</code></p>
+<figure class="highlight typescript"><figcaption><span>navbar.module.ts</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">NgModule</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">CommonModule</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">NavbarComponent</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./navbar.component&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@NgModule</span>(&#123;</span><br><span class="line">  <span class="attr">declarations</span>: [</span><br><span class="line">    <span class="title class_">NavbarComponent</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">imports</span>: [</span><br><span class="line">    <span class="title class_">CommonModule</span></span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">NavbarModule</span> &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>然後設定樣式表跟樣板</p>
+<figure class="highlight css"><figcaption><span>navbar.component.css</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">ul</span><span class="selector-class">.navbar</span> &#123;</span><br><span class="line">  <span class="attribute">list-style-type</span>: none;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">overflow</span>: hidden;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#e7e7e7</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#f3f3f3</span>;</span><br><span class="line">  <span class="attribute">position</span>: -webkit-sticky; <span class="comment">/* Safari */</span></span><br><span class="line">  <span class="attribute">position</span>: sticky;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">nav</span> &#123;</span><br><span class="line">  <span class="attribute">margin-bottom</span>: <span class="number">10px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><figcaption><span>navbar.component.html</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">nav</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">&quot;navbar&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ng-content</span>&gt;</span><span class="tag">&lt;/<span class="name">ng-content</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="ng-content">ng-content</h3>
+<p>前面的程式碼中，可以看到 <code>NavbarComponent</code> 的樣板裡有一個 <code>&lt;ng-content&gt;&lt;/ng-content&gt;</code><br>
+<code>ng-content</code> 可以將放在自訂標籤裡的元素都轉移進去<br>
+如果不加上這個，即使裡面放在多元素，都不會被顯示出來</p>
+<p>舉例來說，我有這樣的 HTML 內容：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">app-navbar</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>list item<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">app-navbar</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>那麼樣板的輸出會長這樣：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">nav</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">&quot;navbar&quot;</span>&gt;</span></span><br><span class="line">    	<span class="tag">&lt;<span class="name">li</span>&gt;</span>list item<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="Component-樣式獨立">Component 樣式獨立</h3>
+<p>component 本身可以使用樣式表，這個樣式表只能自己使用，其他 component 無法引用<br>
+如果用過 <code>F12</code> 去查看 angular 的輸出，可以發現每個 component 裡的元素都會有一個屬性名稱作為標識：</p>
+<p><img src="image-20210301205045383.png" alt="image-20210301205045383"></p>
+<p>而 component 輸出的樣式表會在每個指定條件後方加上對該屬性名稱的限制，進而達成樣式獨立</p>
+<h3 id="nav-item-元件">nav-item 元件</h3>
+<p>為了能夠更方便的產生 navbar 的按鈕，要再新增一個 component <code>nav-item</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ng g component navbar/nav-item</span><br></pre></td></tr></table></figure>
+<p>使用後會在 <code>navbar</code> 資料夾中產生 <code>nav-item</code> 資料夾，並含有相關的 component 檔案</p>
+<p>接著繼續照著 navbar 範例的子項目開始寫樣式表跟樣版內容：</p>
+<figure class="highlight typescript"><figcaption><span>nav-item.component.ts 部分</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">NavItemComponent</span> <span class="keyword">implements</span> <span class="title class_">OnInit</span> &#123;</span><br><span class="line">  <span class="meta">@Input</span>(<span class="string">&#x27;href&#x27;</span>) url = <span class="string">&#x27;#&#x27;</span>;</span><br><span class="line">  <span class="meta">@Input</span>() active = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* ... */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><figcaption><span>nav-item.componant.css</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.nav-item</span> &#123;</span><br><span class="line">    <span class="attribute">float</span>: left;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.nav-item</span> <span class="selector-tag">a</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: block;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#666</span>;</span><br><span class="line">    <span class="attribute">text-align</span>: center;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">14px</span> <span class="number">16px</span>;</span><br><span class="line">    <span class="attribute">text-decoration</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.nav-item</span> <span class="selector-tag">a</span><span class="selector-pseudo">:hover</span><span class="selector-pseudo">:not</span>(<span class="selector-class">.active</span>) &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#ddd</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.nav-item</span> <span class="selector-tag">a</span><span class="selector-class">.active</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: white;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#4CAF50</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><figcaption><span>nav-bar.component.html</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">&quot;nav-item&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> [<span class="attr">href</span>]=<span class="string">&quot;url&quot;</span> [<span class="attr">class.active</span>]=<span class="string">&#x27;active&#x27;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ng-content</span>&gt;</span><span class="tag">&lt;/<span class="name">ng-content</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>上面的程式可以看到一些 <code>@Input</code> 的應用<br>
+等等在使用時會使用這些屬性來設定連接跟啟用</p>
+<h2 id="導出">導出</h2>
+<p>寫好了 component 的部分，要能夠讓外面其他 component 可以使用，因此要進行導出<br>
+導出時只要加入 Module 裡的 <code>exports </code> 列表裡就可以了</p>
+<figure class="highlight typescript"><figcaption><span>navbar.module.ts 部分</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta">@NgModule</span>(&#123;</span><br><span class="line">  <span class="comment">/* ... */</span></span><br><span class="line">  <span class="attr">exports</span>: [</span><br><span class="line">    <span class="title class_">NavbarComponent</span>,</span><br><span class="line">    <span class="title class_">NavItemComponent</span></span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">NavbarModule</span> &#123; &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如果在使用 <code>ng g component</code> 時加上 <code>--export</code> 參數，Angular CLI 會自己幫你加到 <code>exports</code> 裡</p>
+</blockquote>
+<h2 id="導入">導入</h2>
+<p>為了讓 <code>AppComponent</code> 可以使用這些自訂的 component，所以要將 <code>NavbarModule</code> 導入 <code>AppModule</code><br>
+也就是在 <code>imports</code> 裡加入 <code>NavbarModule</code></p>
+<figure class="highlight typescript"><figcaption><span>app.module.ts 部分</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta">@NgModule</span>(&#123;</span><br><span class="line">  <span class="comment">/* ... */</span></span><br><span class="line">  <span class="attr">imports</span>: [</span><br><span class="line">    <span class="comment">/* ... */</span></span><br><span class="line">    <span class="title class_">NavbarModule</span>,</span><br><span class="line">    <span class="comment">/* ... */</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="comment">/* ... */</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppModule</span> &#123; &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>記得要先將 <code>NavbarModule</code> 類別引入，再加到 imports 列表裡</p>
+</blockquote>
+<h2 id="使用自訂標籤">使用自訂標籤</h2>
+<p>接著在 <code>AppComponent</code> 的樣板檔裡採用這些自訂標籤</p>
+<figure class="highlight html"><figcaption><span>app.component.html</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">app-navbar</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">app-nav-item</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">appIcon</span>=<span class="string">&quot;home&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        MyAngular</span><br><span class="line">    <span class="tag">&lt;/<span class="name">app-nav-item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">app-nav-item</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span> [<span class="attr">active</span>]=<span class="string">&#x27;true&#x27;</span>&gt;</span></span><br><span class="line">        首頁</span><br><span class="line">    <span class="tag">&lt;/<span class="name">app-nav-item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">app-nav-item</span> <span class="attr">href</span>=<span class="string">&quot;https://www.google.com&quot;</span>&gt;</span></span><br><span class="line">        Google</span><br><span class="line">    <span class="tag">&lt;/<span class="name">app-nav-item</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">app-navbar</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>就可以看到成果了：</p>
+<p><img src="image-20210301211924107.png" alt="image-20210301211924107"></p>
+<h1>路由 (Routing)</h1>
+<p>SPA 的精隨在於它不用一直透過 request 取得頁面<br>
+因為換頁的操作都是在前端完成的<br>
+透過配置路由，可以決定哪些路徑要呈現哪些畫面</p>
+<h2 id="基本配置">基本配置</h2>
+<p>由於一開始就建立附帶 routing 功能的專案，所以就省了建立 <code>AppRoutingModule</code> 的力氣了<br>
+直接來看目前 <code>AppRoutingModule</code> 的配置：</p>
+<figure class="highlight typescript"><figcaption><span>app-routing.module.ts</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">NgModule</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">RouterModule</span>, <span class="title class_">Routes</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/router&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">routes</span>: <span class="title class_">Routes</span> = [];</span><br><span class="line"></span><br><span class="line"><span class="meta">@NgModule</span>(&#123;</span><br><span class="line">  <span class="attr">imports</span>: [<span class="title class_">RouterModule</span>.<span class="title function_">forRoot</span>(routes)],</span><br><span class="line">  <span class="attr">exports</span>: [<span class="title class_">RouterModule</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppRoutingModule</span> &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>大致上就是一般的模組，重點就擺在 <code>RouterModule</code> 跟 <code>Routes</code> 身上</p>
+<h3 id="RouterModule">RouterModule</h3>
+<p>用來設定路由的模組，形式是固定的<br>
+<code>imports</code> 要放 <code>RouterModule</code> 導出的 Route 上<br>
+<code>exports</code> 則將 <code>RouterModule</code> 導出</p>
+<p><code>RouterModule</code> 有兩個基本函式 <code>forRoot</code> 跟 <code>forChild</code> 可以導出路由<br>
+<code>forRoot</code> 只會給 <code>AppRoutingModule</code> 使用而已<br>
+<code>forChild</code> 則會給其他的 RoutingModule 使用</p>
+<h3 id="Route">Route</h3>
+<p><code>Route</code> 包含路由的各種資訊，這邊只舉幾個常見的參數</p>
+<ul>
+<li><code>path</code><br>
+路徑名稱</li>
+<li><code>component</code><br>
+對應的 component</li>
+<li><code>redirectTo</code><br>
+可以重新導向路徑</li>
+<li><code>children</code><br>
+子路由，子路由裡的根路徑位置就是 <code>path</code></li>
+<li><code>data</code><br>
+當要使用 router 資訊來產生模板時，可以在 <code>data</code> 裡承載資料</li>
+</ul>
+<h3 id="router-outlet">router-outlet</h3>
+<p>經過路由處理後的 Component 會在 <code>router-outlet</code> 標籤內輸出<br>
+原理其實跟 <code>ng-content</code> 差不多</p>
+<h1>建立路由</h1>
+<p>一開始先建立一個 <code>HomeComponent</code> 作為首頁<br>
+接著在 <code>AppRoutingModule</code> 裡建立對應的 Route</p>
+<figure class="highlight typescript"><figcaption><span>app-routing.module.ts 部份</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="attr">routes</span>: <span class="title class_">Routes</span> = [</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&#x27;&#x27;</span>, <span class="attr">pathMatch</span>:<span class="string">&#x27;full&#x27;</span>, <span class="attr">redirectTo</span>: <span class="string">&#x27;/home&#x27;</span> &#125;,</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&#x27;home&#x27;</span>, <span class="attr">component</span>: <span class="title class_">HomeComponent</span> &#125;</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<p>根路徑的字串內容是空的，需要再加上 <code>patchMatch: 'full'</code> 才能正常使用<br>
+這邊將根目錄重新導向到 <code>/home</code><br>
+而 <code>/home</code> 對應的 component 即 <code>HomeComponent</code></p>
+<h2 id="配置-router-outlet">配置 router-outlet</h2>
+<p>於 <code>app.component.html</code> 裡新增 <code>router-outlet</code> 來使路由的輸出結果顯示出來</p>
+<figure class="highlight html"><figcaption><span>app.component.html</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">app-navbar</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">app-nav-item</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">appIcon</span>=<span class="string">&quot;home&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        MyAngular</span><br><span class="line">    <span class="tag">&lt;/<span class="name">app-nav-item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">app-nav-item</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span> [<span class="attr">active</span>]=<span class="string">&#x27;true&#x27;</span>&gt;</span></span><br><span class="line">        首頁</span><br><span class="line">    <span class="tag">&lt;/<span class="name">app-nav-item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">app-nav-item</span> <span class="attr">href</span>=<span class="string">&quot;https://www.google.com&quot;</span>&gt;</span></span><br><span class="line">        Google</span><br><span class="line">    <span class="tag">&lt;/<span class="name">app-nav-item</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">app-navbar</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">router-outlet</span>&gt;</span><span class="tag">&lt;/<span class="name">router-outlet</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>然後就可以看到輸出畫面了</p>
+<p><img src="image-20210302113729318.png" alt="image-20210302113729318"></p>
+<h2 id="子路由">子路由</h2>
+<p>並不是每個路由都一定要在 <code>AppRoutingModule</code> 管理才行<br>
+實際上針對不同的模組，可以管理自己的路由</p>
+<p>這邊就先建立一個含路由的 <code>UserModule</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ng g module user --routing</span><br></pre></td></tr></table></figure>
+<p>建立好之後看一下 <code>user-routing.module.ts</code> 的內容</p>
+<figure class="highlight typescript"><figcaption><span>user-routing.module.ts</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">NgModule</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">RouterModule</span>, <span class="title class_">Routes</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/router&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">routes</span>: <span class="title class_">Routes</span> = [];</span><br><span class="line"></span><br><span class="line"><span class="meta">@NgModule</span>(&#123;</span><br><span class="line">  <span class="attr">imports</span>: [<span class="title class_">RouterModule</span>.<span class="title function_">forChild</span>(routes)],</span><br><span class="line">  <span class="attr">exports</span>: [<span class="title class_">RouterModule</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserRoutingModule</span> &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>和 <code>AppRoutingModule</code> 差不多，就是 <code>forRoot</code> 的部份變成了 <code>forChild</code> 而已</p>
+<p>接著新增屬於 <code>UserModule</code> 的頁面 <code>UserComponent</code>後，將 <code>/user</code> 導向 <code>UserComponent</code></p>
+<figure class="highlight typescript"><figcaption><span>user-routing.module.ts 部份</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="attr">routes</span>: <span class="title class_">Routes</span> = [</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&#x27;user&#x27;</span>, <span class="attr">component</span>: <span class="title class_">UserComponent</span> &#125;</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<p>然後在 <code>AppModule</code> 導入 <code>UserModule</code></p>
+<figure class="highlight typescript"><figcaption><span>app.module.ts 部份</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta">@NgModule</span>(&#123;</span><br><span class="line">  <span class="comment">/* ... */</span></span><br><span class="line">  <span class="attr">imports</span>: [</span><br><span class="line">    <span class="comment">/* ... */</span></span><br><span class="line">    <span class="title class_">UserModule</span>,</span><br><span class="line">    <span class="title class_">AppRoutingModule</span>,</span><br><span class="line">    <span class="comment">/* ... */</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="comment">/* ... */</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppModule</span> &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>就可以前往 <code>/user</code> 查看結果了：</p>
+<p><img src="image-20210302191619241.png" alt="image-20210302191619241"></p>
+<h2 id="萬用字元路由">萬用字元路由</h2>
+<p>Route 裡的 <code>path</code> 如果設定內容為 <code>**</code> 的字串<br>
+則可以匹配所有路徑</p>
+<p>接下來將會透過建立 404 錯誤頁面來進行範例</p>
+<div class="note warning"><p>萬用字元請務必擺在最下面<br>
+放在前面會使得判斷時直接導向萬用字元的路徑，而後面的路徑則不會被判斷到<br>
+要多注意萬用字元的位置，以避免某些路徑被吃掉的問題</p>
+</div>
+<h2 id="建立-404-錯誤頁面">建立 404 錯誤頁面</h2>
+<p>首先先建立好 <code>error404.component.ts</code><br>
+由於只是一個簡單的錯誤畫面，所以就不建立測試，樣板和樣式也都改成內置</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ng g component error404 -s -t --skip-tests</span><br></pre></td></tr></table></figure>
+<p>接著寫好樣板內容，並去除掉用不到的部份</p>
+<figure class="highlight typescript"><figcaption><span>error404.component.ts</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Component</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  <span class="attr">selector</span>: <span class="string">&#x27;app-error404&#x27;</span>,</span><br><span class="line">  <span class="attr">template</span>: <span class="string">`&lt;h1&gt;404 Not Found!&lt;/h1&gt;`</span>,</span><br><span class="line">  <span class="attr">styles</span>: []</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">Error404Component</span> &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>然後新增到 <code>AppRoutingModule</code> 的 <code>routers</code>裡</p>
+<figure class="highlight typescript"><figcaption><span>app-routing.module.ts 部份</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="attr">routes</span>: <span class="title class_">Routes</span> = [</span><br><span class="line">  <span class="comment">/* ... */</span></span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&#x27;**&#x27;</span>, <span class="attr">component</span>: <span class="title class_">Error404Component</span> &#125;</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<p>接著隨便打個不存在的路徑，就可以看到 <code>404 Not Found!</code> 了</p>
+<p><img src="image-20210302193413146.png" alt="image-20210302193413146"></p>
+<h2 id="路由順序問題">路由順序問題</h2>
+<p>在萬用字元路由的條目中，有說到萬用字元的位置問題<br>
+其實 module 的引用順序也會影響路由判斷的順序<br>
+像是前面的 <code>UserModule</code>，我其實是刻意把它擺在 <code>AppRoutingModule</code> 的<strong>上方</strong><br>
+<strong>越先引入的越先被判斷到</strong>，因此 <code>AppRoutingModule</code> 務必要再最下方</p>
+<p>接續剛剛的 404 錯誤頁面，如果這次將 <code>UserModule</code> 放在 <code>AppRoutingModule</code> 下方，那會發生這樣的狀況</p>
+<p><img src="image-20210302194006667.png" alt="image-20210302194006667"></p>
+<p>可以發現到，原本可以正常導向的 <code>/user</code> 卻被導向到萬用字元的路徑上了<br>
+這是因為 <code>AppRoutingModule</code> 先被判斷的關係，而萬用字元正好就在 <code>AppRoutingModule</code> 的底部<br>
+因此在到達 <code>UserModule</code> 裡的 <code>UserRoutingModule</code> 前，就會因為先判斷到 <code>AppRoutingModule</code> 的萬用字元而被導向過去<br>
+也就是說，<code>AppRoutingModule</code> 後面如果再多塞幾個路由，實際上是毫無意義的，因為根本到達不了</p>
+<h2 id="路由連接">路由連接</h2>
+<p>除了導向，還可以透過官方提供的 directive 來取得<strong>路由路徑</strong>或是<strong>定位 <code>navbar</code> 上的項目</strong><br>
+也就是 <code>routerLink</code> 跟 <code>routerLinkActive</code><br>
+比起用說明的，這個直接套用到 <code>navbar</code> 上比較快</p>
+<p>由於現有的 <code>nav-item</code> 架構不適合使用 <code>routerLink</code>，這邊需要將 <code>nav-item</code>小改一下</p>
+<ol>
+<li>
+<p><code>NavItemComponent</code> 裡的 Input 變數都清除</p>
+</li>
+<li>
+<p>樣板修改</p>
+ <figure class="highlight html"><figcaption><span>nav-item.component.html</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">&quot;nav-item&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ng-content</span>&gt;</span><span class="tag">&lt;/<span class="name">ng-content</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>將樣式表 <code>nav-item.component.css</code> 的內容移到 <code>style.css</code></p>
+</li>
+<li>
+<p>修改 <code>app.component.html</code></p>
+<figure class="highlight html"><figcaption><span>app.component.html</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">app-navbar</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">app-nav-item</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span> <span class="attr">appIcon</span>=<span class="string">&quot;home&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            MyAngular</span><br><span class="line">        <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">app-nav-item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">app-nav-item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/home&quot;</span>&gt;</span></span><br><span class="line">            首頁</span><br><span class="line">        <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">app-nav-item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">app-nav-item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/user&quot;</span>&gt;</span></span><br><span class="line">            使用者</span><br><span class="line">        <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">app-nav-item</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">app-navbar</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">router-outlet</span>&gt;</span><span class="tag">&lt;/<span class="name">router-outlet</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>然後套用 <code>routerLink</code> 跟 <code>routerLinkActive</code></p>
+<figure class="highlight html"><figcaption><span>app.component.html</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">app-navbar</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">app-nav-item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">routerLink</span>=<span class="string">&quot;/&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span> <span class="attr">appIcon</span>=<span class="string">&quot;home&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            MyAngular</span><br><span class="line">        <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">app-nav-item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">app-nav-item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">routerLink</span>=<span class="string">&quot;/home&quot;</span> <span class="attr">routerLinkActive</span>=<span class="string">&#x27;active&#x27;</span>&gt;</span></span><br><span class="line">            首頁</span><br><span class="line">        <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">app-nav-item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">app-nav-item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">routerLink</span>=<span class="string">&quot;/user&quot;</span> <span class="attr">routerLinkActive</span>=<span class="string">&#x27;active&#x27;</span>&gt;</span></span><br><span class="line">            使用者</span><br><span class="line">        <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">app-nav-item</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">app-navbar</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">router-outlet</span>&gt;</span><span class="tag">&lt;/<span class="name">router-outlet</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>執行結果：</p>
+<table>
+<thead>
+<tr>
+<th>/home</th>
+<th>/user</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="image-20210303213924861.png" alt="image-20210303213924861"></td>
+<td><img src="image-20210303213944788.png" alt="image-20210303213944788"></td>
+</tr>
+</tbody>
+</table>
+<p>可以發現，現在上面的 tab 會根據你的頁面路徑來提示你所在的頁面<br>
+<strong>實際上 <code>routerLinkActive</code> 會在你指定的 <code>routerLink</code> 路徑符合時給予所在元素指定的 CSS class</strong></p>
+<p>如果有仔細觀察看這次換頁的的畫面，也可以發現，跟上一次比起來，這次的頁面切換非常順利<br>
+這正是 SPA，不須在換頁時發送 request，在同一個頁面就可以透過 javascript 進行換頁行為</p>
+<h2 id="巢狀路由">巢狀路由</h2>
+<p>在一開始的 Route 介紹有說到 <code>children</code> 參數<br>
+<code>children</code> 本身可以接受更多的 Route，當前面的路徑符合父 Route 時，會進入 <code>children</code> 搜尋符合的路徑，<strong>並套用父 Route 的 Component</strong></p>
+<p>這邊也舉個例子：</p>
+<p>首先建立兩個 component：<code>UserIndexComponent</code>、<code>UserInfoComponent</code><br>
+然後修改 <code>UserComponent</code> 的樣板</p>
+<figure class="highlight html"><figcaption><span>user.component.html</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>user works!<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">router-outlet</span>&gt;</span><span class="tag">&lt;/<span class="name">router-outlet</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>接著在 <code>UserRoutingModule</code> 加入巢狀路由</p>
+<figure class="highlight typescript"><figcaption><span>user-routing.module.ts 部份</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="attr">routes</span>: <span class="title class_">Routes</span> = [</span><br><span class="line">  &#123; </span><br><span class="line">    <span class="attr">path</span>: <span class="string">&#x27;user&#x27;</span>, <span class="attr">component</span>: <span class="title class_">UserComponent</span>,</span><br><span class="line">    <span class="attr">children</span>: [</span><br><span class="line">      &#123; <span class="attr">path</span>: <span class="string">&#x27;&#x27;</span>, <span class="attr">pathMatch</span>: <span class="string">&#x27;full&#x27;</span>, <span class="attr">component</span>: <span class="title class_">UserIndexComponent</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">path</span>: <span class="string">&#x27;info&#x27;</span>, <span class="attr">component</span>: <span class="title class_">UserInfoComponent</span> &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<p>最後看一下結果：</p>
+<table>
+<thead>
+<tr>
+<th>/user</th>
+<th>/user/info</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="image-20210303221200790.png" alt="image-20210303221200790"></td>
+<td><img src="image-20210303221216995.png" alt="image-20210303221216995"></td>
+</tr>
+</tbody>
+</table>
+<p>從上面的圖可以看到，內容被嵌到 <code>UserComponent</code> 樣板裡的 <code>router-outlet</code> 了<br>
+由於在父路由有指定 <code>component</code>，因此在到達子路由前就會先上一層 <code>UserComponent</code></p>
+<p>另外，你也可以發現上面的 tab 還是亮著的，那邊不是指定 <code>/user</code> 嗎？<br>
+由於 Angular 處理路由時會把部份匹配的路由都設定為 active，因此 <code>/user</code> 實際上也是處於 active 的狀態<br>
+即使路由是在外面被指定，依然會觸發：</p>
+<figure class="highlight plaintext"><figcaption><span>user-routing.module.ts 部份</span></figcaption><table><tr><td class="code"><pre><span class="line">const routes: Routes = [</span><br><span class="line">  &#123; </span><br><span class="line">    path: &#x27;user&#x27;, component: UserComponent,</span><br><span class="line">    children: [</span><br><span class="line">      &#123; path: &#x27;&#x27;, pathMatch: &#x27;full&#x27;, component: UserIndexComponent &#125;,</span><br><span class="line">      </span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123; path: &#x27;user/info&#x27;, component: UserInfoComponent &#125;,</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<p><img src="image-20210303221846843.png" alt="image-20210303221846843"></p>
+<h2 id="Hasg-Tag">Hasg Tag</h2>
+<p>將路徑擺在網址的 Hash Tag 後方</p>
+<p>在 <code>AppRoutingModule</code> 中設定 <code>useHash</code> 即可：</p>
+<figure class="highlight typescript"><figcaption><span>app-routing.module.ts 部份</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta">@NgModule</span>(&#123;</span><br><span class="line">  <span class="attr">imports</span>: [<span class="title class_">RouterModule</span>.<span class="title function_">forRoot</span>(routes, &#123;</span><br><span class="line">    <span class="attr">useHash</span>: <span class="literal">true</span></span><br><span class="line">  &#125;)],</span><br><span class="line">  <span class="attr">exports</span>: [<span class="title class_">RouterModule</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppRoutingModule</span> &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p><img src="image-20210303224836807.png" alt="image-20210303224836807"></p>
+<h1>結語</h1>
+<p>這次的內容相較之前又更長一些<br>
+在介紹 Module 時也順便介紹了路由</p>
+<p>路由是 Angular 中非常核心的功能<br>
+SPA 的實現就是靠前端的路由在運作的<br>
+只透過前端換頁，達到較為流暢操作操作環境</p>
+<p>一開始是想要自己設計 Navbar 樣式，但是考慮到自己的設計能力很差，所以直接套用 W3School 的範例比較快<br>
+中間講到 <code>routerLink</code> 時才發現自己設計的架構不好使用，所以才對 <code>nav-item</code> 進行修改</p>
+<p>目前已經講了許多 Angular 的各種類別，這些都可以在官方網站找到更詳細的解說<br>
+如果去翻官方網站的說明文件，可以發現現在講的東西都還沒過一半<br>
+Angular 真的還有好多東西可以講，不過因為我沒有繼續深入，所以沒辦法再講更多東西了<br>
+因為到目前為止的每個條目都不是寫得特別詳細，如果有其他額外的問題，可以到官方文件上尋找相關條目</p>
+<p>如果文章裡有什麼錯誤的話，可以透過文章下面的 gitalk 回報給我</p>
+<h1>參考</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.w3schools.com/css/css_navbar_horizontal.asp">w3school: CSS Horizontal Navigation Bar</a></li>
+<li><a target="_blank" rel="noopener" href="https://angular.io/guide/router">Angular - In-app navigation: routing to views</a></li>
+</ul>
+<h1>更新</h1>
+<ul>
+<li>2021-04-28
+<ul>
+<li>參考條目：
+<ul>
+<li>補上項目符號</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div style='text-align: center'>
+    <a class='btn' href='/2021/02/23/note-angular-learning-5/'>
+        上一篇
+    </a>
+    <a class='btn' href='/2021/04/28/note-angular-learning-7/'>
+        下一篇
+    </a>
+</div>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Angular/" rel="tag"><i class="fa fa-tag"></i> Angular</a>
+              <a href="/tags/%E7%B6%B2%E9%A0%81%E5%89%8D%E7%AB%AF/" rel="tag"><i class="fa fa-tag"></i> 網頁前端</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/02/23/note-angular-learning-5/" rel="prev" title="Angular學習筆記5 - 基本結構操作、Pipe、Directive">
+                  <i class="fa fa-angle-left"></i> Angular學習筆記5 - 基本結構操作、Pipe、Directive
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/04/28/note-angular-learning-7/" rel="next" title="Angular學習筆記7 - Injectable、Service">
+                  Angular學習筆記7 - Injectable、Service <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2020 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Bluebean</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr+QR0SQDNfgglgtcM=" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"stu98832","repo":"stu98832.github.io","client_id":"0b84385c74db3fd44c22","client_secret":"089aee5f0152169f2b4ec924fbce2a06ac1e4c89","admin_user":"stu98832","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","labels":"Gitalk","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"6487a43cb6b107bd4dfc31f7ef955b9e"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

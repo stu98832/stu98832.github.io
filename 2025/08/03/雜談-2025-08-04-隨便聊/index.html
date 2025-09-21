@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"stu98832.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="最近雜談比較多 一開始因為剛接觸 MSW，暫時沒什麼可以分享的 後來則是興趣在嘗試檔案解析、封包解析 這方面的事情無法公開細節，所以沒辦法分寫，但歷程倒是可以寫一點">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[雜談] 2025-08-04 - 隨便聊">
+<meta property="og:url" content="http://stu98832.github.io/2025/08/03/%E9%9B%9C%E8%AB%87-2025-08-04-%E9%9A%A8%E4%BE%BF%E8%81%8A/index.html">
+<meta property="og:site_name" content="Bluebean 的筆記">
+<meta property="og:description" content="最近雜談比較多 一開始因為剛接觸 MSW，暫時沒什麼可以分享的 後來則是興趣在嘗試檔案解析、封包解析 這方面的事情無法公開細節，所以沒辦法分寫，但歷程倒是可以寫一點">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2025-08-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-09-21T15:51:56.665Z">
+<meta property="article:author" content="Bluebean">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://stu98832.github.io/2025/08/03/%E9%9B%9C%E8%AB%87-2025-08-04-%E9%9A%A8%E4%BE%BF%E8%81%8A/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://stu98832.github.io/2025/08/03/%E9%9B%9C%E8%AB%87-2025-08-04-%E9%9A%A8%E4%BE%BF%E8%81%8A/","path":"2025/08/03/雜談-2025-08-04-隨便聊/","title":"[雜談] 2025-08-04 - 隨便聊"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[雜談] 2025-08-04 - 隨便聊 | Bluebean 的筆記</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Bluebean 的筆記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">檔案解析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">WireShark 解析封包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">有關 MSW</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">有關 Blog</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bluebean"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Bluebean</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/stu98832" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stu98832" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://stu98832.github.io/2025/08/03/%E9%9B%9C%E8%AB%87-2025-08-04-%E9%9A%A8%E4%BE%BF%E8%81%8A/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Bluebean">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[雜談] 2025-08-04 - 隨便聊 | Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [雜談] 2025-08-04 - 隨便聊
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2025-08-04 00:00:00" itemprop="dateCreated datePublished" datetime="2025-08-04T00:00:00+08:00">2025-08-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E9%9B%9C%E8%AB%87/" itemprop="url" rel="index"><span itemprop="name">雜談</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>最近雜談比較多</p>
+<p>一開始因為剛接觸 MSW，暫時沒什麼可以分享的</p>
+<p>後來則是興趣在嘗試檔案解析、封包解析<br>
+這方面的事情無法公開細節，所以沒辦法分寫，但歷程倒是可以寫一點</p>
+<span id="more"></span>
+<h1>檔案解析</h1>
+<p>以前因為很常寫楓谷的檔案解析 (感謝網路上大佬的開源) ，算是累積了一些感覺<br>
+只要檔案不大，結構具規律性，而且沒有加密，就比較好靠猜去解析一份不大的檔案</p>
+<p>幾周前時候有做過檔案解析，因為檔案非常單純，沒有加密，只依靠對內容的理解程度，不用幾天整份檔案就解得差不多了<br>
+解出當下我非常的興奮，畢竟這算是在幾乎沒有資源的情況下，靠一己之力解析一份檔案<br>
+不過大概是因為檔案的結構實在太過單純，加上沒有加密，才有機會讓我解出來</p>
+<p>解析檔案很吃對資料結構的熟悉度以及經驗<br>
+最好解的大概就是字串了，其次是一些數值，最後是各種結構體</p>
+<p>一般來說，要能夠完美的解析檔案，還是需要透過一些反編譯、反組譯的手段去分析讀檔程式<br>
+不是每個程式都赤裸裸的，沒有經過編碼、壓縮、加密<br>
+但程式不一定允許你做動態分析，甚至有些會加殼，考慮時間成本，人工分析依舊有必要<br>
+除了經驗以外，運氣也是一種實力，有時候大膽的猜測可以大幅加速解析進度</p>
+<p>不過上面說的都是針對沒有加密的情況，有加密情況就不一樣了<br>
+我猜大概還是透過動態解析去抓取加密方式跟祕鑰，但結構的部份還是要靠人工分析 (這些部份通常散落在各個函式庫或主程式的某處，透過反組譯的方式解析難度很高)</p>
+<h1>WireShark 解析封包</h1>
+<p>因為在 Github 上看到有人透過擷取遊戲封包來做一些便利的服務，所以我想說也來解析看看<br>
+說實話我一看到可以用純文字抓取封包內容，就在想誰心臟這麼大，竟然敢用明文傳遞遊戲內的資料…</p>
+<p>解析封包的方式其實就跟檔案解析差不多，但在遊戲內是執行透過特定行為來抓取特定行為的封包，固定要解析的內容做解析<br>
+因為包含遊戲的邏輯，解析時更容易透過像是技能 ID、血量、點數之類明確的值去定位</p>
+<p>通常遊戲封包都會加一些隨機因素並加密，所以並不好解析<br>
+需要透過反組譯、動態分析去找到祕鑰來解密封包，後面再做人工分析比較快，比起檔案難度高上不少</p>
+<p>解析時使用的是 Wireshark，這還是我第一次在學校以外的地方碰這玩意兒<br>
+原本只單靠 TCP 的 Data 區塊做分析，後來覺得麻煩，開始寫 Dissector 跟 TCP 封包合併<br>
+不得不說，這玩意兒還真是難用… ，當初研究了 2 天才大概知道怎麼寫<br>
+官方的 Lua 文件資料太少了，但純 C 有些功能又對不太上</p>
+<p>只不過可惜，後期遊戲更新把 header 跟部份封包做了加密，我就沒辦法繼續解析了…</p>
+<h1>工作</h1>
+<p>平常工作的內容我覺得沒有什麼好分享的部份</p>
+<p>現在工作上做的是 AI 應用，但說實話，還是苦工居多<br>
+工作內容並不是純寫 Code，還要發 Support Ticket 去問問題，偶爾公司的基礎設施會搞人，公司的政策有時候會導致要申請一堆有的沒的東西，心挺累的<br>
+行政作業的處理時間雖然沒有大於開發時間，但夾雜在開發週期內還是非常煩人</p>
+<p>開發 AI 應用的部份也很無聊<br>
+除了 AI 應用的本質都是圍繞在 Prompt 上以外<br>
+再來就是因為時程壓力，導致該做的分析流程、服務架構、調度策略都很難排入<br>
+這些東西是蠻有趣的，但能用的時間太少了…</p>
+<h1>有關 MSW</h1>
+<p>前些日子本來想要在 MSW 上做開發，礙於官方作為以及玩家群體的素質，加上我也沒有明確的目標，後來就停止了<br>
+雖然上一篇才剛說停止，結果三個禮拜後，我又想回鍋了🙃<br>
+雖然中文開發社群還是一樣冷清，但只要看到開始有人發問，甚至是發布遊戲開發進度，還是讓我開心<br>
+官方也在全球開放後三個月後久違的進行了更新，能夠在 VSCode 上 Debug 真的是太棒了！</p>
+<p>而紙娃娃的問題，目前依舊沒有得到有效的改善<br>
+社群上看到有人寫了碎圖機增加盜圖成本，算是目前最有效的防盜工具了<br>
+依我目前的感覺，盜圖社群的能力都不高，所以光這樣就可以一定程度上避免盜圖 (只要時間成本低於收益，仍然有被盜的可能)</p>
+<p>目前看起來，官方還是有在做事，不過速度非常的緩慢，不知道紙娃娃的問題什麼時候才會處理</p>
+<p>也因為近期沒什麼太大的事件發生，才讓我萌生想要回鍋的念頭<br>
+但大概只會寫基礎設施，我沒有設計遊戲的天份 🙃</p>
+<h1>有關 Blog</h1>
+<p>最近真的想不到有什麼東西可以寫<br>
+雖然下班之後還是在寫程式，但近期做的事情都沒辦法公開細節</p>
+<p>到目前為止連續寫了四篇雜談，讓我心裡覺得怪怪的<br>
+我自己還是會把這個 Blog 當作一個筆記，所以寫雜談的時候都覺得內容有點水 XD</p>
+<p>如果要等到有內容產出，那可能長達1~2個月，甚至半年沒更新 <s>(因為我很懶)</s><br>
+但如果是以特定週期更新，但都是雜談的話，又感覺太水</p>
+<p>目前還是打算以特定週期發布新文章，只不過時間可能會再拉長一點<br>
+主要是近期我想不到要寫什麼</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/07/13/%E9%9B%9C%E8%AB%87-2025-07-13-%E5%9C%A8-msw-%E7%9A%84%E7%AC%AC-3-%E5%80%8B%E6%9C%88/" rel="prev" title="[雜談] 2025-07-13 - 在 MSW 的第 3 個月">
+                  <i class="fa fa-angle-left"></i> [雜談] 2025-07-13 - 在 MSW 的第 3 個月
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/09/21/%E9%9B%9C%E8%AB%87-2025-09-21-%E9%96%92%E8%81%8A%E8%BF%91%E6%B3%81/" rel="next" title="[雜談] 2025-09-21 - 閒聊近況">
+                  [雜談] 2025-09-21 - 閒聊近況 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2020 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Bluebean</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr+QR0SQDNfgglgtcM=" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"stu98832","repo":"stu98832.github.io","client_id":"0b84385c74db3fd44c22","client_secret":"089aee5f0152169f2b4ec924fbce2a06ac1e4c89","admin_user":"stu98832","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","labels":"Gitalk","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"efe16ca855fa90afda730efe257a130d"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

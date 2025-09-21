@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"stu98832.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="何謂基本資料型別？ 基本資料型別可以說是程式裡構成資料的基本單位，任何複雜的結構 (struct) 和類別 (class) 便是由許多基本型別組合而成的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基本資料型別">
+<meta property="og:url" content="http://stu98832.github.io/2020/04/18/basic-data-type/index.html">
+<meta property="og:site_name" content="Bluebean 的筆記">
+<meta property="og:description" content="何謂基本資料型別？ 基本資料型別可以說是程式裡構成資料的基本單位，任何複雜的結構 (struct) 和類別 (class) 便是由許多基本型別組合而成的">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2020-04-17T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-09-21T15:51:56.657Z">
+<meta property="article:author" content="Bluebean">
+<meta property="article:tag" content="程式概念">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://stu98832.github.io/2020/04/18/basic-data-type/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://stu98832.github.io/2020/04/18/basic-data-type/","path":"/2020/04/18/basic-data-type/","title":"基本資料型別"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>基本資料型別 | Bluebean 的筆記</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Bluebean 的筆記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">何謂基本資料型別？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">有哪些基本資料型別？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">為什麼整數的大小會浮動？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">string 不是基本型別嗎？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E5%AD%97%E7%B7%A8%E7%A2%BC"><span class="nav-number">4.1.</span> <span class="nav-text">文字編碼</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">將基本資料型別轉換成一連串位元組</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%AB%AF%E5%BA%8F"><span class="nav-number">5.1.</span> <span class="nav-text">小端序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E7%AB%AF%E5%BA%8F"><span class="nav-number">5.2.</span> <span class="nav-text">大端序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#float-%E5%92%8C-double-%E5%A6%82%E4%BD%95%E8%BD%89%E6%8F%9B%E6%88%90%E4%BD%8D%E5%85%83%E7%B5%84"><span class="nav-number">5.3.</span> <span class="nav-text">float 和 double 如何轉換成位元組</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%9E%8B%E5%88%A5%E7%9A%84%E5%A4%A7%E5%B0%8F%E6%98%AF%E5%9B%BA%E5%AE%9A%E7%9A%84"><span class="nav-number">5.4.</span> <span class="nav-text">基本型別的大小是固定的</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">結語</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bluebean"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Bluebean</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/stu98832" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stu98832" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://stu98832.github.io/2020/04/18/basic-data-type/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Bluebean">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="基本資料型別 | Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          基本資料型別
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2020-04-18 00:00:00" itemprop="dateCreated datePublished" datetime="2020-04-18T00:00:00+08:00">2020-04-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%A8%8B%E5%BC%8F%E6%A6%82%E5%BF%B5/" itemprop="url" rel="index"><span itemprop="name">程式概念</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1>何謂基本資料型別？</h1>
+<p>基本資料型別可以說是程式裡構成資料的基本單位，任何複雜的結構 (struct) 和類別 (class) 便是由許多基本型別組合而成的</p>
+<span id="more"></span>
+<h1>有哪些基本資料型別？</h1>
+<p>以 C 語言來說，基本資料型別有下列幾種：</p>
+<table>
+<thead>
+<tr>
+<th>類型</th>
+<th style="text-align:left">意義</th>
+<th style="text-align:left">大小</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>char</td>
+<td style="text-align:left">ASCII 文字，在其他高階程式語言中儲存的是 Unicode 文字</td>
+<td style="text-align:left">1 bytes ~ 2bytes</td>
+</tr>
+<tr>
+<td>unsigned char</td>
+<td style="text-align:left">位元組，在大部分的程式語言叫做 byte</td>
+<td style="text-align:left">1 bytes</td>
+</tr>
+<tr>
+<td>short int</td>
+<td style="text-align:left">短整數，通常會忽略 int 不寫</td>
+<td style="text-align:left">2 bytes</td>
+</tr>
+<tr>
+<td>unsigned short int</td>
+<td style="text-align:left">無號短整數，通常會忽略 int 不寫</td>
+<td style="text-align:left">2 bytes</td>
+</tr>
+<tr>
+<td>int</td>
+<td style="text-align:left">整數</td>
+<td style="text-align:left">2 bytes ~ 4 bytes</td>
+</tr>
+<tr>
+<td>unsigned int</td>
+<td style="text-align:left">無號整數，可以忽略 int 不寫</td>
+<td style="text-align:left">2 bytes ~ 4 bytes</td>
+</tr>
+<tr>
+<td>long int</td>
+<td style="text-align:left">長整數，通常會忽略 int 不寫</td>
+<td style="text-align:left">4 bytes ~ 8 bytes</td>
+</tr>
+<tr>
+<td>unsigned long int</td>
+<td style="text-align:left">無號長整數，通常會忽略 int 不寫</td>
+<td style="text-align:left">4 bytes ~ 8 bytes</td>
+</tr>
+<tr>
+<td>long long int</td>
+<td style="text-align:left">超長整數，通常會忽略 int 不寫<br/>在其他高階語言中沒有這個類型，只有 long int</td>
+<td style="text-align:left">8 bytes</td>
+</tr>
+<tr>
+<td>unsigned long long int</td>
+<td style="text-align:left">無號超長整數，通常會忽略 int 不寫<br/>在其他高階語言中沒有這個類型，只有 unsigned long int</td>
+<td style="text-align:left">8 bytes</td>
+</tr>
+<tr>
+<td>float</td>
+<td style="text-align:left">單精確浮點數，某些程式稱為 single</td>
+<td style="text-align:left">4 bytes</td>
+</tr>
+<tr>
+<td>double</td>
+<td style="text-align:left">雙精確浮點數</td>
+<td style="text-align:left">8 bytes</td>
+</tr>
+<tr>
+<td>*</td>
+<td style="text-align:left">指標 (pointer)，C / C++ 才有的類型，指向一個記憶體位址</td>
+<td style="text-align:left">4 bytes ~ 8 bytes</td>
+</tr>
+</tbody>
+</table>
+<p>各類型的大小關係為</p>
+<p><code>char</code> &lt;= <code>short</code> &lt;= <code>int</code> &lt;= <code>long</code> &lt;= <code>long long</code></p>
+<h1>為什麼整數的大小會浮動？</h1>
+<p>這個數據模型有關，如果你是使用某些編譯器 (例如：Trobo C) ，他們的整數為 2bytes，不過現今已經幾乎沒有程式語言將 int 定為 2bytes了，目前主要都是 4bytes</p>
+<p>long 的部份一開始是 4bytes，由於 64 位元的 linux 使用的是 LP64，即 long 和 pointer 為 64 位元，因此對於 64位元的 linux 來說，long 是 bytes</p>
+<p>pointer 的部份，在 32位元的電腦上為 4bytes，而在 64位元的電腦上為 8bytes</p>
+<p>char 在 C/C++ 是 ascii 字元，然而在其他高階語言中，則是 Unicode 字元，因此長度就從 1bytes 變為 2bytes</p>
+<h1>string 不是基本型別嗎？</h1>
+<p>string 我們稱為字串，意思是字元串列，或者在C我們又稱字元陣列，也就是說他是由一連串的字元所組成的，因此我不把它當作基本型別來看</p>
+<p>在大部分的高階語言中，string 被視為基本資料型別，string 中有關字元的細節會被隱藏起來，並且統一使用Unicode，如果要將 string 轉成位元組，就要進行編碼 (Encoding)</p>
+<h2 id="文字編碼">文字編碼</h2>
+<p>上面有提到 ASCII 跟 Unicode，這些其實就是文字編碼</p>
+<p>我們現在電腦上所看到的文字實際上都是數字，只是電腦透過判斷這些數字，將它們渲染成我們熟悉的文字</p>
+<p>那電腦是怎麼將這些數據對應到文字的呢？就是靠文字編碼。每個國家常用的編碼都不同，以繁體中文來說，我們所使用的編碼就是 Big5(950)，簡體中文則是 GBK，韓文是 windows-949(949)，而一般的英文字、數字等則是 ASCII。</p>
+<p>ASCII 是<strong>美國資訊交換標準代碼</strong>，裡面包含了基本的符號、英文字、數字與控制符號，從 0 到 127，共128個字</p>
+<p>Unicode 則是為了能夠方便在各個不同語系國家中互相使用而產生的編碼，俗稱萬國碼</p>
+<h1>將基本資料型別轉換成一連串位元組</h1>
+<p>了解各種基本資料型別與其大小後，現在要將他們轉換成一連串位元組，實際上資料都會以位元組的型態被儲存到電腦上，或是被傳送到網路上</p>
+<p>一般分成2種方式轉換，一種叫小端序 (little endian)，另一種叫大端序 (big endian)</p>
+<p>除了 float 跟 double 之外，其他型別通常都是採用小端序進行儲存</p>
+<h2 id="小端序">小端序</h2>
+<p>即<strong>小的先存</strong></p>
+<p>舉例來說：</p>
+<p>假設一個16進制整數 0x12345678 ，越左邊數字越大</p>
+<p>使用小端序的方式就會變成 78 56 34 12，越左邊的資料越早存</p>
+<h2 id="大端序">大端序</h2>
+<p>即<strong>大的先存</strong></p>
+<p>舉例來說：</p>
+<p>假設一個16進制整數 0x12345678 ，越左邊數字越大</p>
+<p>使用大端序的方式就會變成 12 34 56 78，越左邊的資料越早存</p>
+<h2 id="float-和-double-如何轉換成位元組">float 和 double 如何轉換成位元組</h2>
+<p>浮點數的儲存方式比較特別，細節可以參考 IEEE 754</p>
+<p>浮點數通常會分成 3個區塊：正負號 (signed)、指數 (expon)、分數值 (fraction)</p>
+<table>
+    <tr><td colspan=4 style='text-align:center'>float</td></tr>
+    <tr>
+        <td></td>
+        <td style='text-align:center' width='3.125%'>S</td>
+        <td style='text-align:center' width='25%'>E</td>
+        <td style='text-align:center' width='71.875%'>F</td>
+    </tr>
+    <tr>
+        <td style='text-align:center'>bits</td>
+        <td style='text-align:center'>1</td>
+        <td style='text-align:center'>8</td>
+        <td style='text-align:center'>23</td>
+    </tr>
+</table>
+<table>
+    <tr><td colspan=4 style='text-align:center'>double</td></tr>
+    <tr>
+        <td></td>
+        <td style='text-align:center' width='1.5625%'>S</td>
+        <td style='text-align:center' width='17.1875%'>E</td>
+        <td style='text-align:center' width='81.25%'>F</td>
+    </tr>
+    <tr>
+        <td style='text-align:center'>bits</td>
+        <td style='text-align:center'>1</td>
+        <td style='text-align:center'>11</td>
+        <td style='text-align:center'>52</td>
+    </tr>
+</table>
+<p>將這些欄位組合起來變成 32bits/64bits 整數後，以整數小端序的方式轉換為位元組，就是 float 跟 double 轉換以位元組表示的模樣了</p>
+<h2 id="基本型別的大小是固定的">基本型別的大小是固定的</h2>
+<p>上面有介紹過每個基本型別的大小，這些型別就算轉成字元組，大小依舊不會改變</p>
+<p>假設有一個短整數 (short) 數值為 0x12</p>
+<p>以小端序儲存時，會變成 12 00</p>
+<p>以大端序儲存時，會變成 00 12</p>
+<p>雖然看起來只有 1bytes，但是由於 short的大小為 2bytes，因此轉換成 bytes 時長度要一樣，所以變成2個單獨的 byte</p>
+<h1>結語</h1>
+<p>這邊只是粗淺的講了一下基本資料型別，希望能夠讓大家更了解這些基本資料的大小、意義與其如何以位元組的方式處存在電腦上，如果對基本資料型別有了一定的概念，將會更了解 struct、class、union 等複雜結構的原理，也會對儲存的資料大小有所概念，之後如果接觸到檔案存取與網路資料收送的部份，也能夠比較直覺的去進行思考，而不會卡在位元組轉成基本資料的問題上。</p>
+<p>如果有寫錯的部份或是有其他建議，可以在下面的 gitalk 上留言告訴我</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%A8%8B%E5%BC%8F%E6%A6%82%E5%BF%B5/" rel="tag"><i class="fa fa-tag"></i> 程式概念</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/03/22/note-avtice-object-pattern/" rel="prev" title="設計模式筆記—Active Object Pattern (舊)">
+                  <i class="fa fa-angle-left"></i> 設計模式筆記—Active Object Pattern (舊)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/06/26/call-by-reference/" rel="next" title="Call By Value, Call By Reference? 談談所謂的參數引用">
+                  Call By Value, Call By Reference? 談談所謂的參數引用 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2020 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Bluebean</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr+QR0SQDNfgglgtcM=" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"stu98832","repo":"stu98832.github.io","client_id":"0b84385c74db3fd44c22","client_secret":"089aee5f0152169f2b4ec924fbce2a06ac1e4c89","admin_user":"stu98832","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","labels":"Gitalk","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"50fdc970a4787ca6fdcb702859e81cdc"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

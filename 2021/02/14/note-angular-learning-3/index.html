@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"stu98832.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Angular 的專案資料夾內容相當豐富，剛開始看到時，還真不知道該從哪裡下手呢。檔案數量多，名子又很長 所以一開始會先介紹一下基本的專案結構，然後間單說一下 Module 跟 Component">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Angular學習筆記3 - 專案結構、Module、Component">
+<meta property="og:url" content="http://stu98832.github.io/2021/02/14/note-angular-learning-3/index.html">
+<meta property="og:site_name" content="Bluebean 的筆記">
+<meta property="og:description" content="Angular 的專案資料夾內容相當豐富，剛開始看到時，還真不知道該從哪裡下手呢。檔案數量多，名子又很長 所以一開始會先介紹一下基本的專案結構，然後間單說一下 Module 跟 Component">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://stu98832.github.io/2021/02/14/note-angular-learning-3/image-20210214131549514.png">
+<meta property="og:image" content="http://stu98832.github.io/2021/02/14/note-angular-learning-3/image-20210214132052697.png">
+<meta property="og:image" content="http://stu98832.github.io/2021/02/14/note-angular-learning-3/image-20210214134553583.png">
+<meta property="og:image" content="http://stu98832.github.io/2021/02/14/note-angular-learning-3/image-20210214170932176.png">
+<meta property="og:image" content="http://stu98832.github.io/2021/02/14/note-angular-learning-3/image-20210214190724338.png">
+<meta property="og:image" content="http://stu98832.github.io/2021/02/14/note-angular-learning-3/image-20210214190804781.png">
+<meta property="article:published_time" content="2021-02-13T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-09-21T15:51:56.666Z">
+<meta property="article:author" content="Bluebean">
+<meta property="article:tag" content="Angular">
+<meta property="article:tag" content="網頁前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://stu98832.github.io/2021/02/14/note-angular-learning-3/image-20210214131549514.png">
+
+
+<link rel="canonical" href="http://stu98832.github.io/2021/02/14/note-angular-learning-3/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://stu98832.github.io/2021/02/14/note-angular-learning-3/","path":"/2021/02/14/note-angular-learning-3/","title":"Angular學習筆記3 - 專案結構、Module、Component"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Angular學習筆記3 - 專案結構、Module、Component | Bluebean 的筆記</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Bluebean 的筆記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Angular 專案結構</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#src-%E7%B5%90%E6%A7%8B"><span class="nav-number">1.1.</span> <span class="nav-text">src 結構</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">Module</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A3%9D%E9%A3%BE%E5%99%A8"><span class="nav-number">2.1.</span> <span class="nav-text">裝飾器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#note-info"><span class="nav-number">2.1.1.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#decorator-%E7%9A%84%E9%A0%86%E5%BA%8F%E6%98%AF%E7%94%B1%E4%B8%8B%E5%88%B0%E4%B8%8A"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">decorator 的順序是由下到上</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NgModule"><span class="nav-number">2.2.</span> <span class="nav-text">NgModule</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BrowserModule"><span class="nav-number">2.3.</span> <span class="nav-text">BrowserModule</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AppRoutingModule"><span class="nav-number">2.4.</span> <span class="nav-text">AppRoutingModule</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">Component</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%8A%E6%95%B8"><span class="nav-number">3.1.</span> <span class="nav-text">變數</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bluebean"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Bluebean</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/stu98832" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stu98832" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://stu98832.github.io/2021/02/14/note-angular-learning-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Bluebean">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Angular學習筆記3 - 專案結構、Module、Component | Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Angular學習筆記3 - 專案結構、Module、Component
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2021-02-14 00:00:00" itemprop="dateCreated datePublished" datetime="2021-02-14T00:00:00+08:00">2021-02-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%80%8B%E4%BA%BA%E7%AD%86%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">個人筆記</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Angular 的專案資料夾內容相當豐富，剛開始看到時，還真不知道該從哪裡下手呢。檔案數量多，名子又很長</p>
+<p>所以一開始會先介紹一下基本的專案結構，然後間單說一下 Module 跟 Component</p>
+<span id="more"></span>
+<h1>Angular 專案結構</h1>
+<p><img src="image-20210214131549514.png" alt="image-20210214131549514"></p>
+<ul>
+<li>e2e<br>
+自動模擬使用者操作的測試。(我還沒用過這種測試，以前都是手動去測試的)</li>
+<li>package.json / package-lock.json / node_modules<br>
+管理 nodejs 套件相關的檔案跟資料夾</li>
+<li>src<br>
+專案的原始碼</li>
+<li>angular.json<br>
+專案的設定</li>
+<li>tsconfig.app.json / tsconfig.json / tsconfig.spec.json<br>
+TypeScript 編譯的相關設定</li>
+<li>tslint.json<br>
+Type Script 程式碼檢查的設定</li>
+</ul>
+<p>其他更詳細的部份可以參考<a target="_blank" rel="noopener" href="https://angular.io/guide/file-structure">官方文件</a></p>
+<p>大多數的東西其實剛開始都不會碰，最主要的就是 <strong>src</strong> 資料夾</p>
+<h2 id="src-結構">src 結構</h2>
+<p><img src="image-20210214132052697.png" alt="image-20210214132052697"></p>
+<p>src 資料夾裡面有幾個一開始需要先注意的東西：</p>
+<ul>
+<li>app 資料夾<br>
+應用程式的主體，裡面會放入與模組、元件、服務之類應用程式相關的程式</li>
+<li>assert 資料夾<br>
+網頁所需要的資源，編譯頁面時會被處理且一起被輸出</li>
+<li>style.css<br>
+整個專案共用的 CSS 樣式</li>
+<li>favicon.ico<br>
+網頁的圖標</li>
+<li>index.html<br>
+整個 SPA 的 HTML 本體<br>
+<code>&lt;app-root&gt;</code> 元素裡會嵌入 AppComponent 處理後的頁面</li>
+</ul>
+<p>其他不需要動，但很重要的東西：</p>
+<ul>
+<li>main.ts<br>
+專案的程式入口<br>
+會啟動 AppModule</li>
+<li>test.ts<br>
+專案的測試程序啟動腳本</li>
+</ul>
+<p>看完了專案結構之後，讓我們開始專注在 <strong>app</strong> 這個資料夾的內容上</p>
+<p>整個資料夾目前共有6份檔案，分別為：</p>
+<ul>
+<li>app-routing.module.ts<br>
+路由模組</li>
+<li>app.component.css<br>
+AppComponent 的樣式表</li>
+<li>app.component.html<br>
+AppComponent 的 HTML 樣板檔</li>
+<li>app.component.spec.ts<br>
+AppComponent 的測試程式</li>
+<li>app.component.ts<br>
+AppComponent 類別</li>
+<li>app.module.ts<br>
+AppModule 類別</li>
+</ul>
+<p>接下來將會簡單介紹一下上面所寫的 Module 跟 Component 是什麼東西</p>
+<h1>Module</h1>
+<p>檔案名稱為 <code>&lt;module_name&gt;.module.ts</code></p>
+<p>整個 Angular 程式都是跟著 Module 走<br>
+Module 會引入 Component 來渲染頁面</p>
+<p>專案建立之後，會有一個最主要的模組叫做 <strong>AppModule</strong>，檔案名稱為 <code>app.module.ts</code>。</p>
+<p>來看一下 AppModule 的樣貌：</p>
+<p><img src="image-20210214134553583.png" alt="image-20210214134553583"></p>
+<p>整體結構看起來相當的簡單，裡面應用了幾個 Angular 的核心模組，並使用了<strong>裝飾器 NgModule</strong></p>
+<h2 id="裝飾器">裝飾器</h2>
+<p>屬於設計模式的一種，可以為一個類別或函式附加額外的設定或功能</p>
+<p>已經有一些程式語言提供了裝飾器的語法糖，例如說 <strong>Python</strong> 、<strong>Typescript</strong>、<strong>Javascript</strong></p>
+<p>來看一下裝飾器大概的樣貌，這邊是使用 python 來示範：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 裝飾器</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decorator</span>(<span class="params">func</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;decorator&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 裝飾過後的函式</span></span><br><span class="line">    <span class="comment"># 這邊用了一個 python 的技巧，將所有接收到的參數都丟到原函式中</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">decorated_func</span>(<span class="params">*args, **kargs</span>):</span><br><span class="line">    	<span class="built_in">print</span>(<span class="string">&#x27;hello!&#x27;</span>)</span><br><span class="line">    	<span class="keyword">return</span> func(*args, **kargs)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 回傳裝飾過後的函式</span></span><br><span class="line">    <span class="keyword">return</span> decorated_func</span><br><span class="line"></span><br><span class="line"><span class="comment"># 將 foo 套用 decorator</span></span><br><span class="line"><span class="meta">@decorator</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">foo</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;foo&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;call foo&#x27;</span>)</span><br><span class="line">foo() </span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">輸出：</span></span><br><span class="line"><span class="string">decorator</span></span><br><span class="line"><span class="string">call foo</span></span><br><span class="line"><span class="string">hello!</span></span><br><span class="line"><span class="string">foo</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+<p>從輸出中可以看到，整個裝飾器運作的順序<br>
+在宣告時會先進入 <code>decorator</code> 裝飾 <code>foo</code> 這個函式，之後呼叫時則會呼叫已經被裝飾過函式</p>
+<p>實際上 python 的 decorator 語法糖就等同於這個樣子：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">decorator</span>():</span><br><span class="line">    <span class="comment"># ...</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">foo</span>():</span><br><span class="line">    <span class="comment"># ...</span></span><br><span class="line">foo = decorator(foo)</span><br></pre></td></tr></table></figure>
+<p>decorator 可以有參數，也可以堆疊，像是：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@decorator1</span></span><br><span class="line"><span class="meta">@decorator2(<span class="params">value</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">foo</span>():</span><br><span class="line">    <span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
+<h3 id="note-info"><!-- note info --></h3>
+<div class="note info"><h4 id="decorator-的順序是由下到上">decorator 的順序是由下到上</h4>
+<p>要特別注意的是，decorator 的順序是由下到上，而不是像視覺上看到的由上到下<br>
+這是因為套用兩層 decorator，會等同於下面這個樣子：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">foo = decorator1(decorator2(value)(foo))</span><br></pre></td></tr></table></figure>
+<p><code>foo</code> 先傳入 <code>decorator2(value)</code> 裡，接著 <code>decorator2(value)</code> 回傳的裝飾後的函式再傳入 <code>decorator1</code><br>
+所以實際上是 <code>decorator2(value)</code> 會先被套用</p>
+</div>
+<p>TypeScript 上的 decorator 也類似 python，<strong>但是 TypeScript 只能對類別或是類別裡的方法使用 decorator</strong>，而且 TypeScript 的 decorator 只做修飾，不會回傳函式</p>
+<h2 id="NgModule">NgModule</h2>
+<p>NgModule 是 Angular 的核心元件之一，是一種裝飾器</p>
+<p>主要會使用這些參數：</p>
+<ul>
+<li>declarations<br>
+表示模組使用到的 Component，Component 本身要加到這邊才會有作用</li>
+<li>imports<br>
+表示該模組所引用的其他模組</li>
+<li>providers<br>
+額外的服務 (Service)，之後會提到</li>
+<li>bootstrap<br>
+主模組才會需要的東西，會在模組自啟時使用指定的 Component</li>
+<li>exports<br>
+AppModule 沒有使用的參數，用於其他子模組<br>
+給其他模組使用的 Component<br>
+沒有寫在這邊的話，即使已經放入 declarations 中，模組被引用時依然不會使用那些 Component</li>
+</ul>
+<h2 id="BrowserModule">BrowserModule</h2>
+<p>包含整個 Angular 應用所需的基礎架構</p>
+<h2 id="AppRoutingModule">AppRoutingModule</h2>
+<p>路由模組，將路徑對到相對應的頁面。<br>
+詳細的內容在之後介紹路由時會說到</p>
+<h1>Component</h1>
+<p>檔案名稱為 <code>&lt;component_name&gt;.component.ts</code></p>
+<p>先看一下 <code>app.component.ts</code> 裡的樣貌：</p>
+<p><img src="image-20210214170932176.png" alt="image-20210214170932176"></p>
+<p>上面的 <code>@Component</code> 部份跟 NgModule 一樣是裝飾器</p>
+<p>主要參數有：</p>
+<ul>
+<li>
+<p>selector<br>
+元件在樣板中被使用時所對應的元素，使用 CSS Selector 選擇元素<br>
+基本上會是一個獨立名稱的標籤 (Tag)，通常為 <code>app-&lt;tag_name&gt;</code><br>
+AppComponent 中的 app-root 就是對應到前面 HTML 說到的 <code>&lt;app-root&gt;</code></p>
+</li>
+<li>
+<p>template / templateUrl<br>
+HTML 樣板<br>
+前者是直接把 HTML 打在裡面，後者則是直接引用檔案，檔案名稱通常為 <code>&lt;component_name&gt;.component.html</code></p>
+</li>
+<li>
+<p>styles / styleUrls<br>
+引用的樣式表<br>
+前者是直接把樣式打在裡面，後者則是直接引用檔案，檔案名稱通常為 <code>&lt;component_name&gt;.component.css</code> (假設樣式表類型使用 CSS )</p>
+</li>
+</ul>
+<h2 id="變數">變數</h2>
+<p>在 Component 類別裡宣告的變數或函式，可以在樣板中被應用</p>
+<p>例如說 AppComponent 裡的 <code>title</code> 數值為 <code>'test-project'</code><br>
+如果還記得上一篇使用 <code>ng serve</code> 後瀏覽器上看到的畫面的話，會發現上面的字是 “<strong>test-project</strong> app is running!”</p>
+<p><img src="image-20210214190724338.png" alt="image-20210214190724338"></p>
+<p>可以將 <code>title</code> 的數值改成其他內容，比如說 <code>'hello-world'</code><br>
+之後再使用 <code>ng serve</code> 開啟伺服器後再去查看，你會發現它變成 “<strong>hello-world</strong> app is running!” 了</p>
+<p><img src="image-20210214190804781.png" alt="image-20210214190804781"></p>
+<div class="note info"><p>上一篇有說到，<code>ng serve</code> 開啟的伺服器會感應檔案的變化，然後讓瀏覽器重新整理<br>
+所以在改 <code>title</code> 之前可以先開啟伺服器，然後再修改 <code>title</code>，應該會發現頁面被自動重新整理</p>
+</div>
+<p>至於 HTML 樣板要怎麼引用這些變數，就等到下一個章節會繼續說明</p>
+<h1>結語</h1>
+<p>原本是想多放一點實際操作的，但是前面加上專案結構跟裝飾器介紹之後，發現這樣下去篇幅可能會太長，所以就先停在這裡，等後面再慢慢補上</p>
+<p>Angular 的東西真的是蠻多的，自己目前碰到的也都是比較基本的東西而已，但是真要把這些基本的東西講明白，感覺也是挺困難的。目前都是依照自己的了解，加上網路上的一些資訊輔助，將文章打出來 (<s>不然有些地方我其實也不知道應該要怎麼解釋會比較好</s>)，希望有在看的各位到目前為止都還看得懂</p>
+<h1>參考資料</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://angular.io/api/core/NgModule">Angular - NgModule</a></li>
+<li><a target="_blank" rel="noopener" href="https://angular.io/api/platform-browser/BrowserModule">Angular - BrowserModule</a></li>
+<li><a target="_blank" rel="noopener" href="https://angular.io/guide/component-overview">Angular - Angular Components Overview</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.typescriptlang.org/docs/handbook/decorators.html">TypeScript: Documentation - Decorators</a></li>
+<li><a target="_blank" rel="noopener" href="https://oldmo860617.medium.com/%E5%8D%81%E5%88%86%E9%90%98%E5%B8%B6%E4%BD%A0%E4%BA%86%E8%A7%A3-typescript-decorator-48c2ae9e246d">十分鐘帶你了解 TypeScript Decorator. 什麼是 Decorator ? | by 莫力全 Kyle Mo | Medium</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/20139834">Decorators in ES7 - 知乎</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.miniasp.com/post/2019/02/18/Unit-testing-Integration-testing-e2e-testing">一次搞懂單元測試、整合測試、端對端測試之間的差異 | The Will Will Web</a></li>
+</ul>
+<div style='text-align: center'>
+    <a class='btn' href='/2021/02/12/note-angular-learning-2/'>
+        上一篇
+    </a>
+    <a class='btn' href='/2021/02/18/note-angular-learning-4/'>
+        下一篇
+    </a>
+</div>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Angular/" rel="tag"><i class="fa fa-tag"></i> Angular</a>
+              <a href="/tags/%E7%B6%B2%E9%A0%81%E5%89%8D%E7%AB%AF/" rel="tag"><i class="fa fa-tag"></i> 網頁前端</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/02/12/note-angular-learning-2/" rel="prev" title="Angular學習筆記2 - 建立第一個 Angular 專案">
+                  <i class="fa fa-angle-left"></i> Angular學習筆記2 - 建立第一個 Angular 專案
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/02/18/note-angular-learning-4/" rel="next" title="Angular學習筆記4 - Component與樣版">
+                  Angular學習筆記4 - Component與樣版 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2020 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Bluebean</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr+QR0SQDNfgglgtcM=" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"stu98832","repo":"stu98832.github.io","client_id":"0b84385c74db3fd44c22","client_secret":"089aee5f0152169f2b4ec924fbce2a06ac1e4c89","admin_user":"stu98832","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","labels":"Gitalk","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"2914d086d2f5aba5d04c540e3bb180fc"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

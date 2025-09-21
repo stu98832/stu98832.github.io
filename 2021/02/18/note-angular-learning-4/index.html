@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"stu98832.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="上次有提到，Component 的變數可以在樣板中被使用。 那實際上樣板是怎麼使用 Component 的變數呢？ Component 跟樣板的關係又是什麼？ 本章將會進一步講解 Component 與樣板之間的關係 並透過 Angular 提供的綁定功能，來寫一個簡單的登入畫面">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Angular學習筆記4 - Component與樣版">
+<meta property="og:url" content="http://stu98832.github.io/2021/02/18/note-angular-learning-4/index.html">
+<meta property="og:site_name" content="Bluebean 的筆記">
+<meta property="og:description" content="上次有提到，Component 的變數可以在樣板中被使用。 那實際上樣板是怎麼使用 Component 的變數呢？ Component 跟樣板的關係又是什麼？ 本章將會進一步講解 Component 與樣板之間的關係 並透過 Angular 提供的綁定功能，來寫一個簡單的登入畫面">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://stu98832.github.io/2021/02/18/note-angular-learning-4/image-20210215171831887.png">
+<meta property="og:image" content="http://stu98832.github.io/2021/02/18/note-angular-learning-4/image-20210215173022980.png">
+<meta property="og:image" content="http://stu98832.github.io/2021/02/18/note-angular-learning-4/image-20210215184626871.png">
+<meta property="og:image" content="http://stu98832.github.io/2021/02/18/note-angular-learning-4/image-20210215173529255.png">
+<meta property="og:image" content="http://stu98832.github.io/2021/02/18/note-angular-learning-4/image-20210215182748173.png">
+<meta property="og:image" content="http://stu98832.github.io/2021/02/18/note-angular-learning-4/0-1613395057504-1613395079612.gif">
+<meta property="article:published_time" content="2021-02-17T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-09-21T15:51:56.666Z">
+<meta property="article:author" content="Bluebean">
+<meta property="article:tag" content="Angular">
+<meta property="article:tag" content="網頁前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://stu98832.github.io/2021/02/18/note-angular-learning-4/image-20210215171831887.png">
+
+
+<link rel="canonical" href="http://stu98832.github.io/2021/02/18/note-angular-learning-4/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://stu98832.github.io/2021/02/18/note-angular-learning-4/","path":"/2021/02/18/note-angular-learning-4/","title":"Angular學習筆記4 - Component與樣版"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Angular學習筆記4 - Component與樣版 | Bluebean 的筆記</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Bluebean 的筆記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">何謂 Component ？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">Component 與樣板的關係</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">Component 與樣板的溝通</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E5%AD%97%E6%8F%92%E5%80%BC-Text-Interpolation"><span class="nav-number">3.1.</span> <span class="nav-text">文字插值 (Text Interpolation)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%AC%E6%80%A7%E7%B6%81%E5%AE%9A-Property-Binding"><span class="nav-number">3.2.</span> <span class="nav-text">屬性綁定 (Property Binding)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#note-warning"><span class="nav-number">3.2.1.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A2%AB%E7%B6%81%E5%AE%9A%E7%9A%84%E6%98%AF-property%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF-attribute"><span class="nav-number">3.2.1.1.</span> <span class="nav-text">被綁定的是 property，而不是 attribute</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E7%B6%81%E5%AE%9A-Event-Binding"><span class="nav-number">3.3.</span> <span class="nav-text">事件綁定 (Event Binding)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#note-info"><span class="nav-number">3.3.1.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-event-%E5%8F%96%E5%BE%97%E4%BA%8B%E4%BB%B6%E8%B3%87%E8%A8%8A"><span class="nav-number">3.3.1.1.</span> <span class="nav-text">使用 $event 取得事件資訊</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%99%E5%90%91%E7%B6%81%E5%AE%9A-Two-way-binding"><span class="nav-number">3.4.</span> <span class="nav-text">雙向綁定 (Two-way binding)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">用 Component 實做一個登入畫面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">參考</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">更新</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bluebean"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Bluebean</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/stu98832" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stu98832" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://stu98832.github.io/2021/02/18/note-angular-learning-4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Bluebean">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Angular學習筆記4 - Component與樣版 | Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Angular學習筆記4 - Component與樣版
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2021-02-18 00:00:00" itemprop="dateCreated datePublished" datetime="2021-02-18T00:00:00+08:00">2021-02-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%80%8B%E4%BA%BA%E7%AD%86%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">個人筆記</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>上次有提到，Component 的變數可以在樣板中被使用。<br>
+那實際上樣板是怎麼使用 Component 的變數呢？<br>
+Component 跟樣板的關係又是什麼？</p>
+<p>本章將會進一步講解 Component 與樣板之間的關係<br>
+並透過 Angular 提供的綁定功能，來寫一個簡單的登入畫面</p>
+<span id="more"></span>
+<h1>何謂 Component ？</h1>
+<p>在上一篇文章裡，只有提到 Component 裝飾器的部份，但並沒有特別說明 Component 是什麼</p>
+<p>那 Component 到底是什麼</p>
+<p>就我所理解，<strong>Component 是頁面的其中一種元件</strong></p>
+<p>仔細回想一下裝飾器內容，裡面不是有個 selector 參數嗎？<br>
+這個 selector 會選擇一個獨立的標籤名稱，並把樣板內容帶入，所以當你要使用這個 Component 時，你只要帶入這個 Component 選擇的標籤就可以將那個 Component 的內容帶入了</p>
+<p>以 AppComponent 的 <code>app-root</code> 為例子，當你在 index.html 中使用了 <code>&lt;app-root&gt;&lt;/app-root&gt;</code>，這便表示了你在頁面的那個位置使用了 AppComponent ，你也不需要知道這個標籤的細節，就可以使用了</p>
+<h1>Component 與樣板的關係</h1>
+<p>再回想一次裝飾器的內容，裡面有一個 template (或 templateUrl) 參數<br>
+這個參數的內容，或指向的檔案，即為<strong>樣板</strong></p>
+<p>所謂的樣板，就是一個 HTML 塊</p>
+<p>Component 的畫面要如何呈現，都取決於樣板</p>
+<h1>Component 與樣板的溝通</h1>
+<p>Component 跟樣板可以透過幾種方式來進行溝通：</p>
+<ol>
+<li>文字插值 (Text interpolation)</li>
+<li>屬性綁定 (Property binding)</li>
+<li>事件綁定 (Event binding)</li>
+<li>雙向榜定 (Two-way binding)</li>
+</ol>
+<h2 id="文字插值-Text-Interpolation">文字插值 (Text Interpolation)</h2>
+<p>使用方式：<code>{{ expression }}</code><br>
+最常使用的形式，可以放在任何地方。<br>
+這個區塊的內容會被<strong>替換</strong>成裡面的程式所輸出的結果<br>
+除了可以使用 Component 的變數以外，亦可以進行一些運算，如：<code>&#123;&#123; 1+1 &#125;&#125;</code></p>
+<p><img src="image-20210215171831887.png" alt="image-20210215171831887"></p>
+<p>除了單純輸出以外，還另外有一個 pipe 的功能可用，之後會說到</p>
+<h2 id="屬性綁定-Property-Binding">屬性綁定 (Property Binding)</h2>
+<p>使用方式：<code>[property]</code><br>
+這裡的綁定關係是從將元素上的屬性與 Component 綁在一起<br>
+此時屬性的數值<strong>是程式的一部分，而不是純文字</strong></p>
+<p><img src="image-20210215173022980.png" alt="image-20210215173022980"></p>
+<p>數值亦可以輸入運算式，像是：<code>[href]=&quot;1+1&quot;</code></p>
+<p>除了對一般的屬性進行綁定，也可以對元素樣式進行綁定</p>
+<p><img src="image-20210215184626871.png" alt="image-20210215184626871"></p>
+<p>使用文字插值一樣可以進行屬性綁定，兩種寫法是一樣的</p>
+<p><img src="image-20210215173529255.png" alt="image-20210215173529255"></p>
+<h3 id="note-warning"><!-- note warning --></h3>
+<div class="note warning"><h4 id="被綁定的是-property，而不是-attribute">被綁定的是 property，而不是 attribute</h4>
+<p>官方文件有一段在敘述綁定屬性的名稱問題：<br>
+<a target="_blank" rel="noopener" href="https://angular.io/guide/property-binding#colspan-and-colspan">https://angular.io/guide/property-binding#colspan-and-colspan</a><br>
+實際上文件都是寫 property，在那段也有說到，綁定的並不是 attribute<br>
+如果要綁定 attribute，請使用 <code>attr</code>，例如：<code>attr.href</code></p>
+</div>
+<h2 id="事件綁定-Event-Binding">事件綁定 (Event Binding)</h2>
+<p>使用方式：<code>(event)</code><br>
+可以將 DOM 事件綁定到 Component 的函式上<br>
+也可以直接執行一段程式</p>
+<p><img src="image-20210215182748173.png" alt="image-20210215182748173"></p>
+<h3 id="note-info"><!-- note info --></h3>
+<div class="note info"><h4 id="使用-event-取得事件資訊">使用 <code>$event</code> 取得事件資訊</h4>
+<p><code>$event</code> 是一個儲存事件相關資訊的變數<br>
+例如說 <code>$event.target</code> 可以取得該事件作用的對象<br>
+在綁定事件時，可以將 <code>$event</code> 或是 <code>$event.target</code> 帶入函式中使用</p>
+</div>
+<h2 id="雙向綁定-Two-way-binding">雙向綁定 (Two-way binding)</h2>
+<p>使用方式：<code>[(property)]</code></p>
+<p>一種比較特殊的綁定方式，是屬性綁定和事件綁定的合體<br>
+我目前還沒有用過雙向綁定，詳細的用法可以看官方文件：<a target="_blank" rel="noopener" href="https://angular.io/guide/two-way-binding">Angular - Two-way binding</a></p>
+<h1>用 Component 實做一個登入畫面</h1>
+<p>使用剛剛介紹的幾種溝通方式，做一個簡單的登入畫面</p>
+<p>當使用者輸入帳號：bob，密碼：bubble 時，會登入成功<br>
+登入成功時，下面會顯示一行歡迎使用者的<font color='green'>綠字</font><br>
+登入失敗時，下面會顯示一行登入失敗的<font color='red'>紅字</font></p>
+<figure class="highlight typescript"><figcaption><span>app.component.ts</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Component</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@angular/core&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  <span class="attr">selector</span>: <span class="string">&#x27;app-root&#x27;</span>,</span><br><span class="line">  <span class="attr">templateUrl</span>: <span class="string">&#x27;./app.component.html&#x27;</span>,</span><br><span class="line">  <span class="attr">styleUrls</span>: [<span class="string">&#x27;./app.component.css&#x27;</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppComponent</span> &#123;</span><br><span class="line">  title   = <span class="string">&#x27;test-project&#x27;</span>;</span><br><span class="line">  color   = <span class="string">&#x27;black&#x27;</span>;</span><br><span class="line">  message = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 登入函式</span></span><br><span class="line">  <span class="title function_">onLogin</span>(<span class="params"><span class="attr">username</span>: <span class="built_in">string</span>, <span class="attr">password</span>: <span class="built_in">string</span></span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (username == <span class="string">&#x27;bob&#x27;</span> &amp;&amp; password == <span class="string">&#x27;bubble&#x27;</span>) &#123;</span><br><span class="line">      <span class="comment">// 登入成功時輸出綠色文字</span></span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">color</span> = <span class="string">&#x27;green&#x27;</span>;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">message</span> = <span class="string">`wellcom <span class="subst">$&#123;username&#125;</span>!`</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 登入失敗時輸出紅色文字</span></span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">color</span> = <span class="string">&#x27;red&#x27;</span>;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">message</span> = <span class="string">&#x27;login failed&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><figcaption><span>app.component.html</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span> &#123;&#123; title &#125;&#125; <span class="tag">&lt;/<span class="name">h1</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span>     #<span class="attr">username</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> #<span class="attr">password</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> (<span class="attr">click</span>)=<span class="string">&quot;onLogin(username.value, password.value)&quot;</span>&gt;</span>login<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> [<span class="attr">style.color</span>]=<span class="string">&quot;color&quot;</span>&gt;</span>&#123;&#123; message &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在樣板檔裡可以發現 <code>&lt;input&gt;</code> 上有標記 <code>#username</code> 跟 <code>#password</code><br>
+這是 angular 樣板裡的一種特殊語法，它表示目前標記所在的元素，是一個變數<br>
+因此才能夠在下面的 <code>onLogin</code> 中直接取得數值，是很好用的東西</p>
+<p>打完程式之後，就可以使用 <code>ng serve</code> 來看看畫面：</p>
+<p><img src="0-1613395057504-1613395079612.gif" alt="img"></p>
+<h1>結語</h1>
+<p>一開始寫這邊的時候，一直在想要怎麼接續上一次的變數<br>
+寫著寫著，發覺開頭怪怪的，於是又修了一下<br>
+寫到雙向綁定後，才發現之前根本沒有用過雙向綁定 Orz<br>
+後來跑去看了下官方文件，嗯…，要先塞幾個東西進來才能繼續講下去，所以就沒有特別說明了 (<s>果斷放棄</s>)</p>
+<p>到目前為止，我都還沒講到 Angular 比較基本的樣板寫法，像是 ngIf、ngFor 之類的<br>
+前面單純講概念就花掉太多篇幅了…<br>
+後面會慢慢把這些東西補完，然後接著繼續講 Module、Routing 還有 Service 的部份</p>
+<p>這篇被擱置了一段時間才放出來，主要是我在思考這篇是不是出來的太早<br>
+本身初學 Angular 並沒有多久，其實還沒有一定的份量可以寫出豐富的內容<br>
+太急著寫也表示自己還沒有好好的消化，就把文寫出來，可能會造成很多小錯誤<br>
+因此這個學習筆記之後會慢一點出，慢慢消化跟查閱文件後再釋出</p>
+<h1>參考</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://angular.io/guide/interpolation">Angular - Text interpolation</a></li>
+<li><a target="_blank" rel="noopener" href="https://angular.io/guide/property-binding">Angular - Property binding</a></li>
+<li><a target="_blank" rel="noopener" href="https://angular.io/guide/event-binding">Angular - Event binding</a></li>
+</ul>
+<h1>更新</h1>
+<ul>
+<li>2021/02/23
+<ol>
+<li>**何謂 Component ？**條目
+<ul>
+<li>敘述修正：<code>&lt;app-root&gt;&lt;/app_root&gt;</code> =&gt; <code>&lt;app-root&gt;&lt;/app-root&gt;</code></li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<div style='text-align: center'>
+    <a class='btn' href='/2021/02/14/note-angular-learning-3/'>
+        上一篇
+    </a>
+    <a class='btn' href='/2021/02/23/note-angular-learning-5/'>
+        下一篇
+    </a>
+</div>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Angular/" rel="tag"><i class="fa fa-tag"></i> Angular</a>
+              <a href="/tags/%E7%B6%B2%E9%A0%81%E5%89%8D%E7%AB%AF/" rel="tag"><i class="fa fa-tag"></i> 網頁前端</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/02/14/note-angular-learning-3/" rel="prev" title="Angular學習筆記3 - 專案結構、Module、Component">
+                  <i class="fa fa-angle-left"></i> Angular學習筆記3 - 專案結構、Module、Component
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/02/23/note-angular-learning-5/" rel="next" title="Angular學習筆記5 - 基本結構操作、Pipe、Directive">
+                  Angular學習筆記5 - 基本結構操作、Pipe、Directive <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2020 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Bluebean</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr+QR0SQDNfgglgtcM=" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"stu98832","repo":"stu98832.github.io","client_id":"0b84385c74db3fd44c22","client_secret":"089aee5f0152169f2b4ec924fbce2a06ac1e4c89","admin_user":"stu98832","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","labels":"Gitalk","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"0130032ed4196187120c45cda9e883cd"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

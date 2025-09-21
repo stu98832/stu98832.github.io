@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"stu98832.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="參數引用 大家應該都聽過 Call By Value，Call By Reference 或是 Call By Sharing 這些都是很常見的函式參數引用原則 如果沒聽過相灣概念的話，下面會簡單的做一下介紹">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Call By Value, Call By Reference? 談談所謂的參數引用">
+<meta property="og:url" content="http://stu98832.github.io/2020/06/26/call-by-reference/index.html">
+<meta property="og:site_name" content="Bluebean 的筆記">
+<meta property="og:description" content="參數引用 大家應該都聽過 Call By Value，Call By Reference 或是 Call By Sharing 這些都是很常見的函式參數引用原則 如果沒聽過相灣概念的話，下面會簡單的做一下介紹">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2020-06-26T03:58:11.000Z">
+<meta property="article:modified_time" content="2025-09-21T15:51:56.657Z">
+<meta property="article:author" content="Bluebean">
+<meta property="article:tag" content="C語言">
+<meta property="article:tag" content="程式概念">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://stu98832.github.io/2020/06/26/call-by-reference/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://stu98832.github.io/2020/06/26/call-by-reference/","path":"/2020/06/26/call-by-reference/","title":"Call By Value, Call By Reference? 談談所謂的參數引用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Call By Value, Call By Reference? 談談所謂的參數引用 | Bluebean 的筆記</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Bluebean 的筆記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">參數引用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">Call By Value</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">Call By Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">Call By Sharing</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">到頭來其實只有 Call by value 一種</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">結語</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bluebean"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Bluebean</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/stu98832" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stu98832" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://stu98832.github.io/2020/06/26/call-by-reference/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Bluebean">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Call By Value, Call By Reference? 談談所謂的參數引用 | Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Call By Value, Call By Reference? 談談所謂的參數引用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2020-06-26 11:58:11" itemprop="dateCreated datePublished" datetime="2020-06-26T11:58:11+08:00">2020-06-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%A8%8B%E5%BC%8F%E6%A6%82%E5%BF%B5/" itemprop="url" rel="index"><span itemprop="name">程式概念</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1>參數引用</h1>
+<p>大家應該都聽過 Call By Value，Call By Reference 或是 Call By Sharing</p>
+<p>這些都是很常見的函式參數引用原則</p>
+<p>如果沒聽過相灣概念的話，下面會簡單的做一下介紹</p>
+<span id="more"></span>
+<h1>Call By Value</h1>
+<p>Call by value 是一種參數引用的方式，大部分的人接觸到函式這一塊時，不知不覺中都會使用到這種形式的參數引用</p>
+<p>舉個 C 的例子：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">foo</span><span class="params">(<span class="type">int</span> arg1, <span class="type">int</span> arg2)</span> &#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>在這個例子中，你可以看到一個函式<code>foo</code>，裡面有2個 int 參數<code>args1</code>跟<code>args2</code></p>
+<p>這裡的<code>arg1</code>跟<code>arg2</code>都是Call by value的形式，意思是它就單純是個數值，跟原本的變數毫無關聯</p>
+<p>這邊舉一個新手常犯的錯誤：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">add</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> &#123;</span><br><span class="line">    a = a+b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">5</span>;</span><br><span class="line">    <span class="type">int</span> b = <span class="number">6</span>;</span><br><span class="line">    add(a, b);      <span class="comment">// 應該要是 5+6＝11</span></span><br><span class="line">    print(<span class="string">&quot;a = %d&quot;</span>, a); <span class="comment">// 這邊印出的還是 a = 5</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這邊的輸出會與原本的期望<code>a = 11</code>不符，反而還是<code>a = 5</code></p>
+<p>這邊即說明了 Call by value 並不會改變它所引用的變數，<strong>因為它引用的僅僅只是該變數當時的數值，並不是該變數本身</strong></p>
+<div class="note info"><p>Call by value 在每個程式語言中都一定會被用到<br>
+通常你所使用的函式參數沒有加什麼特別的符號或關鍵字，都會是Call by value</p>
+</div>
+<h1>Call By Reference</h1>
+<p>Call by reference 跟 Call by value 最大的差別是，他是引用<strong>變數</strong>而非<strong>數值</strong></p>
+<p>就拿剛剛的<code>add</code>函式來舉個例子：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">add</span><span class="params">(<span class="type">int</span> *a, <span class="type">int</span> *b)</span> &#123;</span><br><span class="line">    *a = *a + *b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">5</span>;</span><br><span class="line">    <span class="type">int</span> b = <span class="number">6</span>;</span><br><span class="line">    add(&amp;a, &amp;b);        <span class="comment">// 應該要是 5+6＝11</span></span><br><span class="line">    print(<span class="string">&quot;a = %d&quot;</span>, a); <span class="comment">// 這邊印出的是 a = 11</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這邊跟剛剛的不同之處在於，<code>add</code>函式的參數型態從原本的<code>int</code>變成<code>int*</code>，也就是指向型別為 int 的指標</p>
+<div class="note info"><p>不清楚什麼是指標的人，這邊就簡單說明一下<br>
+指標其實就是該資料的記憶體位置<br>
+這個記憶體位置基本上就是一個整數 (int)，或是長整數 (long)</p>
+</div>
+<p><code>main</code>函式中透過傳遞<code>a</code>和<code>b</code>的位址呼叫<code>add</code>，來達到<code>a=a+b</code>的效果</p>
+<p>如果你仔細觀察一下上面那句話，你就會發現我剛剛說的是傳遞<strong>位址</strong></p>
+<p>看出端倪了嗎？其實它實際上還是 Call by value，但是它傳遞的是<strong>記憶體位址</strong>，最後可以透過<code>*</code>取值運算子取得數值(僅適用於 C/C++ 等語言)</p>
+<p>在其他高階程式語言中，比較看不出來他是傳遞記憶體位址，因為要避免使用者亂動記憶體的數值，因此這時候的 Call by reference 會是以其他符號或是關鍵字來表示</p>
+<p>以 C# 來說， C# 的 Call by reference 可以是<code>ref</code>或是<code>out</code>，兩者的差別在於一個要有初始值才能引用，另一個則可以保證一定有輸出值</p>
+<p>以 php 來說，雖然一樣是在參數名稱前加上<code>&amp;</code>運算子，但是使用時不需要使用<code>*</code>取值做設定跟引用(C++亦同)</p>
+<p>值得一提的是，並不是每個程式語言都有提供 Call by reference 的功能，像是 python 就沒有可以使用 Call by reference的關鍵字</p>
+<h1>Call By Sharing</h1>
+<p>Call by sharing 其實並不是一個正式的名詞，我第一次看到這個名詞是在尋找 Java 的相關資料時看到的</p>
+<p>它是在解釋發生在像是 java 這種物件導向程式語言上的某種詭異現象</p>
+<p>java 並沒有 Call by reference 的關鍵字，但是在某些時候，卻又有跟 Call by reference 一樣功能的情況</p>
+<p>舉例來說：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">ClassA</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="variable">value</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">foo</span><span class="params">(ClassA obj)</span> &#123;</span><br><span class="line">        obj.value = <span class="number">10</span>;</span><br><span class="line">        <span class="type">ClassA</span> <span class="variable">objB</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassA</span>();</span><br><span class="line">        objB.value = <span class="number">7</span>;</span><br><span class="line">        obj = objB;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String args[])</span> &#123;</span><br><span class="line">        <span class="type">ClassA</span> <span class="variable">objA</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassA</span>();</span><br><span class="line">        objA.value = <span class="number">5</span>;</span><br><span class="line">        foo(objA);</span><br><span class="line">        System.out.println(<span class="string">&quot;value of objA is &quot;</span> + objA.value)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在這個例子中，<code>foo</code>引用了一個<code>ClassA</code>參數，感覺上是 Call by value。但是他最後print出來的數值卻是<code>value of objA is 10</code>！</p>
+<p>也就是說 Java 其實是使用 Call by reference 作為預設囉？可是奇怪的事情發生了，<code>objA</code>在後面明明被改成<code>objB</code>，可是數值卻是改成10之後的<code>objA</code>，非常的詭異</p>
+<p>於是有人就稱這為 Call by sharing ，<strong>也就是該參數與變數本身都指向同一個物件，但是參數跟變數卻是不一樣的東西</strong></p>
+<div class="note info"><p>沒有提供 Call by reference 的物件導向程式，大多會是使用 Call by sharing 這種形式的參數引用<br>
+也就是只要操作到 Object 或是 Object 的衍生類別，都是 Call by sharing</p>
+</div>
+<h1>到頭來其實只有 Call by value 一種</h1>
+<p>雖然上面講了3種參數引用的形式，但是實際上除了 Call by value 之外的其他2種都只是在說明他們的行為</p>
+<p>這2種形式都是建立在 Call by value 之上，<strong>也就是說，他們實際上都還是傳遞純數值，但是他的行為可能會從單純的數值引用變成變數引用</strong></p>
+<p>講起來可能有點抽象，所以我決定拿出剛剛在 Call by reference 的例子來說明：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">add</span><span class="params">(<span class="type">int</span> *a, <span class="type">int</span> *b)</span> &#123;</span><br><span class="line">    *a = *a + *b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">5</span>;</span><br><span class="line">    <span class="type">int</span> b = <span class="number">6</span>;</span><br><span class="line">    add(&amp;a, &amp;b);        <span class="comment">// 應該要是 5+6＝11</span></span><br><span class="line">    print(<span class="string">&quot;a = %d&quot;</span>, a); <span class="comment">// 這邊印出的是 a = 11</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>還記得這個這個例子吧？</p>
+<p>其實我上面也有說過，它其實傳遞的是<strong>變數的位址</strong></p>
+<p>也就是說其實這個<code>a</code>跟<code>b</code>都還是普通的變數，但是因為他們的數值是位址，所以你在操作時可以依據這個位址去修改這個位址上的數值</p>
+<p>各位可以試著在<code>add</code>函式的最後面加上<code>a = 7</code>這句，你會發現最後<code>a</code>還是沒有變成7，也就是說單純修改<code>a</code>是不會有變化的，但是修改<code>*a</code>就不是這麼一回事了</p>
+<p>因為<code>*a</code>是操作<code>a</code>這個位址上的數值，跟直接修改<code>a</code>數值是不一樣的</p>
+<p>這其實就是 Call by sharing 所解釋的現象，從 java 所產生出來的物件，在丟給變數的時候，其實只是將這個物件的位址丟給變數，而呼叫函式時時僅僅只會傳遞位址，直接修改參數也只是改變他的參考位址而已</p>
+<h1>結語</h1>
+<p>到這裡不知道各位能不能接受這種說法呢？</p>
+<p>我覺得都以 Call by value 說明會讓各位更清楚 Call by reference 跟 Call by sharing 這兩種形式的運作方式</p>
+<p>希望透過這種方式來講述他們的運作原理，可以讓各位更了解使用這些形式的參數會發生什麼事</p>
+<p>由於很多新手會認為這幾種是完全不同的東西，因此在發生某些<strong>神奇現象</strong>時常常會滿頭問號(這邊指的就是直接對參數進行修改，但是原本的變數數值卻沒有改變的情況，通常發生在C語言)</p>
+<p>如果這篇文有什麼錯誤的地方，或是有其他問題的，可以透過下面的 gitalk 告訴我呦～</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C%E8%AA%9E%E8%A8%80/" rel="tag"><i class="fa fa-tag"></i> C語言</a>
+              <a href="/tags/%E7%A8%8B%E5%BC%8F%E6%A6%82%E5%BF%B5/" rel="tag"><i class="fa fa-tag"></i> 程式概念</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/04/18/basic-data-type/" rel="prev" title="基本資料型別">
+                  <i class="fa fa-angle-left"></i> 基本資料型別
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/07/08/ci3-unable-to-locate-the-specified-class/" rel="next" title="CI3-Unable to locate the specified class錯誤">
+                  CI3-Unable to locate the specified class錯誤 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2020 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Bluebean</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr+QR0SQDNfgglgtcM=" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"stu98832","repo":"stu98832.github.io","client_id":"0b84385c74db3fd44c22","client_secret":"089aee5f0152169f2b4ec924fbce2a06ac1e4c89","admin_user":"stu98832","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","labels":"Gitalk","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"d10fef21717233b1f33fa0ab88aad8fb"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

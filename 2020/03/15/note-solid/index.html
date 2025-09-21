@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"stu98832.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="本篇僅紀錄自己學習SOLID的內容摘要，會依照自己的理解和書中的內容結合後將內容打上 如果有理解錯誤的地方，可以在下面的 gitalk 留言通知我  SOLID原則 SOLID 原則是為了鞏固軟體的架構而存在的原則，目的是要減少程式之間的耦合，方便程式的維護與擴充 SOLID 本身是由五種原則所構成，分別為：  單一職責原則 (SRP : Single-Responsibility Princip">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SOLID 筆記">
+<meta property="og:url" content="http://stu98832.github.io/2020/03/15/note-solid/index.html">
+<meta property="og:site_name" content="Bluebean 的筆記">
+<meta property="og:description" content="本篇僅紀錄自己學習SOLID的內容摘要，會依照自己的理解和書中的內容結合後將內容打上 如果有理解錯誤的地方，可以在下面的 gitalk 留言通知我  SOLID原則 SOLID 原則是為了鞏固軟體的架構而存在的原則，目的是要減少程式之間的耦合，方便程式的維護與擴充 SOLID 本身是由五種原則所構成，分別為：  單一職責原則 (SRP : Single-Responsibility Princip">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2020-03-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-09-21T15:51:56.671Z">
+<meta property="article:author" content="Bluebean">
+<meta property="article:tag" content="SOLID">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://stu98832.github.io/2020/03/15/note-solid/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://stu98832.github.io/2020/03/15/note-solid/","path":"/2020/03/15/note-solid/","title":"SOLID 筆記"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>SOLID 筆記 | Bluebean 的筆記</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Bluebean 的筆記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">SOLID原則</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#S-%E5%96%AE%E4%B8%80%E8%81%B7%E8%B2%AC%E5%8E%9F%E5%89%87-SRP-Single-Responsibility-Principle"><span class="nav-number">1.1.</span> <span class="nav-text">S - 單一職責原則 (SRP : Single-Responsibility Principle)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#O-%E9%96%8B%E6%94%BE%E5%B0%81%E9%96%89%E5%8E%9F%E5%89%87-OCP-Open-Closed-Principle"><span class="nav-number">1.2.</span> <span class="nav-text">O - 開放封閉原則 (OCP : Open-Closed Principle)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#L-%E9%87%8C%E6%B0%8F%E6%9B%BF%E6%8F%9B%E5%8E%9F%E5%89%87-LSP-Liskov-Subtitution-Principle"><span class="nav-number">1.3.</span> <span class="nav-text">L - 里氏替換原則 (LSP : Liskov Subtitution Principle)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I-%E4%BB%8B%E9%9D%A2%E9%9A%94%E9%9B%A2%E5%8E%9F%E5%89%87-ISP-Interface-Segregation-Principle"><span class="nav-number">1.4.</span> <span class="nav-text">I - 介面隔離原則 (ISP : Interface Segregation Principle)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#D-%E4%BE%9D%E8%B3%B4%E5%8F%8D%E8%BD%89%E5%8E%9F%E5%89%87-DIP-Dependency-Inversion-Principle"><span class="nav-number">1.5.</span> <span class="nav-text">D - 依賴反轉原則 (DIP : Dependency-Inversion Principle)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">心得</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">參考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bluebean"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Bluebean</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/stu98832" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stu98832" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://stu98832.github.io/2020/03/15/note-solid/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Bluebean">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="SOLID 筆記 | Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SOLID 筆記
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2020-03-15 00:00:00" itemprop="dateCreated datePublished" datetime="2020-03-15T00:00:00+08:00">2020-03-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%80%8B%E4%BA%BA%E7%AD%86%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">個人筆記</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><div class="note warning"><p>本篇僅紀錄自己學習SOLID的內容摘要，會依照自己的理解和書中的內容結合後將內容打上<br>
+如果有理解錯誤的地方，可以在下面的 gitalk 留言通知我</p>
+</div>
+<h1>SOLID原則</h1>
+<p>SOLID 原則是為了鞏固軟體的架構而存在的原則，目的是要減少程式之間的耦合，方便程式的維護與擴充</p>
+<p>SOLID 本身是由五種原則所構成，分別為：</p>
+<ul>
+<li>單一職責原則 (SRP : Single-Responsibility Principle)</li>
+<li>開放封閉原則 (OCP : Open-Closed Principle)</li>
+<li>里氏替換原則 (LSP : Liskov Subtitution Principle)</li>
+<li>介面隔離原則 (ISP : Interface Segregation Principle)</li>
+<li>依賴反轉原則 (DIP : Dependency-Inversion Principle)</li>
+</ul>
+<span id="more"></span>
+<h2 id="S-單一職責原則-SRP-Single-Responsibility-Principle">S - 單一職責原則 (SRP : Single-Responsibility Principle)</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">一個類別應該只有一個發生變化的原因</span><br></pre></td></tr></table></figure>
+<ul>
+<li>一個類別應該只會有一個職責在身，不應該含有多個職責</li>
+<li>當發生變化時，這個類別的其他職責不應該受到變化的職責的影響</li>
+</ul>
+<p>所以任何一個符合 SRP 的類別都將只會處理一項業務，不應該同時包含兩種業務在內</p>
+<p>每一個類別和其底下的函式都只會受到所關注的業務變化影響而改變關注的業務細節，並不會影響到其他業務</p>
+<p>舉一個違反 SRP 的函式例子：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> List&lt;User&gt; <span class="title">SearchUser</span>(<span class="params">List&lt;User&gt; users, <span class="built_in">int</span> userid, <span class="built_in">string</span> username</span>)</span> &#123;</span><br><span class="line">    List&lt;User&gt; matches = <span class="keyword">new</span> List&lt;User&gt;();</span><br><span class="line">    <span class="keyword">foreach</span> (User user : users) &#123;</span><br><span class="line">        <span class="keyword">if</span> (userid != <span class="number">-1</span> &amp;&amp; user.Id == userid) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!<span class="built_in">string</span>.IsNullOrEmpty(username) &amp;&amp; user.Name == username) &#123;</span><br><span class="line">                matches.Add(user);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">string</span>.IsNullOrEmpty(username) &amp;&amp; user.Name == username) &#123;</span><br><span class="line">        	<span class="keyword">if</span> (userid != <span class="number">-1</span> &amp;&amp; user.Id == userid) &#123;</span><br><span class="line">                matches.Add(user);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這邊將搜尋 ID 和名子的功能混在一起，不論是要新增條件或是刪除條件，都會受到其他搜尋條件的影響</p>
+<h2 id="O-開放封閉原則-OCP-Open-Closed-Principle">O - 開放封閉原則 (OCP : Open-Closed Principle)</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">軟體實體（類別、模組、函式等等）應該是可擴展的，但不可更改</span><br></pre></td></tr></table></figure>
+<p>軟體的實體都會透過介面去公開，而內部則不會變動，若有新的需求或變化，只需要實做一個符合介面的類別出來即可，這使得軟體易於擴展，卻不用重新部屬所有的二進制檔或 DLL 檔</p>
+<h2 id="L-里氏替換原則-LSP-Liskov-Subtitution-Principle">L - 里氏替換原則 (LSP : Liskov Subtitution Principle)</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">子型態（subtype）必須能夠替換掉它們的基底型態（base type）</span><br></pre></td></tr></table></figure>
+<p>當兩個類別之間有繼承的關係時，子類別應該要能夠代替父類別</p>
+<p>由於子類別是由父類別衍生出來的，因此它應該只會擴展父類別而不是改變父類別</p>
+<p>若是子類別不能夠替換父類別，這表示他們的性質並不相同，則可以透過提取相似的性質作為介面將他們的「垂直關係」轉為「平行關係」</p>
+<h2 id="I-介面隔離原則-ISP-Interface-Segregation-Principle">I - 介面隔離原則 (ISP : Interface Segregation Principle)</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">不應該強迫客戶程式依賴於它們未使用的方法</span><br></pre></td></tr></table></figure>
+<p>若是部份的客戶有特殊的需求，則不應該直接修改他們所使用到的介面，而應該另外產生一個專屬的介面</p>
+<p>如果為了部份有特殊需求的客戶而修改原有的介面，這會導致本來不會受到影響的客戶也跟著受到了影響，他們也將要重新部屬他們的程式，僅僅只為了他們沒有需要用到的函式</p>
+<p>因此若不確定所有的人都會有同樣的需求，則客製化一個介面會比直接修改原有的介面來得好</p>
+<h2 id="D-依賴反轉原則-DIP-Dependency-Inversion-Principle">D - 依賴反轉原則 (DIP : Dependency-Inversion Principle)</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a. 高層模組不應該依賴於（相依於）低層模組。二者都應該依賴抽象</span><br><span class="line">b. 抽象不應該依賴細節。細節應該依賴抽象</span><br></pre></td></tr></table></figure>
+<p>低層的模組應該透過介面公開，而高層模組則使用介面，使得低層模組與高層模組都只依賴於抽象的介面</p>
+<p>抽象的元件不應該依賴於有實做細節的元件，反而是實做細節的元件要依賴於抽象</p>
+<p>透過介面做隔離使得模組之間的耦合降低，由於都只依賴於介面，因此當模組內部產生變化時，並不需要連同關聯的模組一起進行部屬，只要關注在產生變化的模組即可</p>
+<p>同時，由於高層模組只依賴於介面，這使得高層模組可以依照需求產生新的低層模組進行擴充，而不會動到原先高層模組的結構</p>
+<h1>心得</h1>
+<p>從上面的五個原則中可以發現，SOLID 是為了方便程式的開發，減少修改程式碼的時間，減少程式部屬的時間而產生的原則，而且絕大多數都和「介面」有關，其最重要的核心理念在於「去除耦合」以及「增加元件的凝聚度」，這使得軟體中的每一個元件大都可以單獨被抽出來使用，不僅方便維修，也方便進行擴充工作，使得體的結構變得更加堅固，以應對源源不絕的需求與變化</p>
+<p>由於我目前只是 SOLID 的初學者，還沒有比較豐富的重構經驗，因此也很難為這些原則提出適當的舉例，所以可以發現上面大多都是文字，如果之後對 SOLID 比較熟悉，我會再為每個原則開一篇文章出來講</p>
+<h1>參考</h1>
+<ul>
+<li>無暇的程式碼—敏捷完整篇，物件導向原則、設計模式與 C# 實踐。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/SOLID/" rel="tag"><i class="fa fa-tag"></i> SOLID</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/03/01/c-declaim-rule/" rel="prev" title="C語言的變數宣告規則">
+                  <i class="fa fa-angle-left"></i> C語言的變數宣告規則
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/03/21/note-design-pattern/" rel="next" title="設計模式筆記 (舊)">
+                  設計模式筆記 (舊) <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2020 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Bluebean</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr+QR0SQDNfgglgtcM=" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"stu98832","repo":"stu98832.github.io","client_id":"0b84385c74db3fd44c22","client_secret":"089aee5f0152169f2b4ec924fbce2a06ac1e4c89","admin_user":"stu98832","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","labels":"Gitalk","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"f81f98055fcdba45e043f6d752d8fae0"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

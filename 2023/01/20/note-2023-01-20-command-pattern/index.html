@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"stu98832.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Command Pattern 是一個簡單到另你懷疑這算不算一種模式的模式 主要的形制大致上如下： &#x2F;&#x2F; Command.csinterface Command &#123;    void Execute();&#125; 實際上就是個只有一個執行方法的介面 以上面的 Command 介面為例，只要是實做 Command 介面的類別 呼叫它的 Execute 方法就會執行一連串的指令 這也能算得">
+<meta property="og:type" content="article">
+<meta property="og:title" content="設計模式筆記—Command Pattern">
+<meta property="og:url" content="http://stu98832.github.io/2023/01/20/note-2023-01-20-command-pattern/index.html">
+<meta property="og:site_name" content="Bluebean 的筆記">
+<meta property="og:description" content="Command Pattern 是一個簡單到另你懷疑這算不算一種模式的模式 主要的形制大致上如下： &#x2F;&#x2F; Command.csinterface Command &#123;    void Execute();&#125; 實際上就是個只有一個執行方法的介面 以上面的 Command 介面為例，只要是實做 Command 介面的類別 呼叫它的 Execute 方法就會執行一連串的指令 這也能算得">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2023-01-20T06:50:00.000Z">
+<meta property="article:modified_time" content="2025-09-21T15:51:56.670Z">
+<meta property="article:author" content="Bluebean">
+<meta property="article:tag" content="Design Pattern">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://stu98832.github.io/2023/01/20/note-2023-01-20-command-pattern/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://stu98832.github.io/2023/01/20/note-2023-01-20-command-pattern/","path":"/2023/01/20/note-2023-01-20-command-pattern/","title":"設計模式筆記—Command Pattern"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>設計模式筆記—Command Pattern | Bluebean 的筆記</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Bluebean 的筆記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">善用介面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">思考模式的概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">Undo 功能</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">後記</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">更新</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bluebean"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Bluebean</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/stu98832" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stu98832" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://stu98832.github.io/2023/01/20/note-2023-01-20-command-pattern/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Bluebean">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="設計模式筆記—Command Pattern | Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          設計模式筆記—Command Pattern
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2023-01-20 14:50:00" itemprop="dateCreated datePublished" datetime="2023-01-20T14:50:00+08:00">2023-01-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%80%8B%E4%BA%BA%E7%AD%86%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">個人筆記</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Command Pattern 是一個簡單到另你懷疑這算不算一種模式的模式<br>
+主要的形制大致上如下：</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Command.cs</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title">Command</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Execute</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>實際上就是個只有一個執行方法的介面</p>
+<p>以上面的 Command 介面為例，只要是實做 Command 介面的類別<br>
+呼叫它的 Execute 方法就會執行一連串的指令</p>
+<p>這也能算得上是一種模式嗎？</p>
+<span id="more"></span>
+<h1>善用介面</h1>
+<p>實際上 Command Pattern 就是利用了介面隱藏細節的特性<br>
+以最開始的 Command 介面為例子<br>
+對外部程式而言，只知道 Command 有一個 Execute 方法可以執行，並不知道實際上執行了什麼<br>
+透過這樣的特性就可以將多個 Command 串起來執行</p>
+<p>相關的使用案例像是資料庫的遷移 (Migration)<br>
+如果有使用後端框架的經驗，應該都看過類似的東西：</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Migration_202301201330</span> : <span class="title">Migration</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Up</span>()</span> &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Down</span>()</span> &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>透過實作或繼承 Migration 這個介面或是抽象類別，再定義資料庫更新版本和降版的相關操作<br>
+這其實就是 Command Pattern 的應用</p>
+<p>在執行 Migration 的程式中，並不知道每個 Migration 做了什麼事情<br>
+但是它很明確的執行了「更新版本」的動作<br>
+必要時，還可以直接執行「降版」的動作</p>
+<h1>思考模式的概念</h1>
+<p>Command Pattern 透過統一的介面或抽象類別<br>
+讓程式在設計上可以善用像是 List 或是 Map 等資料結構進行管理與使用<br>
+這就是 Command Pattern 的強大之處</p>
+<p>如果是會使用介面和抽象類別的朋友，或許在不知不覺中就已經用到這個模式了</p>
+<blockquote>
+<p>介面或者抽象類別可以作為是一種抽象概念<br>
+Command Pattern 就是利用了這種抽象的概念來設計程式</p>
+<p>前面提過的 Migration 就屬於一種概念<br>
+在執行資料庫遷移時，只要知道有哪些 Migration 可以<strong>執行</strong>或<strong>退回</strong>就好<br>
+實際上每個 Migration 下了哪些 SQL 指令並不是執行資料庫遷移要關注的事情<br>
+按照這個思維，就會發現 Migration 這個介面或抽象類別出現了</p>
+</blockquote>
+<h1>Undo 功能</h1>
+<p>在 <strong>無暇的程式碼—敏捷完整篇</strong> 書中有提過 Command Pattern 實做 Undo 的部份<br>
+試想一下 Word 或是一些繪圖軟體的上一步下一步功能，為什麼不同性質的操作可以統一退回或復原呢？<br>
+實際上就是使用了 Command Pattern</p>
+<p>即使操作的性質不同，只要實作介面，然後定義好相應操作的執行流程以及退回流程<br>
+對外部的程式而言，他們都是一樣的東西，都可以執行跟退回</p>
+<blockquote>
+<p>前面舉的 Migration 的例子就有 Undo 的功能，只是叫做 <strong>Down</strong> 而已</p>
+</blockquote>
+<h1>結語</h1>
+<p>作為 <strong>無暇的程式碼—敏捷完整篇</strong> 書中第一個介紹的設計模式<br>
+這是最簡單而且概念最好懂的模式了<br>
+以入門來說，Command Pattern 正好可以作為練習使用介面或抽象類別的題材<br>
+學習用抽象概念去思考設計，而非一直使用代表實體的 class</p>
+<h1>後記</h1>
+<p>當我回頭去看過去寫的 Command Pattern 時，發現內容有夠少 XD<br>
+看起來就只是把書上的內容刪減然後改個寫法而已</p>
+<p>有一點經驗之後，當我重看書時，就有了不同的體會<br>
+設計模式不單單只是照著模式走，而是應該思考為何要用這個模式，使用這種設計的理由</p>
+<p>最初是因為看到有關重構的東西而去找書來學<br>
+但現在我認為，重構並不是什麼要特別學的東西，設計才是<br>
+只不過在追求良好設計的途中會驅使工程師重構，以維持軟體品質<br>
+良好的設計可以避免開發上不必要的開銷，並減少軟體維護需要付出的成本</p>
+<h1>更新</h1>
+<ul>
+<li>
+<p>2023-02-26<br>
+更改區段標題 <strong>模式的設計思維</strong> 為 <strong>思考模式的概念</strong></p>
+<blockquote>
+<p>當初在寫的時候沒有意識到自己用了不正確的詞來下標題<br>
+設計模式只是從過去的經驗歸納出來而已，講設計思維感覺比較怪<br>
+所以改成 <strong>思考模式的概念</strong> ，以自己的想法來嘗試解釋模式</p>
+</blockquote>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Design-Pattern/" rel="tag"><i class="fa fa-tag"></i> Design Pattern</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/01/20/note-2023-01-20-design-pattern/" rel="prev" title="設計模式筆記">
+                  <i class="fa fa-angle-left"></i> 設計模式筆記
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/02/26/note-2023-02-26-template-method-pattern/" rel="next" title="設計模式筆記—Template Method Pattern">
+                  設計模式筆記—Template Method Pattern <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2020 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Bluebean</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr+QR0SQDNfgglgtcM=" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"stu98832","repo":"stu98832.github.io","client_id":"0b84385c74db3fd44c22","client_secret":"089aee5f0152169f2b4ec924fbce2a06ac1e4c89","admin_user":"stu98832","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","labels":"Gitalk","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"6011da0591c9daf561e5969a0499c551"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

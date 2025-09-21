@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"stu98832.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="上次翻新的 AnimationView 使用了 CompositionTarget.Rendering 事件 在每次 UI 渲染時更新 Image 物件，並判斷經過時間切換圖片來完成影格動畫 雖然最後呈現效果不錯，但 CPU 佔用量高了點 這次想進一步使用 WPF 裡的動畫系統來改寫原本的動畫組件，優化 AnimationView 的效能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="來翻新老專案 (5) - MapleLooker - AnimationView 動畫組件優化">
+<meta property="og:url" content="http://stu98832.github.io/2025/04/05/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-5-maplelooker-animationview-%E5%8B%95%E7%95%AB%E7%B5%84%E4%BB%B6%E5%84%AA%E5%8C%96/index.html">
+<meta property="og:site_name" content="Bluebean 的筆記">
+<meta property="og:description" content="上次翻新的 AnimationView 使用了 CompositionTarget.Rendering 事件 在每次 UI 渲染時更新 Image 物件，並判斷經過時間切換圖片來完成影格動畫 雖然最後呈現效果不錯，但 CPU 佔用量高了點 這次想進一步使用 WPF 裡的動畫系統來改寫原本的動畫組件，優化 AnimationView 的效能">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://stu98832.github.io/assets/topics/project-renovation/maple-looker/wpf-animation-double-animation-timeline-20250405.png">
+<meta property="og:image" content="https://learn.microsoft.com/zh-tw/dotnet/desktop/wpf/graphics-multimedia/media/backease-graph.png?view=netframeworkdesktop-4.8">
+<meta property="og:image" content="https://learn.microsoft.com/zh-tw/dotnet/desktop/wpf/graphics-multimedia/media/bounceease-graph.png?view=netframeworkdesktop-4.8">
+<meta property="og:image" content="http://stu98832.github.io/assets/topics/project-renovation/maple-looker/wpf-animation-double-animation-keyframes-20250405.png">
+<meta property="og:image" content="http://stu98832.github.io/assets/topics/project-renovation/maple-looker/maple-looker-cpu-usage-before-20250405.png">
+<meta property="og:image" content="http://stu98832.github.io/assets/topics/project-renovation/maple-looker/maple-looker-cpu-usage-after-20250405.png">
+<meta property="article:published_time" content="2025-04-05T07:00:00.000Z">
+<meta property="article:modified_time" content="2025-09-21T15:51:56.671Z">
+<meta property="article:author" content="Bluebean">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://stu98832.github.io/assets/topics/project-renovation/maple-looker/wpf-animation-double-animation-timeline-20250405.png">
+
+
+<link rel="canonical" href="http://stu98832.github.io/2025/04/05/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-5-maplelooker-animationview-%E5%8B%95%E7%95%AB%E7%B5%84%E4%BB%B6%E5%84%AA%E5%8C%96/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://stu98832.github.io/2025/04/05/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-5-maplelooker-animationview-%E5%8B%95%E7%95%AB%E7%B5%84%E4%BB%B6%E5%84%AA%E5%8C%96/","path":"2025/04/05/來翻新老專案-5-maplelooker-animationview-動畫組件優化/","title":"來翻新老專案 (5) - MapleLooker - AnimationView 動畫組件優化"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>來翻新老專案 (5) - MapleLooker - AnimationView 動畫組件優化 | Bluebean 的筆記</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Bluebean 的筆記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">WPF 的動畫系統</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">StoryBoard - 分鏡腳本</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">Animation - 動畫</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E5%80%BC%E5%8B%95%E7%95%AB"><span class="nav-number">3.1.</span> <span class="nav-text">插值動畫</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#KeyFrame-%E9%97%9C%E9%8D%B5%E5%BD%B1%E6%A0%BC%E5%8B%95%E7%95%AB"><span class="nav-number">3.2.</span> <span class="nav-text">KeyFrame - 關鍵影格動畫</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Path-%E8%B7%AF%E5%BE%91%E5%8B%95%E7%95%AB"><span class="nav-number">3.3.</span> <span class="nav-text">Path - 路徑動畫</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">Transform - 轉換</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RenderTransformOrigin"><span class="nav-number">4.1.</span> <span class="nav-text">RenderTransformOrigin</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">用 WPF 的動畫重新描述 AnimationView 的影格動畫</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8D-Transform-%E5%A5%97%E7%94%A8%E5%8B%95%E7%95%AB"><span class="nav-number">5.1.</span> <span class="nav-text">對 Transform 套用動畫</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#StoryBoard-%E5%95%9F%E5%8B%95-%E9%87%8B%E6%94%BE"><span class="nav-number">5.2.</span> <span class="nav-text">StoryBoard 啟動&#x2F;釋放</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C-StoryBoard"><span class="nav-number">5.3.</span> <span class="nav-text">操作 StoryBoard</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">效能</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">8.</span> <span class="nav-text">參考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bluebean"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Bluebean</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/stu98832" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stu98832" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://stu98832.github.io/2025/04/05/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-5-maplelooker-animationview-%E5%8B%95%E7%95%AB%E7%B5%84%E4%BB%B6%E5%84%AA%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Bluebean">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="來翻新老專案 (5) - MapleLooker - AnimationView 動畫組件優化 | Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          來翻新老專案 (5) - MapleLooker - AnimationView 動畫組件優化
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2025-04-05 15:00:00" itemprop="dateCreated datePublished" datetime="2025-04-05T15:00:00+08:00">2025-04-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%80%81%E5%B0%88%E6%A1%88%E7%BF%BB%E6%96%B0/" itemprop="url" rel="index"><span itemprop="name">老專案翻新</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>上次翻新的 AnimationView 使用了 <code>CompositionTarget.Rendering</code> 事件<br>
+在每次 UI 渲染時更新 Image 物件，並判斷經過時間切換圖片來完成影格動畫<br>
+雖然最後呈現效果不錯，但 CPU 佔用量高了點</p>
+<p>這次想進一步使用 WPF 裡的動畫系統來改寫原本的動畫組件，優化 AnimationView 的效能</p>
+<span id="more"></span>
+<h1>WPF 的動畫系統</h1>
+<p>WPF 的動畫系統主要由 Animation、Timeline 組成<br>
+簡單來說，就是在一個時間軸上定義 UI 在某個時間點應該在哪些位置、移動多少、旋轉或放大</p>
+<p>詳細資訊，可參考 <a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-tw/dotnet/desktop/wpf/graphics-multimedia/animation-and-timing-system-overview?view=netframeworkdesktop-4.8">官方文件</a>，這邊不多做說明<br>
+只要知道，在 XAML 或程式碼內定義好一組動畫，並透過事件或是程式觸發，WPF 就會依照 Timeline 內的描述，更新 UI 的狀態</p>
+<h1>StoryBoard - 分鏡腳本</h1>
+<p>是 Timeline 的實作，正如其名，就是用來描述動畫的分鏡腳本</p>
+<p>一個分鏡腳本會由多個動畫元素組成<br>
+需要規劃在什麼時間，哪些物件的屬性，會在某個持續時間內發生變化</p>
+<p>下面是一個簡單的 <code>StoryBoard</code> 範例：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">StoryBoard</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">DoubleAnimation</span> </span></span><br><span class="line"><span class="tag">        <span class="attr">StoryBoard.TargetName</span>=<span class="string">&quot;button1&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">StoryBoard.TargetProperty</span>=<span class="string">&quot;Opacity&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">From</span>=<span class="string">&quot;0.5&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">To</span>=<span class="string">&quot;1.0&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">Duration</span>=<span class="string">&quot;0:0:0.5&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">DoubleAnimation</span> </span></span><br><span class="line"><span class="tag">        <span class="attr">StoryBoard.TargetName</span>=<span class="string">&quot;button2&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">StoryBoard.TargetProperty</span>=<span class="string">&quot;Opacity&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">From</span>=<span class="string">&quot;1.0&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">To</span>=<span class="string">&quot;0.5&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">Duration</span>=<span class="string">&quot;0:0:0.5&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">BeginTime</span>=<span class="string">&quot;0:0:0.5&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">StoryBoard</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在這個 StoryBoard 共會執行兩個操作：</p>
+<ol>
+<li>把 button1 的不透明度在 0.0 秒到 0.5 秒間，從 0.5 調整到 1.0</li>
+<li>把 button2 的不透明度在 0.5 秒到 1.0 秒間，從 1.0 調整到 0.5</li>
+</ol>
+<p><code>StoryBoard</code> 可以定義在 Resource 內，或是直接透過程式建立<br>
+由於 AnimationView 的動畫是動態載入，所以需要透過程式碼動態建立分鏡腳本</p>
+<h1>Animation - 動畫</h1>
+<p>WPF 主要有兩個類型的動畫：插值動畫與關鍵影格動畫</p>
+<h2 id="插值動畫">插值動畫</h2>
+<p>最基礎的動畫，設定起始值 <code>From</code> 、終點值 <code>To</code> 與持續時間 <code>Duration</code><br>
+當輸入一個時間 <code>t</code>，插值動畫會根據時間 <code>t</code> 在 <code>Duration</code> 的位置，計算該時間點的數值</p>
+<p>前面範例的 <code>DoubleAnimation</code> 即是一個例子，透明度的變化如下圖：</p>
+<p><img src="/assets/topics/project-renovation/maple-looker/wpf-animation-double-animation-timeline-20250405.png" alt="DoubleAnimation Timeline"></p>
+<p>在 0.0 秒時，button1 的不透明度設定會是 0.5，0.5 秒時則會是 1.0<br>
+如果時間 <code>t</code> 在 0.25 秒，則不透明度會透過線性插值計算得到 <strong>0.75</strong></p>
+<p>除了一般的線性變化，插值動畫也可以設定 Easing Function 讓變化曲線更平滑<br>
+下列是一些 Easing Function 的變化曲線範例，圖片取自微軟官方文件</p>
+<p>BackEase：<br>
+<img src="https://learn.microsoft.com/zh-tw/dotnet/desktop/wpf/graphics-multimedia/media/backease-graph.png?view=netframeworkdesktop-4.8" alt="BackEase"></p>
+<p>BounceEase：<br>
+<img src="https://learn.microsoft.com/zh-tw/dotnet/desktop/wpf/graphics-multimedia/media/bounceease-graph.png?view=netframeworkdesktop-4.8" alt="BounceEase"></p>
+<p>有關 Easing Function 的部份可參考： <a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-tw/dotnet/desktop/wpf/graphics-multimedia/easing-functions?view=netframeworkdesktop-4.8">Easing 函式 - WPF .NET Framework | Microsoft Learn</a></p>
+<p>除了預設的 Int、Double、Point 等基礎動畫<br>
+WPF 還提供 ObjectAnimation 類別可實作自訂動畫</p>
+<h2 id="KeyFrame-關鍵影格動畫">KeyFrame - 關鍵影格動畫</h2>
+<p>KeyFrame (關鍵影格) 是比插值動畫更有彈性的動畫類型，名稱通常是 <code>XxxAnimationUsingKeyFrames</code><br>
+插值動畫的變化比較單一，沒辦法自由設定。而 KeyFrames 的動畫則可以定義多個時間段的數值，並設定該如何變化</p>
+<p>下面是 KeyFrames 動畫的範例：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">DoubleAnimationUsingKeyFrames</span></span></span><br><span class="line"><span class="tag">    <span class="attr">StoryBoard.TargetName</span>=<span class="string">&quot;button1&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">StoryBoard.TargetProperty</span>=<span class="string">&quot;Opacity&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">LinearDoubleKeyFrame</span> <span class="attr">KeyTime</span>=<span class="string">&quot;0:0:0&quot;</span> <span class="attr">Value</span>=<span class="string">&quot;0.0&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">LinearDoubleKeyFrame</span> <span class="attr">KeyTime</span>=<span class="string">&quot;0:0:1&quot;</span> <span class="attr">Value</span>=<span class="string">&quot;0.5&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">LinearDoubleKeyFrame</span> <span class="attr">KeyTime</span>=<span class="string">&quot;0:0:3&quot;</span> <span class="attr">Value</span>=<span class="string">&quot;1.0&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">DoubleAnimationUsingKeyFrames</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>範例中 button1 的不透明度共設定三個關鍵影格，，根據輸入的時間，透明度會在兩個關鍵時間內透過插值 (Interpolation) 來計算當下的值：</p>
+<p><img src="/assets/topics/project-renovation/maple-looker/wpf-animation-double-animation-keyframes-20250405.png" alt="DoubleAnimation KeyFrames Timeline"></p>
+<p>由於採用了線性插值 (Linear Interpolation)，因此第 0.5 秒的值會是 0.25，第 2 秒的值會是 0.75</p>
+<p>除了線性插值以外，WPF 還有提供離散插值 (Discrete Interpolation) 與樣條插值 (Splined Interpolation)：</p>
+<ul>
+<li>離散插值：瞬間變化，在抵達關鍵時間以前數值並不會發生變化，非常適合製作逐格動畫</li>
+<li>樣條插值：與 Easing Function 類似，可呈現更平滑的數值變化</li>
+</ul>
+<h2 id="Path-路徑動畫">Path - 路徑動畫</h2>
+<p>除了插值動畫跟 KeyFrame 動畫以外，還有一個路徑動畫，名稱通常是 <code>XxxAnimationUsingPath</code><br>
+主要是可以使用 Point 設定一系列的位置，且能夠以較平滑的路徑描述移動軌跡</p>
+<p>這種類型的動畫我並沒有深入研究，詳細資訊可參考官方文件： <a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-tw/dotnet/desktop/wpf/graphics-multimedia/path-animations-overview?view=netframeworkdesktop-4.8">路徑動畫概觀 - WPF .NET Framework | Microsoft Learn</a></p>
+<h1>Transform - 轉換</h1>
+<p>除了調整 UI 的位置、透明度以外，還要能做旋轉、縮放或變形的操作<br>
+這些都可以使用 Transform 來達成</p>
+<p>Transform 可以在 UI 的 <code>LayoutTransform</code> 跟 <code>RenderTransform</code> 做設定<br>
+<code>LayoutTransform</code> 會影響 UI 布局，而 <code>RenderTransform</code> 只影響畫面渲染的結果</p>
+<p>常見的 Transform 有：<code>TranslateTransform</code>、<code>ScaleTransform</code> 和 <code>RotateTransform</code></p>
+<ul>
+<li>TranslateTransform： 對座標做轉譯，可調整 UI 渲染的位置。(在 <code>LayoutTransform</code> 設定沒有效果，因為某些布局會自動調整 UI 位置，如：<code>GridLayout</code>)</li>
+<li>ScaleTransform： 調整 UI 渲染的大小，需要設定中心點</li>
+<li>RotateTransform： 調整 UI 渲染時的角度，需要設定中心點</li>
+</ul>
+<p>除了預設的 Transform 以外，還可以使用 <code>MatrixTransform</code> 自己設定該如何對座標做轉換</p>
+<h2 id="RenderTransformOrigin">RenderTransformOrigin</h2>
+<p>如果是設定 <code>RenderTransform</code>，UI 還有一個 <code>RenderTransformOrigin</code> 的選項可以設定轉換時的座標中心<br>
+以 0 跟 1 表示 UI 的邊界， 0.5 為 UI 的中心點<br>
+如果要以 UI 中心點做旋轉，則 <code>RenderTransformOrigin</code> 需要設定為 <code>0.5,0.5</code> 或是 <code>new Point(0.5, 0.5)</code></p>
+<div class="note info"><p><code>RenderTransformOrigin</code> 只會影響 <code>ScaleTransform</code> 跟 <code>RotateTransform</code>，對 <code>TranslateTransform</code> 不起作用</p>
+</div>
+<h1>用 WPF 的動畫重新描述 AnimationView 的影格動畫</h1>
+<p>在之前的動畫中，我只定義了 <code>Canvas</code>，並在每次渲染的時候重新建立 <code>Image</code> 並套用透明度、旋轉、與原點<br>
+現在我直接把渲染事件拔掉，預設配置 <code>Canvas</code> 和 <code>Image</code>，並交由之後建立的 StoryBoard 來操作：</p>
+<figure class="highlight xml"><figcaption><span>AnimationView.xaml 部份</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Canvas</span></span></span><br><span class="line"><span class="tag">    <span class="attr">x:Name</span>=<span class="string">&quot;canvas&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">ClipToBounds</span>=<span class="string">&quot;True&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">MouseLeftButtonDown</span>=<span class="string">&quot;OnCanvasLeftMouseDown&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">MouseMove</span>=<span class="string">&quot;OnCanvasMouseMove&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">MouseLeftButtonUp</span>=<span class="string">&quot;OnCanvasLeftMouseUp&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">MouseRightButtonDown</span>=<span class="string">&quot;OnCanvasRightMouseDown&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">Focusable</span>=<span class="string">&quot;True&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">KeyDown</span>=<span class="string">&quot;OnCanvasKeyDown&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">Background</span>=<span class="string">&quot;#01000000&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Image</span></span></span><br><span class="line"><span class="tag">        <span class="attr">x:Name</span>=<span class="string">&quot;frameImage&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">RenderTransformOrigin</span>=<span class="string">&quot;0.5,0.5&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">Canvas.Left</span>=<span class="string">&quot;&#123;Binding ViewOffset.X, ElementName=_parent&#125;&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">Canvas.Top</span>=<span class="string">&quot;&#123;Binding ViewOffset.Y, ElementName=_parent&#125;&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">IsEnabled</span>=<span class="string">&quot;False&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Image.RenderTransform</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 預設 Transform，後面設定動畫時會使用 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">TransformGroup</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">ScaleTransform</span> <span class="attr">x:Name</span>=<span class="string">&quot;frameScale&quot;</span> <span class="attr">ScaleX</span>=<span class="string">&quot;1&quot;</span> <span class="attr">ScaleY</span>=<span class="string">&quot;1&quot;</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">TranslateTransform</span> <span class="attr">x:Name</span>=<span class="string">&quot;frameOrigin&quot;</span> <span class="attr">X</span>=<span class="string">&quot;0&quot;</span> <span class="attr">Y</span>=<span class="string">&quot;0&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">TransformGroup</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">Image.RenderTransform</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">Image</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Canvas</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>載入動畫的地方，則建立一個 StoryBoard 並為每個影格建立對應的動畫：</p>
+<figure class="highlight c#"><figcaption><span>AnimationView.xaml.cs</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">LoadAnimation</span>(<span class="params">WzSub property</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.IsLoading = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 載入動畫之前先移除之前的動畫在 Canvas 建立的資源</span></span><br><span class="line">        <span class="keyword">this</span>.storyboard?.Remove(<span class="keyword">this</span>.canvas);</span><br><span class="line">        <span class="keyword">this</span>.storyboard = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">        List&lt;AnimationFrame&gt; frames = <span class="keyword">this</span>.LoadFrames(property);</span><br><span class="line">        <span class="keyword">this</span>.frames = frames;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 建立 StoryBoard</span></span><br><span class="line">        Storyboard storyboard = <span class="keyword">new</span>() &#123;</span><br><span class="line">            AutoReverse = property[<span class="string">&quot;zigzag&quot;</span>] != <span class="literal">null</span>,</span><br><span class="line">            RepeatBehavior = RepeatBehavior.Forever,</span><br><span class="line">        &#125;;</span><br><span class="line">        TimeSpan keytime = TimeSpan.Zero;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 預先設定圖片、原點的 KeyFrame 動畫</span></span><br><span class="line">        ObjectAnimationUsingKeyFrames aniImage = <span class="keyword">new</span>();</span><br><span class="line">        Storyboard.SetTarget(aniImage, <span class="keyword">this</span>.frameImage);</span><br><span class="line">        Storyboard.SetTargetProperty(aniImage, <span class="keyword">new</span>(Image.SourceProperty));</span><br><span class="line">        storyboard.Children.Add(aniImage);</span><br><span class="line"></span><br><span class="line">        DoubleAnimationUsingKeyFrames aniOriginX = <span class="keyword">new</span>();</span><br><span class="line">        Storyboard.SetTargetName(aniOriginX, <span class="string">&quot;frameOrigin&quot;</span>);</span><br><span class="line">        Storyboard.SetTargetProperty(aniOriginX, <span class="keyword">new</span>(TranslateTransform.XProperty));</span><br><span class="line">        storyboard.Children.Add(aniOriginX);</span><br><span class="line"></span><br><span class="line">        DoubleAnimationUsingKeyFrames aniOriginY = <span class="keyword">new</span>();</span><br><span class="line">        Storyboard.SetTargetName(aniOriginY, <span class="string">&quot;frameOrigin&quot;</span>);</span><br><span class="line">        Storyboard.SetTargetProperty(aniOriginY, <span class="keyword">new</span>(TranslateTransform.YProperty));</span><br><span class="line">        storyboard.Children.Add(aniOriginY);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 為每個 Frame 建立動畫</span></span><br><span class="line">        <span class="keyword">foreach</span> (<span class="keyword">var</span> frame <span class="keyword">in</span> frames) &#123;</span><br><span class="line">            <span class="comment">// 設定每個 Frame 的圖片、原點的 KeyFrame，並加入對應的 KeyFrame 動畫內</span></span><br><span class="line">            <span class="comment">// 這邊使用離散插值，只有在抵達關鍵時間以後才會改變圖片跟原點</span></span><br><span class="line">            DiscreteObjectKeyFrame imageKeyframe = <span class="keyword">new</span>() &#123; KeyTime = keytime, Value = frame.Image &#125;;</span><br><span class="line">            aniImage.KeyFrames.Add(imageKeyframe);</span><br><span class="line"></span><br><span class="line">            DiscreteDoubleKeyFrame originXKeyframe = <span class="keyword">new</span>() &#123; KeyTime = keytime, Value = -(<span class="built_in">int</span>)frame.Origin.X &#125;;</span><br><span class="line">            aniOriginX.KeyFrames.Add(originXKeyframe);</span><br><span class="line"></span><br><span class="line">            DiscreteDoubleKeyFrame originYKeyframe = <span class="keyword">new</span>() &#123; KeyTime = keytime, Value = -(<span class="built_in">int</span>)frame.Origin.Y &#125;;</span><br><span class="line">            aniOriginY.KeyFrames.Add(originYKeyframe);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 加入細微的時間差距避免 兩個 Animation 的開頭與的結尾互相重疊</span></span><br><span class="line">            TimeSpan beginTime = keytime + TimeSpan.FromMicroseconds(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 由於遊戲內的透明度、縮放都是直接在一個 Frame 內定義起始值與終點值，因此這邊直接使用一般動畫</span></span><br><span class="line">            DoubleAnimation aniAlpha = <span class="keyword">new</span>() &#123; </span><br><span class="line">                BeginTime = beginTime, </span><br><span class="line">                Duration = TimeSpan.FromMilliseconds(frame.Delay),</span><br><span class="line">                From = frame.A0 / <span class="number">255.0</span>,</span><br><span class="line">                To = frame.A1 / <span class="number">255.0</span>,</span><br><span class="line">            &#125;;</span><br><span class="line">            Storyboard.SetTarget(aniAlpha, <span class="keyword">this</span>.frameImage);</span><br><span class="line">            Storyboard.SetTargetProperty(aniAlpha, <span class="keyword">new</span>(Image.OpacityProperty));</span><br><span class="line">            storyboard.Children.Add(aniAlpha);</span><br><span class="line"></span><br><span class="line">            DoubleAnimation aniScaleX = <span class="keyword">new</span>() &#123; </span><br><span class="line">                BeginTime = beginTime, </span><br><span class="line">                Duration = TimeSpan.FromMilliseconds(frame.Delay),</span><br><span class="line">                From = frame.Z0 / <span class="number">100.0</span>,</span><br><span class="line">                To = frame.Z1 / <span class="number">100.0</span>,</span><br><span class="line">            &#125;;</span><br><span class="line">            Storyboard.SetTargetName(aniScaleX, <span class="string">&quot;frameScale&quot;</span>);</span><br><span class="line">            Storyboard.SetTargetProperty(aniScaleX, <span class="keyword">new</span>(ScaleTransform.ScaleXProperty));</span><br><span class="line">            storyboard.Children.Add(aniScaleX);</span><br><span class="line"></span><br><span class="line">            DoubleAnimation aniScaleY = <span class="keyword">new</span>() &#123; </span><br><span class="line">                BeginTime = beginTime, </span><br><span class="line">                Duration = TimeSpan.FromMilliseconds(frame.Delay),</span><br><span class="line">                From = frame.Z0 / <span class="number">100.0</span>,</span><br><span class="line">                To = frame.Z1 / <span class="number">100.0</span>,</span><br><span class="line">            &#125;;</span><br><span class="line">            Storyboard.SetTargetName(aniScaleY, <span class="string">&quot;frameScale&quot;</span>);</span><br><span class="line">            Storyboard.SetTargetProperty(aniScaleY, <span class="keyword">new</span>(ScaleTransform.ScaleYProperty));</span><br><span class="line">            storyboard.Children.Add(aniScaleY);</span><br><span class="line"></span><br><span class="line">            keytime += TimeSpan.FromMilliseconds(frame.Delay);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.ViewOffset = <span class="keyword">new</span>(<span class="keyword">this</span>.ActualWidth / <span class="number">2.0</span>, <span class="keyword">this</span>.ActualHeight / <span class="number">2.0</span>);</span><br><span class="line">        <span class="keyword">this</span>.storyboard = storyboard;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 在 Canvas 建立 Clock 並執行動畫，且允許直接操作動畫 (暫停、重設等)</span></span><br><span class="line">        <span class="keyword">this</span>.storyboard.Begin(<span class="keyword">this</span>.canvas, <span class="literal">true</span>);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.IsLoading = <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>用程式寫感覺很長一段，但整體上不難理解，就是將每個時間點該播放的動畫都加入 StoryBoard 內<br>
+需要注意的是跟 Transform 有關的動畫，以及 StoryBoard 的啟動方式</p>
+<h2 id="對-Transform-套用動畫">對 Transform 套用動畫</h2>
+<p>動畫能夠直接影響 UI 元件，但 Transform 本身不是 UI 元件，因此直接對 Transform 套用動畫並沒有任何效果</p>
+<p>為了要讓 Transform 套用動畫，需要先註冊 Transform 物件到 DependencyObject 上 (以 AnimationView 的元件來說，就是綁到 AnimationView 身上)<br>
+然後使用 <code>TargetName</code> 去讓動畫操作對應的物件</p>
+<p>我在 xaml 定義的階段就已經先用 <code>x:Name</code> 將 Transform 註冊到 AnimationView 上，所以建立動畫時我只要指定 <code>TargetName</code> 就好</p>
+<h2 id="StoryBoard-啟動-釋放">StoryBoard 啟動/釋放</h2>
+<p>從前面的程式中可以看到，我對 StoryBoard 操作時，都會把 <code>canvas</code> 帶入<br>
+這樣做的目的是要讓 StoryBoard 在 <code>canvas</code> 內建立 Clock 使動畫可以運行<br>
+而一開始的 <code>storyboard.Remove</code> 則是要釋放先前在 <code>canvas</code> 內建立的 Clock 資源</p>
+<p>如果沒有指定物件就播放動畫，除了沒辦法操作動畫的播放以外，也沒辦法對 Transform 套用動畫</p>
+<div class="note info"><p>指定的物件會影響 <code>TargetName</code> 參照的對象<br>
+對 UserControl 來說，不論在裡面建立多少元件，預設 NameScope 都會跟 UserControl 一樣<br>
+所以不論是從 <code>canvas</code> 去操作 <code>frameOrigin</code> ，還是從 <code>AnimationView</code> 本身去操作 <code>frameOrigin</code> ，都是一樣效果<br>
+如果直接對 <code>canvas</code> 建立新的 NameScope，那動畫會找不到 <code>frameOrigin</code> 這個物件</p>
+</div>
+<h2 id="操作-StoryBoard">操作 StoryBoard</h2>
+<p>程式可以對 StoryBoard 做暫停、恢復、設定動畫時間等操作<br>
+前提是在使用 <code>Begin()</code> 執行動畫時，需要設定 <code>isControllable</code> 為 <code>true</code></p>
+<p>之前做的暫停跟重設的功能，這邊改操作 StoryBoard 去實現：</p>
+<figure class="highlight c#"><figcaption><span>AnimationView.xaml.cs</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnCanvasKeyDown</span>(<span class="params"><span class="built_in">object</span> sender, KeyEventArgs e</span>)</span> &#123;</span><br><span class="line">    <span class="comment">// 暫停/恢復</span></span><br><span class="line">    <span class="keyword">if</span> (e.Key == Key.P &amp;&amp; <span class="keyword">this</span>.storyboard != <span class="literal">null</span>) &#123; </span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.storyboard.GetIsPaused(<span class="keyword">this</span>.canvas)) &#123;</span><br><span class="line">            <span class="keyword">this</span>.storyboard.Resume(<span class="keyword">this</span>.canvas);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">this</span>.storyboard.Pause(<span class="keyword">this</span>.canvas);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 重設</span></span><br><span class="line">    <span class="keyword">if</span> (e.Key == Key.R &amp;&amp; <span class="keyword">this</span>.storyboard != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">this</span>.storyboard.Seek(<span class="keyword">this</span>.canvas, TimeSpan.Zero, TimeSeekOrigin.BeginTime);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>效能</h1>
+<p>效能這塊比原本直接在渲染事件內設定好很多<br>
+原本的方法使得 WPF 在執行動畫時會吃掉大概 9% 的 CPU：</p>
+<p><img src="/assets/topics/project-renovation/maple-looker/maple-looker-cpu-usage-before-20250405.png" alt="Cpu Usage - Before"></p>
+<p>改用動畫系統之後，除了移動畫面比較耗 CPU 以外，一般動畫播放幾乎不耗 CPU：</p>
+<p><img src="/assets/topics/project-renovation/maple-looker/maple-looker-cpu-usage-after-20250405.png" alt="Cpu Usage - After"></p>
+<h1>結語</h1>
+<p>動畫這塊熟悉之後就比較好操作，一般使用上沒什麼難度，所以這篇比起優化的歷程，主要都是在講動畫系統的部份</p>
+<p>一開始我還沒意識到，它其實就是類似 Adobe Flash 或是 Adobe After Effect 之類動畫程式的設計邏輯<br>
+因為不是透過 UI 設計動畫，所以寫起來感覺怪怪的，但理解之後，就沒有那麼困難了</p>
+<p>由於楓谷的動畫主要還是這種影格動畫，所以才好用 WPF 的動畫系統呈現<br>
+如果是 Spine 動畫，大概就只能掛 DirectX 然後直接渲染在上面了</p>
+<h1>參考</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-tw/dotnet/desktop/wpf/graphics-multimedia/animation-overview?view=netframeworkdesktop-4.8">動畫概觀 - WPF .NET Framework | Microsoft Learn</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/03/22/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-4-maplelooker-animationview-%E5%8B%95%E7%95%AB%E7%B5%84%E4%BB%B6/" rel="prev" title="來翻新老專案 (4) - MapleLooker - AnimationView 動畫組件">
+                  <i class="fa fa-angle-left"></i> 來翻新老專案 (4) - MapleLooker - AnimationView 動畫組件
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/04/22/%E4%BE%86%E7%BF%BB%E6%96%B0%E8%80%81%E5%B0%88%E6%A1%88-6-maplelooker-treenode-contextmenu-%E9%87%8D%E6%A7%8B/" rel="next" title="來翻新老專案 (6) - MapleLooker - TreeNode ContextMenu 重構">
+                  來翻新老專案 (6) - MapleLooker - TreeNode ContextMenu 重構 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2020 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Bluebean</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr+QR0SQDNfgglgtcM=" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"stu98832","repo":"stu98832.github.io","client_id":"0b84385c74db3fd44c22","client_secret":"089aee5f0152169f2b4ec924fbce2a06ac1e4c89","admin_user":"stu98832","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","labels":"Gitalk","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"0347a3dde96e3e9b0008b530a3ab0da9"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

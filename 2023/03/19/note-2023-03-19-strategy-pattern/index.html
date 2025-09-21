@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"stu98832.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Strategy Pattern 與 Template Method Pattern 的相似，都是跟流程相關的模式 但有一些不一樣的地方 正如 Strategy Pattern 這個名子，這個模式著重在策略的部份 策略也是一種抽象的概念，可以說是達成某個目的過程中可能會用到方法 根據不同的場合使用不同的策略，靈活度高">
+<meta property="og:type" content="article">
+<meta property="og:title" content="設計模式筆記—Strategy Pattern">
+<meta property="og:url" content="http://stu98832.github.io/2023/03/19/note-2023-03-19-strategy-pattern/index.html">
+<meta property="og:site_name" content="Bluebean 的筆記">
+<meta property="og:description" content="Strategy Pattern 與 Template Method Pattern 的相似，都是跟流程相關的模式 但有一些不一樣的地方 正如 Strategy Pattern 這個名子，這個模式著重在策略的部份 策略也是一種抽象的概念，可以說是達成某個目的過程中可能會用到方法 根據不同的場合使用不同的策略，靈活度高">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://stu98832.github.io/2023/03/19/note-2023-03-19-strategy-pattern/image-20230319222209823.png">
+<meta property="article:published_time" content="2023-03-19T13:08:00.000Z">
+<meta property="article:modified_time" content="2025-09-21T15:51:56.671Z">
+<meta property="article:author" content="Bluebean">
+<meta property="article:tag" content="Design Pattern">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://stu98832.github.io/2023/03/19/note-2023-03-19-strategy-pattern/image-20230319222209823.png">
+
+
+<link rel="canonical" href="http://stu98832.github.io/2023/03/19/note-2023-03-19-strategy-pattern/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://stu98832.github.io/2023/03/19/note-2023-03-19-strategy-pattern/","path":"/2023/03/19/note-2023-03-19-strategy-pattern/","title":"設計模式筆記—Strategy Pattern"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>設計模式筆記—Strategy Pattern | Bluebean 的筆記</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Bluebean 的筆記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">可以再更簡單一些</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">思考模式的概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">與 Template Method Pattern 之間該如何做選擇</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">後記</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Bluebean"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Bluebean</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/stu98832" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stu98832" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://stu98832.github.io/2023/03/19/note-2023-03-19-strategy-pattern/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Bluebean">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="設計模式筆記—Strategy Pattern | Bluebean 的筆記">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          設計模式筆記—Strategy Pattern
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2023-03-19 21:08:00" itemprop="dateCreated datePublished" datetime="2023-03-19T21:08:00+08:00">2023-03-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%80%8B%E4%BA%BA%E7%AD%86%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">個人筆記</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Strategy Pattern 與 Template Method Pattern 的相似，都是跟流程相關的模式<br>
+但有一些不一樣的地方</p>
+<p>正如 Strategy Pattern 這個名子，這個模式著重在<strong>策略</strong>的部份<br>
+策略也是一種抽象的概念，可以說是達成某個目的過程中可能會用到方法<br>
+根據不同的場合使用不同的策略，靈活度高</p>
+<span id="more"></span>
+<p>Strategy Pattern 通常會透過一個介面來表示<strong>策略的抽象概念</strong><br>
+接著只要把這個策略帶入任何需要使用的流程內即可</p>
+<p>接下來會用常見的 Sorter 來做範例：</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 這邊簡單用個 selection sort :) </span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SelectionSorter</span>&lt;<span class="title">T</span>&gt; &#123;</span><br><span class="line">    <span class="comment">// 比較的策略，會回傳數字， 1 表示 A &gt; B，0 表示相等，-1 表示 B &lt; A</span></span><br><span class="line">    <span class="keyword">private</span> CompareStrategy&lt;T&gt; strategy;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Sorter</span>(<span class="params">CompareStrategy&lt;T&gt; strategy</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.strategy = strategy;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 由小到大排序</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Sort</span>(<span class="params">T[] items</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;items.Length;++i) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> j=i+<span class="number">1</span>;j&lt;items.Length;++j) &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="keyword">this</span>.strategy.Compare(items[i], items[j]) == <span class="number">1</span>) &#123;</span><br><span class="line">                    <span class="keyword">var</span> temp = items[i];</span><br><span class="line">                    items[i] = items[j];</span><br><span class="line">                    items[j] = temp;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在上面的程式中，一個叫 <code>Sort</code> 泛型類別會接受一個 <code>CompareStrategy</code> 的泛型介面<br>
+之後就可以用這個 Sorter 對元素進行 in-place 排序</p>
+<p>有關 <code>CompareStrategy</code> 的定義如下：</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">CompareStrategy</span>&lt;<span class="title">T</span>&gt; &#123;</span><br><span class="line">    <span class="function"><span class="built_in">int</span> <span class="title">Compare</span>(<span class="params">T item1, T item2</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這個 <code>CompareStrategy</code> 就是一個<strong>策略</strong>，用於比較兩個數值的大小</p>
+<p>現在要做一個複數的排序，直接用 .NET 內建的 Complex 來表示複數<br>
+先以複數的大小來排序，然後再依照實數、虛數的數值個別排序：</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MyComplexCompareStrategy</span> : <span class="title">CompareStrategy</span>&lt;<span class="title">Complex</span>&gt; &#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">Compare</span>(<span class="params">Complex item1, Complex item2</span>)</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> (item1.Magnitude != item2.Magnitude) &#123;</span><br><span class="line">            <span class="keyword">return</span> item1.Magnitude &gt; item2.Magnitude ? <span class="number">1</span> : <span class="number">-1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (item1.Real != item2.Real) &#123;</span><br><span class="line">            <span class="keyword">return</span> item1.Real &gt; item2.Real ? <span class="number">1</span> : <span class="number">-1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (item1.Imaginary != item2.Imaginary) &#123;</span><br><span class="line">            <span class="keyword">return</span> item1.Imaginary &gt; item2.Imaginary ? <span class="number">1</span> : <span class="number">-1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123; <span class="comment">// 到這邊就表示完全相等</span></span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然後建立一個複數的比較並進行排序：</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> complexCompareStrategy = <span class="keyword">new</span> MyComplexCompareStrategy();</span><br><span class="line"><span class="keyword">var</span> complexSorter = <span class="keyword">new</span> SelectionSorter&lt;Complex&gt;(complexCompareStrategy);</span><br><span class="line"><span class="keyword">var</span> complexList = <span class="keyword">new</span> Complex[] &#123;  </span><br><span class="line">    <span class="keyword">new</span> Complex(<span class="number">1</span>, <span class="number">2</span>),</span><br><span class="line">    <span class="keyword">new</span> Complex(<span class="number">0</span>, <span class="number">0</span>),</span><br><span class="line">    <span class="keyword">new</span> Complex(<span class="number">2</span>, <span class="number">1</span>),</span><br><span class="line">    <span class="keyword">new</span> Complex(<span class="number">3</span>, <span class="number">4</span>),</span><br><span class="line">    <span class="keyword">new</span> Complex(<span class="number">-2</span>, <span class="number">1</span>)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Console.WriteLine(<span class="string">&quot;Before: &#123;0&#125;&quot;</span>, <span class="built_in">string</span>.Join(<span class="string">&quot;, &quot;</span>, complexList));</span><br><span class="line"><span class="comment">// Before: &lt;1; 2&gt;, &lt;0; 0&gt;, &lt;2; 1&gt;, &lt;3; 4&gt;, &lt;-2; 1&gt;</span></span><br><span class="line">complexSorter.Sort(complexList);</span><br><span class="line">Console.WriteLine(<span class="string">&quot;Sorted: &#123;0&#125;&quot;</span>, <span class="built_in">string</span>.Join(<span class="string">&quot;, &quot;</span>, complexList));</span><br><span class="line"><span class="comment">// Sorted: &lt;0; 0&gt;, &lt;-2; 1&gt;, &lt;1; 2&gt;, &lt;2; 1&gt;, &lt;3; 4&gt;</span></span><br></pre></td></tr></table></figure>
+<p>結果如下：</p>
+<p><img src="image-20230319222209823.png" alt="image-20230319222209823"></p>
+<h1>可以再更簡單一些</h1>
+<p>看過了上面的範例，應該可以感受到這個模式的威力<br>
+搭配泛型使用，整個類別變得很有彈性，適合不同的場合使用</p>
+<p>原始的 Strategy Pattern 就是這種有介面與實做類別的形式，寫起來 Class 的數量很容易爆增<br>
+但由於現在的 OO 語言多少都會融合一點 FP 的概念<br>
+Lambda 的導入可以說避免產生太多的 Class<br>
+我們可以直接把上面的程式化簡化這樣：</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SortAlgorithm</span> &#123;</span><br><span class="line">    <span class="comment">// comparer 接受 2 個 T 參數，回傳 int</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SelectionSort</span>&lt;<span class="title">T</span>&gt;(<span class="params">T[] items, Func&lt;T, T, <span class="built_in">int</span>&gt; compare</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;items.Length;++i) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> j=i+<span class="number">1</span>;j&lt;items.Length;++j) &#123;</span><br><span class="line">                <span class="keyword">if</span> (compare(items[i], items[j]) == <span class="number">1</span>) &#123;</span><br><span class="line">                    <span class="keyword">var</span> temp = items[i];</span><br><span class="line">                    items[i] = items[j];</span><br><span class="line">                    items[j] = temp;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>執行的程式可以簡化成：</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> comparer = (Complex item1, Complex item2) =&gt; &#123;</span><br><span class="line">	<span class="keyword">if</span> (item1.Magnitude != item2.Magnitude) &#123;</span><br><span class="line">        <span class="keyword">return</span> item1.Magnitude &gt; item2.Magnitude ? <span class="number">1</span> : <span class="number">-1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (item1.Real != item2.Real) &#123;</span><br><span class="line">        <span class="keyword">return</span> item1.Real &gt; item2.Real ? <span class="number">1</span> : <span class="number">-1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (item1.Imaginary != item2.Imaginary) &#123;</span><br><span class="line">        <span class="keyword">return</span> item1.Imaginary &gt; item2.Imaginary ? <span class="number">1</span> : <span class="number">-1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; <span class="comment">// 到這邊就表示完全相等</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> complexList = <span class="keyword">new</span> Complex[] &#123;  </span><br><span class="line">    <span class="keyword">new</span> Complex(<span class="number">1</span>, <span class="number">2</span>),</span><br><span class="line">    <span class="keyword">new</span> Complex(<span class="number">0</span>, <span class="number">0</span>),</span><br><span class="line">    <span class="keyword">new</span> Complex(<span class="number">2</span>, <span class="number">1</span>),</span><br><span class="line">    <span class="keyword">new</span> Complex(<span class="number">3</span>, <span class="number">4</span>),</span><br><span class="line">    <span class="keyword">new</span> Complex(<span class="number">-2</span>, <span class="number">1</span>)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Console.WriteLine(<span class="string">&quot;Before: &#123;0&#125;&quot;</span>, <span class="built_in">string</span>.Join(<span class="string">&quot;, &quot;</span>, complexList));</span><br><span class="line"><span class="comment">// Before: &lt;1; 2&gt;, &lt;0; 0&gt;, &lt;2; 1&gt;, &lt;3; 4&gt;, &lt;-2; 1&gt;</span></span><br><span class="line">SortAlgorithm.SelectionSort(complexList, comparer);</span><br><span class="line">Console.WriteLine(<span class="string">&quot;Sorted: &#123;0&#125;&quot;</span>, <span class="built_in">string</span>.Join(<span class="string">&quot;, &quot;</span>, complexList));</span><br><span class="line"><span class="comment">// Sorted: &lt;0; 0&gt;, &lt;-2; 1&gt;, &lt;1; 2&gt;, &lt;2; 1&gt;, &lt;3; 4&gt;</span></span><br></pre></td></tr></table></figure>
+<p>除了策略本身透過可以 lambda 簡化並直接存到變數以外<br>
+流程本身也可以只是一個方法，然後接受一個函數來使用</p>
+<p>這其實就跟在 C 裡面用函式指標是同一個意思<br>
+我會把這邊的 compare 函數變數作為是一種<strong>策略</strong></p>
+<p>做到這邊，最後就會發現，.NET 的 Array.Sort 跟範例很像：</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="built_in">delegate</span> <span class="built_in">int</span> <span class="title">Comparison</span>&lt;<span class="keyword">in</span> <span class="title">T</span>&gt;(<span class="params">T x, T y</span>)</span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Sort</span>&lt;<span class="title">T</span>&gt;(<span class="params">T[] array, Comparison&lt;T&gt; comparison</span>)</span>;</span><br></pre></td></tr></table></figure>
+<h1>思考模式的概念</h1>
+<p>從最開始有提過，Strategy Pattern 著重在<strong>策略</strong>的部份<br>
+策略就是這個模式的核心<br>
+將外部提供的策略<strong>注入</strong>到某個類別中使用</p>
+<p>概念上就好比一個產品從生產到進入市場的流程<br>
+市場調查、研發、生產、最後打入市場<br>
+打入市場勢必需要某種<strong>策略</strong>，針對不同的客群使用不同的方式讓客戶對產品產生興趣</p>
+<p>因為只關注策略而非流程，因此策略本身可以在各種流程中使用，提高了靈活度</p>
+<h1>與 Template Method Pattern 之間該如何做選擇</h1>
+<p>Template Method Pattern 與 Strategy Pattern 可以做同樣的事情，在靈活度跟關聯程度上也所差異<br>
+我覺得要從問題本身來思考：</p>
+<p>現在要解決的問題是需要<strong>一套共通的作法</strong>，還是<strong>依場合套用不同策略</strong>？</p>
+<p>了解問題的需求，可以從兩個模式中做選擇了</p>
+<p>例如說排序，通常都會是使用者自己按需求排序<br>
+它需要使用者選擇一個<strong>比較策略</strong>，所以就會使用 Strategy Pattern</p>
+<p>但如果在我的應用程式中，排序跟它所屬的環境有關<br>
+換句話說，它跟環境之間有比較強烈的關聯性，其他人不會隨意去更動比較規則<br>
+那使用 Template Method Pattern 就會很適合</p>
+<h1>後記</h1>
+<p>最近太懶了，一直沒有更新設計模式<br>
+雖然我也沒辦法寫太快，畢竟我需要一些例子來說明模式<br>
+有些模式實在是不太常見，我自己也很難想像什麼時候會用到<br>
+可能是因為我經驗還不夠，還沒見過各種優秀 (或慘絕人寰?) 的程式</p>
+<p>在 **無暇的程式碼—敏捷完整篇 **書中，Strategy Pattern 跟 Template Method Pattern 是一起講的<br>
+書中的作者因為 Template Method Pattern 比較簡單而選擇使用該模式<br>
+但我自己的想法是，要去思考問題背後的抽象概念，根據關注的東西來選擇模式的使用<br>
+不過問題的概念可能隨著需求而有所改變，最後還是有機會轉去另一個模式</p>
+<p>目前我對於設計模式的理解都來自 <strong>無暇的程式碼—敏捷完整篇</strong> 這本書<br>
+但實際上我並沒有特別去看過原本的設計模式書籍，頂多上網看一點文章而已，並不了解模式的背景故事<br>
+如果有什麼錯誤的地方，或是覺得解釋不好的，還請多多包含 &lt;(_ _)&gt;</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Design-Pattern/" rel="tag"><i class="fa fa-tag"></i> Design Pattern</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/02/26/note-2023-02-26-template-method-pattern/" rel="prev" title="設計模式筆記—Template Method Pattern">
+                  <i class="fa fa-angle-left"></i> 設計模式筆記—Template Method Pattern
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/07/29/2023-07-29-talk/" rel="next" title="久違的新文章">
+                  久違的新文章 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2020 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Bluebean</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr+QR0SQDNfgglgtcM=" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"stu98832","repo":"stu98832.github.io","client_id":"0b84385c74db3fd44c22","client_secret":"089aee5f0152169f2b4ec924fbce2a06ac1e4c89","admin_user":"stu98832","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-TW","labels":"Gitalk","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"b3eda88b313dc3f31637fa1694ec9449"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>
