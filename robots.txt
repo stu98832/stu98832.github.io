@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://stu98832.github.io/sitemap-index.xml

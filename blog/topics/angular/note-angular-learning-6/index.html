@@ -1,0 +1,522 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-z4jru4n3><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text y=%22.9em%22 font-size=%2290%22&gt;🪨&lt;/text&gt;&lt;/svg&gt;"><link rel="canonical" href="https://stu98832.github.io/blog/topics/angular/note-angular-learning-6/"><link rel="alternate" type="application/rss+xml" title="Bluebean 的筆記" href="https://stu98832.github.io/rss.xml"><title>Angular學習筆記6 - Module 與路由 | Bluebean 的筆記</title><meta name="description" content><meta name="author" content="Renato Rezende"><!-- Open Graph --><meta property="og:type" content="website"><meta property="og:url" content="https://stu98832.github.io/blog/topics/angular/note-angular-learning-6/"><meta property="og:title" content="Angular學習筆記6 - Module 與路由 | Bluebean 的筆記"><meta property="og:description" content><meta property="og:image" content="https://stu98832.github.io/og-image.png"><!-- Twitter / X --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:url" content="https://stu98832.github.io/blog/topics/angular/note-angular-learning-6/"><meta name="twitter:title" content="Angular學習筆記6 - Module 與路由 | Bluebean 的筆記"><meta name="twitter:description" content><meta name="twitter:image" content="https://stu98832.github.io/og-image.png"><!-- Anti-FOUC script: Executed synchronously before DOM render --><script>
+      (function () {
+        const savedTheme = localStorage.getItem('minrock_theme') || 'cream';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      })();
+    </script><link rel="stylesheet" href="/_astro/_..TSd1M-te.css"><link rel="stylesheet" href="/_astro/StructuredData.BsOX6HTC.css"><link rel="stylesheet" href="/_astro/BaseLayout.B3D0qSEd.css"><script type="module" src="/_astro/page.CMFgH77u.js"></script></head><body data-astro-cid-z4jru4n3><a href="#main-content" class="skip-to-content" data-astro-cid-z4jru4n3>Skip to content</a><header class="site-header" data-astro-cid-nen7h5rs><div class="container-wide header-inner" data-astro-cid-nen7h5rs><!-- Brand --><a href="/" class="brand" aria-label="Minrock Home" data-astro-cid-nen7h5rs><span class="brand-rock" data-astro-cid-nen7h5rs>🪨</span><span class="brand-title" data-astro-cid-nen7h5rs>Bluebean 的筆記</span></a><!-- Main Nav --><nav class="nav" aria-label="Main Navigation" data-astro-cid-nen7h5rs><a href="/" class="nav-link" data-astro-cid-nen7h5rs>Home</a><a href="/blog" class="nav-link active" aria-current="page" data-astro-cid-nen7h5rs>Blog</a><a href="/tags" class="nav-link" data-astro-cid-nen7h5rs>Tags</a><a href="/about" class="nav-link" data-astro-cid-nen7h5rs>About</a></nav><!-- Header Actions --><div class="header-actions" data-astro-cid-nen7h5rs><!-- Search Trigger (Desktop) --><button id="header-search-btn" class="search-trigger desktop-only" type="button" aria-label="Search (Ctrl + K)" title="Search (Ctrl + K)" data-astro-cid-nen7h5rs><div class="search-trigger-inner" data-astro-cid-nen7h5rs><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-astro-cid-nen7h5rs><circle cx="11" cy="11" r="8" data-astro-cid-nen7h5rs></circle><path d="m21 21-4.3-4.3" data-astro-cid-nen7h5rs></path></svg><span class="search-trigger-text" data-astro-cid-nen7h5rs>Search...</span></div><kbd class="search-trigger-kbd" data-astro-cid-nen7h5rs>Ctrl K</kbd></button><!-- Mobile Search Button --><button id="mobile-search-btn" class="icon-btn mobile-only" type="button" aria-label="Search" title="Search" data-astro-cid-nen7h5rs><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-astro-cid-nen7h5rs><circle cx="11" cy="11" r="8" data-astro-cid-nen7h5rs></circle><path d="m21 21-4.3-4.3" data-astro-cid-nen7h5rs></path></svg></button><!-- Clustered Controls: Social + Theme + Language Dropdowns --><div class="header-controls" data-astro-cid-nen7h5rs><div class="social-dropdown-container" id="social-dropdown-container" data-astro-cid-nfwclza7><button id="social-menu-btn" class="social-btn-trigger" aria-label="Connect and social links" aria-haspopup="true" aria-expanded="false" title="Connect" data-astro-cid-nfwclza7><!-- Social / At icon --><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-astro-cid-nfwclza7><circle cx="12" cy="12" r="4" data-astro-cid-nfwclza7></circle><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8" data-astro-cid-nfwclza7></path></svg><svg class="social-chevron" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-astro-cid-nfwclza7><polyline points="6 9 12 15 18 9" data-astro-cid-nfwclza7></polyline></svg></button><!-- Floating Social Dropdown --><div id="social-dropdown-menu" class="social-dropdown-menu" role="menu" aria-label="Social and contact options" data-astro-cid-nfwclza7><div class="social-dropdown-header" data-astro-cid-nfwclza7>CONNECT</div><a href="https://github.com/stu98832" target="_blank" rel="noopener noreferrer" class="social-menu-item" role="menuitem" data-astro-cid-nfwclza7><span class="social-item-icon" data-astro-cid-nfwclza7><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-astro-cid-nfwclza7><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z" data-astro-cid-nfwclza7></path></svg></span><div class="social-item-info" data-astro-cid-nfwclza7><span class="social-item-name" data-astro-cid-nfwclza7>GitHub</span><span class="social-item-handle" data-astro-cid-nfwclza7>↗ Repository</span></div></a></div></div><script type="module">function e(){let e=document.getElementById(`social-menu-btn`),t=document.getElementById(`social-dropdown-menu`),n=document.getElementById(`social-dropdown-container`);function r(){if(t){if(window.innerWidth<=768){t.style.left=`50%`,t.style.right=`auto`,t.style.transform=`translateX(-50%)`;let e=t.getBoundingClientRect();if(e.left<12){let n=12-e.left;t.style.transform=`translateX(calc(-50% + ${n}px))`}else if(e.right>window.innerWidth-12){let n=e.right-(window.innerWidth-12);t.style.transform=`translateX(calc(-50% - ${n}px))`}}else t.style.left=``,t.style.right=``,t.style.transform=``}}e?.addEventListener(`click`,n=>{n.stopPropagation(),document.querySelectorAll(`.lang-dropdown.open, .theme-dropdown.open`).forEach(e=>e.classList.remove(`open`)),document.querySelectorAll(`#lang-btn, #theme-toggle-btn`).forEach(e=>e.setAttribute(`aria-expanded`,`false`));let i=t?.classList.toggle(`open`);e.setAttribute(`aria-expanded`,String(!!i)),i&&r()}),window.addEventListener(`resize`,()=>{t?.classList.contains(`open`)&&r()}),document.addEventListener(`click`,r=>{n?.contains(r.target)||(t?.classList.remove(`open`),e?.setAttribute(`aria-expanded`,`false`))}),document.addEventListener(`keydown`,n=>{n.key===`Escape`&&t?.classList.contains(`open`)&&(t.classList.remove(`open`),e?.setAttribute(`aria-expanded`,`false`),e?.focus())})}e(),document.addEventListener(`astro:after-swap`,e);</script><!-- <LanguageSelector /> --></div></div></div></header><main id="main-content" class="main-content container-wide" data-astro-cid-z4jru4n3><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Angular學習筆記6 - Module 與路由","description":"","url":"http://localhost:4321/blog/topics/angular/note-angular-learning-6/","datePublished":"2021-03-03T00:00:00.000Z","dateModified":"2021-03-03T00:00:00.000Z","author":{"@type":"Person","name":"Renato Rezende"},"publisher":{"@type":"Organization","name":"Bluebean 的筆記","url":"http://localhost:4321"},"keywords":"Angular, 網頁前端"}</script><div class="post-page-container" data-astro-cid-jo55ryrt><!-- Main Content Column --><div class="post-main" data-astro-cid-jo55ryrt><article class="post-article" data-astro-cid-jo55ryrt><header class="post-header" data-astro-cid-jo55ryrt><div class="post-meta" data-astro-cid-jo55ryrt><time datetime="2021-03-03T00:00:00.000Z" data-astro-cid-jo55ryrt>March 3, 2021</time><span class="meta-dot" data-astro-cid-jo55ryrt>·</span><span class="reading-time" data-astro-cid-jo55ryrt><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-astro-cid-jo55ryrt><circle cx="12" cy="12" r="10" data-astro-cid-jo55ryrt></circle><polyline points="12 6 12 12 16 14" data-astro-cid-jo55ryrt></polyline></svg>7 min read</span><span class="meta-dot" data-astro-cid-jo55ryrt>·</span><span class="meta-tags" data-astro-cid-jo55ryrt><a href="/tags/Angular" class="tag" data-astro-cid-jo55ryrt>Angular</a><a href="/tags/%E7%B6%B2%E9%A0%81%E5%89%8D%E7%AB%AF" class="tag" data-astro-cid-jo55ryrt>網頁前端</a></span></div><h1 class="post-title" data-astro-cid-jo55ryrt>Angular學習筆記6 - Module 與路由</h1><p class="post-description" data-astro-cid-jo55ryrt></p></header><!-- 🔊 Accessible Audio Player (Text-to-Speech) --><div class="post-content" data-astro-cid-jo55ryrt><p>前面介紹了與 component 相關的內容之後
+接下來將會介紹建構 angular 系統裡的重要角色 <strong>Module</strong>
+Module 可以管理許多的 Component，並引入像是 <strong>Pipe</strong>、<strong>Directive</strong>、<strong>Service</strong> 等東西
+也可以引入其他 Module 來使用相關的 Component、Pipe 或 Directive 等
+之後還會介紹一種比較特別的 Module，<strong>路由</strong></p>
+<h2 id="module">Module</h2>
+<p>前面其實有粗略的介紹過 Module 跟其裝飾器 <code>NgModule</code>
+Module 本身管理著各種 Component、Pipe 跟 Service
+來看看整個系列截至目前為止 <code>AppModule</code> 裡 <code>NgModule</code> 裝飾器的內容：</p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="typescript"><code><span class="line"><span style="color:#ADBAC7">@</span><span style="color:#DCBDFB">NgModule</span><span style="color:#ADBAC7">({</span></span>
+<span class="line"><span style="color:#ADBAC7">  declarations: [</span></span>
+<span class="line"><span style="color:#ADBAC7">    AppComponent,</span></span>
+<span class="line"><span style="color:#ADBAC7">    HtmlTagPipe,</span></span>
+<span class="line"><span style="color:#ADBAC7">    IconDirective</span></span>
+<span class="line"><span style="color:#ADBAC7">  ],</span></span>
+<span class="line"><span style="color:#ADBAC7">  imports: [</span></span>
+<span class="line"><span style="color:#ADBAC7">    BrowserModule,</span></span>
+<span class="line"><span style="color:#ADBAC7">    AppRoutingModule</span></span>
+<span class="line"><span style="color:#ADBAC7">  ],</span></span>
+<span class="line"><span style="color:#ADBAC7">  providers: [],</span></span>
+<span class="line"><span style="color:#ADBAC7">  bootstrap: [AppComponent]</span></span>
+<span class="line"><span style="color:#ADBAC7">})</span></span>
+<span class="line"><span style="color:#F47067">export</span><span style="color:#F47067"> class</span><span style="color:#F69D50"> AppModule</span><span style="color:#ADBAC7"> { }</span></span></code></pre>
+<p>相較於最初介紹 <code>NgModule</code>，可以發現 declarations 多了上次使用的 <code>HtmlTagPage</code> 跟 <code>IconDirective</code>
+事實上，<strong>任何要在頁面使用的 Component、Pipe、Directive 都要放入 declarations 裡</strong>
+之前之所以沒有做這些操作，是因為 Angular CLI 會自動幫忙找<strong>最近</strong>的模組並自動引入</p>
+<p>關於其他參數的內容，則可以回顧之前的{% post_link topics/angular/note-angular-learning-3 %}</p>
+<h2 id="建立-module">建立 Module</h2>
+<p>一直到剛剛都還是在介紹著整個 Angular 應用的中心 <strong>AppModule</strong>
+但是實際上當功能逐漸複雜化時，會開始將一些獨立的功能分成子模組，等到需要時引用
+接著將會再網站上新增 Navbar 模組</p>
+<h3 id="新增模組">新增模組</h3>
+<p>一開始先使用指令新增模組：</p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>ng g module navbar</span></span></code></pre>
+<p>完成後，可以發現多了一個資料夾 <code>navbar</code>，裡面有模組 <code>navbar.module.ts</code></p>
+<p>然後就可以看到空無一物的模組 <code>NavbarModule</code></p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="typescript"><code><span class="line"><span style="color:#F47067">import</span><span style="color:#ADBAC7"> { NgModule } </span><span style="color:#F47067">from</span><span style="color:#96D0FF"> '@angular/core'</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"><span style="color:#F47067">import</span><span style="color:#ADBAC7"> { CommonModule } </span><span style="color:#F47067">from</span><span style="color:#96D0FF"> '@angular/common'</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#ADBAC7">@</span><span style="color:#DCBDFB">NgModule</span><span style="color:#ADBAC7">({</span></span>
+<span class="line"><span style="color:#ADBAC7">  declarations: [ ],</span></span>
+<span class="line"><span style="color:#ADBAC7">  imports: [</span></span>
+<span class="line"><span style="color:#ADBAC7">    CommonModule</span></span>
+<span class="line"><span style="color:#ADBAC7">  ]</span></span>
+<span class="line"><span style="color:#ADBAC7">})</span></span>
+<span class="line"><span style="color:#F47067">export</span><span style="color:#F47067"> class</span><span style="color:#F69D50"> NavbarModule</span><span style="color:#ADBAC7"> { }</span></span></code></pre>
+<h3 id="撰寫-navbar-相關元件">撰寫 navbar 相關元件</h3>
+<p>為了完成 navbar
+接著會參考<a href="https://www.w3schools.com/css/css_navbar_horizontal.asp"> W3School 的 navbar 範例</a>來設定 navbar 元件的樣式表跟樣板
+考慮到 navbar 裡會有一個主體跟數個按鈕
+因此會建立兩種元件 <code>navbar</code> 跟 <code>nav-item</code></p>
+<h4 id="navbar-元件">navbar 元件</h4>
+<p>新增 component <code>navbar</code></p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>ng g component navbar</span></span></code></pre>
+<p>可以發現 <code>NavbarModule</code> 自動引入了 <code>NavbarComponent</code></p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="typescript"><code><span class="line"><span style="color:#F47067">import</span><span style="color:#ADBAC7"> { NgModule } </span><span style="color:#F47067">from</span><span style="color:#96D0FF"> '@angular/core'</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"><span style="color:#F47067">import</span><span style="color:#ADBAC7"> { CommonModule } </span><span style="color:#F47067">from</span><span style="color:#96D0FF"> '@angular/common'</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"><span style="color:#F47067">import</span><span style="color:#ADBAC7"> { NavbarComponent } </span><span style="color:#F47067">from</span><span style="color:#96D0FF"> './navbar.component'</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#ADBAC7">@</span><span style="color:#DCBDFB">NgModule</span><span style="color:#ADBAC7">({</span></span>
+<span class="line"><span style="color:#ADBAC7">  declarations: [</span></span>
+<span class="line"><span style="color:#ADBAC7">    NavbarComponent</span></span>
+<span class="line"><span style="color:#ADBAC7">  ],</span></span>
+<span class="line"><span style="color:#ADBAC7">  imports: [</span></span>
+<span class="line"><span style="color:#ADBAC7">    CommonModule</span></span>
+<span class="line"><span style="color:#ADBAC7">  ]</span></span>
+<span class="line"><span style="color:#ADBAC7">})</span></span>
+<span class="line"><span style="color:#F47067">export</span><span style="color:#F47067"> class</span><span style="color:#F69D50"> NavbarModule</span><span style="color:#ADBAC7"> { }</span></span></code></pre>
+<p>然後設定樣式表跟樣板</p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="css"><code><span class="line"><span style="color:#8DDB8C">ul</span><span style="color:#6CB6FF">.navbar</span><span style="color:#ADBAC7"> {</span></span>
+<span class="line"><span style="color:#6CB6FF">  list-style-type</span><span style="color:#ADBAC7">: </span><span style="color:#6CB6FF">none</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"><span style="color:#6CB6FF">  margin</span><span style="color:#ADBAC7">: </span><span style="color:#6CB6FF">0</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"><span style="color:#6CB6FF">  padding</span><span style="color:#ADBAC7">: </span><span style="color:#6CB6FF">0</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"><span style="color:#6CB6FF">  overflow</span><span style="color:#ADBAC7">: </span><span style="color:#6CB6FF">hidden</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"><span style="color:#6CB6FF">  border</span><span style="color:#ADBAC7">: </span><span style="color:#6CB6FF">1</span><span style="color:#F47067">px</span><span style="color:#6CB6FF"> solid</span><span style="color:#6CB6FF"> #e7e7e7</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"><span style="color:#6CB6FF">  background-color</span><span style="color:#ADBAC7">: </span><span style="color:#6CB6FF">#f3f3f3</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"><span style="color:#6CB6FF">  position</span><span style="color:#ADBAC7">: </span><span style="color:#6CB6FF">-webkit-sticky</span><span style="color:#ADBAC7">; </span><span style="color:#768390">/* Safari */</span></span>
+<span class="line"><span style="color:#6CB6FF">  position</span><span style="color:#ADBAC7">: </span><span style="color:#6CB6FF">sticky</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"><span style="color:#6CB6FF">  top</span><span style="color:#ADBAC7">: </span><span style="color:#6CB6FF">0</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"><span style="color:#ADBAC7">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#8DDB8C">nav</span><span style="color:#ADBAC7"> {</span></span>
+<span class="line"><span style="color:#6CB6FF">  margin-bottom</span><span style="color:#ADBAC7">: </span><span style="color:#6CB6FF">10</span><span style="color:#F47067">px</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"><span style="color:#ADBAC7">}</span></span></code></pre>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="html"><code><span class="line"><span style="color:#ADBAC7">&lt;</span><span style="color:#8DDB8C">nav</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">    &lt;</span><span style="color:#8DDB8C">ul</span><span style="color:#6CB6FF"> class</span><span style="color:#ADBAC7">=</span><span style="color:#96D0FF">"navbar"</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">        &lt;</span><span style="color:#8DDB8C">ng-content</span><span style="color:#ADBAC7">&gt;&lt;/</span><span style="color:#8DDB8C">ng-content</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">    &lt;/</span><span style="color:#8DDB8C">ul</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">&lt;/</span><span style="color:#8DDB8C">nav</span><span style="color:#ADBAC7">&gt;</span></span></code></pre>
+<h4 id="ng-content">ng-content</h4>
+<p>前面的程式碼中，可以看到 <code>NavbarComponent</code> 的樣板裡有一個 <code>&lt;ng-content&gt;&lt;/ng-content&gt;</code>
+<code>ng-content</code> 可以將放在自訂標籤裡的元素都轉移進去
+如果不加上這個，即使裡面放在多元素，都不會被顯示出來</p>
+<p>舉例來說，我有這樣的 HTML 內容：</p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="html"><code><span class="line"><span style="color:#ADBAC7">&lt;</span><span style="color:#8DDB8C">app-navbar</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">    &lt;</span><span style="color:#8DDB8C">li</span><span style="color:#ADBAC7">&gt;list item&lt;/</span><span style="color:#8DDB8C">li</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">&lt;/</span><span style="color:#8DDB8C">app-navbar</span><span style="color:#ADBAC7">&gt;</span></span></code></pre>
+<p>那麼樣板的輸出會長這樣：</p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="html"><code><span class="line"><span style="color:#ADBAC7">&lt;</span><span style="color:#8DDB8C">nav</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">    &lt;</span><span style="color:#8DDB8C">ul</span><span style="color:#6CB6FF"> class</span><span style="color:#ADBAC7">=</span><span style="color:#96D0FF">"navbar"</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">        &lt;</span><span style="color:#8DDB8C">li</span><span style="color:#ADBAC7">&gt;list item&lt;/</span><span style="color:#8DDB8C">li</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">    &lt;/</span><span style="color:#8DDB8C">ul</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">&lt;/</span><span style="color:#8DDB8C">nav</span><span style="color:#ADBAC7">&gt;</span></span></code></pre>
+<h4 id="component-樣式獨立">Component 樣式獨立</h4>
+<p>component 本身可以使用樣式表，這個樣式表只能自己使用，其他 component 無法引用
+如果用過 <code>F12</code> 去查看 angular 的輸出，可以發現每個 component 裡的元素都會有一個屬性名稱作為標識：</p>
+<p><img alt="image-20210301205045383" loading="lazy" decoding="async" width="270" height="16" src="/_astro/image-20210301205045383.CyVhf_2K_kkFNk.webp"></p>
+<p>而 component 輸出的樣式表會在每個指定條件後方加上對該屬性名稱的限制，進而達成樣式獨立</p>
+<h4 id="nav-item-元件">nav-item 元件</h4>
+<p>為了能夠更方便的產生 navbar 的按鈕，要再新增一個 component <code>nav-item</code></p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>ng g component navbar/nav-item</span></span></code></pre>
+<p>使用後會在 <code>navbar</code> 資料夾中產生 <code>nav-item</code> 資料夾，並含有相關的 component 檔案</p>
+<p>接著繼續照著 navbar 範例的子項目開始寫樣式表跟樣版內容：</p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="typescript"><code><span class="line"><span style="color:#F47067">export</span><span style="color:#F47067"> class</span><span style="color:#F69D50"> NavItemComponent</span><span style="color:#F47067"> implements</span><span style="color:#6CB6FF"> OnInit</span><span style="color:#ADBAC7"> {</span></span>
+<span class="line"><span style="color:#ADBAC7">  @</span><span style="color:#DCBDFB">Input</span><span style="color:#ADBAC7">(</span><span style="color:#96D0FF">'href'</span><span style="color:#ADBAC7">) </span><span style="color:#F69D50">url</span><span style="color:#F47067"> =</span><span style="color:#96D0FF"> '#'</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"><span style="color:#ADBAC7">  @</span><span style="color:#DCBDFB">Input</span><span style="color:#ADBAC7">() </span><span style="color:#F69D50">active</span><span style="color:#F47067"> =</span><span style="color:#6CB6FF"> false</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#768390">  /* ... */</span></span>
+<span class="line"><span style="color:#ADBAC7">}</span></span></code></pre>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="css"><code><span class="line"><span style="color:#6CB6FF">.nav-item</span><span style="color:#ADBAC7"> {</span></span>
+<span class="line"><span style="color:#6CB6FF">    float</span><span style="color:#ADBAC7">: </span><span style="color:#6CB6FF">left</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"><span style="color:#ADBAC7">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6CB6FF">.nav-item</span><span style="color:#8DDB8C"> a</span><span style="color:#ADBAC7"> {</span></span>
+<span class="line"><span style="color:#6CB6FF">    display</span><span style="color:#ADBAC7">: </span><span style="color:#6CB6FF">block</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"><span style="color:#6CB6FF">    color</span><span style="color:#ADBAC7">: </span><span style="color:#6CB6FF">#666</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"><span style="color:#6CB6FF">    text-align</span><span style="color:#ADBAC7">: </span><span style="color:#6CB6FF">center</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"><span style="color:#6CB6FF">    padding</span><span style="color:#ADBAC7">: </span><span style="color:#6CB6FF">14</span><span style="color:#F47067">px</span><span style="color:#6CB6FF"> 16</span><span style="color:#F47067">px</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"><span style="color:#6CB6FF">    text-decoration</span><span style="color:#ADBAC7">: </span><span style="color:#6CB6FF">none</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"><span style="color:#ADBAC7">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6CB6FF">.nav-item</span><span style="color:#8DDB8C"> a</span><span style="color:#6CB6FF">:hover:not</span><span style="color:#ADBAC7">(</span><span style="color:#6CB6FF">.active</span><span style="color:#ADBAC7">) {</span></span>
+<span class="line"><span style="color:#6CB6FF">    background-color</span><span style="color:#ADBAC7">: </span><span style="color:#6CB6FF">#ddd</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"><span style="color:#ADBAC7">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6CB6FF">.nav-item</span><span style="color:#8DDB8C"> a</span><span style="color:#6CB6FF">.active</span><span style="color:#ADBAC7"> {</span></span>
+<span class="line"><span style="color:#6CB6FF">    color</span><span style="color:#ADBAC7">: </span><span style="color:#6CB6FF">white</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"><span style="color:#6CB6FF">    background-color</span><span style="color:#ADBAC7">: </span><span style="color:#6CB6FF">#4CAF50</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"><span style="color:#ADBAC7">}</span></span></code></pre>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="html"><code><span class="line"><span style="color:#ADBAC7">&lt;</span><span style="color:#8DDB8C">li</span><span style="color:#6CB6FF"> class</span><span style="color:#ADBAC7">=</span><span style="color:#96D0FF">"nav-item"</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">    &lt;</span><span style="color:#8DDB8C">a</span><span style="color:#6CB6FF"> [href]</span><span style="color:#ADBAC7">=</span><span style="color:#96D0FF">"url"</span><span style="color:#6CB6FF"> [class.active]</span><span style="color:#ADBAC7">=</span><span style="color:#96D0FF">'active'</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">        &lt;</span><span style="color:#8DDB8C">ng-content</span><span style="color:#ADBAC7">&gt;&lt;/</span><span style="color:#8DDB8C">ng-content</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">    &lt;/</span><span style="color:#8DDB8C">a</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">&lt;/</span><span style="color:#8DDB8C">li</span><span style="color:#ADBAC7">&gt;</span></span></code></pre>
+<p>上面的程式可以看到一些 <code>@Input</code> 的應用
+等等在使用時會使用這些屬性來設定連接跟啟用</p>
+<h3 id="導出">導出</h3>
+<p>寫好了 component 的部分，要能夠讓外面其他 component 可以使用，因此要進行導出
+導出時只要加入 Module 裡的 <code>exports </code> 列表裡就可以了</p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="typescript"><code><span class="line"><span style="color:#ADBAC7">@</span><span style="color:#DCBDFB">NgModule</span><span style="color:#ADBAC7">({</span></span>
+<span class="line"><span style="color:#768390">  /* ... */</span></span>
+<span class="line"><span style="color:#ADBAC7">  exports: [</span></span>
+<span class="line"><span style="color:#ADBAC7">    NavbarComponent,</span></span>
+<span class="line"><span style="color:#ADBAC7">    NavItemComponent</span></span>
+<span class="line"><span style="color:#ADBAC7">  ]</span></span>
+<span class="line"><span style="color:#ADBAC7">})</span></span>
+<span class="line"><span style="color:#F47067">export</span><span style="color:#F47067"> class</span><span style="color:#F69D50"> NavbarModule</span><span style="color:#ADBAC7"> { }</span></span></code></pre>
+<blockquote>
+<p>如果在使用 <code>ng g component</code> 時加上 <code>--export</code> 參數，Angular CLI 會自己幫你加到 <code>exports</code> 裡</p>
+</blockquote>
+<h3 id="導入">導入</h3>
+<p>為了讓 <code>AppComponent</code> 可以使用這些自訂的 component，所以要將 <code>NavbarModule</code> 導入 <code>AppModule</code>
+也就是在 <code>imports</code> 裡加入 <code>NavbarModule</code></p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="typescript"><code><span class="line"><span style="color:#ADBAC7">@</span><span style="color:#DCBDFB">NgModule</span><span style="color:#ADBAC7">({</span></span>
+<span class="line"><span style="color:#768390">  /* ... */</span></span>
+<span class="line"><span style="color:#ADBAC7">  imports: [</span></span>
+<span class="line"><span style="color:#768390">    /* ... */</span></span>
+<span class="line"><span style="color:#ADBAC7">    NavbarModule,</span></span>
+<span class="line"><span style="color:#768390">    /* ... */</span></span>
+<span class="line"><span style="color:#ADBAC7">  ],</span></span>
+<span class="line"><span style="color:#768390">  /* ... */</span></span>
+<span class="line"><span style="color:#ADBAC7">})</span></span>
+<span class="line"><span style="color:#F47067">export</span><span style="color:#F47067"> class</span><span style="color:#F69D50"> AppModule</span><span style="color:#ADBAC7"> { }</span></span></code></pre>
+<blockquote>
+<p>記得要先將 <code>NavbarModule</code> 類別引入，再加到 imports 列表裡</p>
+</blockquote>
+<h3 id="使用自訂標籤">使用自訂標籤</h3>
+<p>接著在 <code>AppComponent</code> 的樣板檔裡採用這些自訂標籤</p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="html"><code><span class="line"><span style="color:#ADBAC7">&lt;</span><span style="color:#8DDB8C">app-navbar</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">    &lt;</span><span style="color:#8DDB8C">app-nav-item</span><span style="color:#6CB6FF"> href</span><span style="color:#ADBAC7">=</span><span style="color:#96D0FF">"#"</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">        &lt;</span><span style="color:#8DDB8C">span</span><span style="color:#6CB6FF"> appIcon</span><span style="color:#ADBAC7">=</span><span style="color:#96D0FF">"home"</span><span style="color:#ADBAC7">&gt;&lt;/</span><span style="color:#8DDB8C">span</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">        MyAngular</span></span>
+<span class="line"><span style="color:#ADBAC7">    &lt;/</span><span style="color:#8DDB8C">app-nav-item</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">    &lt;</span><span style="color:#8DDB8C">app-nav-item</span><span style="color:#6CB6FF"> href</span><span style="color:#ADBAC7">=</span><span style="color:#96D0FF">"#"</span><span style="color:#6CB6FF"> [active]</span><span style="color:#ADBAC7">=</span><span style="color:#96D0FF">'true'</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">        首頁</span></span>
+<span class="line"><span style="color:#ADBAC7">    &lt;/</span><span style="color:#8DDB8C">app-nav-item</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">    &lt;</span><span style="color:#8DDB8C">app-nav-item</span><span style="color:#6CB6FF"> href</span><span style="color:#ADBAC7">=</span><span style="color:#96D0FF">"https://www.google.com"</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">        Google</span></span>
+<span class="line"><span style="color:#ADBAC7">    &lt;/</span><span style="color:#8DDB8C">app-nav-item</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">&lt;/</span><span style="color:#8DDB8C">app-navbar</span><span style="color:#ADBAC7">&gt;</span></span></code></pre>
+<p>就可以看到成果了：</p>
+<p><img alt="image-20210301211924107" loading="lazy" decoding="async" width="636" height="210" src="/_astro/image-20210301211924107.DAMLAHAi_rU9X5.webp"></p>
+<h2 id="路由-routing">路由 (Routing)</h2>
+<p>SPA 的精隨在於它不用一直透過 request 取得頁面
+因為換頁的操作都是在前端完成的
+透過配置路由，可以決定哪些路徑要呈現哪些畫面</p>
+<h3 id="基本配置">基本配置</h3>
+<p>由於一開始就建立附帶 routing 功能的專案，所以就省了建立 <code>AppRoutingModule</code> 的力氣了
+直接來看目前 <code>AppRoutingModule</code> 的配置：</p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="typescript"><code><span class="line"><span style="color:#F47067">import</span><span style="color:#ADBAC7"> { NgModule } </span><span style="color:#F47067">from</span><span style="color:#96D0FF"> '@angular/core'</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"><span style="color:#F47067">import</span><span style="color:#ADBAC7"> { RouterModule, Routes } </span><span style="color:#F47067">from</span><span style="color:#96D0FF"> '@angular/router'</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F47067">const</span><span style="color:#6CB6FF"> routes</span><span style="color:#F47067">:</span><span style="color:#F69D50"> Routes</span><span style="color:#F47067"> =</span><span style="color:#ADBAC7"> [];</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#ADBAC7">@</span><span style="color:#DCBDFB">NgModule</span><span style="color:#ADBAC7">({</span></span>
+<span class="line"><span style="color:#ADBAC7">  imports: [RouterModule.</span><span style="color:#DCBDFB">forRoot</span><span style="color:#ADBAC7">(routes)],</span></span>
+<span class="line"><span style="color:#ADBAC7">  exports: [RouterModule]</span></span>
+<span class="line"><span style="color:#ADBAC7">})</span></span>
+<span class="line"><span style="color:#F47067">export</span><span style="color:#F47067"> class</span><span style="color:#F69D50"> AppRoutingModule</span><span style="color:#ADBAC7"> { }</span></span></code></pre>
+<p>大致上就是一般的模組，重點就擺在 <code>RouterModule</code> 跟 <code>Routes</code> 身上</p>
+<h4 id="routermodule">RouterModule</h4>
+<p>用來設定路由的模組，形式是固定的
+<code>imports</code> 要放 <code>RouterModule</code> 導出的 Route 上
+<code>exports</code> 則將 <code>RouterModule</code> 導出</p>
+<p><code>RouterModule</code> 有兩個基本函式 <code>forRoot</code> 跟 <code>forChild</code> 可以導出路由
+<code>forRoot</code> 只會給 <code>AppRoutingModule</code> 使用而已
+<code>forChild</code> 則會給其他的 RoutingModule 使用</p>
+<h4 id="route">Route</h4>
+<p><code>Route</code> 包含路由的各種資訊，這邊只舉幾個常見的參數</p>
+<ul>
+<li><code>path</code>
+路徑名稱</li>
+<li><code>component</code>
+對應的 component</li>
+<li><code>redirectTo</code>
+可以重新導向路徑</li>
+<li><code>children</code>
+子路由，子路由裡的根路徑位置就是 <code>path</code></li>
+<li><code>data</code>
+當要使用 router 資訊來產生模板時，可以在 <code>data</code> 裡承載資料</li>
+</ul>
+<h4 id="router-outlet">router-outlet</h4>
+<p>經過路由處理後的 Component 會在 <code>router-outlet</code> 標籤內輸出
+原理其實跟 <code>ng-content</code> 差不多</p>
+<h2 id="建立路由">建立路由</h2>
+<p>一開始先建立一個 <code>HomeComponent</code> 作為首頁
+接著在 <code>AppRoutingModule</code> 裡建立對應的 Route</p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="typescript"><code><span class="line"><span style="color:#F47067">const</span><span style="color:#6CB6FF"> routes</span><span style="color:#F47067">:</span><span style="color:#F69D50"> Routes</span><span style="color:#F47067"> =</span><span style="color:#ADBAC7"> [</span></span>
+<span class="line"><span style="color:#ADBAC7">  { path: </span><span style="color:#96D0FF">''</span><span style="color:#ADBAC7">, pathMatch:</span><span style="color:#96D0FF">'full'</span><span style="color:#ADBAC7">, redirectTo: </span><span style="color:#96D0FF">'/home'</span><span style="color:#ADBAC7"> },</span></span>
+<span class="line"><span style="color:#ADBAC7">  { path: </span><span style="color:#96D0FF">'home'</span><span style="color:#ADBAC7">, component: HomeComponent }</span></span>
+<span class="line"><span style="color:#ADBAC7">];</span></span></code></pre>
+<p>根路徑的字串內容是空的，需要再加上 <code>patchMatch: 'full'</code> 才能正常使用
+這邊將根目錄重新導向到 <code>/home</code>
+而 <code>/home</code> 對應的 component 即 <code>HomeComponent</code></p>
+<h3 id="配置-router-outlet">配置 router-outlet</h3>
+<p>於 <code>app.component.html</code> 裡新增 <code>router-outlet</code> 來使路由的輸出結果顯示出來</p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="html"><code><span class="line"><span style="color:#ADBAC7">&lt;</span><span style="color:#8DDB8C">app-navbar</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">    &lt;</span><span style="color:#8DDB8C">app-nav-item</span><span style="color:#6CB6FF"> href</span><span style="color:#ADBAC7">=</span><span style="color:#96D0FF">"#"</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">        &lt;</span><span style="color:#8DDB8C">span</span><span style="color:#6CB6FF"> appIcon</span><span style="color:#ADBAC7">=</span><span style="color:#96D0FF">"home"</span><span style="color:#ADBAC7">&gt;&lt;/</span><span style="color:#8DDB8C">span</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">        MyAngular</span></span>
+<span class="line"><span style="color:#ADBAC7">    &lt;/</span><span style="color:#8DDB8C">app-nav-item</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">    &lt;</span><span style="color:#8DDB8C">app-nav-item</span><span style="color:#6CB6FF"> href</span><span style="color:#ADBAC7">=</span><span style="color:#96D0FF">"#"</span><span style="color:#6CB6FF"> [active]</span><span style="color:#ADBAC7">=</span><span style="color:#96D0FF">'true'</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">        首頁</span></span>
+<span class="line"><span style="color:#ADBAC7">    &lt;/</span><span style="color:#8DDB8C">app-nav-item</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">    &lt;</span><span style="color:#8DDB8C">app-nav-item</span><span style="color:#6CB6FF"> href</span><span style="color:#ADBAC7">=</span><span style="color:#96D0FF">"https://www.google.com"</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">        Google</span></span>
+<span class="line"><span style="color:#ADBAC7">    &lt;/</span><span style="color:#8DDB8C">app-nav-item</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">&lt;/</span><span style="color:#8DDB8C">app-navbar</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">&lt;</span><span style="color:#8DDB8C">router-outlet</span><span style="color:#ADBAC7">&gt;&lt;/</span><span style="color:#8DDB8C">router-outlet</span><span style="color:#ADBAC7">&gt;</span></span></code></pre>
+<p>然後就可以看到輸出畫面了</p>
+<p><img alt="image-20210302113729318" loading="lazy" decoding="async" width="620" height="222" src="/_astro/image-20210302113729318.GslGyX1t_Z1wKn9s.webp"></p>
+<h3 id="子路由">子路由</h3>
+<p>並不是每個路由都一定要在 <code>AppRoutingModule</code> 管理才行
+實際上針對不同的模組，可以管理自己的路由</p>
+<p>這邊就先建立一個含路由的 <code>UserModule</code></p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>ng g module user --routing</span></span></code></pre>
+<p>建立好之後看一下 <code>user-routing.module.ts</code> 的內容</p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="typescript"><code><span class="line"><span style="color:#F47067">import</span><span style="color:#ADBAC7"> { NgModule } </span><span style="color:#F47067">from</span><span style="color:#96D0FF"> '@angular/core'</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"><span style="color:#F47067">import</span><span style="color:#ADBAC7"> { RouterModule, Routes } </span><span style="color:#F47067">from</span><span style="color:#96D0FF"> '@angular/router'</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F47067">const</span><span style="color:#6CB6FF"> routes</span><span style="color:#F47067">:</span><span style="color:#F69D50"> Routes</span><span style="color:#F47067"> =</span><span style="color:#ADBAC7"> [];</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#ADBAC7">@</span><span style="color:#DCBDFB">NgModule</span><span style="color:#ADBAC7">({</span></span>
+<span class="line"><span style="color:#ADBAC7">  imports: [RouterModule.</span><span style="color:#DCBDFB">forChild</span><span style="color:#ADBAC7">(routes)],</span></span>
+<span class="line"><span style="color:#ADBAC7">  exports: [RouterModule]</span></span>
+<span class="line"><span style="color:#ADBAC7">})</span></span>
+<span class="line"><span style="color:#F47067">export</span><span style="color:#F47067"> class</span><span style="color:#F69D50"> UserRoutingModule</span><span style="color:#ADBAC7"> { }</span></span></code></pre>
+<p>和 <code>AppRoutingModule</code> 差不多，就是 <code>forRoot</code> 的部份變成了 <code>forChild</code> 而已</p>
+<p>接著新增屬於 <code>UserModule</code> 的頁面 <code>UserComponent</code>後，將 <code>/user</code> 導向 <code>UserComponent</code></p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="typescript"><code><span class="line"><span style="color:#F47067">const</span><span style="color:#6CB6FF"> routes</span><span style="color:#F47067">:</span><span style="color:#F69D50"> Routes</span><span style="color:#F47067"> =</span><span style="color:#ADBAC7"> [</span></span>
+<span class="line"><span style="color:#ADBAC7">  { path: </span><span style="color:#96D0FF">'user'</span><span style="color:#ADBAC7">, component: UserComponent }</span></span>
+<span class="line"><span style="color:#ADBAC7">];</span></span></code></pre>
+<p>然後在 <code>AppModule</code> 導入 <code>UserModule</code></p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="typescript"><code><span class="line"><span style="color:#ADBAC7">@</span><span style="color:#DCBDFB">NgModule</span><span style="color:#ADBAC7">({</span></span>
+<span class="line"><span style="color:#768390">  /* ... */</span></span>
+<span class="line"><span style="color:#ADBAC7">  imports: [</span></span>
+<span class="line"><span style="color:#768390">    /* ... */</span></span>
+<span class="line"><span style="color:#ADBAC7">    UserModule,</span></span>
+<span class="line"><span style="color:#ADBAC7">    AppRoutingModule,</span></span>
+<span class="line"><span style="color:#768390">    /* ... */</span></span>
+<span class="line"><span style="color:#ADBAC7">  ],</span></span>
+<span class="line"><span style="color:#768390">  /* ... */</span></span>
+<span class="line"><span style="color:#ADBAC7">})</span></span>
+<span class="line"><span style="color:#F47067">export</span><span style="color:#F47067"> class</span><span style="color:#F69D50"> AppModule</span><span style="color:#ADBAC7"> { }</span></span></code></pre>
+<p>就可以前往 <code>/user</code> 查看結果了：</p>
+<p><img alt="image-20210302191619241" loading="lazy" decoding="async" width="624" height="222" src="/_astro/image-20210302191619241.DY_QX4Dc_Z2lQvvI.webp"></p>
+<h3 id="萬用字元路由">萬用字元路由</h3>
+<p>Route 裡的 <code>path</code> 如果設定內容為 <code>**</code> 的字串
+則可以匹配所有路徑</p>
+<p>接下來將會透過建立 404 錯誤頁面來進行範例</p>
+<aside class="callout callout-warning" data-callout="warning" data-type="warning" role="note" aria-label="Warning"><div class="callout-title"><span class="callout-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span><span class="callout-title-text">Warning</span></div>
+<p>萬用字元請務必擺在最下面
+放在前面會使得判斷時直接導向萬用字元的路徑，而後面的路徑則不會被判斷到
+要多注意萬用字元的位置，以避免某些路徑被吃掉的問題</p>
+</aside>
+<h3 id="建立-404-錯誤頁面">建立 404 錯誤頁面</h3>
+<p>首先先建立好 <code>error404.component.ts</code>
+由於只是一個簡單的錯誤畫面，所以就不建立測試，樣板和樣式也都改成內置</p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>ng g component error404 -s -t --skip-tests</span></span></code></pre>
+<p>接著寫好樣板內容，並去除掉用不到的部份</p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="typescript"><code><span class="line"><span style="color:#F47067">import</span><span style="color:#ADBAC7"> { Component } </span><span style="color:#F47067">from</span><span style="color:#96D0FF"> '@angular/core'</span><span style="color:#ADBAC7">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#ADBAC7">@</span><span style="color:#DCBDFB">Component</span><span style="color:#ADBAC7">({</span></span>
+<span class="line"><span style="color:#ADBAC7">  selector: </span><span style="color:#96D0FF">'app-error404'</span><span style="color:#ADBAC7">,</span></span>
+<span class="line"><span style="color:#ADBAC7">  template: </span><span style="color:#96D0FF">`&lt;h1&gt;404 Not Found!&lt;/h1&gt;`</span><span style="color:#ADBAC7">,</span></span>
+<span class="line"><span style="color:#ADBAC7">  styles: []</span></span>
+<span class="line"><span style="color:#ADBAC7">})</span></span>
+<span class="line"><span style="color:#F47067">export</span><span style="color:#F47067"> class</span><span style="color:#F69D50"> Error404Component</span><span style="color:#ADBAC7"> { }</span></span></code></pre>
+<p>然後新增到 <code>AppRoutingModule</code> 的 <code>routers</code>裡</p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="typescript"><code><span class="line"><span style="color:#F47067">const</span><span style="color:#6CB6FF"> routes</span><span style="color:#F47067">:</span><span style="color:#F69D50"> Routes</span><span style="color:#F47067"> =</span><span style="color:#ADBAC7"> [</span></span>
+<span class="line"><span style="color:#768390">  /* ... */</span></span>
+<span class="line"><span style="color:#ADBAC7">  { path: </span><span style="color:#96D0FF">'**'</span><span style="color:#ADBAC7">, component: Error404Component }</span></span>
+<span class="line"><span style="color:#ADBAC7">];</span></span></code></pre>
+<p>接著隨便打個不存在的路徑，就可以看到 <code>404 Not Found!</code> 了</p>
+<p><img alt="image-20210302193413146" loading="lazy" decoding="async" width="608" height="239" src="/_astro/image-20210302193413146.DsrG7OvO_Z2mjKDS.webp"></p>
+<h3 id="路由順序問題">路由順序問題</h3>
+<p>在萬用字元路由的條目中，有說到萬用字元的位置問題
+其實 module 的引用順序也會影響路由判斷的順序
+像是前面的 <code>UserModule</code>，我其實是刻意把它擺在 <code>AppRoutingModule</code> 的<strong>上方</strong>
+<strong>越先引入的越先被判斷到</strong>，因此 <code>AppRoutingModule</code> 務必要再最下方</p>
+<p>接續剛剛的 404 錯誤頁面，如果這次將 <code>UserModule</code> 放在 <code>AppRoutingModule</code> 下方，那會發生這樣的狀況</p>
+<p><img alt="image-20210302194006667" loading="lazy" decoding="async" width="579" height="217" src="/_astro/image-20210302194006667.C3zjSlzq_Z1kzUlF.webp"></p>
+<p>可以發現到，原本可以正常導向的 <code>/user</code> 卻被導向到萬用字元的路徑上了
+這是因為 <code>AppRoutingModule</code> 先被判斷的關係，而萬用字元正好就在 <code>AppRoutingModule</code> 的底部
+因此在到達 <code>UserModule</code> 裡的 <code>UserRoutingModule</code> 前，就會因為先判斷到 <code>AppRoutingModule</code> 的萬用字元而被導向過去
+也就是說，<code>AppRoutingModule</code> 後面如果再多塞幾個路由，實際上是毫無意義的，因為根本到達不了</p>
+<h3 id="路由連接">路由連接</h3>
+<p>除了導向，還可以透過官方提供的 directive 來取得<strong>路由路徑</strong>或是<strong>定位 <code>navbar</code> 上的項目</strong>
+也就是 <code>routerLink</code> 跟 <code>routerLinkActive</code>
+比起用說明的，這個直接套用到 <code>navbar</code> 上比較快</p>
+<p>由於現有的 <code>nav-item</code> 架構不適合使用 <code>routerLink</code>，這邊需要將 <code>nav-item</code>小改一下</p>
+<ol>
+<li>
+<p><code>NavItemComponent</code> 裡的 Input 變數都清除</p>
+</li>
+<li>
+<p>樣板修改</p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="html"><code><span class="line"><span style="color:#ADBAC7">&lt;</span><span style="color:#8DDB8C">li</span><span style="color:#6CB6FF"> class</span><span style="color:#ADBAC7">=</span><span style="color:#96D0FF">"nav-item"</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">    &lt;</span><span style="color:#8DDB8C">ng-content</span><span style="color:#ADBAC7">&gt;&lt;/</span><span style="color:#8DDB8C">ng-content</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">&lt;/</span><span style="color:#8DDB8C">li</span><span style="color:#ADBAC7">&gt;</span></span></code></pre>
+</li>
+<li>
+<p>將樣式表 <code>nav-item.component.css</code> 的內容移到 <code>style.css</code></p>
+</li>
+<li>
+<p>修改 <code>app.component.html</code></p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="html"><code><span class="line"><span style="color:#ADBAC7">&lt;</span><span style="color:#8DDB8C">app-navbar</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">    &lt;</span><span style="color:#8DDB8C">app-nav-item</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">     &lt;</span><span style="color:#8DDB8C">a</span><span style="color:#6CB6FF"> href</span><span style="color:#ADBAC7">=</span><span style="color:#96D0FF">"/"</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">            &lt;</span><span style="color:#8DDB8C">span</span><span style="color:#6CB6FF"> appIcon</span><span style="color:#ADBAC7">=</span><span style="color:#96D0FF">"home"</span><span style="color:#ADBAC7">&gt;&lt;/</span><span style="color:#8DDB8C">span</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">            MyAngular</span></span>
+<span class="line"><span style="color:#ADBAC7">        &lt;/</span><span style="color:#8DDB8C">a</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">    &lt;/</span><span style="color:#8DDB8C">app-nav-item</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">    &lt;</span><span style="color:#8DDB8C">app-nav-item</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">        &lt;</span><span style="color:#8DDB8C">a</span><span style="color:#6CB6FF"> href</span><span style="color:#ADBAC7">=</span><span style="color:#96D0FF">"/home"</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">            首頁</span></span>
+<span class="line"><span style="color:#ADBAC7">        &lt;/</span><span style="color:#8DDB8C">a</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">    &lt;/</span><span style="color:#8DDB8C">app-nav-item</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">    &lt;</span><span style="color:#8DDB8C">app-nav-item</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">        &lt;</span><span style="color:#8DDB8C">a</span><span style="color:#6CB6FF"> href</span><span style="color:#ADBAC7">=</span><span style="color:#96D0FF">"/user"</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">            使用者</span></span>
+<span class="line"><span style="color:#ADBAC7">        &lt;/</span><span style="color:#8DDB8C">a</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">    &lt;/</span><span style="color:#8DDB8C">app-nav-item</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">&lt;/</span><span style="color:#8DDB8C">app-navbar</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">&lt;</span><span style="color:#8DDB8C">router-outlet</span><span style="color:#ADBAC7">&gt;&lt;/</span><span style="color:#8DDB8C">router-outlet</span><span style="color:#ADBAC7">&gt;</span></span></code></pre>
+</li>
+</ol>
+<p>然後套用 <code>routerLink</code> 跟 <code>routerLinkActive</code></p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="html"><code><span class="line"><span style="color:#ADBAC7">&lt;</span><span style="color:#8DDB8C">app-navbar</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">    &lt;</span><span style="color:#8DDB8C">app-nav-item</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">        &lt;</span><span style="color:#8DDB8C">a</span><span style="color:#6CB6FF"> routerLink</span><span style="color:#ADBAC7">=</span><span style="color:#96D0FF">"/"</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">            &lt;</span><span style="color:#8DDB8C">span</span><span style="color:#6CB6FF"> appIcon</span><span style="color:#ADBAC7">=</span><span style="color:#96D0FF">"home"</span><span style="color:#ADBAC7">&gt;&lt;/</span><span style="color:#8DDB8C">span</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">            MyAngular</span></span>
+<span class="line"><span style="color:#ADBAC7">        &lt;/</span><span style="color:#8DDB8C">a</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">    &lt;/</span><span style="color:#8DDB8C">app-nav-item</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">    &lt;</span><span style="color:#8DDB8C">app-nav-item</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">        &lt;</span><span style="color:#8DDB8C">a</span><span style="color:#6CB6FF"> routerLink</span><span style="color:#ADBAC7">=</span><span style="color:#96D0FF">"/home"</span><span style="color:#6CB6FF"> routerLinkActive</span><span style="color:#ADBAC7">=</span><span style="color:#96D0FF">'active'</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">            首頁</span></span>
+<span class="line"><span style="color:#ADBAC7">        &lt;/</span><span style="color:#8DDB8C">a</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">    &lt;/</span><span style="color:#8DDB8C">app-nav-item</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">    &lt;</span><span style="color:#8DDB8C">app-nav-item</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">        &lt;</span><span style="color:#8DDB8C">a</span><span style="color:#6CB6FF"> routerLink</span><span style="color:#ADBAC7">=</span><span style="color:#96D0FF">"/user"</span><span style="color:#6CB6FF"> routerLinkActive</span><span style="color:#ADBAC7">=</span><span style="color:#96D0FF">'active'</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">            使用者</span></span>
+<span class="line"><span style="color:#ADBAC7">        &lt;/</span><span style="color:#8DDB8C">a</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">    &lt;/</span><span style="color:#8DDB8C">app-nav-item</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">&lt;/</span><span style="color:#8DDB8C">app-navbar</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">&lt;</span><span style="color:#8DDB8C">router-outlet</span><span style="color:#ADBAC7">&gt;&lt;/</span><span style="color:#8DDB8C">router-outlet</span><span style="color:#ADBAC7">&gt;</span></span></code></pre>
+<p>執行結果：</p>
+<table>
+<thead>
+<tr>
+<th>/home</th>
+<th>/user</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="image-20210303213924861" loading="lazy" decoding="async" width="604" height="248" src="/_astro/image-20210303213924861.D6njz6-C_boiKX.webp"></td>
+<td><img alt="image-20210303213944788" loading="lazy" decoding="async" width="634" height="253" src="/_astro/image-20210303213944788.h8r2Uagu_1vbYez.webp"></td>
+</tr>
+</tbody>
+</table>
+<p>可以發現，現在上面的 tab 會根據你的頁面路徑來提示你所在的頁面
+<strong>實際上 <code>routerLinkActive</code> 會在你指定的 <code>routerLink</code> 路徑符合時給予所在元素指定的 CSS class</strong></p>
+<p>如果有仔細觀察看這次換頁的的畫面，也可以發現，跟上一次比起來，這次的頁面切換非常順利
+這正是 SPA，不須在換頁時發送 request，在同一個頁面就可以透過 javascript 進行換頁行為</p>
+<h3 id="巢狀路由">巢狀路由</h3>
+<p>在一開始的 Route 介紹有說到 <code>children</code> 參數
+<code>children</code> 本身可以接受更多的 Route，當前面的路徑符合父 Route 時，會進入 <code>children</code> 搜尋符合的路徑，<strong>並套用父 Route 的 Component</strong></p>
+<p>這邊也舉個例子：</p>
+<p>首先建立兩個 component：<code>UserIndexComponent</code>、<code>UserInfoComponent</code>
+然後修改 <code>UserComponent</code> 的樣板</p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="html"><code><span class="line"><span style="color:#ADBAC7">&lt;</span><span style="color:#8DDB8C">p</span><span style="color:#ADBAC7">&gt;user works!&lt;/</span><span style="color:#8DDB8C">p</span><span style="color:#ADBAC7">&gt;</span></span>
+<span class="line"><span style="color:#ADBAC7">&lt;</span><span style="color:#8DDB8C">router-outlet</span><span style="color:#ADBAC7">&gt;&lt;/</span><span style="color:#8DDB8C">router-outlet</span><span style="color:#ADBAC7">&gt;</span></span></code></pre>
+<p>接著在 <code>UserRoutingModule</code> 加入巢狀路由</p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="typescript"><code><span class="line"><span style="color:#F47067">const</span><span style="color:#6CB6FF"> routes</span><span style="color:#F47067">:</span><span style="color:#F69D50"> Routes</span><span style="color:#F47067"> =</span><span style="color:#ADBAC7"> [</span></span>
+<span class="line"><span style="color:#ADBAC7">  { </span></span>
+<span class="line"><span style="color:#ADBAC7">    path: </span><span style="color:#96D0FF">'user'</span><span style="color:#ADBAC7">, component: UserComponent,</span></span>
+<span class="line"><span style="color:#ADBAC7">    children: [</span></span>
+<span class="line"><span style="color:#ADBAC7">      { path: </span><span style="color:#96D0FF">''</span><span style="color:#ADBAC7">, pathMatch: </span><span style="color:#96D0FF">'full'</span><span style="color:#ADBAC7">, component: UserIndexComponent },</span></span>
+<span class="line"><span style="color:#ADBAC7">      { path: </span><span style="color:#96D0FF">'info'</span><span style="color:#ADBAC7">, component: UserInfoComponent }</span></span>
+<span class="line"><span style="color:#ADBAC7">    ]</span></span>
+<span class="line"><span style="color:#ADBAC7">  }</span></span>
+<span class="line"><span style="color:#ADBAC7">];</span></span></code></pre>
+<p>最後看一下結果：</p>
+<table>
+<thead>
+<tr>
+<th>/user</th>
+<th>/user/info</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="image-20210303221200790" loading="lazy" decoding="async" width="387" height="209" src="/_astro/image-20210303221200790.CSf61Ltl_1Tnf6u.webp"></td>
+<td><img alt="image-20210303221216995" loading="lazy" decoding="async" width="406" height="207" src="/_astro/image-20210303221216995.DWmYja9p_6PTqg.webp"></td>
+</tr>
+</tbody>
+</table>
+<p>從上面的圖可以看到，內容被嵌到 <code>UserComponent</code> 樣板裡的 <code>router-outlet</code> 了
+由於在父路由有指定 <code>component</code>，因此在到達子路由前就會先上一層 <code>UserComponent</code></p>
+<p>另外，你也可以發現上面的 tab 還是亮著的，那邊不是指定 <code>/user</code> 嗎？
+由於 Angular 處理路由時會把部份匹配的路由都設定為 active，因此 <code>/user</code> 實際上也是處於 active 的狀態
+即使路由是在外面被指定，依然會觸發：</p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>const routes: Routes = [</span></span>
+<span class="line"><span>  { </span></span>
+<span class="line"><span>    path: 'user', component: UserComponent,</span></span>
+<span class="line"><span>    children: [</span></span>
+<span class="line"><span>      { path: '', pathMatch: 'full', component: UserIndexComponent },</span></span>
+<span class="line"><span>      </span></span>
+<span class="line"><span>    ]</span></span>
+<span class="line"><span>  },</span></span>
+<span class="line"><span>  { path: 'user/info', component: UserInfoComponent },</span></span>
+<span class="line"><span>];</span></span></code></pre>
+<p><img alt="image-20210303221846843" loading="lazy" decoding="async" width="410" height="159" src="/_astro/image-20210303221846843.CYcI5aO9_h1syK.webp"></p>
+<h3 id="hasg-tag">Hasg Tag</h3>
+<p>將路徑擺在網址的 Hash Tag 後方</p>
+<p>在 <code>AppRoutingModule</code> 中設定 <code>useHash</code> 即可：</p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="typescript"><code><span class="line"><span style="color:#ADBAC7">@</span><span style="color:#DCBDFB">NgModule</span><span style="color:#ADBAC7">({</span></span>
+<span class="line"><span style="color:#ADBAC7">  imports: [RouterModule.</span><span style="color:#DCBDFB">forRoot</span><span style="color:#ADBAC7">(routes, {</span></span>
+<span class="line"><span style="color:#ADBAC7">    useHash: </span><span style="color:#6CB6FF">true</span></span>
+<span class="line"><span style="color:#ADBAC7">  })],</span></span>
+<span class="line"><span style="color:#ADBAC7">  exports: [RouterModule]</span></span>
+<span class="line"><span style="color:#ADBAC7">})</span></span>
+<span class="line"><span style="color:#F47067">export</span><span style="color:#F47067"> class</span><span style="color:#F69D50"> AppRoutingModule</span><span style="color:#ADBAC7"> { }</span></span></code></pre>
+<p><img alt="image-20210303224836807" loading="lazy" decoding="async" width="436" height="225" src="/_astro/image-20210303224836807.BnCz9eO3_6wmmN.webp"></p>
+<h2 id="結語">結語</h2>
+<p>這次的內容相較之前又更長一些
+在介紹 Module 時也順便介紹了路由</p>
+<p>路由是 Angular 中非常核心的功能
+SPA 的實現就是靠前端的路由在運作的
+只透過前端換頁，達到較為流暢操作操作環境</p>
+<p>一開始是想要自己設計 Navbar 樣式，但是考慮到自己的設計能力很差，所以直接套用 W3School 的範例比較快
+中間講到 <code>routerLink</code> 時才發現自己設計的架構不好使用，所以才對 <code>nav-item</code> 進行修改</p>
+<p>目前已經講了許多 Angular 的各種類別，這些都可以在官方網站找到更詳細的解說
+如果去翻官方網站的說明文件，可以發現現在講的東西都還沒過一半
+Angular 真的還有好多東西可以講，不過因為我沒有繼續深入，所以沒辦法再講更多東西了
+因為到目前為止的每個條目都不是寫得特別詳細，如果有其他額外的問題，可以到官方文件上尋找相關條目</p>
+<p>如果文章裡有什麼錯誤的話，可以透過文章下面的 gitalk 回報給我</p>
+<h2 id="參考">參考</h2>
+<ul>
+<li><a href="https://www.w3schools.com/css/css_navbar_horizontal.asp">w3school: CSS Horizontal Navigation Bar</a></li>
+<li><a href="https://angular.io/guide/router">Angular - In-app navigation: routing to views</a></li>
+</ul>
+<h2 id="更新">更新</h2>
+<ul>
+<li>2021-04-28
+<ul>
+<li>參考條目：
+<ul>
+<li>補上項目符號</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div><!-- Prev / Next Navigation --><nav class="post-nav" aria-label="Post navigation" data-astro-cid-jo55ryrt><a href="/blog/topics/angular/note-angular-learning-5" class="nav-card nav-prev" data-astro-cid-jo55ryrt><span class="nav-direction" data-astro-cid-jo55ryrt>← Older</span><span class="nav-title" data-astro-cid-jo55ryrt>Angular學習筆記5 - 基本結構操作、Pipe、Directive</span></a><a href="/blog/topics/angular/note-angular-learning-7" class="nav-card nav-next" data-astro-cid-jo55ryrt><span class="nav-direction" data-astro-cid-jo55ryrt>Newer →</span><span class="nav-title" data-astro-cid-jo55ryrt>Angular學習筆記7 - Injectable、Service</span></a></nav><!-- 💬 Modular Comments Area --><section class="comments-area" id="comments" aria-label="Article Discussion" data-astro-cid-nuen6n26><div class="comments-divider" data-astro-cid-nuen6n26></div><script src="https://giscus.app/client.js" data-repo="stu98832/stu98832.github.io" data-repo-id="MDEwOlJlcG9zaXRvcnkyNDMyNTk5NjE=" data-category="Giscus" data-category-id="DIC_kwDODn_aOc4DGeo4" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="light" data-lang="zh-TW" data-loading crossorigin="anonymous" async>
+      </script></section></article></div><!-- Sticky Sidebar Column (TOC) --><aside class="post-sidebar" aria-label="Article Table of Contents" data-astro-cid-jo55ryrt><nav class="toc" aria-label="Table of contents" data-astro-cid-lkw5wmmf><div class="toc-title" data-astro-cid-lkw5wmmf>On This Page</div><ol class="toc-list" data-astro-cid-lkw5wmmf><li class="toc-item depth-2" data-astro-cid-lkw5wmmf><a href="#module" class="toc-link" data-astro-cid-lkw5wmmf><span class="toc-text" data-astro-cid-lkw5wmmf>Module</span></a></li><li class="toc-item depth-2" data-astro-cid-lkw5wmmf><a href="#建立-module" class="toc-link" data-astro-cid-lkw5wmmf><span class="toc-text" data-astro-cid-lkw5wmmf>建立 Module</span></a></li><li class="toc-item depth-3" data-astro-cid-lkw5wmmf><a href="#新增模組" class="toc-link" data-astro-cid-lkw5wmmf><span class="toc-text" data-astro-cid-lkw5wmmf>新增模組</span></a></li><li class="toc-item depth-3" data-astro-cid-lkw5wmmf><a href="#撰寫-navbar-相關元件" class="toc-link" data-astro-cid-lkw5wmmf><span class="toc-text" data-astro-cid-lkw5wmmf>撰寫 navbar 相關元件</span></a></li><li class="toc-item depth-3" data-astro-cid-lkw5wmmf><a href="#導出" class="toc-link" data-astro-cid-lkw5wmmf><span class="toc-text" data-astro-cid-lkw5wmmf>導出</span></a></li><li class="toc-item depth-3" data-astro-cid-lkw5wmmf><a href="#導入" class="toc-link" data-astro-cid-lkw5wmmf><span class="toc-text" data-astro-cid-lkw5wmmf>導入</span></a></li><li class="toc-item depth-3" data-astro-cid-lkw5wmmf><a href="#使用自訂標籤" class="toc-link" data-astro-cid-lkw5wmmf><span class="toc-text" data-astro-cid-lkw5wmmf>使用自訂標籤</span></a></li><li class="toc-item depth-2" data-astro-cid-lkw5wmmf><a href="#路由-routing" class="toc-link" data-astro-cid-lkw5wmmf><span class="toc-text" data-astro-cid-lkw5wmmf>路由 (Routing)</span></a></li><li class="toc-item depth-3" data-astro-cid-lkw5wmmf><a href="#基本配置" class="toc-link" data-astro-cid-lkw5wmmf><span class="toc-text" data-astro-cid-lkw5wmmf>基本配置</span></a></li><li class="toc-item depth-2" data-astro-cid-lkw5wmmf><a href="#建立路由" class="toc-link" data-astro-cid-lkw5wmmf><span class="toc-text" data-astro-cid-lkw5wmmf>建立路由</span></a></li><li class="toc-item depth-3" data-astro-cid-lkw5wmmf><a href="#配置-router-outlet" class="toc-link" data-astro-cid-lkw5wmmf><span class="toc-text" data-astro-cid-lkw5wmmf>配置 router-outlet</span></a></li><li class="toc-item depth-3" data-astro-cid-lkw5wmmf><a href="#子路由" class="toc-link" data-astro-cid-lkw5wmmf><span class="toc-text" data-astro-cid-lkw5wmmf>子路由</span></a></li><li class="toc-item depth-3" data-astro-cid-lkw5wmmf><a href="#萬用字元路由" class="toc-link" data-astro-cid-lkw5wmmf><span class="toc-text" data-astro-cid-lkw5wmmf>萬用字元路由</span></a></li><li class="toc-item depth-3" data-astro-cid-lkw5wmmf><a href="#建立-404-錯誤頁面" class="toc-link" data-astro-cid-lkw5wmmf><span class="toc-text" data-astro-cid-lkw5wmmf>建立 404 錯誤頁面</span></a></li><li class="toc-item depth-3" data-astro-cid-lkw5wmmf><a href="#路由順序問題" class="toc-link" data-astro-cid-lkw5wmmf><span class="toc-text" data-astro-cid-lkw5wmmf>路由順序問題</span></a></li><li class="toc-item depth-3" data-astro-cid-lkw5wmmf><a href="#路由連接" class="toc-link" data-astro-cid-lkw5wmmf><span class="toc-text" data-astro-cid-lkw5wmmf>路由連接</span></a></li><li class="toc-item depth-3" data-astro-cid-lkw5wmmf><a href="#巢狀路由" class="toc-link" data-astro-cid-lkw5wmmf><span class="toc-text" data-astro-cid-lkw5wmmf>巢狀路由</span></a></li><li class="toc-item depth-3" data-astro-cid-lkw5wmmf><a href="#hasg-tag" class="toc-link" data-astro-cid-lkw5wmmf><span class="toc-text" data-astro-cid-lkw5wmmf>Hasg Tag</span></a></li><li class="toc-item depth-2" data-astro-cid-lkw5wmmf><a href="#結語" class="toc-link" data-astro-cid-lkw5wmmf><span class="toc-text" data-astro-cid-lkw5wmmf>結語</span></a></li><li class="toc-item depth-2" data-astro-cid-lkw5wmmf><a href="#參考" class="toc-link" data-astro-cid-lkw5wmmf><span class="toc-text" data-astro-cid-lkw5wmmf>參考</span></a></li><li class="toc-item depth-2" data-astro-cid-lkw5wmmf><a href="#更新" class="toc-link" data-astro-cid-lkw5wmmf><span class="toc-text" data-astro-cid-lkw5wmmf>更新</span></a></li></ol></nav><script type="module">var e=null,t;function n(){e&&=(e.abort(),null),t!==void 0&&(window.clearTimeout(t),t=void 0);let n=Array.from(document.querySelectorAll(`.toc-link`)),r=Array.from(document.querySelectorAll(`article h2[id], article h3[id]`));if(!n.length||!r.length)return;e=new AbortController;let{signal:i}=e,a=!1,o=!1;function s(e){e&&n.forEach(t=>{t.getAttribute(`href`)?.replace(/^#/,``)===e?t.classList.add(`active`):t.classList.remove(`active`)})}function c(){if(a)return;let e=window.scrollY,t=window.innerHeight,n=document.documentElement.scrollHeight;if(e+t>=n-80){s(r[r.length-1].id);return}let i=Math.max(150,t*.35);for(let e=r.length-1;e>=0;e--)if(r[e].getBoundingClientRect().top<=i){s(r[e].id);return}s(r[0].id)}function l(){o||=(window.requestAnimationFrame(()=>{c(),o=!1}),!0)}n.forEach(e=>{e.addEventListener(`click`,()=>{let n=e.getAttribute(`href`)?.replace(/^#/,``);n&&(s(n),a=!0,window.clearTimeout(t),t=window.setTimeout(()=>{a=!1,l()},600))},{signal:i})}),window.addEventListener(`scroll`,l,{passive:!0,signal:i}),window.addEventListener(`resize`,l,{passive:!0,signal:i}),l()}n(),document.addEventListener(`astro:page-load`,n),document.addEventListener(`astro:after-swap`,n),document.addEventListener(`astro:before-swap`,()=>{e&&=(e.abort(),null),t!==void 0&&(window.clearTimeout(t),t=void 0)});</script></aside></div><script type="module">function e(){document.querySelectorAll(`pre`).forEach(e=>{if(e.querySelector(`.code-copy-btn`))return;let t=document.createElement(`button`);t.type=`button`,t.className=`code-copy-btn`,t.setAttribute(`aria-label`,`Copy code to clipboard`),t.innerHTML=`
+        <svg class="copy-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
+          <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
+        </svg>
+        <span class="copy-label">Copy</span>
+      `,t.addEventListener(`click`,async()=>{let n=e.querySelector(`code`),r=n?n.innerText:e.innerText;try{await navigator.clipboard.writeText(r),t.classList.add(`copied`);let e=t.querySelector(`.copy-label`);e&&(e.textContent=`Copied!`),setTimeout(()=>{t.classList.remove(`copied`),e&&(e.textContent=`Copy`)},2e3)}catch{}}),e.style.position=`relative`,e.appendChild(t)})}e(),document.addEventListener(`astro:after-swap`,e);</script></main><footer class="site-footer" data-astro-cid-jo6i4kqk><div class="container footer-inner" data-astro-cid-jo6i4kqk><div class="footer-socials" aria-label="Social and feed links" data-astro-cid-jo6i4kqk><a href="https://github.com/stu98832" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="GitHub" title="Source on GitHub" data-astro-cid-jo6i4kqk><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-jo6i4kqk><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" data-astro-cid-jo6i4kqk></path></svg></a><a href="/rss.xml" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="RSS Feed" title="Subscribe to RSS Feed" data-astro-cid-jo6i4kqk><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-jo6i4kqk><path d="M4 11a9 9 0 0 1 9 9" data-astro-cid-jo6i4kqk></path><path d="M4 4a16 16 0 0 1 16 16" data-astro-cid-jo6i4kqk></path><circle cx="5" cy="19" r="1" data-astro-cid-jo6i4kqk></circle></svg></a></div><div class="footer-copy" data-astro-cid-jo6i4kqk><span data-astro-cid-jo6i4kqk>© 2026 Bluebean 的筆記.</span><span class="footer-separator" data-astro-cid-jo6i4kqk>•</span><span class="footer-ssg" data-astro-cid-jo6i4kqk>Pure SSG powered by <a href="https://astro.build" target="_blank" rel="noopener noreferrer" data-astro-cid-jo6i4kqk>Astro</a></span></div><div class="footer-signature" data-astro-cid-jo6i4kqk><em data-astro-cid-jo6i4kqk>Crafted with precision by the <a href="https://github.com/rnt-rez/minrock" target="_blank" rel="noopener noreferrer" data-astro-cid-jo6i4kqk>Minrock Project</a>. Engineered for the open web.</em></div></div></footer><!-- Search Modal Backdrop & Container --><div id="search-modal-backdrop" class="search-backdrop" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Global Search" data-astro-cid-etsyzymg><div class="search-dialog" id="search-modal-dialog" data-astro-cid-etsyzymg><!-- Header --><div class="search-dialog-header" data-astro-cid-etsyzymg><div class="search-input-wrapper" data-astro-cid-etsyzymg><svg class="search-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-astro-cid-etsyzymg><circle cx="11" cy="11" r="8" data-astro-cid-etsyzymg></circle><path d="m21 21-4.3-4.3" data-astro-cid-etsyzymg></path></svg><input type="text" id="search-modal-input" class="search-input" placeholder="Search articles, projects, topics, tags..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-astro-cid-etsyzymg><button id="search-modal-clear" class="search-clear-btn" aria-label="Clear search" type="button" style="display: none;" data-astro-cid-etsyzymg><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-etsyzymg><line x1="18" y1="6" x2="6" y2="18" data-astro-cid-etsyzymg></line><line x1="6" y1="6" x2="18" y2="18" data-astro-cid-etsyzymg></line></svg></button></div><button id="search-modal-close" class="search-close-badge" type="button" aria-label="Close search (Esc)" title="Close (Esc)" data-astro-cid-etsyzymg><kbd class="kbd-esc" data-astro-cid-etsyzymg>ESC</kbd></button></div><!-- Results Area --><div id="search-modal-results" class="search-dialog-body" tabindex="-1" data-astro-cid-etsyzymg><div class="search-initial-state" data-astro-cid-etsyzymg><div class="initial-section-title" data-astro-cid-etsyzymg>Quick Access &amp; Navigation</div><div class="initial-shortcuts" data-astro-cid-etsyzymg><a href="/blog" class="initial-pill" data-astro-cid-etsyzymg><span class="pill-icon" data-astro-cid-etsyzymg>📄</span><span data-astro-cid-etsyzymg>All Articles</span></a><!-- <a href="/projects" class="initial-pill">
+            <span class="pill-icon">📦</span>
+            <span>All Projects</span>
+          </a> --><a href="/tags" class="initial-pill" data-astro-cid-etsyzymg><span class="pill-icon" data-astro-cid-etsyzymg>🏷️</span><span data-astro-cid-etsyzymg>All Tags</span></a><a href="/about" class="initial-pill" data-astro-cid-etsyzymg><span class="pill-icon" data-astro-cid-etsyzymg>👤</span><span data-astro-cid-etsyzymg>About</span></a></div><div class="initial-hint" data-astro-cid-etsyzymg>Type any keyword (e.g., <code data-astro-cid-etsyzymg>obsidian</code>, <code data-astro-cid-etsyzymg>astro</code>, <code data-astro-cid-etsyzymg>typography</code>, <code data-astro-cid-etsyzymg>scatterleaf</code>) to filter in real-time.</div></div></div><!-- Footer --><div class="search-dialog-footer" data-astro-cid-etsyzymg><div class="search-shortcuts-guide" data-astro-cid-etsyzymg><span class="guide-item" data-astro-cid-etsyzymg><kbd data-astro-cid-etsyzymg>↑</kbd><kbd data-astro-cid-etsyzymg>↓</kbd> Navigate</span><span class="guide-item" data-astro-cid-etsyzymg><kbd data-astro-cid-etsyzymg>↵</kbd> Select</span><span class="guide-item" data-astro-cid-etsyzymg><kbd data-astro-cid-etsyzymg>ESC</kbd> Close</span></div><div class="search-brand-note" data-astro-cid-etsyzymg>🪨 Minrock Search</div></div></div></div><script type="module" src="/_astro/SearchModal.astro_astro_type_script_index_0_lang.CWuE0uq0.js"></script><button id="back-to-top" aria-label="Back to top" title="Back to top" data-astro-cid-vy5be4ad><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-astro-cid-vy5be4ad><polyline points="18 15 12 9 6 15" data-astro-cid-vy5be4ad></polyline></svg></button><script type="module">var e=null;function t(){e&&=(e.abort(),null);let t=document.getElementById(`back-to-top`);if(!t)return;e=new AbortController;let{signal:n}=e,r=!1;function i(){r||=(window.requestAnimationFrame(()=>{window.scrollY>300?t?.classList.add(`visible`):t?.classList.remove(`visible`),r=!1}),!0)}window.addEventListener(`scroll`,i,{passive:!0,signal:n}),i(),t.addEventListener(`click`,()=>{window.scrollTo({top:0,behavior:`smooth`})},{signal:n})}t(),document.addEventListener(`astro:page-load`,t),document.addEventListener(`astro:after-swap`,t),document.addEventListener(`astro:before-swap`,()=>{e&&=(e.abort(),null)});</script><script type="module" src="/_astro/ImageZoom.astro_astro_type_script_index_0_lang.BCmcjYw0.js"></script></body></html>

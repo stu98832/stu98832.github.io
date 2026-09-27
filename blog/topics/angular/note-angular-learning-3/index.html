@@ -1,0 +1,211 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-z4jru4n3><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text y=%22.9em%22 font-size=%2290%22&gt;🪨&lt;/text&gt;&lt;/svg&gt;"><link rel="canonical" href="https://stu98832.github.io/blog/topics/angular/note-angular-learning-3/"><link rel="alternate" type="application/rss+xml" title="Bluebean 的筆記" href="https://stu98832.github.io/rss.xml"><title>Angular學習筆記3 - 專案結構、Module、Component | Bluebean 的筆記</title><meta name="description" content><meta name="author" content="Renato Rezende"><!-- Open Graph --><meta property="og:type" content="website"><meta property="og:url" content="https://stu98832.github.io/blog/topics/angular/note-angular-learning-3/"><meta property="og:title" content="Angular學習筆記3 - 專案結構、Module、Component | Bluebean 的筆記"><meta property="og:description" content><meta property="og:image" content="https://stu98832.github.io/og-image.png"><!-- Twitter / X --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:url" content="https://stu98832.github.io/blog/topics/angular/note-angular-learning-3/"><meta name="twitter:title" content="Angular學習筆記3 - 專案結構、Module、Component | Bluebean 的筆記"><meta name="twitter:description" content><meta name="twitter:image" content="https://stu98832.github.io/og-image.png"><!-- Anti-FOUC script: Executed synchronously before DOM render --><script>
+      (function () {
+        const savedTheme = localStorage.getItem('minrock_theme') || 'cream';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      })();
+    </script><link rel="stylesheet" href="/_astro/_..TSd1M-te.css"><link rel="stylesheet" href="/_astro/StructuredData.BsOX6HTC.css"><link rel="stylesheet" href="/_astro/BaseLayout.B3D0qSEd.css"><script type="module" src="/_astro/page.CMFgH77u.js"></script></head><body data-astro-cid-z4jru4n3><a href="#main-content" class="skip-to-content" data-astro-cid-z4jru4n3>Skip to content</a><header class="site-header" data-astro-cid-nen7h5rs><div class="container-wide header-inner" data-astro-cid-nen7h5rs><!-- Brand --><a href="/" class="brand" aria-label="Minrock Home" data-astro-cid-nen7h5rs><span class="brand-rock" data-astro-cid-nen7h5rs>🪨</span><span class="brand-title" data-astro-cid-nen7h5rs>Bluebean 的筆記</span></a><!-- Main Nav --><nav class="nav" aria-label="Main Navigation" data-astro-cid-nen7h5rs><a href="/" class="nav-link" data-astro-cid-nen7h5rs>Home</a><a href="/blog" class="nav-link active" aria-current="page" data-astro-cid-nen7h5rs>Blog</a><a href="/tags" class="nav-link" data-astro-cid-nen7h5rs>Tags</a><a href="/about" class="nav-link" data-astro-cid-nen7h5rs>About</a></nav><!-- Header Actions --><div class="header-actions" data-astro-cid-nen7h5rs><!-- Search Trigger (Desktop) --><button id="header-search-btn" class="search-trigger desktop-only" type="button" aria-label="Search (Ctrl + K)" title="Search (Ctrl + K)" data-astro-cid-nen7h5rs><div class="search-trigger-inner" data-astro-cid-nen7h5rs><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-astro-cid-nen7h5rs><circle cx="11" cy="11" r="8" data-astro-cid-nen7h5rs></circle><path d="m21 21-4.3-4.3" data-astro-cid-nen7h5rs></path></svg><span class="search-trigger-text" data-astro-cid-nen7h5rs>Search...</span></div><kbd class="search-trigger-kbd" data-astro-cid-nen7h5rs>Ctrl K</kbd></button><!-- Mobile Search Button --><button id="mobile-search-btn" class="icon-btn mobile-only" type="button" aria-label="Search" title="Search" data-astro-cid-nen7h5rs><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-astro-cid-nen7h5rs><circle cx="11" cy="11" r="8" data-astro-cid-nen7h5rs></circle><path d="m21 21-4.3-4.3" data-astro-cid-nen7h5rs></path></svg></button><!-- Clustered Controls: Social + Theme + Language Dropdowns --><div class="header-controls" data-astro-cid-nen7h5rs><div class="social-dropdown-container" id="social-dropdown-container" data-astro-cid-nfwclza7><button id="social-menu-btn" class="social-btn-trigger" aria-label="Connect and social links" aria-haspopup="true" aria-expanded="false" title="Connect" data-astro-cid-nfwclza7><!-- Social / At icon --><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-astro-cid-nfwclza7><circle cx="12" cy="12" r="4" data-astro-cid-nfwclza7></circle><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8" data-astro-cid-nfwclza7></path></svg><svg class="social-chevron" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-astro-cid-nfwclza7><polyline points="6 9 12 15 18 9" data-astro-cid-nfwclza7></polyline></svg></button><!-- Floating Social Dropdown --><div id="social-dropdown-menu" class="social-dropdown-menu" role="menu" aria-label="Social and contact options" data-astro-cid-nfwclza7><div class="social-dropdown-header" data-astro-cid-nfwclza7>CONNECT</div><a href="https://github.com/stu98832" target="_blank" rel="noopener noreferrer" class="social-menu-item" role="menuitem" data-astro-cid-nfwclza7><span class="social-item-icon" data-astro-cid-nfwclza7><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-astro-cid-nfwclza7><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z" data-astro-cid-nfwclza7></path></svg></span><div class="social-item-info" data-astro-cid-nfwclza7><span class="social-item-name" data-astro-cid-nfwclza7>GitHub</span><span class="social-item-handle" data-astro-cid-nfwclza7>↗ Repository</span></div></a></div></div><script type="module">function e(){let e=document.getElementById(`social-menu-btn`),t=document.getElementById(`social-dropdown-menu`),n=document.getElementById(`social-dropdown-container`);function r(){if(t){if(window.innerWidth<=768){t.style.left=`50%`,t.style.right=`auto`,t.style.transform=`translateX(-50%)`;let e=t.getBoundingClientRect();if(e.left<12){let n=12-e.left;t.style.transform=`translateX(calc(-50% + ${n}px))`}else if(e.right>window.innerWidth-12){let n=e.right-(window.innerWidth-12);t.style.transform=`translateX(calc(-50% - ${n}px))`}}else t.style.left=``,t.style.right=``,t.style.transform=``}}e?.addEventListener(`click`,n=>{n.stopPropagation(),document.querySelectorAll(`.lang-dropdown.open, .theme-dropdown.open`).forEach(e=>e.classList.remove(`open`)),document.querySelectorAll(`#lang-btn, #theme-toggle-btn`).forEach(e=>e.setAttribute(`aria-expanded`,`false`));let i=t?.classList.toggle(`open`);e.setAttribute(`aria-expanded`,String(!!i)),i&&r()}),window.addEventListener(`resize`,()=>{t?.classList.contains(`open`)&&r()}),document.addEventListener(`click`,r=>{n?.contains(r.target)||(t?.classList.remove(`open`),e?.setAttribute(`aria-expanded`,`false`))}),document.addEventListener(`keydown`,n=>{n.key===`Escape`&&t?.classList.contains(`open`)&&(t.classList.remove(`open`),e?.setAttribute(`aria-expanded`,`false`),e?.focus())})}e(),document.addEventListener(`astro:after-swap`,e);</script><!-- <LanguageSelector /> --></div></div></div></header><main id="main-content" class="main-content container-wide" data-astro-cid-z4jru4n3><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Angular學習筆記3 - 專案結構、Module、Component","description":"","url":"http://localhost:4321/blog/topics/angular/note-angular-learning-3/","datePublished":"2021-02-14T00:00:00.000Z","dateModified":"2021-02-14T00:00:00.000Z","author":{"@type":"Person","name":"Renato Rezende"},"publisher":{"@type":"Organization","name":"Bluebean 的筆記","url":"http://localhost:4321"},"keywords":"Angular, 網頁前端"}</script><div class="post-page-container" data-astro-cid-jo55ryrt><!-- Main Content Column --><div class="post-main" data-astro-cid-jo55ryrt><article class="post-article" data-astro-cid-jo55ryrt><header class="post-header" data-astro-cid-jo55ryrt><div class="post-meta" data-astro-cid-jo55ryrt><time datetime="2021-02-14T00:00:00.000Z" data-astro-cid-jo55ryrt>February 14, 2021</time><span class="meta-dot" data-astro-cid-jo55ryrt>·</span><span class="reading-time" data-astro-cid-jo55ryrt><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-astro-cid-jo55ryrt><circle cx="12" cy="12" r="10" data-astro-cid-jo55ryrt></circle><polyline points="12 6 12 12 16 14" data-astro-cid-jo55ryrt></polyline></svg>3 min read</span><span class="meta-dot" data-astro-cid-jo55ryrt>·</span><span class="meta-tags" data-astro-cid-jo55ryrt><a href="/tags/Angular" class="tag" data-astro-cid-jo55ryrt>Angular</a><a href="/tags/%E7%B6%B2%E9%A0%81%E5%89%8D%E7%AB%AF" class="tag" data-astro-cid-jo55ryrt>網頁前端</a></span></div><h1 class="post-title" data-astro-cid-jo55ryrt>Angular學習筆記3 - 專案結構、Module、Component</h1><p class="post-description" data-astro-cid-jo55ryrt></p></header><!-- 🔊 Accessible Audio Player (Text-to-Speech) --><div class="post-content" data-astro-cid-jo55ryrt><p>Angular 的專案資料夾內容相當豐富，剛開始看到時，還真不知道該從哪裡下手呢。檔案數量多，名子又很長</p>
+<p>所以一開始會先介紹一下基本的專案結構，然後間單說一下 Module 跟 Component</p>
+<h2 id="angular-專案結構">Angular 專案結構</h2>
+<p><img alt="image-20210214131549514" loading="lazy" decoding="async" width="137" height="344" src="/_astro/image-20210214131549514.C5GSx6FX_ZRuiP6.webp"></p>
+<ul>
+<li>e2e
+自動模擬使用者操作的測試。(我還沒用過這種測試，以前都是手動去測試的)</li>
+<li>package.json / package-lock.json / node_modules
+管理 nodejs 套件相關的檔案跟資料夾</li>
+<li>src
+專案的原始碼</li>
+<li>angular.json
+專案的設定</li>
+<li>tsconfig.app.json / tsconfig.json / tsconfig.spec.json
+TypeScript 編譯的相關設定</li>
+<li>tslint.json
+Type Script 程式碼檢查的設定</li>
+</ul>
+<p>其他更詳細的部份可以參考<a href="https://angular.io/guide/file-structure">官方文件</a></p>
+<p>大多數的東西其實剛開始都不會碰，最主要的就是 <strong>src</strong> 資料夾</p>
+<h3 id="src-結構">src 結構</h3>
+<p><img alt="image-20210214132052697" loading="lazy" decoding="async" width="196" height="351" src="/_astro/image-20210214132052697.C1bPrS50_1E2Idc.webp"></p>
+<p>src 資料夾裡面有幾個一開始需要先注意的東西：</p>
+<ul>
+<li>app 資料夾
+應用程式的主體，裡面會放入與模組、元件、服務之類應用程式相關的程式</li>
+<li>assert 資料夾
+網頁所需要的資源，編譯頁面時會被處理且一起被輸出</li>
+<li>style.css
+整個專案共用的 CSS 樣式</li>
+<li>favicon.ico
+網頁的圖標</li>
+<li>index.html
+整個 SPA 的 HTML 本體
+<code>&lt;app-root&gt;</code> 元素裡會嵌入 AppComponent 處理後的頁面</li>
+</ul>
+<p>其他不需要動，但很重要的東西：</p>
+<ul>
+<li>main.ts
+專案的程式入口
+會啟動 AppModule</li>
+<li>test.ts
+專案的測試程序啟動腳本</li>
+</ul>
+<p>看完了專案結構之後，讓我們開始專注在 <strong>app</strong> 這個資料夾的內容上</p>
+<p>整個資料夾目前共有6份檔案，分別為：</p>
+<ul>
+<li>app-routing.module.ts
+路由模組</li>
+<li>app.component.css
+AppComponent 的樣式表</li>
+<li>app.component.html
+AppComponent 的 HTML 樣板檔</li>
+<li>app.component.spec.ts
+AppComponent 的測試程式</li>
+<li>app.component.ts
+AppComponent 類別</li>
+<li>app.module.ts
+AppModule 類別</li>
+</ul>
+<p>接下來將會簡單介紹一下上面所寫的 Module 跟 Component 是什麼東西</p>
+<h2 id="module">Module</h2>
+<p>檔案名稱為 <code>&lt;module_name&gt;.module.ts</code></p>
+<p>整個 Angular 程式都是跟著 Module 走
+Module 會引入 Component 來渲染頁面</p>
+<p>專案建立之後，會有一個最主要的模組叫做 <strong>AppModule</strong>，檔案名稱為 <code>app.module.ts</code>。</p>
+<p>來看一下 AppModule 的樣貌：</p>
+<p><img alt="image-20210214134553583" loading="lazy" decoding="async" width="455" height="350" src="/_astro/image-20210214134553583.B34yoFrg_ZV1iBP.webp"></p>
+<p>整體結構看起來相當的簡單，裡面應用了幾個 Angular 的核心模組，並使用了<strong>裝飾器 NgModule</strong></p>
+<h3 id="裝飾器">裝飾器</h3>
+<p>屬於設計模式的一種，可以為一個類別或函式附加額外的設定或功能</p>
+<p>已經有一些程式語言提供了裝飾器的語法糖，例如說 <strong>Python</strong> 、<strong>Typescript</strong>、<strong>Javascript</strong></p>
+<p>來看一下裝飾器大概的樣貌，這邊是使用 python 來示範：</p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#768390">## 裝飾器</span></span>
+<span class="line"><span style="color:#F47067">def</span><span style="color:#DCBDFB"> decorator</span><span style="color:#ADBAC7">(func):</span></span>
+<span class="line"><span style="color:#6CB6FF">    print</span><span style="color:#ADBAC7">(</span><span style="color:#96D0FF">'decorator'</span><span style="color:#ADBAC7">)</span></span>
+<span class="line"><span style="color:#ADBAC7">    </span></span>
+<span class="line"><span style="color:#768390">    # 裝飾過後的函式</span></span>
+<span class="line"><span style="color:#768390">    # 這邊用了一個 python 的技巧，將所有接收到的參數都丟到原函式中</span></span>
+<span class="line"><span style="color:#F47067">    def</span><span style="color:#DCBDFB"> decorated_func</span><span style="color:#ADBAC7">(</span><span style="color:#F47067">*</span><span style="color:#ADBAC7">args, </span><span style="color:#F47067">**</span><span style="color:#ADBAC7">kargs):</span></span>
+<span class="line"><span style="color:#6CB6FF">        print</span><span style="color:#ADBAC7">(</span><span style="color:#96D0FF">'hello!'</span><span style="color:#ADBAC7">)</span></span>
+<span class="line"><span style="color:#F47067">        return</span><span style="color:#ADBAC7"> func(</span><span style="color:#F47067">*</span><span style="color:#ADBAC7">args, </span><span style="color:#F47067">**</span><span style="color:#ADBAC7">kargs)</span></span>
+<span class="line"><span style="color:#ADBAC7">    </span></span>
+<span class="line"><span style="color:#768390">    # 回傳裝飾過後的函式</span></span>
+<span class="line"><span style="color:#F47067">    return</span><span style="color:#ADBAC7"> decorated_func</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#768390">## 將 foo 套用 decorator</span></span>
+<span class="line"><span style="color:#DCBDFB">@decorator</span></span>
+<span class="line"><span style="color:#F47067">def</span><span style="color:#DCBDFB"> foo</span><span style="color:#ADBAC7">():</span></span>
+<span class="line"><span style="color:#6CB6FF">    print</span><span style="color:#ADBAC7">(</span><span style="color:#96D0FF">'foo'</span><span style="color:#ADBAC7">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6CB6FF">print</span><span style="color:#ADBAC7">(</span><span style="color:#96D0FF">'call foo'</span><span style="color:#ADBAC7">)</span></span>
+<span class="line"><span style="color:#ADBAC7">foo() </span></span>
+<span class="line"><span style="color:#96D0FF">"""</span></span>
+<span class="line"><span style="color:#96D0FF">輸出：</span></span>
+<span class="line"><span style="color:#96D0FF">decorator</span></span>
+<span class="line"><span style="color:#96D0FF">call foo</span></span>
+<span class="line"><span style="color:#96D0FF">hello!</span></span>
+<span class="line"><span style="color:#96D0FF">foo</span></span>
+<span class="line"><span style="color:#96D0FF">"""</span></span></code></pre>
+<p>從輸出中可以看到，整個裝飾器運作的順序
+在宣告時會先進入 <code>decorator</code> 裝飾 <code>foo</code> 這個函式，之後呼叫時則會呼叫已經被裝飾過函式</p>
+<p>實際上 python 的 decorator 語法糖就等同於這個樣子：</p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F47067">def</span><span style="color:#DCBDFB"> decorator</span><span style="color:#ADBAC7">():</span></span>
+<span class="line"><span style="color:#768390">    # ...</span></span>
+<span class="line"><span style="color:#F47067">def</span><span style="color:#DCBDFB"> foo</span><span style="color:#ADBAC7">():</span></span>
+<span class="line"><span style="color:#768390">    # ...</span></span>
+<span class="line"><span style="color:#ADBAC7">foo </span><span style="color:#F47067">=</span><span style="color:#ADBAC7"> decorator(foo)</span></span></code></pre>
+<p>decorator 可以有參數，也可以堆疊，像是：</p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#DCBDFB">@decorator1</span></span>
+<span class="line"><span style="color:#DCBDFB">@decorator2</span><span style="color:#ADBAC7">(value)</span></span>
+<span class="line"><span style="color:#F47067">def</span><span style="color:#DCBDFB"> foo</span><span style="color:#ADBAC7">():</span></span>
+<span class="line"><span style="color:#768390">    # ...</span></span></code></pre>
+<aside class="callout callout-info" data-callout="info" data-type="info" role="note" aria-label="Info"><div class="callout-title"><span class="callout-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></span><span class="callout-title-text">Info</span></div>
+<p></p>
+<h5 id="decorator-的順序是由下到上">decorator 的順序是由下到上</h5>
+<p>要特別注意的是，decorator 的順序是由下到上，而不是像視覺上看到的由上到下
+這是因為套用兩層 decorator，會等同於下面這個樣子：</p>
+<pre class="astro-code github-dark-dimmed" style="background-color:#22272e;color:#adbac7; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#ADBAC7">foo </span><span style="color:#F47067">=</span><span style="color:#ADBAC7"> decorator1(decorator2(value)(foo))</span></span></code></pre>
+<p><code>foo</code> 先傳入 <code>decorator2(value)</code> 裡，接著 <code>decorator2(value)</code> 回傳的裝飾後的函式再傳入 <code>decorator1</code>
+所以實際上是 <code>decorator2(value)</code> 會先被套用</p>
+</aside>
+<p>TypeScript 上的 decorator 也類似 python，<strong>但是 TypeScript 只能對類別或是類別裡的方法使用 decorator</strong>，而且 TypeScript 的 decorator 只做修飾，不會回傳函式</p>
+<h3 id="ngmodule">NgModule</h3>
+<p>NgModule 是 Angular 的核心元件之一，是一種裝飾器</p>
+<p>主要會使用這些參數：</p>
+<ul>
+<li>declarations
+表示模組使用到的 Component，Component 本身要加到這邊才會有作用</li>
+<li>imports
+表示該模組所引用的其他模組</li>
+<li>providers
+額外的服務 (Service)，之後會提到</li>
+<li>bootstrap
+主模組才會需要的東西，會在模組自啟時使用指定的 Component</li>
+<li>exports
+AppModule 沒有使用的參數，用於其他子模組
+給其他模組使用的 Component
+沒有寫在這邊的話，即使已經放入 declarations 中，模組被引用時依然不會使用那些 Component</li>
+</ul>
+<h3 id="browsermodule">BrowserModule</h3>
+<p>包含整個 Angular 應用所需的基礎架構</p>
+<h3 id="approutingmodule">AppRoutingModule</h3>
+<p>路由模組，將路徑對到相對應的頁面。
+詳細的內容在之後介紹路由時會說到</p>
+<h2 id="component">Component</h2>
+<p>檔案名稱為 <code>&lt;component_name&gt;.component.ts</code></p>
+<p>先看一下 <code>app.component.ts</code> 裡的樣貌：</p>
+<p><img alt="image-20210214170932176" loading="lazy" decoding="async" width="333" height="200" src="/_astro/image-20210214170932176.DhUUSfkt_3Xjzr.webp"></p>
+<p>上面的 <code>@Component</code> 部份跟 NgModule 一樣是裝飾器</p>
+<p>主要參數有：</p>
+<ul>
+<li>
+<p>selector
+元件在樣板中被使用時所對應的元素，使用 CSS Selector 選擇元素
+基本上會是一個獨立名稱的標籤 (Tag)，通常為 <code>app-&lt;tag_name&gt;</code>
+AppComponent 中的 app-root 就是對應到前面 HTML 說到的 <code>&lt;app-root&gt;</code></p>
+</li>
+<li>
+<p>template / templateUrl
+HTML 樣板
+前者是直接把 HTML 打在裡面，後者則是直接引用檔案，檔案名稱通常為 <code>&lt;component_name&gt;.component.html</code></p>
+</li>
+<li>
+<p>styles / styleUrls
+引用的樣式表
+前者是直接把樣式打在裡面，後者則是直接引用檔案，檔案名稱通常為 <code>&lt;component_name&gt;.component.css</code> (假設樣式表類型使用 CSS )</p>
+</li>
+</ul>
+<h3 id="變數">變數</h3>
+<p>在 Component 類別裡宣告的變數或函式，可以在樣板中被應用</p>
+<p>例如說 AppComponent 裡的 <code>title</code> 數值為 <code>'test-project'</code>
+如果還記得上一篇使用 <code>ng serve</code> 後瀏覽器上看到的畫面的話，會發現上面的字是 “<strong>test-project</strong> app is running!”</p>
+<p><img alt="image-20210214190724338" loading="lazy" decoding="async" width="344" height="91" src="/_astro/image-20210214190724338.joMubQK__ZTkQ7w.webp"></p>
+<p>可以將 <code>title</code> 的數值改成其他內容，比如說 <code>'hello-world'</code>
+之後再使用 <code>ng serve</code> 開啟伺服器後再去查看，你會發現它變成 “<strong>hello-world</strong> app is running!” 了</p>
+<p><img alt="image-20210214190804781" loading="lazy" decoding="async" width="344" height="87" src="/_astro/image-20210214190804781.Bt5aWjBo_Z1jgfYg.webp"></p>
+<aside class="callout callout-info" data-callout="info" data-type="info" role="note" aria-label="Info"><div class="callout-title"><span class="callout-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></span><span class="callout-title-text">Info</span></div>
+<p>上一篇有說到，<code>ng serve</code> 開啟的伺服器會感應檔案的變化，然後讓瀏覽器重新整理
+所以在改 <code>title</code> 之前可以先開啟伺服器，然後再修改 <code>title</code>，應該會發現頁面被自動重新整理</p>
+</aside>
+<p>至於 HTML 樣板要怎麼引用這些變數，就等到下一個章節會繼續說明</p>
+<h2 id="結語">結語</h2>
+<p>原本是想多放一點實際操作的，但是前面加上專案結構跟裝飾器介紹之後，發現這樣下去篇幅可能會太長，所以就先停在這裡，等後面再慢慢補上</p>
+<p>Angular 的東西真的是蠻多的，自己目前碰到的也都是比較基本的東西而已，但是真要把這些基本的東西講明白，感覺也是挺困難的。目前都是依照自己的了解，加上網路上的一些資訊輔助，將文章打出來 (<del>不然有些地方我其實也不知道應該要怎麼解釋會比較好</del>)，希望有在看的各位到目前為止都還看得懂</p>
+<h2 id="參考資料">參考資料</h2>
+<ul>
+<li><a href="https://angular.io/api/core/NgModule">Angular - NgModule</a></li>
+<li><a href="https://angular.io/api/platform-browser/BrowserModule">Angular - BrowserModule</a></li>
+<li><a href="https://angular.io/guide/component-overview">Angular - Angular Components Overview</a></li>
+<li><a href="https://www.typescriptlang.org/docs/handbook/decorators.html">TypeScript: Documentation - Decorators</a></li>
+<li><a href="https://oldmo860617.medium.com/%E5%8D%81%E5%88%86%E9%90%98%E5%B8%B6%E4%BD%A0%E4%BA%86%E8%A7%A3-typescript-decorator-48c2ae9e246d">十分鐘帶你了解 TypeScript Decorator. 什麼是 Decorator ? | by 莫力全 Kyle Mo | Medium</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/20139834">Decorators in ES7 - 知乎</a></li>
+<li><a href="https://blog.miniasp.com/post/2019/02/18/Unit-testing-Integration-testing-e2e-testing">一次搞懂單元測試、整合測試、端對端測試之間的差異 | The Will Will Web</a></li>
+</ul>
+</div><!-- Prev / Next Navigation --><nav class="post-nav" aria-label="Post navigation" data-astro-cid-jo55ryrt><a href="/blog/topics/angular/note-angular-learning-2" class="nav-card nav-prev" data-astro-cid-jo55ryrt><span class="nav-direction" data-astro-cid-jo55ryrt>← Older</span><span class="nav-title" data-astro-cid-jo55ryrt>Angular學習筆記2 - 建立第一個 Angular 專案</span></a><a href="/blog/topics/angular/note-angular-learning-4" class="nav-card nav-next" data-astro-cid-jo55ryrt><span class="nav-direction" data-astro-cid-jo55ryrt>Newer →</span><span class="nav-title" data-astro-cid-jo55ryrt>Angular學習筆記4 - Component與樣版</span></a></nav><!-- 💬 Modular Comments Area --><section class="comments-area" id="comments" aria-label="Article Discussion" data-astro-cid-nuen6n26><div class="comments-divider" data-astro-cid-nuen6n26></div><script src="https://giscus.app/client.js" data-repo="stu98832/stu98832.github.io" data-repo-id="MDEwOlJlcG9zaXRvcnkyNDMyNTk5NjE=" data-category="Giscus" data-category-id="DIC_kwDODn_aOc4DGeo4" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="light" data-lang="zh-TW" data-loading crossorigin="anonymous" async>
+      </script></section></article></div><!-- Sticky Sidebar Column (TOC) --><aside class="post-sidebar" aria-label="Article Table of Contents" data-astro-cid-jo55ryrt><nav class="toc" aria-label="Table of contents" data-astro-cid-lkw5wmmf><div class="toc-title" data-astro-cid-lkw5wmmf>On This Page</div><ol class="toc-list" data-astro-cid-lkw5wmmf><li class="toc-item depth-2" data-astro-cid-lkw5wmmf><a href="#angular-專案結構" class="toc-link" data-astro-cid-lkw5wmmf><span class="toc-text" data-astro-cid-lkw5wmmf>Angular 專案結構</span></a></li><li class="toc-item depth-3" data-astro-cid-lkw5wmmf><a href="#src-結構" class="toc-link" data-astro-cid-lkw5wmmf><span class="toc-text" data-astro-cid-lkw5wmmf>src 結構</span></a></li><li class="toc-item depth-2" data-astro-cid-lkw5wmmf><a href="#module" class="toc-link" data-astro-cid-lkw5wmmf><span class="toc-text" data-astro-cid-lkw5wmmf>Module</span></a></li><li class="toc-item depth-3" data-astro-cid-lkw5wmmf><a href="#裝飾器" class="toc-link" data-astro-cid-lkw5wmmf><span class="toc-text" data-astro-cid-lkw5wmmf>裝飾器</span></a></li><li class="toc-item depth-3" data-astro-cid-lkw5wmmf><a href="#ngmodule" class="toc-link" data-astro-cid-lkw5wmmf><span class="toc-text" data-astro-cid-lkw5wmmf>NgModule</span></a></li><li class="toc-item depth-3" data-astro-cid-lkw5wmmf><a href="#browsermodule" class="toc-link" data-astro-cid-lkw5wmmf><span class="toc-text" data-astro-cid-lkw5wmmf>BrowserModule</span></a></li><li class="toc-item depth-3" data-astro-cid-lkw5wmmf><a href="#approutingmodule" class="toc-link" data-astro-cid-lkw5wmmf><span class="toc-text" data-astro-cid-lkw5wmmf>AppRoutingModule</span></a></li><li class="toc-item depth-2" data-astro-cid-lkw5wmmf><a href="#component" class="toc-link" data-astro-cid-lkw5wmmf><span class="toc-text" data-astro-cid-lkw5wmmf>Component</span></a></li><li class="toc-item depth-3" data-astro-cid-lkw5wmmf><a href="#變數" class="toc-link" data-astro-cid-lkw5wmmf><span class="toc-text" data-astro-cid-lkw5wmmf>變數</span></a></li><li class="toc-item depth-2" data-astro-cid-lkw5wmmf><a href="#結語" class="toc-link" data-astro-cid-lkw5wmmf><span class="toc-text" data-astro-cid-lkw5wmmf>結語</span></a></li><li class="toc-item depth-2" data-astro-cid-lkw5wmmf><a href="#參考資料" class="toc-link" data-astro-cid-lkw5wmmf><span class="toc-text" data-astro-cid-lkw5wmmf>參考資料</span></a></li></ol></nav><script type="module">var e=null,t;function n(){e&&=(e.abort(),null),t!==void 0&&(window.clearTimeout(t),t=void 0);let n=Array.from(document.querySelectorAll(`.toc-link`)),r=Array.from(document.querySelectorAll(`article h2[id], article h3[id]`));if(!n.length||!r.length)return;e=new AbortController;let{signal:i}=e,a=!1,o=!1;function s(e){e&&n.forEach(t=>{t.getAttribute(`href`)?.replace(/^#/,``)===e?t.classList.add(`active`):t.classList.remove(`active`)})}function c(){if(a)return;let e=window.scrollY,t=window.innerHeight,n=document.documentElement.scrollHeight;if(e+t>=n-80){s(r[r.length-1].id);return}let i=Math.max(150,t*.35);for(let e=r.length-1;e>=0;e--)if(r[e].getBoundingClientRect().top<=i){s(r[e].id);return}s(r[0].id)}function l(){o||=(window.requestAnimationFrame(()=>{c(),o=!1}),!0)}n.forEach(e=>{e.addEventListener(`click`,()=>{let n=e.getAttribute(`href`)?.replace(/^#/,``);n&&(s(n),a=!0,window.clearTimeout(t),t=window.setTimeout(()=>{a=!1,l()},600))},{signal:i})}),window.addEventListener(`scroll`,l,{passive:!0,signal:i}),window.addEventListener(`resize`,l,{passive:!0,signal:i}),l()}n(),document.addEventListener(`astro:page-load`,n),document.addEventListener(`astro:after-swap`,n),document.addEventListener(`astro:before-swap`,()=>{e&&=(e.abort(),null),t!==void 0&&(window.clearTimeout(t),t=void 0)});</script></aside></div><script type="module">function e(){document.querySelectorAll(`pre`).forEach(e=>{if(e.querySelector(`.code-copy-btn`))return;let t=document.createElement(`button`);t.type=`button`,t.className=`code-copy-btn`,t.setAttribute(`aria-label`,`Copy code to clipboard`),t.innerHTML=`
+        <svg class="copy-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
+          <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
+        </svg>
+        <span class="copy-label">Copy</span>
+      `,t.addEventListener(`click`,async()=>{let n=e.querySelector(`code`),r=n?n.innerText:e.innerText;try{await navigator.clipboard.writeText(r),t.classList.add(`copied`);let e=t.querySelector(`.copy-label`);e&&(e.textContent=`Copied!`),setTimeout(()=>{t.classList.remove(`copied`),e&&(e.textContent=`Copy`)},2e3)}catch{}}),e.style.position=`relative`,e.appendChild(t)})}e(),document.addEventListener(`astro:after-swap`,e);</script></main><footer class="site-footer" data-astro-cid-jo6i4kqk><div class="container footer-inner" data-astro-cid-jo6i4kqk><div class="footer-socials" aria-label="Social and feed links" data-astro-cid-jo6i4kqk><a href="https://github.com/stu98832" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="GitHub" title="Source on GitHub" data-astro-cid-jo6i4kqk><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-jo6i4kqk><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" data-astro-cid-jo6i4kqk></path></svg></a><a href="/rss.xml" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="RSS Feed" title="Subscribe to RSS Feed" data-astro-cid-jo6i4kqk><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-jo6i4kqk><path d="M4 11a9 9 0 0 1 9 9" data-astro-cid-jo6i4kqk></path><path d="M4 4a16 16 0 0 1 16 16" data-astro-cid-jo6i4kqk></path><circle cx="5" cy="19" r="1" data-astro-cid-jo6i4kqk></circle></svg></a></div><div class="footer-copy" data-astro-cid-jo6i4kqk><span data-astro-cid-jo6i4kqk>© 2026 Bluebean 的筆記.</span><span class="footer-separator" data-astro-cid-jo6i4kqk>•</span><span class="footer-ssg" data-astro-cid-jo6i4kqk>Pure SSG powered by <a href="https://astro.build" target="_blank" rel="noopener noreferrer" data-astro-cid-jo6i4kqk>Astro</a></span></div><div class="footer-signature" data-astro-cid-jo6i4kqk><em data-astro-cid-jo6i4kqk>Crafted with precision by the <a href="https://github.com/rnt-rez/minrock" target="_blank" rel="noopener noreferrer" data-astro-cid-jo6i4kqk>Minrock Project</a>. Engineered for the open web.</em></div></div></footer><!-- Search Modal Backdrop & Container --><div id="search-modal-backdrop" class="search-backdrop" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Global Search" data-astro-cid-etsyzymg><div class="search-dialog" id="search-modal-dialog" data-astro-cid-etsyzymg><!-- Header --><div class="search-dialog-header" data-astro-cid-etsyzymg><div class="search-input-wrapper" data-astro-cid-etsyzymg><svg class="search-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-astro-cid-etsyzymg><circle cx="11" cy="11" r="8" data-astro-cid-etsyzymg></circle><path d="m21 21-4.3-4.3" data-astro-cid-etsyzymg></path></svg><input type="text" id="search-modal-input" class="search-input" placeholder="Search articles, projects, topics, tags..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-astro-cid-etsyzymg><button id="search-modal-clear" class="search-clear-btn" aria-label="Clear search" type="button" style="display: none;" data-astro-cid-etsyzymg><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-etsyzymg><line x1="18" y1="6" x2="6" y2="18" data-astro-cid-etsyzymg></line><line x1="6" y1="6" x2="18" y2="18" data-astro-cid-etsyzymg></line></svg></button></div><button id="search-modal-close" class="search-close-badge" type="button" aria-label="Close search (Esc)" title="Close (Esc)" data-astro-cid-etsyzymg><kbd class="kbd-esc" data-astro-cid-etsyzymg>ESC</kbd></button></div><!-- Results Area --><div id="search-modal-results" class="search-dialog-body" tabindex="-1" data-astro-cid-etsyzymg><div class="search-initial-state" data-astro-cid-etsyzymg><div class="initial-section-title" data-astro-cid-etsyzymg>Quick Access &amp; Navigation</div><div class="initial-shortcuts" data-astro-cid-etsyzymg><a href="/blog" class="initial-pill" data-astro-cid-etsyzymg><span class="pill-icon" data-astro-cid-etsyzymg>📄</span><span data-astro-cid-etsyzymg>All Articles</span></a><!-- <a href="/projects" class="initial-pill">
+            <span class="pill-icon">📦</span>
+            <span>All Projects</span>
+          </a> --><a href="/tags" class="initial-pill" data-astro-cid-etsyzymg><span class="pill-icon" data-astro-cid-etsyzymg>🏷️</span><span data-astro-cid-etsyzymg>All Tags</span></a><a href="/about" class="initial-pill" data-astro-cid-etsyzymg><span class="pill-icon" data-astro-cid-etsyzymg>👤</span><span data-astro-cid-etsyzymg>About</span></a></div><div class="initial-hint" data-astro-cid-etsyzymg>Type any keyword (e.g., <code data-astro-cid-etsyzymg>obsidian</code>, <code data-astro-cid-etsyzymg>astro</code>, <code data-astro-cid-etsyzymg>typography</code>, <code data-astro-cid-etsyzymg>scatterleaf</code>) to filter in real-time.</div></div></div><!-- Footer --><div class="search-dialog-footer" data-astro-cid-etsyzymg><div class="search-shortcuts-guide" data-astro-cid-etsyzymg><span class="guide-item" data-astro-cid-etsyzymg><kbd data-astro-cid-etsyzymg>↑</kbd><kbd data-astro-cid-etsyzymg>↓</kbd> Navigate</span><span class="guide-item" data-astro-cid-etsyzymg><kbd data-astro-cid-etsyzymg>↵</kbd> Select</span><span class="guide-item" data-astro-cid-etsyzymg><kbd data-astro-cid-etsyzymg>ESC</kbd> Close</span></div><div class="search-brand-note" data-astro-cid-etsyzymg>🪨 Minrock Search</div></div></div></div><script type="module" src="/_astro/SearchModal.astro_astro_type_script_index_0_lang.CWuE0uq0.js"></script><button id="back-to-top" aria-label="Back to top" title="Back to top" data-astro-cid-vy5be4ad><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-astro-cid-vy5be4ad><polyline points="18 15 12 9 6 15" data-astro-cid-vy5be4ad></polyline></svg></button><script type="module">var e=null;function t(){e&&=(e.abort(),null);let t=document.getElementById(`back-to-top`);if(!t)return;e=new AbortController;let{signal:n}=e,r=!1;function i(){r||=(window.requestAnimationFrame(()=>{window.scrollY>300?t?.classList.add(`visible`):t?.classList.remove(`visible`),r=!1}),!0)}window.addEventListener(`scroll`,i,{passive:!0,signal:n}),i(),t.addEventListener(`click`,()=>{window.scrollTo({top:0,behavior:`smooth`})},{signal:n})}t(),document.addEventListener(`astro:page-load`,t),document.addEventListener(`astro:after-swap`,t),document.addEventListener(`astro:before-swap`,()=>{e&&=(e.abort(),null)});</script><script type="module" src="/_astro/ImageZoom.astro_astro_type_script_index_0_lang.BCmcjYw0.js"></script></body></html>
