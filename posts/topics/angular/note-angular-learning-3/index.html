@@ -1,0 +1,620 @@
+<!DOCTYPE html><html dir="ltr" lang="zh-TW" class="overflow-y-scroll scroll-smooth"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" href="/favicon.ico"><link rel="canonical" href="https://stu98832.github.io/posts/topics/angular/note-angular-learning-3/"><meta name="generator" content="Astro v7.3.5"><!-- Font --><style>@font-face{font-family:"Google Sans Code-14ad1c6dba3715dd";src:url("/_astro/fonts/9344e1e6ba3134db.woff") format("woff"), url("/_astro/fonts/4b36ecaec8861e3e.ttf") format("truetype");font-display:swap;font-weight:300;font-style:italic;}@font-face{font-family:"Google Sans Code-14ad1c6dba3715dd";src:url("/_astro/fonts/8f4ae94aecd98e20.woff") format("woff"), url("/_astro/fonts/82b0269728335a0a.ttf") format("truetype");font-display:swap;font-weight:400;font-style:italic;}@font-face{font-family:"Google Sans Code-14ad1c6dba3715dd";src:url("/_astro/fonts/20c20d9068c60dd0.woff") format("woff"), url("/_astro/fonts/b576f4f05c9dbc87.ttf") format("truetype");font-display:swap;font-weight:500;font-style:italic;}@font-face{font-family:"Google Sans Code-14ad1c6dba3715dd";src:url("/_astro/fonts/5a6c2a0b85de9ba1.woff") format("woff"), url("/_astro/fonts/4b0ae898a7afcd37.ttf") format("truetype");font-display:swap;font-weight:600;font-style:italic;}@font-face{font-family:"Google Sans Code-14ad1c6dba3715dd";src:url("/_astro/fonts/30d0dcc4d81c0020.woff") format("woff"), url("/_astro/fonts/e8acb21fdbc37b03.ttf") format("truetype");font-display:swap;font-weight:700;font-style:italic;}@font-face{font-family:"Google Sans Code-14ad1c6dba3715dd";src:url("/_astro/fonts/bf976bcffafeb084.woff") format("woff"), url("/_astro/fonts/8436f9847213f651.ttf") format("truetype");font-display:swap;font-weight:300;font-style:normal;}@font-face{font-family:"Google Sans Code-14ad1c6dba3715dd";src:url("/_astro/fonts/8a34d92a2a36603b.woff") format("woff"), url("/_astro/fonts/ccba4fb3766b1b6e.ttf") format("truetype");font-display:swap;font-weight:400;font-style:normal;}@font-face{font-family:"Google Sans Code-14ad1c6dba3715dd";src:url("/_astro/fonts/a20ca4cd312f40ca.woff") format("woff"), url("/_astro/fonts/ec093fff40157157.ttf") format("truetype");font-display:swap;font-weight:500;font-style:normal;}@font-face{font-family:"Google Sans Code-14ad1c6dba3715dd";src:url("/_astro/fonts/b74e6fc4049d0d63.woff") format("woff"), url("/_astro/fonts/dab775c12e1996fc.ttf") format("truetype");font-display:swap;font-weight:600;font-style:normal;}@font-face{font-family:"Google Sans Code-14ad1c6dba3715dd";src:url("/_astro/fonts/d9c1254858362ad4.woff") format("woff"), url("/_astro/fonts/a5f75c165e55a648.ttf") format("truetype");font-display:swap;font-weight:700;font-style:normal;}:root{--font-google-sans-code:"Google Sans Code-14ad1c6dba3715dd",monospace,微軟正黑體;}</style><!-- Primary meta --><title>Angular學習筆記3 - 專案結構、Module、Component | Bluebean 的筆記</title><meta name="title" content="Angular學習筆記3 - 專案結構、Module、Component | Bluebean 的筆記"><meta name="description" content><meta name="author" content="Bluebean"><link rel="sitemap" href="/sitemap-index.xml"><!-- Open Graph --><meta property="og:type" content="website"><meta property="og:site_name" content="Bluebean 的筆記"><meta property="og:title" content="Angular學習筆記3 - 專案結構、Module、Component | Bluebean 的筆記"><meta property="og:description" content><meta property="og:url" content="https://stu98832.github.io/posts/topics/angular/note-angular-learning-3/"><meta property="og:image" content="https://stu98832.github.io/default-og.jpg"><!-- Twitter / X --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://stu98832.github.io/posts/topics/angular/note-angular-learning-3/"><meta property="twitter:title" content="Angular學習筆記3 - 專案結構、Module、Component | Bluebean 的筆記"><meta property="twitter:description" content><meta property="twitter:image" content="https://stu98832.github.io/default-og.jpg"><!-- RSS autodiscovery --><link rel="alternate" type="application/rss+xml" title="Bluebean 的筆記" href="https://stu98832.github.io/rss.xml/"><!-- Filled at runtime by theme.ts to match the current background colour --><meta name="theme-color" content=""><!-- Extra head content injected by child layouts (e.g. JSON-LD, article meta) --><meta property="og:type" content="article"><meta property="article:published_time" content="2021-02-14T00:00:00.000Z"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Angular學習筆記3 - 專案結構、Module、Component | Bluebean 的筆記","datePublished":"2021-02-14T00:00:00.000Z","author":[{"@type":"Person","name":"Bluebean","url":"https://stu98832.github.io"}]}</script><!--
+      Inline FOUC-prevention script: sets data-theme on <html> before
+      the browser paints. Runs synchronously, no defer/async.
+    --><script>
+      (function () {
+        const stored = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+        const theme = stored ?? (prefersDark ? "dark" : "light");
+        const root = document.firstElementChild;
+        root?.setAttribute("data-theme", theme);
+        root?.classList.toggle("dark", theme === "dark");
+        // Expose value so theme.ts can skip re-detection.
+        window.__theme = { value: theme };
+      })();
+    </script><link rel="stylesheet" href="/_astro/Footer.BSzCrF3j.css"></head><body class="bg-background font-app text-foreground selection:bg-accent/75 selection:text-accent-foreground flex min-h-svh flex-col"><a id="skip-to-content" href="#main-content" class="bg-background text-accent absolute inset-s-16 -top-full z-50 px-3 py-2 backdrop-blur-lg transition-all focus:top-4">跳至內容</a><header class="app-layout flex flex-col items-center justify-between sm:flex-row"><div class="border-border bg-background relative flex w-full items-baseline justify-between border-b py-4 sm:items-center sm:py-6"><a href="/" class="absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none">Bluebean 的筆記</a><nav id="nav-menu" class="flex w-full flex-col items-center sm:ms-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0"><button id="menu-btn" class="focus-outline self-end p-2 sm:hidden" aria-label="打開選單" aria-expanded="false" aria-controls="menu-items" data-label-open="打開選單" data-label-close="關閉選單"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="hidden" viewBox="0 0 24 24" id="close-icon"><path stroke="none" d="M0 0h24v24H0z" /><path d="M18 6 6 18M6 6l12 12" /></svg><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="icon icon-tabler icons-tabler-outline icon-tabler-menu-deep" viewBox="0 0 24 24" id="menu-icon"><path stroke="none" d="M0 0h24v24H0z" /><path d="M4 6h16M7 12h13M10 18h10" /></svg></button><ul id="menu-items" class="[&amp;&gt;li&gt;a]:hover:text-accent mt-4 hidden w-44 grid-cols-2 place-content-center gap-2 sm:mt-0 sm:flex sm:w-auto sm:gap-x-5 sm:gap-y-0 sm:[&amp;&gt;li]:h-8 [&amp;&gt;li&gt;a]:block [&amp;&gt;li&gt;a]:px-4 [&amp;&gt;li&gt;a]:py-3 [&amp;&gt;li&gt;a]:text-center [&amp;&gt;li&gt;a]:font-medium sm:[&amp;&gt;li&gt;a]:px-2 sm:[&amp;&gt;li&gt;a]:py-1"><li class="col-span-2"><a href="/posts/" class="active-nav">Posts</a></li><li class="col-span-2"><a href="/tags/">Tags</a></li><li class="col-span-2"><a href="/about/">About</a></li><li class="col-span-2"><a href="/archives/" title="Archives" aria-label="Archives" class="group inline-flex items-center gap-1 hover:text-accent focus-outline flex size-full justify-center p-3 sm:relative sm:size-8 sm:p-0"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="hidden sm:absolute sm:top-1/2 sm:left-1/2 sm:block sm:size-6 sm:-translate-x-1/2 sm:-translate-y-1/2" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2 2 2 0 0 1-2 2H5a2 2 0 0 1-2-2M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8M10 12h4" /></svg><span class="sm:sr-only">Archives</span></a></li><li class="col-span-1 flex items-center justify-center"><a href="/search/" title="Search" aria-label="Search" class="group inline-flex items-center gap-1 hover:text-accent focus-outline relative size-8"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="absolute top-1/2 left-1/2 size-6 -translate-x-1/2 -translate-y-1/2" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M3 10a7 7 0 1 0 14 0 7 7 0 1 0-14 0M21 21l-6-6" /></svg><span class="sr-only">Search</span></a></li><li class="col-span-1 flex items-center justify-center"><button id="theme-btn" class="focus-outline hover:[&amp;&gt;svg]:stroke-accent relative size-12 p-4 sm:size-8" title="切換主題" aria-label="auto" aria-live="polite"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="absolute top-[50%] left-[50%] translate-[-50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M12 3h.393a7.5 7.5 0 0 0 7.92 12.446A9 9 0 1 1 12 2.992z" /></svg><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="absolute top-[50%] left-[50%] translate-[-50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M14.828 14.828a4 4 0 1 0-5.656-5.656 4 4 0 0 0 5.656 5.656M6.343 17.657l-1.414 1.414M6.343 6.343 4.929 4.929M17.657 6.343l1.414-1.414M17.657 17.657l1.414 1.414M4 12H2M12 4V2M20 12h2M12 20v2" /></svg></button></li></ul></nav></div></header><script type="module">function e(){let e=document.querySelector(`#menu-btn`),t=document.querySelector(`#menu-items`),n=document.querySelector(`#menu-icon`),r=document.querySelector(`#close-icon`);if(!e||!t||!n||!r)return;let i=e.dataset.labelOpen??`Open menu`,a=e.dataset.labelClose??`Close menu`;e.addEventListener(`click`,()=>{let o=e.getAttribute(`aria-expanded`)===`true`;e.setAttribute(`aria-expanded`,o?`false`:`true`),e.setAttribute(`aria-label`,o?i:a),t.classList.toggle(`hidden`),t.classList.toggle(`grid`),n.classList.toggle(`hidden`),r.classList.toggle(`hidden`)})}function t(){let e=document.getElementById(`skip-to-content`);e&&e.addEventListener(`click`,e=>{if(e.defaultPrevented||e.metaKey||e.ctrlKey||e.shiftKey||e.button!==0)return;e.preventDefault();let t=document.getElementById(`main-content`);t&&(t.setAttribute(`tabindex`,`-1`),t.addEventListener(`blur`,()=>t.removeAttribute(`tabindex`),{once:!0}),t.focus(),t.scrollIntoView({behavior:`smooth`}))})}e(),document.addEventListener(`astro:after-swap`,e),t(),document.addEventListener(`astro:after-swap`,t);</script><div class="app-layout flex items-center justify-start"><a id="back-button" href="#" class="group inline-flex items-center gap-1 hover:text-accent focus-outline hover:text-foreground/75 -ms-2 mt-8 mb-2"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="inline-block size-6 rtl:rotate-180" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="m15 6-6 6 6 6" /></svg><span>Go back</span></a></div><script type="module">document.querySelector(`#back-button`)?.addEventListener(`click`,e=>{e.preventDefault(),history.back()});</script><main id="main-content" class="app-layout" data-pagefind-body><h1 class="text-accent inline-block text-2xl font-bold sm:text-3xl">Angular學習筆記3 - 專案結構、Module、Component</h1><div class="my-2 flex items-center gap-2"><div class="text-muted-foreground flex items-center gap-x-2"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="inline-block size-6 min-w-5.5" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zM16 3v4M8 3v4M4 11h16M7 14h.013M10.01 14h.005M13.01 14h.005M16.015 14h.005M13.015 17h.005M7.01 17h.005M10.01 17h.005" /></svg><time class="text-sm sm:text-base" datetime="2021-02-14T00:00:00.000Z">2021-02-14</time></div></div><article id="article" class="mt-8 w-full app-prose max-w-app prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)"><p>Angular 的專案資料夾內容相當豐富，剛開始看到時，還真不知道該從哪裡下手呢。檔案數量多，名子又很長</p>
+<p>所以一開始會先介紹一下基本的專案結構，然後間單說一下 Module 跟 Component</p>
+<h2 id="angular-專案結構">Angular 專案結構</h2>
+<p><img alt="image-20210214131549514" loading="lazy" decoding="async" width="137" height="344" src="/_astro/image-20210214131549514.C5GSx6FX_ZRuiP6.webp"></p>
+<ul>
+<li>e2e
+自動模擬使用者操作的測試。(我還沒用過這種測試，以前都是手動去測試的)</li>
+<li>package.json / package-lock.json / node_modules
+管理 nodejs 套件相關的檔案跟資料夾</li>
+<li>src
+專案的原始碼</li>
+<li>angular.json
+專案的設定</li>
+<li>tsconfig.app.json / tsconfig.json / tsconfig.spec.json
+TypeScript 編譯的相關設定</li>
+<li>tslint.json
+Type Script 程式碼檢查的設定</li>
+</ul>
+<p>其他更詳細的部份可以參考<a href="https://angular.io/guide/file-structure">官方文件</a></p>
+<p>大多數的東西其實剛開始都不會碰，最主要的就是 <strong>src</strong> 資料夾</p>
+<h3 id="src-結構">src 結構</h3>
+<p><img alt="image-20210214132052697" loading="lazy" decoding="async" width="196" height="351" src="/_astro/image-20210214132052697.C1bPrS50_1E2Idc.webp"></p>
+<p>src 資料夾裡面有幾個一開始需要先注意的東西：</p>
+<ul>
+<li>app 資料夾
+應用程式的主體，裡面會放入與模組、元件、服務之類應用程式相關的程式</li>
+<li>assert 資料夾
+網頁所需要的資源，編譯頁面時會被處理且一起被輸出</li>
+<li>style.css
+整個專案共用的 CSS 樣式</li>
+<li>favicon.ico
+網頁的圖標</li>
+<li>index.html
+整個 SPA 的 HTML 本體
+<code>&lt;app-root&gt;</code> 元素裡會嵌入 AppComponent 處理後的頁面</li>
+</ul>
+<p>其他不需要動，但很重要的東西：</p>
+<ul>
+<li>main.ts
+專案的程式入口
+會啟動 AppModule</li>
+<li>test.ts
+專案的測試程序啟動腳本</li>
+</ul>
+<p>看完了專案結構之後，讓我們開始專注在 <strong>app</strong> 這個資料夾的內容上</p>
+<p>整個資料夾目前共有6份檔案，分別為：</p>
+<ul>
+<li>app-routing.module.ts
+路由模組</li>
+<li>app.component.css
+AppComponent 的樣式表</li>
+<li>app.component.html
+AppComponent 的 HTML 樣板檔</li>
+<li>app.component.spec.ts
+AppComponent 的測試程式</li>
+<li>app.component.ts
+AppComponent 類別</li>
+<li>app.module.ts
+AppModule 類別</li>
+</ul>
+<p>接下來將會簡單介紹一下上面所寫的 Module 跟 Component 是什麼東西</p>
+<h2 id="module">Module</h2>
+<p>檔案名稱為 <code>&lt;module_name&gt;.module.ts</code></p>
+<p>整個 Angular 程式都是跟著 Module 走
+Module 會引入 Component 來渲染頁面</p>
+<p>專案建立之後，會有一個最主要的模組叫做 <strong>AppModule</strong>，檔案名稱為 <code>app.module.ts</code>。</p>
+<p>來看一下 AppModule 的樣貌：</p>
+<p><img alt="image-20210214134553583" loading="lazy" decoding="async" width="455" height="350" src="/_astro/image-20210214134553583.B34yoFrg_ZV1iBP.webp"></p>
+<p>整體結構看起來相當的簡單，裡面應用了幾個 Angular 的核心模組，並使用了<strong>裝飾器 NgModule</strong></p>
+<h3 id="裝飾器">裝飾器</h3>
+<p>屬於設計模式的一種，可以為一個類別或函式附加額外的設定或功能</p>
+<p>已經有一些程式語言提供了裝飾器的語法糖，例如說 <strong>Python</strong> 、<strong>Typescript</strong>、<strong>Javascript</strong></p>
+<p>來看一下裝飾器大概的樣貌，這邊是使用 python 來示範：</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">## 裝飾器</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">def</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic"> decorator</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">(</span><span style="--shiki-light:#FF9800;--shiki-dark:#7FDBCA">func</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">)</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">    print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">decorator</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    </span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">    # 裝飾過後的函式</span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">    # 這邊用了一個 python 的技巧，將所有接收到的參數都丟到原函式中</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">    def</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic"> decorated_func</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">(</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">*</span><span style="--shiki-light:#FF9800;--shiki-dark:#7FDBCA">args</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> **</span><span style="--shiki-light:#FF9800;--shiki-dark:#7FDBCA">kargs</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">)</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">        print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">hello!</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">        return</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6"> func</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">*</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">args</span><span style="--shiki-light:#212121;--shiki-dark:#D9F5DD">,</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> **</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">kargs</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    </span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">    # 回傳裝飾過後的函式</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    return</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> decorated_func</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">## 將 foo 套用 decorator</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">@</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C5E478;--shiki-dark-font-style:italic">decorator</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">def</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic"> foo</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">()</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">    print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">foo</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">call foo</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">foo</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">()</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> </span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-dark:#D9F5DD">"""</span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-dark:#ECC48D">輸出：</span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-dark:#ECC48D">decorator</span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-dark:#ECC48D">call foo</span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-dark:#ECC48D">hello!</span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-dark:#ECC48D">foo</span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-dark:#D9F5DD">"""</span></span></code></pre>
+<p>從輸出中可以看到，整個裝飾器運作的順序
+在宣告時會先進入 <code>decorator</code> 裝飾 <code>foo</code> 這個函式，之後呼叫時則會呼叫已經被裝飾過函式</p>
+<p>實際上 python 的 decorator 語法糖就等同於這個樣子：</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">def</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic"> decorator</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">()</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">    # ...</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">def</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic"> foo</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">()</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">    # ...</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">foo </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6"> decorator</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">foo</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span></code></pre>
+<p>decorator 可以有參數，也可以堆疊，像是：</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">@</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C5E478;--shiki-dark-font-style:italic">decorator1</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">@</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C5E478;--shiki-dark-font-style:italic">decorator2</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">value</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">def</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic"> foo</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">()</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">    # ...</span></span></code></pre>
+<div class="callout" data-callout="info" data-collapsible="false"><div class="callout-title"><div class="callout-title-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></div><div class="callout-title-text">Info</div></div><div class="callout-content"><h5 id="decorator-的順序是由下到上">decorator 的順序是由下到上</h5><p>要特別注意的是，decorator 的順序是由下到上，而不是像視覺上看到的由上到下
+這是因為套用兩層 decorator，會等同於下面這個樣子：</p><pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">foo </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6"> decorator1</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">decorator2</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">value</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">foo</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">))</span></span></code></pre><p><code>foo</code> 先傳入 <code>decorator2(value)</code> 裡，接著 <code>decorator2(value)</code> 回傳的裝飾後的函式再傳入 <code>decorator1</code>
+所以實際上是 <code>decorator2(value)</code> 會先被套用</p></div></div>
+<p>TypeScript 上的 decorator 也類似 python，<strong>但是 TypeScript 只能對類別或是類別裡的方法使用 decorator</strong>，而且 TypeScript 的 decorator 只做修飾，不會回傳函式</p>
+<h3 id="ngmodule">NgModule</h3>
+<p>NgModule 是 Angular 的核心元件之一，是一種裝飾器</p>
+<p>主要會使用這些參數：</p>
+<ul>
+<li>declarations
+表示模組使用到的 Component，Component 本身要加到這邊才會有作用</li>
+<li>imports
+表示該模組所引用的其他模組</li>
+<li>providers
+額外的服務 (Service)，之後會提到</li>
+<li>bootstrap
+主模組才會需要的東西，會在模組自啟時使用指定的 Component</li>
+<li>exports
+AppModule 沒有使用的參數，用於其他子模組
+給其他模組使用的 Component
+沒有寫在這邊的話，即使已經放入 declarations 中，模組被引用時依然不會使用那些 Component</li>
+</ul>
+<h3 id="browsermodule">BrowserModule</h3>
+<p>包含整個 Angular 應用所需的基礎架構</p>
+<h3 id="approutingmodule">AppRoutingModule</h3>
+<p>路由模組，將路徑對到相對應的頁面。
+詳細的內容在之後介紹路由時會說到</p>
+<h2 id="component">Component</h2>
+<p>檔案名稱為 <code>&lt;component_name&gt;.component.ts</code></p>
+<p>先看一下 <code>app.component.ts</code> 裡的樣貌：</p>
+<p><img alt="image-20210214170932176" loading="lazy" decoding="async" width="333" height="200" src="/_astro/image-20210214170932176.DhUUSfkt_3Xjzr.webp"></p>
+<p>上面的 <code>@Component</code> 部份跟 NgModule 一樣是裝飾器</p>
+<p>主要參數有：</p>
+<ul>
+<li>
+<p>selector
+元件在樣板中被使用時所對應的元素，使用 CSS Selector 選擇元素
+基本上會是一個獨立名稱的標籤 (Tag)，通常為 <code>app-&lt;tag_name&gt;</code>
+AppComponent 中的 app-root 就是對應到前面 HTML 說到的 <code>&lt;app-root&gt;</code></p>
+</li>
+<li>
+<p>template / templateUrl
+HTML 樣板
+前者是直接把 HTML 打在裡面，後者則是直接引用檔案，檔案名稱通常為 <code>&lt;component_name&gt;.component.html</code></p>
+</li>
+<li>
+<p>styles / styleUrls
+引用的樣式表
+前者是直接把樣式打在裡面，後者則是直接引用檔案，檔案名稱通常為 <code>&lt;component_name&gt;.component.css</code> (假設樣式表類型使用 CSS )</p>
+</li>
+</ul>
+<h3 id="變數">變數</h3>
+<p>在 Component 類別裡宣告的變數或函式，可以在樣板中被應用</p>
+<p>例如說 AppComponent 裡的 <code>title</code> 數值為 <code>'test-project'</code>
+如果還記得上一篇使用 <code>ng serve</code> 後瀏覽器上看到的畫面的話，會發現上面的字是 “<strong>test-project</strong> app is running!”</p>
+<p><img alt="image-20210214190724338" loading="lazy" decoding="async" width="344" height="91" src="/_astro/image-20210214190724338.joMubQK__ZTkQ7w.webp"></p>
+<p>可以將 <code>title</code> 的數值改成其他內容，比如說 <code>'hello-world'</code>
+之後再使用 <code>ng serve</code> 開啟伺服器後再去查看，你會發現它變成 “<strong>hello-world</strong> app is running!” 了</p>
+<p><img alt="image-20210214190804781" loading="lazy" decoding="async" width="344" height="87" src="/_astro/image-20210214190804781.Bt5aWjBo_Z1jgfYg.webp"></p>
+<div class="callout" data-callout="info" data-collapsible="false"><div class="callout-title"><div class="callout-title-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></div><div class="callout-title-text">Info</div></div><div class="callout-content"><p>上一篇有說到，<code>ng serve</code> 開啟的伺服器會感應檔案的變化，然後讓瀏覽器重新整理
+所以在改 <code>title</code> 之前可以先開啟伺服器，然後再修改 <code>title</code>，應該會發現頁面被自動重新整理</p></div></div>
+<p>至於 HTML 樣板要怎麼引用這些變數，就等到下一個章節會繼續說明</p>
+<h2 id="結語">結語</h2>
+<p>原本是想多放一點實際操作的，但是前面加上專案結構跟裝飾器介紹之後，發現這樣下去篇幅可能會太長，所以就先停在這裡，等後面再慢慢補上</p>
+<p>Angular 的東西真的是蠻多的，自己目前碰到的也都是比較基本的東西而已，但是真要把這些基本的東西講明白，感覺也是挺困難的。目前都是依照自己的了解，加上網路上的一些資訊輔助，將文章打出來 (<del>不然有些地方我其實也不知道應該要怎麼解釋會比較好</del>)，希望有在看的各位到目前為止都還看得懂</p>
+<h2 id="參考資料">參考資料</h2>
+<ul>
+<li><a href="https://angular.io/api/core/NgModule">Angular - NgModule</a></li>
+<li><a href="https://angular.io/api/platform-browser/BrowserModule">Angular - BrowserModule</a></li>
+<li><a href="https://angular.io/guide/component-overview">Angular - Angular Components Overview</a></li>
+<li><a href="https://www.typescriptlang.org/docs/handbook/decorators.html">TypeScript: Documentation - Decorators</a></li>
+<li><a href="https://oldmo860617.medium.com/%E5%8D%81%E5%88%86%E9%90%98%E5%B8%B6%E4%BD%A0%E4%BA%86%E8%A7%A3-typescript-decorator-48c2ae9e246d">十分鐘帶你了解 TypeScript Decorator. 什麼是 Decorator ? | by 莫力全 Kyle Mo | Medium</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/20139834">Decorators in ES7 - 知乎</a></li>
+<li><a href="https://blog.miniasp.com/post/2019/02/18/Unit-testing-Integration-testing-e2e-testing">一次搞懂單元測試、整合測試、端對端測試之間的差異 | The Will Will Web</a></li>
+</ul>
+</article><hr class="my-8 border-dashed"><div id="btt-btn-container" class="fixed inset-e-4 bottom-8 z-50 md:sticky md:inset-e-auto md:float-end md:me-1 translate-y-14 opacity-0 transition duration-500"><button data-button="back-to-top" class="group bg-background relative px-2 py-1 size-14 rounded-full shadow-xl md:h-8 md:w-fit md:rounded-md md:shadow-none md:focus-visible:rounded-none md:bg-background/35 md:bg-clip-padding md:backdrop-blur-lg"><span id="progress-indicator" class="absolute inset-0 -z-10 block size-14 scale-110 rounded-full bg-transparent md:hidden md:h-8 md:rounded-md"></span><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="inline-block rotate-90 md:hidden" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M5 12h14M5 12l6 6M5 12l6-6" /></svg><span class="group-hover:text-accent sr-only text-sm md:not-sr-only"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="inline-block size-4" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M12 5v14M16 9l-4-4M8 9l4-4" /></svg>Back to top</span></button></div><script data-astro-rerun>
+  function backToTop() {
+    const rootElement = document.documentElement;
+    const btnContainer = document.querySelector("#btt-btn-container");
+    const backToTopBtn = document.querySelector("[data-button='back-to-top']");
+    const progressIndicator = document.querySelector("#progress-indicator");
+
+    if (!rootElement || !btnContainer || !backToTopBtn || !progressIndicator)
+      return;
+
+    backToTopBtn.addEventListener("click", () => {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    });
+
+    let lastVisible = null;
+    function handleScroll() {
+      const scrollTotal = rootElement.scrollHeight - rootElement.clientHeight;
+      const scrollTop = rootElement.scrollTop;
+      const scrollPercent = Math.floor((scrollTop / scrollTotal) * 100);
+
+      progressIndicator.style.setProperty(
+        "background-image",
+        `conic-gradient(var(--accent), var(--accent) ${scrollPercent}%, transparent ${scrollPercent}%)`
+      );
+
+      const isVisible = scrollTop / scrollTotal > 0.3;
+
+      if (isVisible !== lastVisible) {
+        btnContainer.classList.toggle("opacity-100", isVisible);
+        btnContainer.classList.toggle("translate-y-0", isVisible);
+        btnContainer.classList.toggle("opacity-0", !isVisible);
+        btnContainer.classList.toggle("translate-y-14", !isVisible);
+        lastVisible = isVisible;
+      }
+    }
+
+    let ticking = false;
+    document.addEventListener("scroll", () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+  }
+  backToTop();
+</script><ul class="mt-4 mb-8 flex flex-wrap gap-4 sm:my-8"><li><a href="/tags/angular/" class="flex items-center gap-0.5 border-foreground border-b-2 border-dashed hover:border-accent hover:text-accent hover:-mt-0.5 focus-visible:text-accent focus-visible:border-none text-sm"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="opacity-80 size-4" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M5 9h14M5 15h14M11 4 7 20M17 4l-4 16" /></svg>Angular</a></li><li><a href="/tags/網頁前端/" class="flex items-center gap-0.5 border-foreground border-b-2 border-dashed hover:border-accent hover:text-accent hover:-mt-0.5 focus-visible:text-accent focus-visible:border-none text-sm"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="opacity-80 size-4" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M5 9h14M5 15h14M11 4 7 20M17 4l-4 16" /></svg>網頁前端</a></li></ul><div class="flex flex-none flex-col items-center justify-center gap-1 md:items-start"><span class="italic">分享文章:</span><div class="text-center"><a href="https://wa.me/?text=https://stu98832.github.io/posts/topics/angular/note-angular-learning-3/" title="分享到 Whatsapp" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center gap-1 hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="m3 21 1.65-3.8a9 9 0 1 1 3.4 2.9z" /><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0za5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1" /></svg><span class="sr-only">分享到 Whatsapp</span></a><a href="https://www.facebook.com/sharer.php?u=https://stu98832.github.io/posts/topics/angular/note-angular-learning-3/" title="分享到 Facebook" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center gap-1 hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M7 10v4h3v7h4v-7h3l1-4h-4V8a1 1 0 0 1 1-1h3V3h-3a5 5 0 0 0-5 5v2z" /></svg><span class="sr-only">分享到 Facebook</span></a><a href="https://x.com/intent/post?url=https://stu98832.github.io/posts/topics/angular/note-angular-learning-3/" title="分享到 X" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center gap-1 hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="m4 4 11.733 16H20L8.267 4zM4 20l6.768-6.768m2.46-2.46L20 4" /></svg><span class="sr-only">分享到 X</span></a><a href="https://t.me/share/url?url=https://stu98832.github.io/posts/topics/angular/note-angular-learning-3/" title="分享到 Telegram" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center gap-1 hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="m15 10-4 4 6 6 4-16-18 7 4 2 2 6 3-4" /></svg><span class="sr-only">分享到 Telegram</span></a><a href="mailto:?subject=See%20this%20post&amp;body=https://stu98832.github.io/posts/topics/angular/note-angular-learning-3/" title="以 email 分享" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center gap-1 hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><path d="m3 7 9 6 9-6" /></svg><span class="sr-only">以 email 分享</span></a></div></div><hr class="my-8 border-dashed"><div data-pagefind-ignore class="my-8 grid grid-cols-1 gap-6 sm:grid-cols-2"><a href="/posts/topics/angular/note-angular-learning-2/" class="flex w-full gap-1 hover:opacity-75"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="inline-block flex-none rtl:rotate-180" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M5 12h14M5 12l6 6M5 12l6-6" /></svg><div><span>Previous</span><div class="text-accent/85 text-sm">Angular學習筆記2 - 建立第一個 Angular 專案</div></div></a><a href="/posts/topics/angular/note-angular-learning-4/" class="flex w-full justify-end gap-1 text-end hover:opacity-75 sm:col-start-2"><div><span>Next</span><div class="text-accent/85 text-sm">Angular學習筆記4 - Component與樣版</div></div><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="inline-block flex-none rtl:rotate-180" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M5 12h14M13 18l6-6M13 6l6 6" /></svg></a></div><script src="https://giscus.app/client.js" data-repo="stu98832/stu98832.github.io" data-repo-id="MDEwOlJlcG9zaXRvcnkyNDMyNTk5NjE=" data-category="Giscus" data-category-id="DIC_kwDODn_aOc4DGeo4" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-lang="zh-TW" data-loading crossorigin="anonymous" async></script></main><footer class="app-layout mt-auto"><div class="border-border flex flex-col items-center justify-between border-t py-6 sm:flex-row-reverse sm:py-4"><div class="flex items-center"><div class="flex flex-wrap items-center gap-1"><a href="https://github.com/stu98832" title="Github" class="group inline-flex items-center gap-1 hover:text-accent p-2 hover:rotate-6 sm:p-1"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21" /></svg><span class="sr-only">Github</span></a></div><a target="_blank" href="/rss.xml" class="justify-content inline-block" aria-label="RSS Feed" title="RSS Feed"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="stroke-accent scale-125 stroke-3 rtl:-rotate-90" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M4 19a1 1 0 1 0 2 0 1 1 0 1 0-2 0M4 4a16 16 0 0 1 16 16M4 11a9 9 0 0 1 9 9" /></svg><span class="sr-only">RSS Feed</span></a></div><div class="my-2 flex flex-col items-center whitespace-nowrap sm:flex-row"><span>Copyright &#169; 2026</span><span class="hidden sm:inline">&nbsp;|&nbsp;</span><span>All rights reserved.</span></div></div></footer><script type="module">var e=`theme`,t=`light`,n=`dark`,r=`https://giscus.app`;function i(e){document.querySelector(`iframe.giscus-frame`)?.contentWindow?.postMessage({giscus:{setConfig:e}},r)}function a(){return localStorage.getItem(e)||(window.matchMedia(`(prefers-color-scheme: dark)`).matches?n:t)}var o=window.__theme?.value??a();function s(){localStorage.setItem(e,o),c()}function c(){let e=document.firstElementChild;e?.setAttribute(`data-theme`,o),e?.classList.toggle(`dark`,o===n),document.querySelector(`#theme-btn`)?.setAttribute(`aria-label`,o);let t=window.getComputedStyle(document.body).backgroundColor;document.querySelector(`meta[name='theme-color']`)?.setAttribute(`content`,t),i({theme:o===n?`dark`:`light`})}function l(){c(),document.querySelector(`#theme-btn`)?.addEventListener(`click`,()=>{o=o===t?n:t,s()})}l(),document.addEventListener(`astro:after-swap`,l),document.addEventListener(`astro:before-swap`,e=>{let t=document.querySelector(`meta[name='theme-color']`)?.getAttribute(`content`);t&&e.newDocument.querySelector(`meta[name='theme-color']`)?.setAttribute(`content`,t)}),window.matchMedia(`(prefers-color-scheme: dark)`).addEventListener(`change`,({matches:e})=>{o=e?n:t,s()}),window.addEventListener(`message`,e=>{e.origin===r&&s()});</script></body></html><script data-astro-rerun>
+  function createProgressBar() {
+    const progressContainer = document.createElement("div");
+    progressContainer.className =
+      "progress-container fixed top-0 z-10 h-1 w-full bg-background";
+
+    const progressBar = document.createElement("div");
+    progressBar.className = "progress-bar h-1 w-0 bg-accent";
+    progressBar.id = "myBar";
+
+    progressContainer.appendChild(progressBar);
+    document.body.appendChild(progressContainer);
+  }
+  createProgressBar();
+
+  function updateScrollProgress() {
+    document.addEventListener("scroll", () => {
+      const winScroll =
+        document.body.scrollTop || document.documentElement.scrollTop;
+      const height =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      if (document) {
+        const myBar = document.getElementById("myBar");
+        if (myBar) {
+          myBar.style.width = scrolled + "%";
+        }
+      }
+    });
+  }
+  updateScrollProgress();
+
+  function addHeadingLinks() {
+    const headings = Array.from(
+      document.querySelectorAll("h2, h3, h4, h5, h6")
+    );
+    for (const heading of headings) {
+      heading.classList.add("group");
+      const link = document.createElement("a");
+      link.className =
+        "heading-link ms-2 no-underline opacity-75 md:opacity-0 md:group-hover:opacity-100 md:focus:opacity-100";
+      link.href = "#" + heading.id;
+
+      const span = document.createElement("span");
+      span.ariaHidden = "true";
+      span.innerText = "#";
+      link.appendChild(span);
+      heading.appendChild(link);
+    }
+  }
+  addHeadingLinks();
+
+  function attachCopyButtons() {
+    const copyButtonLabel = "Copy";
+    const codeBlocks = Array.from(document.querySelectorAll("pre"));
+
+    for (const codeBlock of codeBlocks) {
+      const wrapper = document.createElement("div");
+      wrapper.style.position = "relative";
+
+      const computedStyle = getComputedStyle(codeBlock);
+      const hasFileNameOffset =
+        computedStyle.getPropertyValue("--file-name-offset").trim() !== "";
+
+      const topClass = hasFileNameOffset
+        ? "top-(--file-name-offset)"
+        : "-top-3";
+
+      const copyButton = document.createElement("button");
+      copyButton.className = `copy-code absolute end-3 ${topClass} rounded bg-muted border border-muted px-2 py-1 text-xs leading-4 text-foreground font-medium`;
+      copyButton.innerHTML = copyButtonLabel;
+      codeBlock.setAttribute("tabindex", "0");
+      codeBlock.appendChild(copyButton);
+
+      codeBlock?.parentNode?.insertBefore(wrapper, codeBlock);
+      wrapper.appendChild(codeBlock);
+
+      copyButton.addEventListener("click", async () => {
+        await copyCode(codeBlock, copyButton);
+      });
+    }
+
+    async function copyCode(block, button) {
+      const code = block.querySelector("code");
+      const text = code?.innerText;
+
+      await navigator.clipboard.writeText(text ?? "");
+
+      button.innerText = "Copied";
+
+      setTimeout(() => {
+        button.innerText = copyButtonLabel;
+      }, 700);
+    }
+  }
+  attachCopyButtons();
+
+  /** Accessible image lightbox for article images. */
+  function initLightbox() {
+    const article = document.getElementById("article");
+    if (!article) return;
+
+    const prefersReducedMotion = () =>
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    let overlay = null;
+    let lastFocused = null;
+
+    // Defer attribute mutations so they don't push the LCP timestamp.
+    // Event listeners below use delegation and don't need the attributes to exist yet.
+    requestAnimationFrame(() => {
+      const images = Array.from(article.querySelectorAll("img"));
+      for (const image of images) {
+        if (image.closest("a")) continue;
+        image.setAttribute("role", "button");
+        image.setAttribute("tabindex", "0");
+        image.setAttribute("aria-haspopup", "dialog");
+        image.setAttribute(
+          "aria-label",
+          image.alt ? `Zoom image: ${image.alt}` : "Zoom image"
+        );
+      }
+    });
+
+    function open(src, alt, trigger) {
+      if (overlay) return;
+      lastFocused = trigger ?? document.activeElement;
+
+      overlay = document.createElement("div");
+      overlay.setAttribute("role", "dialog");
+      overlay.setAttribute("aria-modal", "true");
+      overlay.setAttribute(
+        "aria-label",
+        alt ? `Image preview: ${alt}` : "Image preview"
+      );
+      overlay.className =
+        "fixed inset-0 z-50 flex cursor-zoom-out items-center justify-center bg-black/70 backdrop-blur-sm opacity-0 transition-opacity duration-200 motion-reduce:transition-none";
+
+      const closeButton = document.createElement("button");
+      closeButton.type = "button";
+      closeButton.setAttribute("aria-label", "Close image preview");
+      closeButton.className =
+        "absolute end-4 top-4 rounded p-2 text-3xl leading-none text-white";
+      closeButton.innerHTML = "&#10005;";
+      closeButton.addEventListener("click", close);
+
+      const image = document.createElement("img");
+      image.src = src;
+      image.alt = "";
+      image.className =
+        "max-h-[90dvh] max-w-[90dvw] cursor-default object-contain";
+
+      overlay.append(closeButton, image);
+      overlay.addEventListener("click", e => {
+        if (e.target === overlay && currentScale <= 1) close();
+      });
+
+      let currentScale = 1;
+      let translateX = 0;
+      let translateY = 0;
+      let initialDist = 0;
+      let initialScale = 1;
+      let panStartX = 0;
+      let panStartY = 0;
+      let panStartTranslateX = 0;
+      let panStartTranslateY = 0;
+      let lastTapTime = 0;
+
+      function applyTransform() {
+        image.style.transform = `scale(${currentScale}) translate(${translateX}px, ${translateY}px)`;
+      }
+
+      function resetTransform() {
+        currentScale = 1;
+        translateX = 0;
+        translateY = 0;
+        image.style.transform = "";
+      }
+
+      overlay.addEventListener(
+        "touchstart",
+        e => {
+          const t = e.touches;
+          if (t.length === 2) {
+            initialDist = Math.hypot(
+              t[1].clientX - t[0].clientX,
+              t[1].clientY - t[0].clientY
+            );
+            initialScale = currentScale;
+          } else if (t.length === 1) {
+            const now = Date.now();
+            if (now - lastTapTime < 300) {
+              e.preventDefault();
+              if (currentScale > 1) {
+                resetTransform();
+              } else {
+                currentScale = 2;
+                translateX = 0;
+                translateY = 0;
+                applyTransform();
+              }
+              lastTapTime = 0;
+              panStartX = t[0].clientX;
+              panStartY = t[0].clientY;
+              panStartTranslateX = translateX;
+              panStartTranslateY = translateY;
+            } else {
+              lastTapTime = now;
+              if (currentScale > 1) {
+                panStartX = t[0].clientX;
+                panStartY = t[0].clientY;
+                panStartTranslateX = translateX;
+                panStartTranslateY = translateY;
+              }
+            }
+          }
+        },
+        { passive: false }
+      );
+
+      overlay.addEventListener(
+        "touchmove",
+        e => {
+          const t = e.touches;
+          if (t.length === 2) {
+            e.preventDefault();
+            const dist = Math.hypot(
+              t[1].clientX - t[0].clientX,
+              t[1].clientY - t[0].clientY
+            );
+            currentScale = Math.min(
+              4,
+              Math.max(1, initialScale * (dist / initialDist))
+            );
+            applyTransform();
+          } else if (t.length === 1) {
+            if (currentScale > 1) {
+              e.preventDefault();
+              translateX =
+                panStartTranslateX + (t[0].clientX - panStartX) / currentScale;
+              translateY =
+                panStartTranslateY + (t[0].clientY - panStartY) / currentScale;
+              const maxX = Math.max(
+                0,
+                (image.clientWidth - overlay.clientWidth / currentScale) / 2
+              );
+              const maxY = Math.max(
+                0,
+                (image.clientHeight - overlay.clientHeight / currentScale) / 2
+              );
+              translateX = Math.min(maxX, Math.max(-maxX, translateX));
+              translateY = Math.min(maxY, Math.max(-maxY, translateY));
+              applyTransform();
+            } else {
+              e.preventDefault();
+            }
+          }
+        },
+        { passive: false }
+      );
+
+      overlay.addEventListener("touchend", e => {
+        if (e.touches.length === 0 && currentScale <= 1.05) {
+          resetTransform();
+        }
+      });
+
+      overlay.addEventListener("touchcancel", e => {
+        if (e.touches.length === 0 && currentScale <= 1.05) {
+          resetTransform();
+        }
+      });
+
+      document.body.appendChild(overlay);
+      document.body.style.overflow = "hidden";
+      document.addEventListener("keydown", onKeyDown);
+      window.__closeLightbox = close;
+
+      requestAnimationFrame(() => overlay?.classList.add("opacity-100"));
+      closeButton.focus();
+    }
+
+    function close() {
+      if (!overlay) return;
+      const el = overlay;
+      overlay = null;
+      window.__closeLightbox = null;
+
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = "";
+      lastFocused?.focus();
+      lastFocused = null;
+
+      if (prefersReducedMotion()) {
+        el.remove();
+        return;
+      }
+      const remove = () => el.remove();
+      el.addEventListener("transitionend", remove, { once: true });
+      setTimeout(remove, 250); // fallback in case transitionend never fires
+      el.classList.remove("opacity-100");
+    }
+
+    function onKeyDown(e) {
+      if (e.key === "Escape") {
+        close();
+      } else if (e.key === "Tab") {
+        trapFocus(e);
+      }
+    }
+
+    // Keep keyboard focus inside the open dialog.
+    function trapFocus(e) {
+      if (!overlay) return;
+      const focusables = overlay.querySelectorAll(
+        'a[href], button, [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+
+    function triggerFromEvent(e) {
+      const image = e.target.closest("img");
+      if (!image || !article.contains(image) || image.closest("a")) return null;
+      return image;
+    }
+
+    function activate(image) {
+      open(image.currentSrc || image.src, image.alt, image);
+    }
+
+    article.addEventListener("click", e => {
+      const image = triggerFromEvent(e);
+      if (!image) return;
+      e.preventDefault();
+      activate(image);
+    });
+
+    article.addEventListener("keydown", e => {
+      if (e.key !== "Enter" && e.key !== " " && e.key !== "Spacebar") return;
+      const image = triggerFromEvent(e);
+      if (!image) return;
+      e.preventDefault();
+      activate(image);
+    });
+  }
+  initLightbox();
+
+  if (!window.__lightboxSwapBound) {
+    window.__lightboxSwapBound = true;
+    document.addEventListener("astro:before-swap", () =>
+      window.__closeLightbox?.()
+    );
+  }
+
+  document.addEventListener("astro:after-swap", () =>
+    window.scrollTo({ left: 0, top: 0, behavior: "instant" })
+  );
+</script>

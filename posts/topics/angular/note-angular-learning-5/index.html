@@ -1,0 +1,756 @@
+<!DOCTYPE html><html dir="ltr" lang="zh-TW" class="overflow-y-scroll scroll-smooth"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" href="/favicon.ico"><link rel="canonical" href="https://stu98832.github.io/posts/topics/angular/note-angular-learning-5/"><meta name="generator" content="Astro v7.3.5"><!-- Font --><style>@font-face{font-family:"Google Sans Code-14ad1c6dba3715dd";src:url("/_astro/fonts/9344e1e6ba3134db.woff") format("woff"), url("/_astro/fonts/4b36ecaec8861e3e.ttf") format("truetype");font-display:swap;font-weight:300;font-style:italic;}@font-face{font-family:"Google Sans Code-14ad1c6dba3715dd";src:url("/_astro/fonts/8f4ae94aecd98e20.woff") format("woff"), url("/_astro/fonts/82b0269728335a0a.ttf") format("truetype");font-display:swap;font-weight:400;font-style:italic;}@font-face{font-family:"Google Sans Code-14ad1c6dba3715dd";src:url("/_astro/fonts/20c20d9068c60dd0.woff") format("woff"), url("/_astro/fonts/b576f4f05c9dbc87.ttf") format("truetype");font-display:swap;font-weight:500;font-style:italic;}@font-face{font-family:"Google Sans Code-14ad1c6dba3715dd";src:url("/_astro/fonts/5a6c2a0b85de9ba1.woff") format("woff"), url("/_astro/fonts/4b0ae898a7afcd37.ttf") format("truetype");font-display:swap;font-weight:600;font-style:italic;}@font-face{font-family:"Google Sans Code-14ad1c6dba3715dd";src:url("/_astro/fonts/30d0dcc4d81c0020.woff") format("woff"), url("/_astro/fonts/e8acb21fdbc37b03.ttf") format("truetype");font-display:swap;font-weight:700;font-style:italic;}@font-face{font-family:"Google Sans Code-14ad1c6dba3715dd";src:url("/_astro/fonts/bf976bcffafeb084.woff") format("woff"), url("/_astro/fonts/8436f9847213f651.ttf") format("truetype");font-display:swap;font-weight:300;font-style:normal;}@font-face{font-family:"Google Sans Code-14ad1c6dba3715dd";src:url("/_astro/fonts/8a34d92a2a36603b.woff") format("woff"), url("/_astro/fonts/ccba4fb3766b1b6e.ttf") format("truetype");font-display:swap;font-weight:400;font-style:normal;}@font-face{font-family:"Google Sans Code-14ad1c6dba3715dd";src:url("/_astro/fonts/a20ca4cd312f40ca.woff") format("woff"), url("/_astro/fonts/ec093fff40157157.ttf") format("truetype");font-display:swap;font-weight:500;font-style:normal;}@font-face{font-family:"Google Sans Code-14ad1c6dba3715dd";src:url("/_astro/fonts/b74e6fc4049d0d63.woff") format("woff"), url("/_astro/fonts/dab775c12e1996fc.ttf") format("truetype");font-display:swap;font-weight:600;font-style:normal;}@font-face{font-family:"Google Sans Code-14ad1c6dba3715dd";src:url("/_astro/fonts/d9c1254858362ad4.woff") format("woff"), url("/_astro/fonts/a5f75c165e55a648.ttf") format("truetype");font-display:swap;font-weight:700;font-style:normal;}:root{--font-google-sans-code:"Google Sans Code-14ad1c6dba3715dd",monospace,微軟正黑體;}</style><!-- Primary meta --><title>Angular學習筆記5 - 基本結構操作、Pipe、Directive | Bluebean 的筆記</title><meta name="title" content="Angular學習筆記5 - 基本結構操作、Pipe、Directive | Bluebean 的筆記"><meta name="description" content><meta name="author" content="Bluebean"><link rel="sitemap" href="/sitemap-index.xml"><!-- Open Graph --><meta property="og:type" content="website"><meta property="og:site_name" content="Bluebean 的筆記"><meta property="og:title" content="Angular學習筆記5 - 基本結構操作、Pipe、Directive | Bluebean 的筆記"><meta property="og:description" content><meta property="og:url" content="https://stu98832.github.io/posts/topics/angular/note-angular-learning-5/"><meta property="og:image" content="https://stu98832.github.io/default-og.jpg"><!-- Twitter / X --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://stu98832.github.io/posts/topics/angular/note-angular-learning-5/"><meta property="twitter:title" content="Angular學習筆記5 - 基本結構操作、Pipe、Directive | Bluebean 的筆記"><meta property="twitter:description" content><meta property="twitter:image" content="https://stu98832.github.io/default-og.jpg"><!-- RSS autodiscovery --><link rel="alternate" type="application/rss+xml" title="Bluebean 的筆記" href="https://stu98832.github.io/rss.xml/"><!-- Filled at runtime by theme.ts to match the current background colour --><meta name="theme-color" content=""><!-- Extra head content injected by child layouts (e.g. JSON-LD, article meta) --><meta property="og:type" content="article"><meta property="article:published_time" content="2021-02-23T00:00:00.000Z"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Angular學習筆記5 - 基本結構操作、Pipe、Directive | Bluebean 的筆記","datePublished":"2021-02-23T00:00:00.000Z","author":[{"@type":"Person","name":"Bluebean","url":"https://stu98832.github.io"}]}</script><!--
+      Inline FOUC-prevention script: sets data-theme on <html> before
+      the browser paints. Runs synchronously, no defer/async.
+    --><script>
+      (function () {
+        const stored = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+        const theme = stored ?? (prefersDark ? "dark" : "light");
+        const root = document.firstElementChild;
+        root?.setAttribute("data-theme", theme);
+        root?.classList.toggle("dark", theme === "dark");
+        // Expose value so theme.ts can skip re-detection.
+        window.__theme = { value: theme };
+      })();
+    </script><link rel="stylesheet" href="/_astro/Footer.BSzCrF3j.css"></head><body class="bg-background font-app text-foreground selection:bg-accent/75 selection:text-accent-foreground flex min-h-svh flex-col"><a id="skip-to-content" href="#main-content" class="bg-background text-accent absolute inset-s-16 -top-full z-50 px-3 py-2 backdrop-blur-lg transition-all focus:top-4">跳至內容</a><header class="app-layout flex flex-col items-center justify-between sm:flex-row"><div class="border-border bg-background relative flex w-full items-baseline justify-between border-b py-4 sm:items-center sm:py-6"><a href="/" class="absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none">Bluebean 的筆記</a><nav id="nav-menu" class="flex w-full flex-col items-center sm:ms-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0"><button id="menu-btn" class="focus-outline self-end p-2 sm:hidden" aria-label="打開選單" aria-expanded="false" aria-controls="menu-items" data-label-open="打開選單" data-label-close="關閉選單"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="hidden" viewBox="0 0 24 24" id="close-icon"><path stroke="none" d="M0 0h24v24H0z" /><path d="M18 6 6 18M6 6l12 12" /></svg><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="icon icon-tabler icons-tabler-outline icon-tabler-menu-deep" viewBox="0 0 24 24" id="menu-icon"><path stroke="none" d="M0 0h24v24H0z" /><path d="M4 6h16M7 12h13M10 18h10" /></svg></button><ul id="menu-items" class="[&amp;&gt;li&gt;a]:hover:text-accent mt-4 hidden w-44 grid-cols-2 place-content-center gap-2 sm:mt-0 sm:flex sm:w-auto sm:gap-x-5 sm:gap-y-0 sm:[&amp;&gt;li]:h-8 [&amp;&gt;li&gt;a]:block [&amp;&gt;li&gt;a]:px-4 [&amp;&gt;li&gt;a]:py-3 [&amp;&gt;li&gt;a]:text-center [&amp;&gt;li&gt;a]:font-medium sm:[&amp;&gt;li&gt;a]:px-2 sm:[&amp;&gt;li&gt;a]:py-1"><li class="col-span-2"><a href="/posts/" class="active-nav">Posts</a></li><li class="col-span-2"><a href="/tags/">Tags</a></li><li class="col-span-2"><a href="/about/">About</a></li><li class="col-span-2"><a href="/archives/" title="Archives" aria-label="Archives" class="group inline-flex items-center gap-1 hover:text-accent focus-outline flex size-full justify-center p-3 sm:relative sm:size-8 sm:p-0"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="hidden sm:absolute sm:top-1/2 sm:left-1/2 sm:block sm:size-6 sm:-translate-x-1/2 sm:-translate-y-1/2" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2 2 2 0 0 1-2 2H5a2 2 0 0 1-2-2M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8M10 12h4" /></svg><span class="sm:sr-only">Archives</span></a></li><li class="col-span-1 flex items-center justify-center"><a href="/search/" title="Search" aria-label="Search" class="group inline-flex items-center gap-1 hover:text-accent focus-outline relative size-8"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="absolute top-1/2 left-1/2 size-6 -translate-x-1/2 -translate-y-1/2" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M3 10a7 7 0 1 0 14 0 7 7 0 1 0-14 0M21 21l-6-6" /></svg><span class="sr-only">Search</span></a></li><li class="col-span-1 flex items-center justify-center"><button id="theme-btn" class="focus-outline hover:[&amp;&gt;svg]:stroke-accent relative size-12 p-4 sm:size-8" title="切換主題" aria-label="auto" aria-live="polite"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="absolute top-[50%] left-[50%] translate-[-50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M12 3h.393a7.5 7.5 0 0 0 7.92 12.446A9 9 0 1 1 12 2.992z" /></svg><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="absolute top-[50%] left-[50%] translate-[-50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M14.828 14.828a4 4 0 1 0-5.656-5.656 4 4 0 0 0 5.656 5.656M6.343 17.657l-1.414 1.414M6.343 6.343 4.929 4.929M17.657 6.343l1.414-1.414M17.657 17.657l1.414 1.414M4 12H2M12 4V2M20 12h2M12 20v2" /></svg></button></li></ul></nav></div></header><script type="module">function e(){let e=document.querySelector(`#menu-btn`),t=document.querySelector(`#menu-items`),n=document.querySelector(`#menu-icon`),r=document.querySelector(`#close-icon`);if(!e||!t||!n||!r)return;let i=e.dataset.labelOpen??`Open menu`,a=e.dataset.labelClose??`Close menu`;e.addEventListener(`click`,()=>{let o=e.getAttribute(`aria-expanded`)===`true`;e.setAttribute(`aria-expanded`,o?`false`:`true`),e.setAttribute(`aria-label`,o?i:a),t.classList.toggle(`hidden`),t.classList.toggle(`grid`),n.classList.toggle(`hidden`),r.classList.toggle(`hidden`)})}function t(){let e=document.getElementById(`skip-to-content`);e&&e.addEventListener(`click`,e=>{if(e.defaultPrevented||e.metaKey||e.ctrlKey||e.shiftKey||e.button!==0)return;e.preventDefault();let t=document.getElementById(`main-content`);t&&(t.setAttribute(`tabindex`,`-1`),t.addEventListener(`blur`,()=>t.removeAttribute(`tabindex`),{once:!0}),t.focus(),t.scrollIntoView({behavior:`smooth`}))})}e(),document.addEventListener(`astro:after-swap`,e),t(),document.addEventListener(`astro:after-swap`,t);</script><div class="app-layout flex items-center justify-start"><a id="back-button" href="#" class="group inline-flex items-center gap-1 hover:text-accent focus-outline hover:text-foreground/75 -ms-2 mt-8 mb-2"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="inline-block size-6 rtl:rotate-180" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="m15 6-6 6 6 6" /></svg><span>Go back</span></a></div><script type="module">document.querySelector(`#back-button`)?.addEventListener(`click`,e=>{e.preventDefault(),history.back()});</script><main id="main-content" class="app-layout" data-pagefind-body><h1 class="text-accent inline-block text-2xl font-bold sm:text-3xl">Angular學習筆記5 - 基本結構操作、Pipe、Directive</h1><div class="my-2 flex items-center gap-2"><div class="text-muted-foreground flex items-center gap-x-2"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="inline-block size-6 min-w-5.5" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zM16 3v4M8 3v4M4 11h16M7 14h.013M10.01 14h.005M13.01 14h.005M16.015 14h.005M13.015 17h.005M7.01 17h.005M10.01 17h.005" /></svg><time class="text-sm sm:text-base" datetime="2021-02-23T00:00:00.000Z">2021-02-23</time></div></div><article id="article" class="mt-8 w-full app-prose max-w-app prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)"><p>這次要繼續介紹與 Complnent 相關的各種工具：</p>
+<ul>
+<li>Pipe</li>
+<li>Directive</li>
+</ul>
+<p>透過使用這些東西，可以使得 Component 樣板的內容變得更簡潔、好維護</p>
+<p>在開始講之前，要先補之前沒有介紹到的一些基本的樣板結構操作</p>
+<h2 id="基礎的-angular-樣板結構操作">基礎的 Angular 樣板結構操作</h2>
+<p>Angular 提供了幾種結構性操作，使得撰寫樣板變得更加便利</p>
+<p>結構性操作包括：</p>
+<ul>
+<li>ngIf</li>
+<li>ngFor</li>
+<li>ngSwitch</li>
+</ul>
+<h3 id="ngif">ngIf</h3>
+<p>使用方式：<code>&lt;tag *ngIf="expression"&gt; ... &lt;/tag&gt;</code></p>
+<p>用來決定是否顯示該元素以及其子元素的內容
+裡面可以帶入變數，運算式，或常數</p>
+<p>首先先準備好決定顯示的變數 <code>visible</code></p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="typescript"><code><span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">export</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> class</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFCB8B"> AppComponent</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> {</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    visible </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#1976D2;--shiki-dark:#FF5874"> false</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">}</span></span></code></pre>
+<p>接著來寫樣板</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="html"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">p</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C5E478;--shiki-dark-font-style:italic"> *ngIf</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">=</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">!visible</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> contentA </span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">p</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">p</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C5E478;--shiki-dark-font-style:italic"> *ngIf</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">=</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">visible</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> contentB </span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">p</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">button</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C5E478;--shiki-dark-font-style:italic"> (click)</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">=</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">visible=!visible</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> toggle content </span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">button</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span></code></pre>
+<p>樣板的內容是這樣的，一開始只會顯示 <code>contentA</code>
+當點擊了 <code>toggle content</code> 後，會將 <code>visible</code> 的值做反向，此時顯示 <code>contentB</code>
+再點擊一次 <code>toggle content</code> 後，再將 <code>visible</code> 反向一次，此時顯示 <code>contentA</code></p>
+<p>來看一下執行畫面：</p>
+<p><img alt="0-0-1613996588336.gif" loading="lazy" decoding="async" width="404" height="185" src="/_astro/0-1613996588336.Cr6aqEdw_262c6P.webp"></p>
+<div class="callout" data-callout="info" data-collapsible="false"><div class="callout-title"><div class="callout-title-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></div><div class="callout-title-text">Info</div></div><div class="callout-content"><h5 id="ngif-為-false-時是直接移除該元素">ngIf 為 false 時，是直接移除該元素</h5><p>一般的 Javascript 做隱藏，可能會是設定 <code>display:none</code> 來達成隱藏的效果
+而 ngIf 則會直接移除整個元素，顯示時再將其加回來</p></div></div>
+<h3 id="ngfor">ngFor</h3>
+<p>使用方式：<code>&lt;tag *ngFor="let item of list;let i=index;let odd=odd; traceBy: func"&gt; ... &lt;/tag&gt;</code></p>
+<p>可以遍歷 <code>list</code> 的內容，並將該元素以其子元素逐一輸出
+裡面有幾個內容需要先說明清楚：</p>
+<ul>
+<li><code>let item of list</code>
+<code>item</code> 表示被迭代的元素，<code>list</code> 則是陣列</li>
+<li><code>let i=index</code> (可選)
+取得目前迴圈的索引值</li>
+<li><code>let odd=odd</code> (可選)
+目前的迭代的索引是否為奇數</li>
+<li><code>trackBy: func </code> (可選)
+指定用來追蹤物件的依據。通常不太會使用這個選項
+簡單來說，就是用來確定清單更新時的變化依據，來決定是否要重新載入 DOM 元素
+預設情況，當陣列內的物件不一樣時，會把整個元素都重新載入一次
+但可以指定像是名子之類的作為依據，這樣就只會更新有差異的部份，而不是整個 DOM 刪除重新加入
+算是可以增加前端顯示效能的功能</li>
+</ul>
+<p>使用 ngFor 之前先設定一個字串陣列 <code>list</code>，等等要拿來遍歷用的</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="typescript"><code><span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">export</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> class</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFCB8B"> AppComponent</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> {</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  list </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> [</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">    '</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">apple</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">    '</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">banana</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">    '</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">cat</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">    '</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">dog</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  ]</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">}</span></span></code></pre>
+<p>然後是樣版</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="html"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">style</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#FF6363">  table</span><span style="--shiki-light:#212121;--shiki-dark:#C792EA">,</span><span style="--shiki-light:#22863A;--shiki-dark:#FF6363"> th</span><span style="--shiki-light:#212121;--shiki-dark:#C792EA">,</span><span style="--shiki-light:#22863A;--shiki-dark:#FF6363"> td</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> {</span></span>
+<span class="line"><span style="--shiki-light:#1976D2;--shiki-dark:#80CBC4">    border</span><span style="--shiki-light:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 1</span><span style="--shiki-light:#D32F2F;--shiki-dark:#FFEB95">px</span><span style="--shiki-light:#1976D2;--shiki-dark:#FF6363"> solid</span><span style="--shiki-light:#1976D2;--shiki-dark:#7FDBCA"> black</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  }</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">style</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">table</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">  &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">tr</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA"> </span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C5E478;--shiki-dark-font-style:italic">    *ngFor</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">=</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">let item of list;let i=index;let odd=odd;</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C5E478;--shiki-dark-font-style:italic">    [style.background-color]</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">=</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">odd ? 'pink' : 'transparent'</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">  &gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">    &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">td</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">{{ i }}</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">td</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">    &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">td</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">{{ item }}</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">td</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">  &lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">tr</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">table</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span></code></pre>
+<p>樣板的部份，主要是將陣列的所有字串都印出來，並印出他們的索引值
+為了使用 <code>odd</code>，這邊針對索引值為<strong>奇數</strong>的列，將背景顏色改為粉紅色</p>
+<p>執行畫面：</p>
+<p><img alt="image-20210222203142323" loading="lazy" decoding="async" width="354" height="190" src="/_astro/image-20210222203142323.BYfR2Uij_ZMIC9Y.webp"></p>
+<h3 id="ngswitch">ngSwitch</h3>
+<p>使用方式：</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="html"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#FFFFFF">tag</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C5E478;--shiki-dark-font-style:italic"> [ngSwitch]</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">=</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">variable</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> </span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">  &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#FFFFFF">tag</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C5E478;--shiki-dark-font-style:italic"> *ngSwitchCase</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">=</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">expression</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">  &lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#FFFFFF">tag</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">  &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#FFFFFF">tag</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C5E478;--shiki-dark-font-style:italic"> *ngSwitchCase</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">=</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">expression</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">  &lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#FFFFFF">tag</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">  &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#FFFFFF">tag</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C5E478;--shiki-dark-font-style:italic"> *ngSwitchDefault</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic"> &lt;!-- 可選 --&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">  &lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#FFFFFF">tag</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#FFFFFF">tag</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span></code></pre>
+<p>跟一般程式的 switch 差不多</p>
+<p>這邊直接舉例子比較快：</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="typescript"><code><span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">export</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> class</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFCB8B"> AppComponent</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> {</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  currentTab </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> ''</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">}</span></span></code></pre>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="html"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">button</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C5E478;--shiki-dark-font-style:italic"> (click)</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">=</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">currentTab='Tab1'</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">Tab1</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">button</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">button</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C5E478;--shiki-dark-font-style:italic"> (click)</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">=</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">currentTab='Tab2'</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">Tab2</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">button</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">button</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C5E478;--shiki-dark-font-style:italic"> (click)</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">=</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">currentTab='Tab3'</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">Tab3</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">button</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">div</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C5E478;--shiki-dark-font-style:italic"> [ngSwitch]</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">=</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">currentTab</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">  &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">p</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C5E478;--shiki-dark-font-style:italic"> *ngSwitchCase</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">=</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">'Tab1'</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> Tab1 </span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">p</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">  &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">p</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C5E478;--shiki-dark-font-style:italic"> *ngSwitchCase</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">=</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">'Tab2'</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> Tab2 </span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">p</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">  &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">p</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C5E478;--shiki-dark-font-style:italic"> *ngSwitchCase</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">=</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">'Tab3'</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> Tab3 </span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">p</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">  &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">p</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C5E478;--shiki-dark-font-style:italic"> *ngSwitchDefault</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> 404 </span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">p</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">div</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span></code></pre>
+<p>這邊會模擬一個簡單的 Tab 功能</p>
+<p>要特別注意的地方是在 <code>*ngSwitchCase</code> 上
+<code>*ngSwitchCase</code> 的值是要輸入<strong>表達式</strong>，而非一般文字
+所以當要使用<strong>字串</strong>作為判斷的依據時，兩旁邊要加上<strong>引號</strong></p>
+<p>執行畫面：</p>
+<p><img alt="0-1613998385371.gif" loading="lazy" decoding="async" width="404" height="185" src="/_astro/0-1613998385371.BifiHuZ7_Z2enCbe.webp"></p>
+<h2 id="pipe">Pipe</h2>
+<p>使用方式：<code>value | pipe:arg1:arg2...</code></p>
+<p>Pipe 是一種用來處理資料的工具
+比較常見的例子像是格式化時間顯示</p>
+<p>Pipe 的參數以<strong>冒號</strong> <code>:</code> 做區隔</p>
+<p><strong>Pipe 可以透過 <code>|</code> 進行串接</strong></p>
+<h3 id="官方提供的基本-pipe">官方提供的基本 Pipe</h3>
+<p>官方其實已經有提供幾個基本的 Pipe 來使用，像是：</p>
+<ul>
+<li><a href="https://angular.io/api/common/DatePipe">DatePipe</a>：date
+日期格式</li>
+<li><a href="https://angular.io/api/common/LowerCasePipe">LowerCasePipe</a>：lowercase
+小寫顯示</li>
+<li><a href="https://angular.io/api/common/CurrencyPipe">CurrencyPipe</a>：currency
+貨幣表示</li>
+<li><a href="https://angular.io/api/common/DecimalPipe">DecimalPipe</a>：number
+數字表示</li>
+<li><a href="https://angular.io/api/common/PercentPipe">PercentPipe</a>：percent
+百分比表示</li>
+</ul>
+<p>詳細用法可以點擊上面的 Pipe 類別名稱前往 Angular 官網查看</p>
+<p>Pipe 範例：</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="html"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">p</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">{{ '2020-01-01' | date }}</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">p</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">p</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">{{ 'lower' | uppercase  }}</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">p</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">p</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">{{ 'UPPER' | lowercase }}</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">p</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">p</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">{{ 100 | currency }}</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">p</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">p</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">{{ 10000 | number }}</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">p</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">p</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">{{ 0.05 | percent }}</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">p</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span></code></pre>
+<p>執行畫面：</p>
+<p><img alt="image-20210222214250931" loading="lazy" decoding="async" width="353" height="257" src="/_astro/image-20210222214250931.FOZi2OU7_Z1DvDyg.webp"></p>
+<h3 id="自訂-pipe">自訂 Pipe</h3>
+<p>Angular 使用者可以自己建立自訂的 Pipe 類別</p>
+<p>最簡單的方式就是透過 Angular CLI 的 <code>ng g pipe {pipe-path}</code> 來建立</p>
+<p>這邊會透過 Angular CLI 建立一個 Pipe <code>html-tag</code></p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="plaintext"><code><span class="line"><span>ng g pipe html-tag</span></span></code></pre>
+<p>建立好的 HtmlTagPipe 如下：</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="typescript"><code><span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">import</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> { Pipe</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> PipeTransform } </span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">from</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> '</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">@angular/core</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">@</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">Pipe</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">({</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  name</span><span style="--shiki-light:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> '</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">htmlTag</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">})</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">export</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> class</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFCB8B"> HtmlTagPipe</span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic"> implements</span><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478"> PipeTransform</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> {</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">  transform</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">(</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D7DBE0">value</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">:</span><span style="--shiki-light:#1976D2;--shiki-dark:#C5E478"> unknown</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> ...</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D7DBE0">args</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">:</span><span style="--shiki-light:#1976D2;--shiki-dark:#C5E478"> unknown</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">[]</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">)</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">:</span><span style="--shiki-light:#1976D2;--shiki-dark:#C5E478"> unknown</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> {</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    return</span><span style="--shiki-light:#1976D2;--shiki-dark:#FF5874"> null</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  }</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">}</span></span></code></pre>
+<p>透過 <code>@Pipe</code> 裝飾器來建立可使用的 Pipe
+<code>name</code> 表示在樣板使用時的 Pipe 名稱</p>
+<p>由於之前建立專案時，是使用<strong>型別嚴格檢查</strong>，所以產生的函式參數型別會是 <code>unknown</code> 的型態</p>
+<p>接下來會假定傳入數值一定是字串，然後將輸出字串 <code>&lt;value&gt;</code></p>
+<p>修改後的 transform 函式如下：</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="typescript"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">transform</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(value: string): string {</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">  return</span><span style="--shiki-light:#22863A;--shiki-dark:#D6DEEB"> `</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">&lt;</span><span style="--shiki-light:#D32F2F;--shiki-dark:#D3423E">${</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">value</span><span style="--shiki-light:#D32F2F;--shiki-dark:#D3423E">}</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">&gt;</span><span style="--shiki-light:#22863A;--shiki-dark:#D6DEEB">`</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">}</span></span></code></pre>
+<p>接著使用建立好的 Pipe</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="html"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">p</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">{{ 'li' | htmlTag }}</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">p</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span></code></pre>
+<p>執行畫面：</p>
+<p><img alt="image-20210222214454420" loading="lazy" decoding="async" width="349" height="128" src="/_astro/image-20210222214454420.D8qJzkyJ_ZqVq6k.webp"></p>
+<h2 id="directive">Directive</h2>
+<p>Directive 可以修飾元素本身</p>
+<p>Directive 修飾的元素都是透過<strong>選擇器</strong>來選擇
+通常是選擇含有自訂<strong>屬性 (attribute)</strong> 的元素
+(在 CSS Selector 中表示為 <code>[attribute]</code> )</p>
+<p>Angular 有提供一些基本的 Directive：</p>
+<ul>
+<li>ngClass
+CSS 樣式類別</li>
+<li>ngStyle
+CSS 樣式</li>
+<li><strong>Model</strong>
+對 HTML Form 元素進行雙向綁定時使用</li>
+</ul>
+<h3 id="ngifngfor-其實都是-directive">ngIf、ngFor 其實都是 Directive</h3>
+<p>前面在說明結構性操作時，有提到 ngIf、ngFor 跟 ngSwitch
+這些其實全部都是 Directive
+他們在官方文件中被歸類為<strong>結構指示 (Structural Directive)</strong></p>
+<h3 id="directive-的特例component">Directive 的特例：Component</h3>
+<p>Component 本身繼承自 Directive
+可以說是 Directive 的特例
+專門修飾自訂標籤，並輸出樣板內容
+Directive 可以做的事情，Component 都可以做</p>
+<h3 id="自訂-directive">自訂 Directive</h3>
+<p>簡單的介紹了 Directive 之後，接著來新增自定義的 Directive</p>
+<p>本次將會建立一個名為 <code>icon</code> 的 Directive</p>
+<p>在開始之前，先透過 npm 安裝 icon 套件 <code>FontAwesome</code></p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="plaintext"><code><span class="line"><span>npm install @fortawesome/fontawesome-free</span></span></code></pre>
+<p>接著在 <code>專案資料夾/angular.json</code> 中引入 <code>FontAwesome</code> 的 CSS 檔與 JS 檔</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="json"><code><span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">styles</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">: [</span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  /* ... */</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">  "</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">node_modules/@fortawesome/fontawesome-free/css/all.min.css</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  /* ... */</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">],</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">scripts</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">: [</span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  /* ... */</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">  "</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">node_modules/@fortawesome/fontawesome-free/js/all.min.js</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  /* ... */</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">]</span></span></code></pre>
+<p>接著使用 Angular CLI 建立一個 Directive，指令如下：</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="plaintext"><code><span class="line"><span>ng g directive icon</span></span></code></pre>
+<p>建立好的 Directive 會長這個樣子：</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="typescript"><code><span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">import</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> { Directive } </span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">from</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> '</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">@angular/core</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">@</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">Directive</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">({</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  selector</span><span style="--shiki-light:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> '</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">[appIcon]</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">})</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">export</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> class</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFCB8B"> IconDirective</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> {</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#82AAFF">  constructor</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">()</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> { }</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">}</span></span></code></pre>
+<p>接著來改寫一下，在建構式引入元素參考
+並增加 class <code>fa</code> 和 <code>fa-home</code></p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="typescript"><code><span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">export</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> class</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFCB8B"> IconDirective</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> {</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#82AAFF">  constructor</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">(</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D7DBE0">elem</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">:</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFCB8B"> ElementRef</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">&lt;</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFCB8B">HTMLElement</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">&gt;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">)</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> { </span></span>
+<span class="line"><span style="--shiki-light:#1976D2;--shiki-dark:#D6DEEB">    elem</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">.</span><span style="--shiki-light:#1976D2;--shiki-light-font-style:inherit;--shiki-dark:#FAF39F;--shiki-dark-font-style:italic">nativeElement</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">.</span><span style="--shiki-light:#1976D2;--shiki-light-font-style:inherit;--shiki-dark:#FAF39F;--shiki-dark-font-style:italic">classList</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">.</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">add</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">fa</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> '</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">fa-home</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">);</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  }</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">}</span></span></code></pre>
+<p>然後在 AppComponent 的樣板裡套用這個 Directive</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="html"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">button</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">    &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">i</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C5E478;--shiki-dark-font-style:italic"> appIcon</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">i</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA"> &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">span</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> Home </span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">span</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">button</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span></code></pre>
+<p>執行結果：</p>
+<p><img alt="image-20210223100039003" loading="lazy" decoding="async" width="353" height="160" src="/_astro/image-20210223100039003.BQ8JbwKZ_Z1PrQMX.webp"></p>
+<h4 id="input">Input</h4>
+<p>只有一種 Icon 顯然是不夠的
+為了能夠讓使用者自己決定要使用的 Icon，因此要在 Directive 裡新增輸入變數</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="typescript"><code><span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">import</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> { Directive</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> ElementRef</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> Input } </span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">from</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> '</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">@angular/core</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">@</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">Directive</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">({</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  selector</span><span style="--shiki-light:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> '</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">[appIcon]</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">})</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">export</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> class</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFCB8B"> IconDirective</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> {</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">  @</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">Input</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">() iconType </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> '</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">home</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">    </span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#82AAFF">  constructor</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">(</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D7DBE0">elem</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">:</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFCB8B"> ElementRef</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">&lt;</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFCB8B">HTMLElement</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">&gt;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">)</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> { </span></span>
+<span class="line"><span style="--shiki-light:#1976D2;--shiki-dark:#D6DEEB">    elem</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">.</span><span style="--shiki-light:#1976D2;--shiki-light-font-style:inherit;--shiki-dark:#FAF39F;--shiki-dark-font-style:italic">nativeElement</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">.</span><span style="--shiki-light:#1976D2;--shiki-light-font-style:inherit;--shiki-dark:#FAF39F;--shiki-dark-font-style:italic">classList</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">.</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">add</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">fa</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#22863A;--shiki-dark:#D6DEEB"> `</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">fa-</span><span style="--shiki-light:#D32F2F;--shiki-dark:#D3423E">${</span><span style="--shiki-light:#1976D2;--shiki-dark:#7FDBCA">this</span><span style="--shiki-light:#24292EFF;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#BAEBE2">iconType</span><span style="--shiki-light:#D32F2F;--shiki-dark:#D3423E">}</span><span style="--shiki-light:#22863A;--shiki-dark:#D6DEEB">`</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">);</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  }</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">}</span></span></code></pre>
+<p>建構式的內容也改成會隨著 <code>iconType</code> 而改變</p>
+<p>使用了 Input 之後，就可以在樣板裡再新增一個 <code>iconType</code> 屬性來決定輸出數值</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="html"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">button</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">    &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">i</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C5E478;--shiki-dark-font-style:italic"> appIcon</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C5E478;--shiki-dark-font-style:italic"> iconType</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">=</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">link</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">i</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA"> &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">span</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> Url </span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">span</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">button</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span></code></pre>
+<p>執行結果：</p>
+<p><img alt="image-20210223102046493" loading="lazy" decoding="async" width="345" height="118" src="/_astro/image-20210223102046493.B6MVXisb_Z4pLez.webp"></p>
+<p>嗯…？怎麼沒改變？
+原來 Directive 在<strong>建構時</strong>就已經設定好元素的樣式了
+因此即使後來設定 <code>iconType</code>，也沒辦法改變樣式
+為了解決這個問題，需要讓 <code>IconDirective</code> 繼承 <code>OnInit</code> 界面</p>
+<h4 id="oninit-介面">OnInit 介面</h4>
+<p><code>OnInit</code> 界面裡只有一個函式 <code>ngOnInit</code>
+當一切都設定好，頁面要初始化時，就會呼叫 <code>ngOnInit</code>
+因此我們要來改寫原本的 Directive，使其繼承 <code>OnInit</code> 並實做 <code>ngOnInit</code></p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="typescript"><code><span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">import</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> { Directive</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> ElementRef</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> Input</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> OnInit } </span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">from</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> '</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">@angular/core</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">@</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">Directive</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">({</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  selector</span><span style="--shiki-light:#D32F2F;--shiki-dark:#D6DEEB">:</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> '</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">[appIcon]</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">})</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">export</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> class</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFCB8B"> IconDirective</span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic"> implements</span><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478"> OnInit</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> {</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">  @</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">Input</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">() iconType </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> '</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">home</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  </span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  // 這邊使用了 TypeScript 的語法糖</span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  // 引入變建立一個私有成員 elem</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#82AAFF">  constructor</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">(</span><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">private</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D7DBE0"> elem</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">:</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFCB8B"> ElementRef</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">&lt;</span><span style="--shiki-light:#6F42C1;--shiki-dark:#FFCB8B">HTMLElement</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">&gt;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">)</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> { </span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  // 在初始化時才設定 icon</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">  ngOnInit</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">()</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> {</span></span>
+<span class="line"><span style="--shiki-light:#1976D2;--shiki-dark:#7FDBCA">    this</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">.</span><span style="--shiki-light:#1976D2;--shiki-light-font-style:inherit;--shiki-dark:#FAF39F;--shiki-dark-font-style:italic">elem</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">.</span><span style="--shiki-light:#1976D2;--shiki-light-font-style:inherit;--shiki-dark:#FAF39F;--shiki-dark-font-style:italic">nativeElement</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">.</span><span style="--shiki-light:#1976D2;--shiki-light-font-style:inherit;--shiki-dark:#FAF39F;--shiki-dark-font-style:italic">classList</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">.</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">add</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">fa</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">,</span><span style="--shiki-light:#22863A;--shiki-dark:#D6DEEB"> `</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">fa-</span><span style="--shiki-light:#D32F2F;--shiki-dark:#D3423E">${</span><span style="--shiki-light:#1976D2;--shiki-dark:#7FDBCA">this</span><span style="--shiki-light:#24292EFF;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">.</span><span style="--shiki-light:#24292EFF;--shiki-dark:#BAEBE2">iconType</span><span style="--shiki-light:#D32F2F;--shiki-dark:#D3423E">}</span><span style="--shiki-light:#22863A;--shiki-dark:#D6DEEB">`</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">);</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">  }</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">}</span></span></code></pre>
+<p>接著看一下執行畫面：</p>
+<p><img alt="image-20210223102003663" loading="lazy" decoding="async" width="416" height="188" src="/_astro/image-20210223102003663.DzWKIwfg_1lbAdp.webp"></p>
+<p>前面寫完 <code>IconDirective</code> 之後，感覺比以往直接賦予 class 還要麻煩，字也更多
+每次設定 Icon 時都要出現 <code>appIcon</code> 跟 <code>iconType</code>
+要解決這個問題，可以使用 Input 屬性綁定</p>
+<h4 id="input-屬性綁定">Input 屬性綁定</h4>
+<p>從前面的範例中可以發現，Input 本身也是一個裝飾器
+而 Input 本身其實可以接受一個參數，也就是<strong>要綁定的屬性名稱</strong></p>
+<p>在這邊為了要簡化 <code>iconType</code> 跟 <code>appIcon</code> 一定要一起出現的問題
+因此對於 <code>iconType</code> 的部份就透過綁定 <code>appIcon</code> 來解決：</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="typescript"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#82AAFF">@</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">Input</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">appIcon</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">) iconType </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">=</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD"> '</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">home</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">'</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span></code></pre>
+<p>樣板的內容就可以進行改寫：</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="html"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">button</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">    &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">i</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#C5E478;--shiki-dark-font-style:italic"> appIcon</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">=</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">link</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">i</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA"> &lt;</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">span</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> Url </span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">span</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&lt;/</span><span style="--shiki-light:#22863A;--shiki-dark:#CAECE6">button</span><span style="--shiki-light:#24292EFF;--shiki-dark:#7FDBCA">&gt;</span></span></code></pre>
+<p>執行結果：</p>
+<p><img alt="image-20210223103332732" loading="lazy" decoding="async" width="401" height="135" src="/_astro/image-20210223103332732.DKBYtudu_Z2e5DSx.webp"></p>
+<blockquote>
+<p>![NOTE]
+事實上將 Property 名稱設定為 <code>appIcon</code>，也可以達成一樣的效果
+不一定要進行屬性綁定</p>
+</blockquote>
+<h2 id="結語">結語</h2>
+<p>這次算是補足了之前沒說到的 ngIf、ngFor 等結構指示
+雖然是知道 ngIf 跟 ngFor 或是 ngSwitch 這些都是 Directive
+但由於其特殊性，讓我不知道該怎麼說明才好
+後來看到官方文件上寫的是 <strong>Structural Directive</strong>
+於是前面在不破題的情況下，我就把這些都稱為<strong>結構性操作</strong></p>
+<p>ngModel 的部份由於涉及雙向綁定
+自己本身對這部份不熟，所以沒另外講解
+可以參考官方的<a href="https://angular.io/guide/two-way-binding">雙向綁定條目</a>來進一步了解</p>
+<p>這次篇幅跟之前比起來有比較長一點
+實際上 Directive 還有其他東西可以說明
+但是由於篇幅關係，加上有些內容我也不是很熟悉，因此就不另外介紹了
+有興趣的可以去找官方文件來深入</p>
+<h2 id="參考">參考</h2>
+<ul>
+<li><a href="https://dotblogs.com.tw/explooosion/2017/04/29/035512">Angular - ngFor trackby | Robby - 全端的 Front-End Engineer - 點部落</a></li>
+<li><a href="https://angular.io/guide/built-in-directives">Angular - Built-in directives</a></li>
+<li><a href="https://angular.io/guide/attribute-directives">Angular - Attribute directives</a></li>
+<li><a href="https://angular.io/guide/structural-directives">Angular - Structural directives</a></li>
+<li><a href="https://angular.io/guide/pipes">Angular - Transforming Data Using Pipes</a></li>
+<li><a href="https://angular.io/api/core/OnInit">Angular - OnInit</a></li>
+</ul>
+</article><hr class="my-8 border-dashed"><div id="btt-btn-container" class="fixed inset-e-4 bottom-8 z-50 md:sticky md:inset-e-auto md:float-end md:me-1 translate-y-14 opacity-0 transition duration-500"><button data-button="back-to-top" class="group bg-background relative px-2 py-1 size-14 rounded-full shadow-xl md:h-8 md:w-fit md:rounded-md md:shadow-none md:focus-visible:rounded-none md:bg-background/35 md:bg-clip-padding md:backdrop-blur-lg"><span id="progress-indicator" class="absolute inset-0 -z-10 block size-14 scale-110 rounded-full bg-transparent md:hidden md:h-8 md:rounded-md"></span><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="inline-block rotate-90 md:hidden" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M5 12h14M5 12l6 6M5 12l6-6" /></svg><span class="group-hover:text-accent sr-only text-sm md:not-sr-only"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="inline-block size-4" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M12 5v14M16 9l-4-4M8 9l4-4" /></svg>Back to top</span></button></div><script data-astro-rerun>
+  function backToTop() {
+    const rootElement = document.documentElement;
+    const btnContainer = document.querySelector("#btt-btn-container");
+    const backToTopBtn = document.querySelector("[data-button='back-to-top']");
+    const progressIndicator = document.querySelector("#progress-indicator");
+
+    if (!rootElement || !btnContainer || !backToTopBtn || !progressIndicator)
+      return;
+
+    backToTopBtn.addEventListener("click", () => {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    });
+
+    let lastVisible = null;
+    function handleScroll() {
+      const scrollTotal = rootElement.scrollHeight - rootElement.clientHeight;
+      const scrollTop = rootElement.scrollTop;
+      const scrollPercent = Math.floor((scrollTop / scrollTotal) * 100);
+
+      progressIndicator.style.setProperty(
+        "background-image",
+        `conic-gradient(var(--accent), var(--accent) ${scrollPercent}%, transparent ${scrollPercent}%)`
+      );
+
+      const isVisible = scrollTop / scrollTotal > 0.3;
+
+      if (isVisible !== lastVisible) {
+        btnContainer.classList.toggle("opacity-100", isVisible);
+        btnContainer.classList.toggle("translate-y-0", isVisible);
+        btnContainer.classList.toggle("opacity-0", !isVisible);
+        btnContainer.classList.toggle("translate-y-14", !isVisible);
+        lastVisible = isVisible;
+      }
+    }
+
+    let ticking = false;
+    document.addEventListener("scroll", () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+  }
+  backToTop();
+</script><ul class="mt-4 mb-8 flex flex-wrap gap-4 sm:my-8"><li><a href="/tags/angular/" class="flex items-center gap-0.5 border-foreground border-b-2 border-dashed hover:border-accent hover:text-accent hover:-mt-0.5 focus-visible:text-accent focus-visible:border-none text-sm"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="opacity-80 size-4" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M5 9h14M5 15h14M11 4 7 20M17 4l-4 16" /></svg>Angular</a></li><li><a href="/tags/網頁前端/" class="flex items-center gap-0.5 border-foreground border-b-2 border-dashed hover:border-accent hover:text-accent hover:-mt-0.5 focus-visible:text-accent focus-visible:border-none text-sm"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="opacity-80 size-4" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M5 9h14M5 15h14M11 4 7 20M17 4l-4 16" /></svg>網頁前端</a></li></ul><div class="flex flex-none flex-col items-center justify-center gap-1 md:items-start"><span class="italic">分享文章:</span><div class="text-center"><a href="https://wa.me/?text=https://stu98832.github.io/posts/topics/angular/note-angular-learning-5/" title="分享到 Whatsapp" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center gap-1 hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="m3 21 1.65-3.8a9 9 0 1 1 3.4 2.9z" /><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0za5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1" /></svg><span class="sr-only">分享到 Whatsapp</span></a><a href="https://www.facebook.com/sharer.php?u=https://stu98832.github.io/posts/topics/angular/note-angular-learning-5/" title="分享到 Facebook" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center gap-1 hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M7 10v4h3v7h4v-7h3l1-4h-4V8a1 1 0 0 1 1-1h3V3h-3a5 5 0 0 0-5 5v2z" /></svg><span class="sr-only">分享到 Facebook</span></a><a href="https://x.com/intent/post?url=https://stu98832.github.io/posts/topics/angular/note-angular-learning-5/" title="分享到 X" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center gap-1 hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="m4 4 11.733 16H20L8.267 4zM4 20l6.768-6.768m2.46-2.46L20 4" /></svg><span class="sr-only">分享到 X</span></a><a href="https://t.me/share/url?url=https://stu98832.github.io/posts/topics/angular/note-angular-learning-5/" title="分享到 Telegram" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center gap-1 hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="m15 10-4 4 6 6 4-16-18 7 4 2 2 6 3-4" /></svg><span class="sr-only">分享到 Telegram</span></a><a href="mailto:?subject=See%20this%20post&amp;body=https://stu98832.github.io/posts/topics/angular/note-angular-learning-5/" title="以 email 分享" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center gap-1 hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><path d="m3 7 9 6 9-6" /></svg><span class="sr-only">以 email 分享</span></a></div></div><hr class="my-8 border-dashed"><div data-pagefind-ignore class="my-8 grid grid-cols-1 gap-6 sm:grid-cols-2"><a href="/posts/topics/angular/note-angular-learning-4/" class="flex w-full gap-1 hover:opacity-75"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="inline-block flex-none rtl:rotate-180" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M5 12h14M5 12l6 6M5 12l6-6" /></svg><div><span>Previous</span><div class="text-accent/85 text-sm">Angular學習筆記4 - Component與樣版</div></div></a><a href="/posts/topics/angular/note-angular-learning-6/" class="flex w-full justify-end gap-1 text-end hover:opacity-75 sm:col-start-2"><div><span>Next</span><div class="text-accent/85 text-sm">Angular學習筆記6 - Module 與路由</div></div><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="inline-block flex-none rtl:rotate-180" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M5 12h14M13 18l6-6M13 6l6 6" /></svg></a></div><script src="https://giscus.app/client.js" data-repo="stu98832/stu98832.github.io" data-repo-id="MDEwOlJlcG9zaXRvcnkyNDMyNTk5NjE=" data-category="Giscus" data-category-id="DIC_kwDODn_aOc4DGeo4" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-lang="zh-TW" data-loading crossorigin="anonymous" async></script></main><footer class="app-layout mt-auto"><div class="border-border flex flex-col items-center justify-between border-t py-6 sm:flex-row-reverse sm:py-4"><div class="flex items-center"><div class="flex flex-wrap items-center gap-1"><a href="https://github.com/stu98832" title="Github" class="group inline-flex items-center gap-1 hover:text-accent p-2 hover:rotate-6 sm:p-1"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21" /></svg><span class="sr-only">Github</span></a></div><a target="_blank" href="/rss.xml" class="justify-content inline-block" aria-label="RSS Feed" title="RSS Feed"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="stroke-accent scale-125 stroke-3 rtl:-rotate-90" viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" /><path d="M4 19a1 1 0 1 0 2 0 1 1 0 1 0-2 0M4 4a16 16 0 0 1 16 16M4 11a9 9 0 0 1 9 9" /></svg><span class="sr-only">RSS Feed</span></a></div><div class="my-2 flex flex-col items-center whitespace-nowrap sm:flex-row"><span>Copyright &#169; 2026</span><span class="hidden sm:inline">&nbsp;|&nbsp;</span><span>All rights reserved.</span></div></div></footer><script type="module">var e=`theme`,t=`light`,n=`dark`,r=`https://giscus.app`;function i(e){document.querySelector(`iframe.giscus-frame`)?.contentWindow?.postMessage({giscus:{setConfig:e}},r)}function a(){return localStorage.getItem(e)||(window.matchMedia(`(prefers-color-scheme: dark)`).matches?n:t)}var o=window.__theme?.value??a();function s(){localStorage.setItem(e,o),c()}function c(){let e=document.firstElementChild;e?.setAttribute(`data-theme`,o),e?.classList.toggle(`dark`,o===n),document.querySelector(`#theme-btn`)?.setAttribute(`aria-label`,o);let t=window.getComputedStyle(document.body).backgroundColor;document.querySelector(`meta[name='theme-color']`)?.setAttribute(`content`,t),i({theme:o===n?`dark`:`light`})}function l(){c(),document.querySelector(`#theme-btn`)?.addEventListener(`click`,()=>{o=o===t?n:t,s()})}l(),document.addEventListener(`astro:after-swap`,l),document.addEventListener(`astro:before-swap`,e=>{let t=document.querySelector(`meta[name='theme-color']`)?.getAttribute(`content`);t&&e.newDocument.querySelector(`meta[name='theme-color']`)?.setAttribute(`content`,t)}),window.matchMedia(`(prefers-color-scheme: dark)`).addEventListener(`change`,({matches:e})=>{o=e?n:t,s()}),window.addEventListener(`message`,e=>{e.origin===r&&s()});</script></body></html><script data-astro-rerun>
+  function createProgressBar() {
+    const progressContainer = document.createElement("div");
+    progressContainer.className =
+      "progress-container fixed top-0 z-10 h-1 w-full bg-background";
+
+    const progressBar = document.createElement("div");
+    progressBar.className = "progress-bar h-1 w-0 bg-accent";
+    progressBar.id = "myBar";
+
+    progressContainer.appendChild(progressBar);
+    document.body.appendChild(progressContainer);
+  }
+  createProgressBar();
+
+  function updateScrollProgress() {
+    document.addEventListener("scroll", () => {
+      const winScroll =
+        document.body.scrollTop || document.documentElement.scrollTop;
+      const height =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      if (document) {
+        const myBar = document.getElementById("myBar");
+        if (myBar) {
+          myBar.style.width = scrolled + "%";
+        }
+      }
+    });
+  }
+  updateScrollProgress();
+
+  function addHeadingLinks() {
+    const headings = Array.from(
+      document.querySelectorAll("h2, h3, h4, h5, h6")
+    );
+    for (const heading of headings) {
+      heading.classList.add("group");
+      const link = document.createElement("a");
+      link.className =
+        "heading-link ms-2 no-underline opacity-75 md:opacity-0 md:group-hover:opacity-100 md:focus:opacity-100";
+      link.href = "#" + heading.id;
+
+      const span = document.createElement("span");
+      span.ariaHidden = "true";
+      span.innerText = "#";
+      link.appendChild(span);
+      heading.appendChild(link);
+    }
+  }
+  addHeadingLinks();
+
+  function attachCopyButtons() {
+    const copyButtonLabel = "Copy";
+    const codeBlocks = Array.from(document.querySelectorAll("pre"));
+
+    for (const codeBlock of codeBlocks) {
+      const wrapper = document.createElement("div");
+      wrapper.style.position = "relative";
+
+      const computedStyle = getComputedStyle(codeBlock);
+      const hasFileNameOffset =
+        computedStyle.getPropertyValue("--file-name-offset").trim() !== "";
+
+      const topClass = hasFileNameOffset
+        ? "top-(--file-name-offset)"
+        : "-top-3";
+
+      const copyButton = document.createElement("button");
+      copyButton.className = `copy-code absolute end-3 ${topClass} rounded bg-muted border border-muted px-2 py-1 text-xs leading-4 text-foreground font-medium`;
+      copyButton.innerHTML = copyButtonLabel;
+      codeBlock.setAttribute("tabindex", "0");
+      codeBlock.appendChild(copyButton);
+
+      codeBlock?.parentNode?.insertBefore(wrapper, codeBlock);
+      wrapper.appendChild(codeBlock);
+
+      copyButton.addEventListener("click", async () => {
+        await copyCode(codeBlock, copyButton);
+      });
+    }
+
+    async function copyCode(block, button) {
+      const code = block.querySelector("code");
+      const text = code?.innerText;
+
+      await navigator.clipboard.writeText(text ?? "");
+
+      button.innerText = "Copied";
+
+      setTimeout(() => {
+        button.innerText = copyButtonLabel;
+      }, 700);
+    }
+  }
+  attachCopyButtons();
+
+  /** Accessible image lightbox for article images. */
+  function initLightbox() {
+    const article = document.getElementById("article");
+    if (!article) return;
+
+    const prefersReducedMotion = () =>
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    let overlay = null;
+    let lastFocused = null;
+
+    // Defer attribute mutations so they don't push the LCP timestamp.
+    // Event listeners below use delegation and don't need the attributes to exist yet.
+    requestAnimationFrame(() => {
+      const images = Array.from(article.querySelectorAll("img"));
+      for (const image of images) {
+        if (image.closest("a")) continue;
+        image.setAttribute("role", "button");
+        image.setAttribute("tabindex", "0");
+        image.setAttribute("aria-haspopup", "dialog");
+        image.setAttribute(
+          "aria-label",
+          image.alt ? `Zoom image: ${image.alt}` : "Zoom image"
+        );
+      }
+    });
+
+    function open(src, alt, trigger) {
+      if (overlay) return;
+      lastFocused = trigger ?? document.activeElement;
+
+      overlay = document.createElement("div");
+      overlay.setAttribute("role", "dialog");
+      overlay.setAttribute("aria-modal", "true");
+      overlay.setAttribute(
+        "aria-label",
+        alt ? `Image preview: ${alt}` : "Image preview"
+      );
+      overlay.className =
+        "fixed inset-0 z-50 flex cursor-zoom-out items-center justify-center bg-black/70 backdrop-blur-sm opacity-0 transition-opacity duration-200 motion-reduce:transition-none";
+
+      const closeButton = document.createElement("button");
+      closeButton.type = "button";
+      closeButton.setAttribute("aria-label", "Close image preview");
+      closeButton.className =
+        "absolute end-4 top-4 rounded p-2 text-3xl leading-none text-white";
+      closeButton.innerHTML = "&#10005;";
+      closeButton.addEventListener("click", close);
+
+      const image = document.createElement("img");
+      image.src = src;
+      image.alt = "";
+      image.className =
+        "max-h-[90dvh] max-w-[90dvw] cursor-default object-contain";
+
+      overlay.append(closeButton, image);
+      overlay.addEventListener("click", e => {
+        if (e.target === overlay && currentScale <= 1) close();
+      });
+
+      let currentScale = 1;
+      let translateX = 0;
+      let translateY = 0;
+      let initialDist = 0;
+      let initialScale = 1;
+      let panStartX = 0;
+      let panStartY = 0;
+      let panStartTranslateX = 0;
+      let panStartTranslateY = 0;
+      let lastTapTime = 0;
+
+      function applyTransform() {
+        image.style.transform = `scale(${currentScale}) translate(${translateX}px, ${translateY}px)`;
+      }
+
+      function resetTransform() {
+        currentScale = 1;
+        translateX = 0;
+        translateY = 0;
+        image.style.transform = "";
+      }
+
+      overlay.addEventListener(
+        "touchstart",
+        e => {
+          const t = e.touches;
+          if (t.length === 2) {
+            initialDist = Math.hypot(
+              t[1].clientX - t[0].clientX,
+              t[1].clientY - t[0].clientY
+            );
+            initialScale = currentScale;
+          } else if (t.length === 1) {
+            const now = Date.now();
+            if (now - lastTapTime < 300) {
+              e.preventDefault();
+              if (currentScale > 1) {
+                resetTransform();
+              } else {
+                currentScale = 2;
+                translateX = 0;
+                translateY = 0;
+                applyTransform();
+              }
+              lastTapTime = 0;
+              panStartX = t[0].clientX;
+              panStartY = t[0].clientY;
+              panStartTranslateX = translateX;
+              panStartTranslateY = translateY;
+            } else {
+              lastTapTime = now;
+              if (currentScale > 1) {
+                panStartX = t[0].clientX;
+                panStartY = t[0].clientY;
+                panStartTranslateX = translateX;
+                panStartTranslateY = translateY;
+              }
+            }
+          }
+        },
+        { passive: false }
+      );
+
+      overlay.addEventListener(
+        "touchmove",
+        e => {
+          const t = e.touches;
+          if (t.length === 2) {
+            e.preventDefault();
+            const dist = Math.hypot(
+              t[1].clientX - t[0].clientX,
+              t[1].clientY - t[0].clientY
+            );
+            currentScale = Math.min(
+              4,
+              Math.max(1, initialScale * (dist / initialDist))
+            );
+            applyTransform();
+          } else if (t.length === 1) {
+            if (currentScale > 1) {
+              e.preventDefault();
+              translateX =
+                panStartTranslateX + (t[0].clientX - panStartX) / currentScale;
+              translateY =
+                panStartTranslateY + (t[0].clientY - panStartY) / currentScale;
+              const maxX = Math.max(
+                0,
+                (image.clientWidth - overlay.clientWidth / currentScale) / 2
+              );
+              const maxY = Math.max(
+                0,
+                (image.clientHeight - overlay.clientHeight / currentScale) / 2
+              );
+              translateX = Math.min(maxX, Math.max(-maxX, translateX));
+              translateY = Math.min(maxY, Math.max(-maxY, translateY));
+              applyTransform();
+            } else {
+              e.preventDefault();
+            }
+          }
+        },
+        { passive: false }
+      );
+
+      overlay.addEventListener("touchend", e => {
+        if (e.touches.length === 0 && currentScale <= 1.05) {
+          resetTransform();
+        }
+      });
+
+      overlay.addEventListener("touchcancel", e => {
+        if (e.touches.length === 0 && currentScale <= 1.05) {
+          resetTransform();
+        }
+      });
+
+      document.body.appendChild(overlay);
+      document.body.style.overflow = "hidden";
+      document.addEventListener("keydown", onKeyDown);
+      window.__closeLightbox = close;
+
+      requestAnimationFrame(() => overlay?.classList.add("opacity-100"));
+      closeButton.focus();
+    }
+
+    function close() {
+      if (!overlay) return;
+      const el = overlay;
+      overlay = null;
+      window.__closeLightbox = null;
+
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = "";
+      lastFocused?.focus();
+      lastFocused = null;
+
+      if (prefersReducedMotion()) {
+        el.remove();
+        return;
+      }
+      const remove = () => el.remove();
+      el.addEventListener("transitionend", remove, { once: true });
+      setTimeout(remove, 250); // fallback in case transitionend never fires
+      el.classList.remove("opacity-100");
+    }
+
+    function onKeyDown(e) {
+      if (e.key === "Escape") {
+        close();
+      } else if (e.key === "Tab") {
+        trapFocus(e);
+      }
+    }
+
+    // Keep keyboard focus inside the open dialog.
+    function trapFocus(e) {
+      if (!overlay) return;
+      const focusables = overlay.querySelectorAll(
+        'a[href], button, [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+
+    function triggerFromEvent(e) {
+      const image = e.target.closest("img");
+      if (!image || !article.contains(image) || image.closest("a")) return null;
+      return image;
+    }
+
+    function activate(image) {
+      open(image.currentSrc || image.src, image.alt, image);
+    }
+
+    article.addEventListener("click", e => {
+      const image = triggerFromEvent(e);
+      if (!image) return;
+      e.preventDefault();
+      activate(image);
+    });
+
+    article.addEventListener("keydown", e => {
+      if (e.key !== "Enter" && e.key !== " " && e.key !== "Spacebar") return;
+      const image = triggerFromEvent(e);
+      if (!image) return;
+      e.preventDefault();
+      activate(image);
+    });
+  }
+  initLightbox();
+
+  if (!window.__lightboxSwapBound) {
+    window.__lightboxSwapBound = true;
+    document.addEventListener("astro:before-swap", () =>
+      window.__closeLightbox?.()
+    );
+  }
+
+  document.addEventListener("astro:after-swap", () =>
+    window.scrollTo({ left: 0, top: 0, behavior: "instant" })
+  );
+</script>
